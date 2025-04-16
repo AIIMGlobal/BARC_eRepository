@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Add New Organization | '.($global_setting->title ?? ""))
+@section('title', 'Edit Category | '.($global_setting->title ?? ""))
 
 @section('content')
     <div class="page-content">
@@ -9,13 +9,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        {{-- <h4 class="mb-sm-0">Add New Organization</h4> --}}
-
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Dashboard</a></li>
 
-                                <li class="breadcrumb-item active">Add New Organization</li>
+                                <li class="breadcrumb-item active">Edit Category</li>
                             </ol>
                         </div>
 
@@ -23,91 +21,78 @@
                 </div>
             </div>
             <!-- end page title -->
+
             <div class="row">
                 <div class="col-md-12">
                     @include('backend.admin.partials.alert')
 
                     <div class="card card-height-100">
                         <div class="card-header align-items-center d-flex">
-                            <h4 class="card-title mb-0 flex-grow-1">Add New Organization</h4>
+                            <h4 class="card-title mb-0 flex-grow-1">Edit Category</h4>
 
-                            @can('manage_office')
+                            @can('category_list')
                                 <div class="flex-shrink-0">
-                                    <a href="{{ route('admin.office.index') }}" class="btn btn-primary">Organization List</a>
+                                    <a href="{{ route('admin.category.index') }}" class="btn btn-primary">Category List</a>
                                 </div>
                             @endcan
                         </div>
 
                         <div class="card-body">
-                            <form id="createForm" action="{{ route('admin.office.store') }}" method="POST" enctype="multipart/form-data">
+                            <form id="updateForm" action="{{ route('admin.category.update', Crypt::encryptString($category->id)) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
 
                                 <div class="row g-3">
-                                    <div class="col-md-4 col-sm-12">
+                                    <div class="col-md-6 col-sm-12">
                                         <div>
-                                            <label for="name" class="form-label">Organization Name: <span style="color:red;">*</span></label>
+                                            <label for="category_name" class="form-label">Category Name: <span style="color:red;">*</span></label>
 
-                                            <input id="name" type="text" class="form-control" name="name" placeholder="Enter Organization Name" value="{{ old('name') }}" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4 col-sm-12">
-                                        <div>
-                                            <label for="short_name" class="form-label">Organization Short Name: </label>
-
-                                            <input id="short_name" type="text" class="form-control" name="short_name" placeholder="Enter Organization Short Name" value="{{ old('short_name') }}">
+                                            <input id="category_name" type="text" class="form-control" name="category_name" placeholder="Enter Category Name" value="{{ $category->category_name ?? old('category_name') }}" required>
                                         </div>
                                     </div>
                                     
-                                    <div class="col-md-4 col-sm-12">
-                                        <label for="division" class="form-label">Division: <span style="color:red;">*</span></label>
+                                    <div class="col-md-6 col-sm-12">
+                                        <label for="parent_id" class="form-label">Parent Category: </label>
 
-                                        <select name="division" class="form-control division_id_0 select2" id="present_division_id" required>
-                                            <option value="">--Select Division--</option>
+                                        <select name="parent_id" class="form-control select2" id="parent_id">
+                                            <option value="">--Select Parent Category--</option>
 
-                                            @foreach ($divisions as $division)
-                                                <option value="{{ $division->id }}">{{ $division->name_en }}</option>
+                                            @foreach ($categorys as $parent)
+                                                <option value="{{ $parent->id }}" {{ $parent->id == $category->parent_id ? 'selected' : '' }}>{{ $parent->category_name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
 
-                                    <div class="col-md-4 col-sm-12">
-                                        <label for="district" class="form-label">District: </label>
-
-                                        <select name="district" class="form-control district_id_0 select2" id="present_district_id">
-                                            <option value="">--Select Division First--</option>
-
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-4 col-sm-12">
-                                        <label for="upazila" class="form-label">Upazila/Thana: </label>
-
-                                        <select name="upazila" class="form-control upazila_id_0 select2" id="present_upazila_id">
-                                            <option value="">--Select District First--</option>
-
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-4 col-sm-12">
+                                    <div class="col-md-6 col-sm-12">
                                         <div>
-                                            <label for="website_url" class="form-label">Website URL: </label>
+                                            <label for="description" class="form-label">Description: </label>
 
-                                            <textarea name="website_url" id="website_url" class="form-control" cols="30" rows="1" placeholder="Enter Website URL">{{ old('website_url') }}</textarea>
+                                            <textarea name="description" id="description" class="form-control" cols="30" rows="1" placeholder="Enter Description">{{ $category->description ?? old('description') }}</textarea>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4 col-sm-12">
+                                    <div class="col-md-6 col-sm-6 col-xsm-12">
                                         <div>
-                                            <label for="logo" class="form-label">Organization Logo: </label>
+                                            <label for="image" class="form-label">Upload New Category Image:</label>
 
-                                            <input id="logo" type="file" class="form-control" name="logo">
+                                            <input type="file" class="form-control" id="image" name="image">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div>
+                                            <label for="image" class="">Current Category Image:</label>
+
+                                            @if ($category->image && Storage::exists('public/' . $category->image))
+                                                <img src="{{ asset('storage/' . $category->image) }}" alt="Category Image" style="max-height: 95px;">
+                                            @else
+                                                <img src="https://png.pngtree.com/png-clipart/20190925/original/pngtree-no-image-vector-illustration-isolated-png-image_4979075.jpg" alt="Category Image" style="max-height: 95px;">
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                                 
                                 <div class="row">
-                                    <div class="col-md-4 col-sm-12 mt-4">
+                                    <div class="col-md-6 col-sm-12 mt-4">
                                         <div class="switchery-demo">
                                             <input type="checkbox" name="status" class="js-switch" value="1" checked> Status
                                         </div>
@@ -115,7 +100,7 @@
 
                                     <div>
                                         <div class="hstack gap-2 justify-content-end">
-                                            <button type="submit" class="btn btn-success" id="submitBtn">Submit</button>
+                                            <button type="submit" class="btn btn-success" id="submitBtn">Update</button>
                                         </div>
                                     </div>
                                 </div><!--end row-->
@@ -141,12 +126,10 @@
         $('[href*="{{ $menu_expand }}"]').closest('.first-dropdown').find('.menu-link').attr('aria-expanded','true');
         $('[href*="{{ $menu_expand }}"]').closest('.first-dropdown').find('.menu-dropdown:first').addClass('show');
     </script>
-
-    @include('backend.admin.partials.addressDynamic')
     
     <script>
         $(document).ready(function() {
-            $('#createForm').on('submit', function(e) {
+            $('#updateForm').on('submit', function(e) {
                 e.preventDefault();
 
                 $('#submitBtn').prop('disabled', true);
@@ -165,24 +148,34 @@
                         $("button[type='submit']").prop("disabled", true);
                     },
                     success: function(response) {
-                        Swal.fire({
-                            title: response.message,
-                            icon: 'success',
-                            showCancelButton: false,
-                        });
+                        if (response.success == true) {
+                            Swal.fire({
+                                title: response.message,
+                                icon: 'success',
+                                showCancelButton: false,
+                            });
 
-                        form.trigger('reset');
+                            form.trigger('reset');
 
-                        if ($('.select2').length > 0) {
-                            $('.select2').val('').trigger('change');
+                            if ($('.select2').length > 0) {
+                                $('.select2').val('').trigger('change');
+                            }
+
+                            setTimeout(() => window.location.reload(), 1000);
+
+                            $('#submitBtn').prop('disabled', false);
+                            $('#submitBtn').html(`Update`);
+                        } else {
+                            Swal.fire({
+                                title: response.message,
+                                icon: 'error',
+                                showCancelButton: false,
+                            });
                         }
-
-                        $('#submitBtn').prop('disabled', false);
-                        $('#submitBtn').html(`Submit`);
                     },
                     error: function(xhr) {
                         $('#submitBtn').prop('disabled', false);
-                        $('#submitBtn').html(`Submit`);
+                        $('#submitBtn').html(`Update`);
 
                         if (xhr.status === 422) {
                             let errors = xhr.responseJSON.errors;
@@ -198,9 +191,11 @@
                                 text: errorMessages,
                             });
                         } else {
-                            toastr.options.closeButton = true;
-                            toastr.options.timeOut = 1500;
-                            toastr.error("Something went wrong. Please try again.");
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: "Something went wrong. Please try again.",
+                            });
                         }
                     }
                 });

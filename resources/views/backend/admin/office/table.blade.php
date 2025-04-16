@@ -8,7 +8,7 @@
             <td class="text-center">{{ $i }}</td>
 
             <td class="text-center">
-                @if ($office->logo)
+                @if ($office->logo && Storage::exists('public/' . $office->logo))
                     <img src="{{ asset('storage/' . $office->logo) }}" alt="Logo" style="max-height: 50px;">
                 @else
                     <img src="https://png.pngtree.com/png-clipart/20190925/original/pngtree-no-image-vector-illustration-isolated-png-image_4979075.jpg" alt="Logo" style="max-height: 50px;">

@@ -5,18 +5,18 @@
         <a href="{{ route('admin.home') }}" class="logo logo-dark mt-2">
             <span class="logo-sm">
                 <img src="@if($global_setting->soft_logo && Storage::exists('public/soft_logo/' . $global_setting->soft_logo))
-    {{ asset('storage/soft_logo/' . $global_setting->soft_logo) }}
-@else
-    {{ 'https://png.pngtree.com/png-clipart/20190925/original/pngtree-no-image-vector-illustration-isolated-png-image_4979075.jpg' }}
-@endif" alt="" height="50">
+                    {{ asset('storage/soft_logo/' . $global_setting->soft_logo) }}
+                @else
+                    {{ 'https://png.pngtree.com/png-clipart/20190925/original/pngtree-no-image-vector-illustration-isolated-png-image_4979075.jpg' }}
+                @endif" alt="" height="50">
             </span>
 
             <span class="logo-lg">
                 <img src="@if($global_setting->soft_logo && Storage::exists('public/soft_logo/' . $global_setting->soft_logo))
-    {{ asset('storage/soft_logo/' . $global_setting->soft_logo) }}
-@else
-    {{ 'https://png.pngtree.com/png-clipart/20190925/original/pngtree-no-image-vector-illustration-isolated-png-image_4979075.jpg' }}
-@endif" alt="" width="100">
+                    {{ asset('storage/soft_logo/' . $global_setting->soft_logo) }}
+                @else
+                    {{ 'https://png.pngtree.com/png-clipart/20190925/original/pngtree-no-image-vector-illustration-isolated-png-image_4979075.jpg' }}
+                @endif" alt="" width="100">
             </span>
         </a>
 
@@ -24,18 +24,18 @@
         <a href="{{ route('admin.home') }}" class="logo logo-light mt-2">
             <span class="logo-sm">
                 <img src="@if($global_setting->soft_logo && Storage::exists('public/soft_logo/' . $global_setting->soft_logo))
-    {{ asset('storage/soft_logo/' . $global_setting->soft_logo) }}
-@else
-    {{ 'https://png.pngtree.com/png-clipart/20190925/original/pngtree-no-image-vector-illustration-isolated-png-image_4979075.jpg' }}
-@endif" alt="" height="50">
+                    {{ asset('storage/soft_logo/' . $global_setting->soft_logo) }}
+                @else
+                    {{ 'https://png.pngtree.com/png-clipart/20190925/original/pngtree-no-image-vector-illustration-isolated-png-image_4979075.jpg' }}
+                @endif" alt="" height="50">
             </span>
 
             <span class="logo-lg">
                 <img src="@if($global_setting->soft_logo && Storage::exists('public/soft_logo/' . $global_setting->soft_logo))
-    {{ asset('storage/soft_logo/' . $global_setting->soft_logo) }}
-@else
-    {{ 'https://png.pngtree.com/png-clipart/20190925/original/pngtree-no-image-vector-illustration-isolated-png-image_4979075.jpg' }}
-@endif" alt="" width="100">
+                    {{ asset('storage/soft_logo/' . $global_setting->soft_logo) }}
+                @else
+                    {{ 'https://png.pngtree.com/png-clipart/20190925/original/pngtree-no-image-vector-illustration-isolated-png-image_4979075.jpg' }}
+                @endif" alt="" width="100">
             </span>
         </a>
 
@@ -131,6 +131,30 @@
                                 @can('assign_permission_list')
                                     <li class="nav-item">
                                         <a href="{{ route('admin.rolePermission.index') }}" class="nav-link">{{__('menu.Give Permission')}}</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </div>
+                    </li>
+                @endcan
+
+                @can('manage_category')
+                    <li class="nav-item first-dropdown">
+                        <a class="nav-link menu-link" href="#category" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="category">
+                            <i class="ri-building-line"></i> <span data-key="t-category">Category Management</span>
+                        </a>
+
+                        <div class="collapse menu-dropdown" id="category">
+                            <ul class="nav nav-sm flex-column">
+                                @can('category_list')
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.category.index') }}" class="nav-link" data-key="t-crm">Category List</a>
+                                    </li>
+                                @endcan
+
+                                @can('create_category')
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.category.index') }}" class="nav-link" data-key="t-crm">Create Category</a>
                                     </li>
                                 @endcan
                             </ul>

@@ -39,7 +39,7 @@
                         </div>
                         
                         <div class="card-body">
-                            <form id="updateForm" action="{{route('admin.office.update', Crypt::encryptString($office->id)) }}" method="POST" enctype="multipart/form-data">
+                            <form id="updateForm" action="{{ route('admin.office.update', Crypt::encryptString($office->id)) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
 
                                 <div class="row g-3">
@@ -119,7 +119,7 @@
                                         <div>
                                             <label for="logo" class="">Current Organization Logo:</label>
 
-                                            @if ($office->logo)
+                                            @if ($office->logo && Storage::exists('public/' . $office->logo))
                                                 <img src="{{ asset('storage/' . $office->logo) }}" alt="Organization Logo" style="max-height: 95px;">
                                             @else
                                                 <img src="https://png.pngtree.com/png-clipart/20190925/original/pngtree-no-image-vector-illustration-isolated-png-image_4979075.jpg" alt="Organization Logo" style="max-height: 95px;">
@@ -137,7 +137,7 @@
 
                                     <div>
                                         <div class="hstack gap-2 justify-content-end">
-                                            <button type="submit" class="btn btn-primary" id="submitBtn">Update</button>
+                                            <button type="submit" class="btn btn-success" id="submitBtn">Update</button>
                                         </div>
                                     </div>
                                 </div><!--end row-->

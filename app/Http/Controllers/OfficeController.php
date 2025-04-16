@@ -134,7 +134,10 @@ class OfficeController extends Controller
                 ], 500);
             }
         } else {
-            return abort(403, "You don't have permission..!");
+            return response()->json([
+                'success' => false,
+                'message' => "You don't have permission..!",
+            ], 500);
         }
     }
 
@@ -233,7 +236,10 @@ class OfficeController extends Controller
                 ], 500);
             }
         } else {
-            return abort(403, "You don't have permission..!");
+            return response()->json([
+                'success' => false,
+                'message' => "You don't have permission..!",
+            ], 500);
         }
     }
 
@@ -254,7 +260,10 @@ class OfficeController extends Controller
                     'message' => 'Organization Deleted Successfully!',
                 ]);
         } else {
-            return abort(403, "You don't have permission..!");
+            return response()->json([
+                'success' => false,
+                'message' => "You don't have permission..!",
+            ], 500);
         }
     }
 }
