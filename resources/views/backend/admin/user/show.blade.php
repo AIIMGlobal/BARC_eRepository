@@ -50,7 +50,7 @@
                     <div class="col-auto">
                         <div class="avatar-lg">
                             @if (($employee->userInfo->image ?? '') && Storage::exists('public/userImages/' . $employee->userInfo->image))
-                                <img src="{{ asset('storage/userImages/' . ($employee->userInfo->image ?? ''))}}" alt="User Image" class="img-thumbnail" style="max-height: 120px;" />
+                                <img src="{{ asset('storage/userImages/' . ($employee->userInfo->image ?? '')) }}" alt="User Image" class="img-thumbnail" style="max-height: 120px;" />
                             @else
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png" alt="User Image" class="img-thumbnail" style="max-height: 120px;" />
                             @endif

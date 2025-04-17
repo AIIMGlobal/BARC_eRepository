@@ -121,7 +121,7 @@
                                         <div>
                                             <label for="department_id" class="form-label">Department: <span style="color:red;">*</span></label>
 
-                                            <select class="form-control" name="department_id" id="department_id" required>
+                                            <select class="form-control select2" name="department_id" id="department_id" required>
                                                 <option value="">--Select Department--</option>
 
                                                 @foreach ($departments as $department)
@@ -138,7 +138,7 @@
                                             @if (Auth::user()->user_type == 4)
                                                 <input type="text" class="form-control" name="designation" id="designation" placeholder="Enter Designation" value="{{ old('designation') }}">
                                             @else
-                                                <select class="form-control" name="designation_id" id="designation_id" required>
+                                                <select class="form-control select2" name="designation_id" id="designation_id" required>
                                                     <option value="">--Select Designation--</option>
 
                                                     @foreach ($designations as $designation)
@@ -875,145 +875,6 @@
                                                         </table>
                                                 </div>
                                             @endforeach
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-sm-12">
-                                        <div class="card">
-                                            <div class="card-header align-items-center d-flex">
-                                                <h4 class="card-title mb-0 flex-grow-1">Present Address: </h4>
-                                            </div>
-
-                                            <div class="card-body">
-                                                <div class="col-12">
-                                                    <div>
-                                                        <label for="present_division_id" class="form-label">Division: </label>
-
-                                                        <select class="form-control select2" name="present_division_id" id="present_division_id">
-                                                            <option value="">--Select Division--</option>
-
-                                                            @foreach ($divisions as $division)
-                                                                <option value="{{ $division->id }}">{{ $division->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12">
-                                                    <div>
-                                                        <label for="present_district_id" class="form-label">District: <span style="color:red;">*</span></label>
-
-                                                        <select class="form-control select2" name="present_district_id" id="present_district_id">
-                                                            <option value="">--Select Division First--</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12">
-                                                    <div>
-                                                        <label for="present_upazila_id" class="form-label">Thana/Upazila</label>
-
-                                                        <select class="form-control select2" name="present_upazila_id" id="present_upazila_id">
-                                                            <option value="">--Select District First--</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12">
-                                                    <div>
-                                                        <label for="present_post_office" class="form-label">Post Office: </label>
-
-                                                        <input type="text" class="form-control" name="present_post_office" id="present_post_office" placeholder="Enter your post office name" value="{{ old('present_post_office') }}">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12">
-                                                    <div>
-                                                        <label for="present_post_code" class="form-label">Post Code: </label>
-                                                        
-                                                        <input type="number" class="form-control" name="present_post_code" id="present_post_code" placeholder="Four digits code" value="{{ old('present_post_code') }}">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12">
-                                                    <div>
-                                                        <label for="present_village_road" class="form-label">Village/Road: </label>
-
-                                                        <textarea class="form-control" name="present_village_road" id="present_village_road" cols="30" rows="4"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-sm-12">
-                                        <div class="card">
-
-                                            <div class="card-header align-items-center d-flex">
-                                                <h4 class="card-title mb-0 flex-grow-1">Permanent Address
-                                                    <input type="checkbox" name="same_as_present_address" id="same_as_present_address">
-                                                    <small style="font-weight: 400; font-size: 0.8em;">Same as present address</small>
-                                                </h4>
-                                            </div>
-
-                                            <div class="card-body">
-                                                <div class="col-12">
-                                                    <div>
-                                                        <label for="permanent_division_id" class="form-label">Division: </label>
-
-                                                        <select class="form-control select2" name="permanent_division_id" id="permanent_division_id">
-                                                            <option value="">--Select Division--</option>
-
-                                                            @foreach ($divisions as $division)
-                                                                <option value="{{ $division->id }}">{{ $division->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12">
-                                                    <div>
-                                                        <label for="permanent_district_id" class="form-label">District: </label>
-
-                                                        <select class="form-control select2" name="permanent_district_id" id="permanent_district_id">
-                                                            <option value="">--Select Division First--</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12">
-                                                    <div>
-                                                        <label for="permanent_upazila_id" class="form-label">Thana/Upazila: </label>
-
-                                                        <select class="form-control select2" name="permanent_upazila_id" id="permanent_upazila_id">
-                                                            <option value="">--Select District First--</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12">
-                                                    <div>
-                                                        <label for="permanent_post_office" class="form-label">Post Office: </label>
-                                                        <input type="text" class="form-control" name="permanent_post_office" id="permanent_post_office" placeholder="Enter your post office name" value="{{ old('permanent_post_office') }}">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12">
-                                                    <div>
-                                                        <label for="permanent_post_code" class="form-label">Post Code</label>
-                                                        
-                                                        <input type="number" class="form-control" name="permanent_post_code" id="permanent_post_code" placeholder="Four digits code" value="{{ old('permanent_post_code') }}">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12">
-                                                    <div>
-                                                        <label for="permanent_village_road" class="form-label">Village/Road: </label>
-
-                                                        <textarea class="form-control" name="permanent_village_road" id="permanent_village_road" cols="30" rows="4"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div> --}}

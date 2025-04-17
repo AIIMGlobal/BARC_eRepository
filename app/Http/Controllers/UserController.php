@@ -378,9 +378,9 @@ class UserController extends Controller
 
             $menu_expand = route('admin.user.index');
 
-            $departments = Department::where('status', 1)->get();
-            $designations = Designation::where('status', 1)->get();
-            $offices = Office::where('status', 1)->get();
+            $departments = Department::where('status', 1)->orderBy('name', 'asc')->get();
+            $designations = Designation::where('status', 1)->orderBy('name', 'asc')->get();
+            $offices = Office::where('status', 1)->orderBy('name', 'asc')->get();
             $divisions = Division::where('status', 1)->get();
             $institutes = Institute::where('status', 1)->get();
             $boards = Board::where('status', 1)->get();
@@ -465,8 +465,8 @@ class UserController extends Controller
                         // 'name_bn' => 'required',
                         'name_en'               => 'required',
                         'user_type'             => 'required',
-                        'mobile'                => 'unique:users|required,mobile,' . $newUser->id,
-                        'email'                 => 'unique:users|required,email,' . $newUser->id,
+                        'mobile'                => 'required|unique:users,mobile,' . $newUser->id,
+                        'email'                 => 'required|unique:users,email,' . $newUser->id,
                         'role_id'               => 'required',
                         // 'employee_id'           => 'required',
                         'department_id'         => 'required',
@@ -814,6 +814,10 @@ class UserController extends Controller
     {
         $user = User::where('id', Auth::user()->id)->first();
         $employee = User::with('userInfo')->where('id', $user->id)->first();
+        $departments = Department::where('status', 1)->orderBy('name', 'asc')->get();
+        $designations = Designation::where('status', 1)->orderBy('name', 'asc')->get();
+        $offices = Office::where('status', 1)->orderBy('name', 'asc')->get();
+
         $divisions = Division::where('status', 1)->get();
         $userAddress = UserAddress::where('user_id', $user->id)->first();
 
@@ -831,30 +835,45 @@ class UserController extends Controller
             'presentUpazilas', 
             'permanentDistricts', 
             'permanentUpazilas',
+            'departments',
+            'designations',
+            'offices'
         ));
     }
 
     public function update_profile(Request $request)
     {
-        $userID = Auth::user()->id;
+        $userID = Auth::id();
 
-        $this->validate($request, [
-            'name_en'               => 'required', 
-            // 'name_bn'               => 'required',
-            'email'                 => 'required|unique:users,email,'.$userID,
-            'mobile'                => 'required|unique:users,mobile,'.$userID,
-            // 'dob'                   => 'required',
-            // 'gender'                => 'required',
-            // 'religion'              => 'required',
-            'employee_id'           => 'required',
-            // 'marital_status'        => 'required',
-            // 'present_division_id'   => 'required',
-            // 'present_district_id'   => 'required',
-            // 'present_upazila_id'    => 'required',
-            // 'present_post_office'   => 'required',
-            // 'present_post_code'     => 'required',
-            // 'present_village_road'  => 'required',
-        ]);
+        if ($request->user_type == 4) {
+            $this->validate($request, [
+                // 'name_bn' => 'required',
+                'name_en'               => 'required',
+                'mobile'                => 'required|unique:users,mobile,' . $userID,
+                'email'                 => 'required|unique:users,email,' . $userID,
+                // 'employee_id'           => 'required',
+                'department_id'         => 'required',
+                'designation'           => 'required',
+                'office_id'             => 'required',
+                // 'present_division_id'   => 'required',
+                // 'present_district_id'   => 'required',
+                // 'present_upazila_id'    => 'required',
+            ]);
+        } else {
+            $this->validate($request, [
+                // 'name_bn' => 'required',
+                'name_en'               => 'required',
+                'mobile'                => 'required|unique:users,mobile,' . $userID,
+                'email'                 => 'required|unique:users,email,' . $userID,
+                // 'employee_id'           => 'required',
+                'department_id'         => 'required',
+                'designation_id'        => 'required',
+                'office_id'             => 'required',
+                // 'present_division_id'   => 'required',
+                // 'present_district_id'   => 'required',
+                // 'present_upazila_id'    => 'required',
+            ]);
+        }
 
         DB::transaction(function () use ($request, $userID) {
             $user = User::where('id', Auth::user()->id)->first();
@@ -862,37 +881,15 @@ class UserController extends Controller
             $user->name_bn = $request->name_bn;
             $user->name_en = $request->name_en;
 
-            // check email already exist on user update
-            if ($request->email != $user->email) {
-                $check = User::where('email', $request->email)->first();
-
-                if (!empty($check)) {
-                    return redirect()->route('admin.edit_profile')->with('error', 'Email already in use!');
-                } else {
-                    $user->email = $request->email;        
-                }
-            } else {
-                $user->email = $request->email;
-            }
-
-            // check mobile already exist on user update
-            if ($request->mobile != $user->mobile) {
-                $checkMobile = User::where('mobile', $request->mobile)->first();
-
-                if (!empty($checkMobile)) {
-                    return redirect()->route('admin.edit_profile')->with('error', 'Mobile number already in use!');
-                } else {
-                    $user->mobile = $request->mobile;        
-                }
-            } else {
-                $user->mobile = $request->mobile;
-            }
-
             $user->save();
 
             $userInfo = UserInfo::where('user_id', $userID)->first();
 
             if ($userInfo) {
+                $userInfo->department_id        = $request->department_id;
+                $userInfo->designation_id       = $request->designation_id;
+                $userInfo->designation          = $request->designation;
+                $userInfo->office_id            = $request->office_id;
                 $userInfo->dob                  = $request->dob;
                 $userInfo->gender               = $request->gender;
                 $userInfo->religion             = $request->religion;
@@ -941,6 +938,10 @@ class UserController extends Controller
                 $userInfo = new UserInfo;
 
                 $userInfo->user_id              = Auth::id();
+                $userInfo->department_id        = $request->department_id;
+                $userInfo->designation_id       = $request->designation_id;
+                $userInfo->designation          = $request->designation;
+                $userInfo->office_id            = $request->office_id;
                 $userInfo->dob                  = $request->dob;
                 $userInfo->gender               = $request->gender;
                 $userInfo->religion             = $request->religion;
@@ -997,7 +998,7 @@ class UserController extends Controller
                 $userAddress->present_post_code     = $request->present_post_code;
                 $userAddress->present_address       = $request->present_village_road;
                 
-                if ($request->same_as_present_address == 1) {
+                if ($request->same_as_present_address) {
                     $userAddress->permanent_division_id     = $request->present_division_id;
                     $userAddress->permanent_district_id     = $request->present_district_id;
                     $userAddress->permanent_upazila_id      = $request->present_upazila_id;
@@ -1014,8 +1015,6 @@ class UserController extends Controller
                     $userAddress->permanent_address         = $request->permanent_village_road;
                     $userAddress->same_as_present_address   = 0;
                 }
-
-                $userAddress->save();
             } else {
                 $userAddress = new UserAddress;
 
@@ -1027,7 +1026,7 @@ class UserController extends Controller
                 $userAddress->present_post_code     = $request->present_post_code;
                 $userAddress->present_address       = $request->present_village_road;
                 
-                if($request->same_as_present_address == 1){
+                if ($request->same_as_present_address) {
                     $userAddress->permanent_division_id     = $request->present_division_id;
                     $userAddress->permanent_district_id     = $request->present_district_id;
                     $userAddress->permanent_upazila_id      = $request->present_upazila_id;
@@ -1035,7 +1034,7 @@ class UserController extends Controller
                     $userAddress->permanent_post_code       = $request->present_post_code;
                     $userAddress->permanent_address         = $request->present_village_road;
                     $userAddress->same_as_present_address   = 1;
-                }else{
+                } else {
                     $userAddress->permanent_division_id     = $request->permanent_division_id;
                     $userAddress->permanent_district_id     = $request->permanent_district_id;
                     $userAddress->permanent_upazila_id      = $request->permanent_upazila_id;
@@ -1044,9 +1043,9 @@ class UserController extends Controller
                     $userAddress->permanent_address         = $request->permanent_village_road;
                     $userAddress->same_as_present_address   = 0;
                 }
-
-                $userAddress->save();
             }
+
+            $userAddress->save();
         });
 
         return redirect()->back()->with('success', 'User updated successfully!');

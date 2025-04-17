@@ -55,8 +55,12 @@
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Error:"><use xlink:href="#info-fill"/></svg>
 
+      <strong>Error!</strong>
+      <br>
+      
       @foreach ($errors->all() as $error)
-        <strong>Error!</strong> {{ __(Session::get('error')) }}
+        <br>
+        <span>{{ $error }}</span>
       @endforeach
 
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

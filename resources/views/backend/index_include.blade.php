@@ -96,6 +96,48 @@
                 </a>
             </div>
         @endcan
+
+        @if (Auth::user()->user_type == 4)
+            @can('total_saved_content')
+                <div class="col-md-3 col-sm-12">
+                    <a href="#" class="text-decoration-none">
+                        <div class="custom-card">
+                            <div class="custom-icon">
+                                <i class="bx bx-file"></i>
+                            </div>
+               
+                            <div class="custom-text">
+                                <p class="title">Total Saved Contents</p>
+                               
+                                <h2 class="count">
+                                    <span class="counter-value" data-target="0">0</span>
+                                </h2>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endcan
+ 
+            @can('total_favourite_content')
+                <div class="col-md-3 col-sm-12">
+                    <a href="#" class="text-decoration-none">
+                        <div class="custom-card">
+                            <div class="custom-icon">
+                                <i class="bx bx-file"></i>
+                            </div>
+               
+                            <div class="custom-text">
+                                <p class="title">Total Favourite Contents</p>
+                               
+                                <h2 class="count">
+                                    <span class="counter-value" data-target="0">0</span>
+                                </h2>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endcan
+        @endif
     </div>
 
     <div class="row my-4">

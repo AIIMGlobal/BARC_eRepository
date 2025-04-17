@@ -129,7 +129,7 @@
                                         <div>
                                             <label for="department_id" class="form-label">Department: <span style="color:red;">*</span></label>
 
-                                            <select  class="form-control" name="department_id" id="department_id" required>
+                                            <select  class="form-control select2" name="department_id" id="department_id" required>
                                                 <option value="">--Select Department--</option>
 
                                                 @foreach ($departments as $department)
@@ -146,7 +146,7 @@
                                             @if ($employee->user_type == 4)
                                                 <input type="text" class="form-control" name="designation" id="designation" placeholder="Enter Designation" value="{{ $employee->userInfo->designation ?? old('designation') }}">
                                             @else
-                                                <select  class="form-control" name="designation_id" id="designation_id" required>
+                                                <select  class="form-control select2" name="designation_id" id="designation_id" required>
                                                     <option value="">--Select Designation--</option>
 
                                                     @foreach ($designations as $designation)
