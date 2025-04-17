@@ -136,7 +136,7 @@
                         $("button[type='submit']").prop("disabled", true);
                     },
                     success: function(response) {
-                        if (response.success == true) {
+                        if (response.success) {
                             Swal.fire({
                                 title: response.message,
                                 icon: 'success',

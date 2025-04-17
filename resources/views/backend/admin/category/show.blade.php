@@ -93,7 +93,7 @@
                                     </div>
                                 @endif
 
-                                <div class="col-md-6 col-sm-12 mt-3">
+                                <div class="col-md-6 col-sm-12">
                                     <div>
                                         <label for="created_at" class="form-label">Created At: </label>
 
@@ -102,7 +102,7 @@
                                 </div>
 
                                 @if ($category->updated_by)
-                                    <div class="col-md-6 col-sm-12 mt-3">
+                                    <div class="col-md-6 col-sm-12">
                                         <div>
                                             <label for="updated_at" class="form-label">Updated At: </label>
 
@@ -138,10 +138,10 @@
 
 @push('script')
     <script>
-        $('[href*="{{$menu_expand}}"]').addClass('active');
-        $('[href*="{{$menu_expand}}"]').closest('.menu-dropdown').addClass('show');
-        $('[href*="{{$menu_expand}}"]').closest('.menu-dropdown').parent().find('.nav-link').attr('aria-expanded','true');
-        $('[href*="{{$menu_expand}}"]').closest('.first-dropdown').find('.menu-link').attr('aria-expanded','true');
-        $('[href*="{{$menu_expand}}"]').closest('.first-dropdown').find('.menu-dropdown:first').addClass('show');
+        $('[href*="{{ $menu_expand }}"]').addClass('active');
+        $('[href*="{{ $menu_expand }}"]').closest('.menu-dropdown').addClass('show');
+        $('[href*="{{ $menu_expand }}"]').closest('.menu-dropdown').parent().find('.nav-link').attr('aria-expanded','true');
+        $('[href*="{{ $menu_expand }}"]').closest('.first-dropdown').find('.menu-link').attr('aria-expanded','true');
+        $('[href*="{{ $menu_expand }}"]').closest('.first-dropdown').find('.menu-dropdown:first').addClass('show');
     </script>
 @endpush

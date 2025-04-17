@@ -103,7 +103,7 @@
                                     </div>
                                 @endif
 
-                                <div class="col-md-6 col-sm-12 mt-3">
+                                <div class="col-md-6 col-sm-12">
                                     <div>
                                         <label for="created_at" class="form-label">Created At: </label>
 
@@ -112,7 +112,7 @@
                                 </div>
 
                                 @if ($office->updated_by)
-                                    <div class="col-md-6 col-sm-12 mt-3">
+                                    <div class="col-md-6 col-sm-12">
                                         <div>
                                             <label for="updated_at" class="form-label">Updated At: </label>
 

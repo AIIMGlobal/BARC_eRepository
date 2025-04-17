@@ -66,10 +66,24 @@
                         <div class="card-body border border-dashed border-end-0 border-start-0">
                             <form>
                                 <div class="row g-3">
-                                    <div class="col-md-2 col-sm-6">
+                                    <div class="col-md-3 col-sm-6">
                                         <div class="search-box">
-                                            
+                                            <select name="category_id" id="category_id" class="form-control select2">
+                                                <option value="">--Search by Category Name--</option>
+
+                                                @if (count($parents) > 0)
+                                                    @foreach ($parents as $parent)
+                                                        <option value="{{ $parent->id }}">{{ $parent->category_name }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
                                         </div>
+                                    </div>
+
+                                    <div class="col-md-2 col-sm-4">
+                                        <button type="button" class="btn btn-danger" id="resetButton"> 
+                                            Reset
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -116,24 +130,24 @@
 
 @push('script')
     <script>
-        $('#office_id').on('change keyup', function () {
+        $('#category_id').on('change keyup', function () {
             fetchFilteredData();
         });
 
         $('#resetButton').on('click', function () {
-            $('#office_id').val('').trigger('change');
+            $('#category_id').val('').trigger('change');
 
             fetchFilteredData();
         });
 
         function fetchFilteredData() {
-            const office_id = $('#office_id').val();
+            const category_id = $('#category_id').val();
 
             $.ajax({
                 url: "{{ route('admin.category.index') }}",
                 type: "GET",
                 data: {
-                    office_id: office_id,
+                    category_id: category_id,
                 },
                 beforeSend: function () {
                     $('#datatable tbody').html('<tr><td colspan="5" class="text-center">Loading...</td></tr>');

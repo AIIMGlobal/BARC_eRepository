@@ -43,7 +43,7 @@ class CategoryController extends Controller
                 ]);
             }
 
-            return view('backend.admin.category.index', compact('categorys'));
+            return view('backend.admin.category.index', compact('categorys', 'parents'));
         } else {
             return abort(403, "You don't have permission!");
         }
@@ -57,7 +57,7 @@ class CategoryController extends Controller
         $user = Auth::user();
 
         if (Gate::allows('create_category', $user)) {
-            $menu_expand = route('admin.category.index');
+            $menu_expand = route('admin.category.create');
 
             $categorys = Category::where('status', 1)->orderBy('category_name', 'asc')->get();
             

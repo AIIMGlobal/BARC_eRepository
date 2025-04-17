@@ -154,7 +154,7 @@
 
                                 @can('create_category')
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.category.index') }}" class="nav-link" data-key="t-crm">Create Category</a>
+                                        <a href="{{ route('admin.category.create') }}" class="nav-link" data-key="t-crm">Create Category</a>
                                     </li>
                                 @endcan
                             </ul>
