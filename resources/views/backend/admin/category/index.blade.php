@@ -54,7 +54,7 @@
                             <h4 class="card-title mb-0 flex-grow-1">Category List</h4>
 
                             <div class="flex-shrink-0">
-                                @can('add_office')
+                                @can('create_category')
                                     <a class="btn btn-primary" href="{{ route('admin.category.create') }}">
                                         Add New Category
                                     </a>

@@ -81,7 +81,7 @@
                 @can('user_management')
                     <li class="nav-item first-dropdown">
                         <a class="nav-link menu-link" href="#rolePermission" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="rolePermission">
-                            <i class="ri-shield-keyhole-line"></i> <span data-key="t-dashboards">User Management</span>
+                            <i class="ri-shield-keyhole-line"></i> <span data-key="t-rolePermission">User Management</span>
                         </a>
 
                         <div class="collapse menu-dropdown" id="rolePermission">
@@ -161,11 +161,47 @@
                         </div>
                     </li>
                 @endcan
+
+                @can('manage_content')
+                    <li class="nav-item first-dropdown">
+                        <a class="nav-link menu-link" href="#content" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="content">
+                            <i class="ri-building-line"></i> <span data-key="t-content">Content Management</span>
+                        </a>
+
+                        <div class="collapse menu-dropdown" id="content">
+                            <ul class="nav nav-sm flex-column">
+                                @can('content_list')
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.content.index') }}" class="nav-link" data-key="t-crm">Content List</a>
+                                    </li>
+                                @endcan
+
+                                @can('content_list')
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.content.indexMyContent') }}" class="nav-link" data-key="t-crm">My Content List</a>
+                                    </li>
+                                @endcan
+
+                                {{-- @can('total_favourite_content')
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.content.index') }}" class="nav-link" data-key="t-crm">Favorite Content List</a>
+                                    </li>
+                                @endcan
+
+                                @can('total_saved_content')
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.content.index') }}" class="nav-link" data-key="t-crm">Saved Content List</a>
+                                    </li>
+                                @endcan --}}
+                            </ul>
+                        </div>
+                    </li>
+                @endcan
                 
                 @can('office_management')
                     <li class="nav-item first-dropdown">
                         <a class="nav-link menu-link" href="#office" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="office">
-                            <i class="ri-building-line"></i> <span data-key="t-dashboards">Organization Management</span>
+                            <i class="ri-building-line"></i> <span data-key="t-office">Organization Management</span>
                         </a>
 
                         <div class="collapse menu-dropdown" id="office">
@@ -191,77 +227,11 @@
                         </div>
                     </li>
                 @endcan
-                
-                @can('project_management')
-                    <li class="nav-item first-dropdown">
-                        <a class="nav-link menu-link" href="#project" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="project">
-                            <i class="ri-building-line"></i> <span data-key="t-dashboards">Project Management</span>
-                        </a>
-
-                        <div class="collapse menu-dropdown" id="project">
-                            <ul class="nav nav-sm flex-column">
-                                @can('all_project_category')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.project_category.index') }}" class="nav-link" data-key="t-crm">Project Category List</a>
-                                    </li>
-                                @endcan
-
-                                @can('all_project')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.project.index') }}" class="nav-link" data-key="t-crm">Project List</a>
-                                    </li>
-                                @endcan
-
-                                @can('all_project_transaction')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.project_transaction.index') }}" class="nav-link" data-key="t-crm">Project Transaction List</a>
-                                    </li>
-                                @endcan
-                            </ul>
-                        </div>
-                    </li>
-                @endcan
-                
-                @can('document_management')
-                    <li class="nav-item first-dropdown">
-                        <a class="nav-link menu-link" href="#document" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="document">
-                            <i class="ri-building-line"></i> <span data-key="t-dashboards">Document Management</span>
-                        </a>
-
-                        <div class="collapse menu-dropdown" id="document">
-                            <ul class="nav nav-sm flex-column">
-                                @can('all_document')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.document.index') }}" class="nav-link" data-key="t-crm">Project Documents</a>
-                                    </li>
-                                @endcan
-
-                                @can('all_legal_document')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.document.legalIndex') }}" class="nav-link" data-key="t-crm">Legal Documents</a>
-                                    </li>
-                                @endcan
-
-                                @can('all_membership_document')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.document.membershipIndex') }}" class="nav-link" data-key="t-crm">Membership Documents</a>
-                                    </li>
-                                @endcan
-
-                                @can('all_financial_document')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.document.financialIndex') }}" class="nav-link" data-key="t-crm">Financial Documents</a>
-                                    </li>
-                                @endcan
-                            </ul>
-                        </div>
-                    </li>
-                @endcan
 
                 @can('manage_location')
                     <li class="nav-item first-dropdown">
                         <a class="nav-link menu-link" href="#location_management" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="location_management">
-                            <i class="ri-map-pin-line"></i> <span data-key="t-dashboards">Location Management</span>
+                            <i class="ri-map-pin-line"></i> <span data-key="t-location_management">Location Management</span>
                         </a>
 
                         <div class="collapse menu-dropdown" id="location_management">
@@ -288,46 +258,10 @@
                     </li>
                 @endcan
 
-                @can('leave_management')
-                    <li class="nav-item first-dropdown">
-                        <a class="nav-link menu-link" href="#leave_management" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="leave_management">
-                            <i class="ri-folder-chart-line"></i> <span data-key="t-dashboards">Leave Management</span>
-                        </a>
-
-                        <div class="collapse menu-dropdown" id="leave_management">
-                            <ul class="nav nav-sm flex-column">
-                                @can('all_leave_category')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.leaveCategory.index') }}" class="nav-link" data-key="t-basic">Leave Category List</a>
-                                    </li>
-                                @endcan
-
-                                @can('all_leave')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.leave.index') }}" class="nav-link" data-key="t-basic">Leave Application List</a>
-                                    </li>
-                                @endcan
-
-                                @can('leave_summary')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.leave.leaveSummary') }}" class="nav-link" data-key="t-basic">Current Year Leave Summary</a>
-                                    </li>
-                                @endcan
-
-                                @can('leave_summary_monthwise')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.leave.leaveSummaryMonthwise') }}" class="nav-link" data-key="t-basic">Month-wise Leave Summary {{ date('Y') }}</a>
-                                    </li>
-                                @endcan
-                            </ul>
-                        </div>
-                    </li>
-                @endcan
-
                 @can('manage_report')
                     <li class="nav-item first-dropdown">
                         <a class="nav-link menu-link" href="#manage_report" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="manage_report">
-                            <i class="ri-folder-chart-line"></i> <span data-key="t-dashboards">Report Management</span>
+                            <i class="ri-folder-chart-line"></i> <span data-key="t-manage_report">Report Management</span>
                         </a>
 
                         <div class="collapse menu-dropdown" id="manage_report">
@@ -335,36 +269,6 @@
                                 @can('project_report')
                                     <li class="nav-item">
                                         <a href="{{ route('admin.report.projectReport') }}" class="nav-link" data-key="t-basic">Project Summary Report</a>
-                                    </li>
-                                @endcan
-
-                                @can('leave_report')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.report.leaveReport') }}" class="nav-link" data-key="t-basic">Leave Report</a>
-                                    </li>
-                                @endcan
-                            </ul>
-                        </div>
-                    </li>
-                @endcan
-
-                @can('eTicket_support')
-                    <li class="nav-item first-dropdown">
-                        <a class="nav-link menu-link" href="#eTicket_support" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="eTicket_support">
-                            <i class="ri-folder-chart-line"></i> <span data-key="eTicket_support">E-Ticket Support</span>
-                        </a>
-
-                        <div class="collapse menu-dropdown" id="eTicket_support">
-                            <ul class="nav nav-sm flex-column">
-                                @can('all_eTicket_type')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.eTicketType.index') }}" class="nav-link" data-key="t-basic">E-Ticket Type List</a>
-                                    </li>
-                                @endcan
-
-                                @can('all_eTicket')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.eTicket.index') }}" class="nav-link" data-key="t-basic">E-Ticket List</a>
                                     </li>
                                 @endcan
                             </ul>
@@ -375,7 +279,7 @@
                 @can('website_setting')
                     <li class="nav-item first-dropdown">
                         <a class="nav-link menu-link" href="#website_setting" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="website_setting">
-                            <i class="ri-home-line"></i> <span data-key="t-dashboards">Settings</span>
+                            <i class="ri-home-line"></i> <span data-key="t-website_setting">Settings</span>
                         </a>
 
                         <div class="collapse menu-dropdown" id="website_setting">
@@ -383,12 +287,12 @@
                                 @can('setting_management')
                                     <li class="nav-item">
                                         <a class="nav-link menu-link" href="{{ route('admin.setting.index') }}">
-                                            <span data-key="t-dashboards">Organization Settings</span>
+                                            <span data-key="t-dashboards">Website Settings</span>
                                         </a>
                                     </li>
                                 @endcan
 
-                                @can('academic_form')
+                                {{-- @can('academic_form')
                                     <li class="nav-item">
                                         <a href="#academic_form" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="academic_form" data-key="t-signin">{{__('menu.Academic Form')}}</a>
 
@@ -445,7 +349,7 @@
                                             </ul>
                                         </div>
                                     </li>
-                                @endcan
+                                @endcan --}}
                             </ul>
                         </div>
                     </li>

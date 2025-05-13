@@ -136,9 +136,9 @@
                     $("html").attr("data-layout-mode",dark_mode_check);
                 });
 
-                window.onload = function() {
-                    document.querySelector(".bbs-loader-wrapper").style.display = "none";
-                }
+                // window.onload = function() {
+                //     document.querySelector(".bbs-loader-wrapper").style.display = "none";
+                // }
             });
         </script>
 

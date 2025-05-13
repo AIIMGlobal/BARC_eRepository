@@ -38,6 +38,7 @@ use App\Http\Controllers\{
     ETicketTypeController,
     ETicketController,
     CategoryController,
+    ContentController,
 };
 
 use App\Http\Controllers\Auth\LoginController;
@@ -437,5 +438,22 @@ Route::group(['middleware' => ['AuthGates','set.locale'], 'prefix' => '/authoriz
         Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('edit');
         Route::post('/update/{id}', [CategoryController::class, 'update'])->name('update');
         Route::get('/destroy/{id}', [CategoryController::class, 'destroy'])->name('delete');
+    });
+
+    // content routes
+    Route::group(['prefix' => '/content', 'as' => 'content.'], function() {
+        Route::get('/', [ContentController::class, 'index'])->name('index');
+        Route::get('/my-content', [ContentController::class, 'indexMyContent'])->name('indexMyContent');
+        Route::get('/create', [ContentController::class, 'create'])->name('create');
+        Route::post('/store', [ContentController::class, 'store'])->name('store');
+        Route::get('/show/{id}', [ContentController::class, 'show'])->name('show');
+        Route::get('/edit/{id}', [ContentController::class, 'edit'])->name('edit');
+        Route::post('/update/{id}', [ContentController::class, 'update'])->name('update');
+        Route::get('/destroy/{id}', [ContentController::class, 'destroy'])->name('destroy');
+        
+        Route::get('/archive/{id}', [ContentController::class, 'archive'])->name('archive');
+        Route::post('/bulk-action', [ContentController::class, 'bulkAction'])->name('bulkAction');
+        Route::post('/toggle-favorite/{id}', [ContentController::class, 'toggleFavorite'])->name('toggleFavorite');
+        Route::post('/toggle-save/{id}', [ContentController::class, 'toggleSave'])->name('toggleSave');
     });
 });
