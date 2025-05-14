@@ -94,7 +94,7 @@
                                 <div class="row">
                                     <div class="col-md-6 col-sm-12 mt-4">
                                         <div class="switchery-demo">
-                                            <input type="checkbox" name="status" class="js-switch" value="1" checked> Status
+                                            <input type="checkbox" name="status" class="js-switch" value="1" {{ $category->status == 1 ? 'checked' : '' }}> Status
                                         </div>
                                     </div>
 
@@ -120,7 +120,7 @@
 
 @push('script')
     <script>
-        $('[href*="{{ $menu_expand }}"]').addClass('active');
+        // $('[href*="{{ $menu_expand }}"]').addClass('active');
         $('[href*="{{ $menu_expand }}"]').closest('.menu-dropdown').addClass('show');
         $('[href*="{{ $menu_expand }}"]').closest('.menu-dropdown').parent().find('.nav-link').attr('aria-expanded','true');
         $('[href*="{{ $menu_expand }}"]').closest('.first-dropdown').find('.menu-link').attr('aria-expanded','true');

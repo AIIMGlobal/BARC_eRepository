@@ -448,7 +448,7 @@ Route::group(['middleware' => ['AuthGates','set.locale'], 'prefix' => '/authoriz
         Route::post('/store', [ContentController::class, 'store'])->name('store');
         Route::get('/show/{id}', [ContentController::class, 'show'])->name('show');
         Route::get('/edit/{id}', [ContentController::class, 'edit'])->name('edit');
-        Route::post('/update/{id}', [ContentController::class, 'update'])->name('update');
+        Route::put('/update/{id}', [ContentController::class, 'update'])->name('update');
         Route::get('/destroy/{id}', [ContentController::class, 'destroy'])->name('destroy');
         
         Route::get('/archive/{id}', [ContentController::class, 'archive'])->name('archive');

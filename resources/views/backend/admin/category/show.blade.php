@@ -138,7 +138,7 @@
 
 @push('script')
     <script>
-        $('[href*="{{ $menu_expand }}"]').addClass('active');
+        // $('[href*="{{ $menu_expand }}"]').addClass('active');
         $('[href*="{{ $menu_expand }}"]').closest('.menu-dropdown').addClass('show');
         $('[href*="{{ $menu_expand }}"]').closest('.menu-dropdown').parent().find('.nav-link').attr('aria-expanded','true');
         $('[href*="{{ $menu_expand }}"]').closest('.first-dropdown').find('.menu-link').attr('aria-expanded','true');

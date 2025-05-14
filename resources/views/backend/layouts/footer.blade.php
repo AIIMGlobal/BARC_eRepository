@@ -84,8 +84,13 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/switchery/0.8.2/switchery.min.js"></script>
 
         <script>
-            let elem = document.querySelector('.js-switch');
-            let switchery = new Switchery(elem, { disabled: false, disabledOpacity: 0.75 });
+            const switchElements = document.querySelectorAll('.js-switch');
+
+            if (switchElements.length > 0) {
+                switchElements.forEach(function(elem) {
+                    new Switchery(elem, { disabled: false, disabledOpacity: 0.75 });
+                });
+            }
         </script>
 
         <script>

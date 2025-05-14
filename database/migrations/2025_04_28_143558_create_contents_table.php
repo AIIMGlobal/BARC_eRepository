@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('content_type')->nullable();
             $table->string('content_name')->nullable();
             $table->string('slug')->unique()->nullable();
+            $table->text('description')->nullable();
             $table->string('extension')->nullable();
             $table->string('content')->nullable();
             $table->year('content_year')->nullable();

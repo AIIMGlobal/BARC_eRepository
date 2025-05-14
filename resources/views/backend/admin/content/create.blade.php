@@ -28,11 +28,9 @@
                         <div class="card-header align-items-center d-flex">
                             <h4 class="card-title mb-0 flex-grow-1">Create New Content</h4>
 
-                            @can('content_list')
-                                <div class="flex-shrink-0">
-                                    <a href="{{ route('admin.content.index') }}" class="btn btn-primary">Content List</a>
-                                </div>
-                            @endcan
+                            <div class="flex-shrink-0">
+                                <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a>
+                            </div>
                         </div>
 
                         <div class="card-body">
@@ -74,9 +72,9 @@
 
                                             <option value="Video">Video</option>
                                             <option value="PDF">PDF</option>
-                                            <option value="Article">Article</option>
                                             <option value="Audio">Audio</option>
                                             <option value="Image">Image</option>
+                                            <option value="Other">Other</option>
                                         </select>
                                     </div>
 
@@ -91,6 +89,12 @@
 
                                         <input type="text" class="form-control" id="sl" name="sl" placeholder="Enter serial number" value="{{ old('sl') }}">
                                     </div> --}}
+
+                                    <div class="col-md-12">
+                                        <label for="meta_description" class="form-label fw-bold">Description</label>
+
+                                        <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter Description">{{ old('description') }}</textarea>
+                                    </div>
 
                                     <div class="col-md-6">
                                         <label for="content" class="form-label fw-bold">Content File: <span class="text-danger">*</span></label>
@@ -144,7 +148,7 @@
 
 @push('script')
     <script>
-        $('[href*="{{ $menu_expand }}"]').addClass('active');
+        // $('[href*="{{ $menu_expand }}"]').addClass('active');
         $('[href*="{{ $menu_expand }}"]').closest('.menu-dropdown').addClass('show');
         $('[href*="{{ $menu_expand }}"]').closest('.menu-dropdown').parent().find('.nav-link').attr('aria-expanded', 'true');
         $('[href*="{{ $menu_expand }}"]').closest('.first-dropdown').find('.menu-link').attr('aria-expanded', 'true');

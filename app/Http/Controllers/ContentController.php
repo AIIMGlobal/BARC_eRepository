@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 /* included models */
 use App\Models\Content;
 use App\Models\Category;
+use App\Models\UserContentActivity;
 
 class ContentController extends Controller
 {
@@ -75,16 +76,26 @@ class ContentController extends Controller
         $user = Auth::user();
 
         if (Gate::allows('manage_content', $user)) {
-            $categories = Category::where('status', '!=', 2)->orderBy('category_name', 'asc')->get();
+            $categories = Category::where('status', '!=', 2)
+                                    ->orderBy('category_name', 'asc')
+                                    ->get();
 
             $query = Content::query();
 
             if ($request->category_id) {
-                $query->where('category_id', $request->category_id);
+                $category = Category::find($request->category_id);
+
+                if ($category) {
+                    $categoryIds = [$category->id];
+
+                    $this->getChildCategoryIds($category, $categoryIds);
+
+                    $query->whereIn('category_id', $categoryIds);
+                }
             }
 
-            if ($request->content_id) {
-                $query->where('id', $request->content_id);
+            if ($request->content_name) {
+                $query->where('content_name', 'like', '%' . $request->content_name . '%');
             }
 
             if ($request->content_type) {
@@ -92,19 +103,30 @@ class ContentController extends Controller
             }
 
             if ($request->from_date && $request->to_date) {
-                $query->whereBetween('published_at', [$request->from_date, $request->to_date]);
+                $fromDate = \Carbon\Carbon::parse($request->from_date)->startOfDay();
+                $toDate = \Carbon\Carbon::parse($request->to_date)->endOfDay();
+                $query->whereBetween('published_at', [$fromDate, $toDate]);
+            } elseif ($request->from_date) {
+                $fromDate = \Carbon\Carbon::parse($request->from_date)->startOfDay();
+                $query->where('published_at', '>=', $fromDate);
+            } elseif ($request->to_date) {
+                $toDate = \Carbon\Carbon::parse($request->to_date)->endOfDay();
+                $query->where('published_at', '<=', $toDate);
             }
 
             $perPage = $request->per_page ?? 24;
-            
+
             $contents = $query->where('status', '!=', 2)
-                            ->with(['category', 'createdBy'])
-                            ->latest()
-                            ->paginate($perPage);
+                                ->with([
+                                    'category',
+                                    'createdBy',
+                                    'userActivities' => fn($q) => $q->where('user_id', Auth::id())
+                                ])
+                                ->latest('published_at')
+                                ->paginate($perPage);
 
             if ($request->ajax()) {
                 $html = view('backend.admin.content.content', compact('contents'))->render();
-
                 $hasMore = $contents->hasMorePages();
 
                 return response()->json([
@@ -116,7 +138,22 @@ class ContentController extends Controller
 
             return view('backend.admin.content.indexMyContent', compact('contents', 'categories'));
         } else {
-            return abort(403, "You don't have permission!");
+            return response()->json([
+                'success' => false,
+                'message' => "You don't have permission!"
+            ], 403);
+        }
+    }
+
+    /**
+     * Recursively collect child category IDs
+     */
+    private function getChildCategoryIds($category, &$categoryIds)
+    {
+        foreach ($category->children as $child) {
+            $categoryIds[] = $child->id;
+
+            $this->getChildCategoryIds($child, $categoryIds);
         }
     }
 
@@ -195,6 +232,7 @@ class ContentController extends Controller
                 $content->content_type      = $request->content_type;
                 $content->content_name      = $request->content_name;
                 $content->slug              = $slug;
+                $content->description       = $request->description;
                 $content->extension         = $extension ?? '';
                 $content->content           = $contentPath;
                 $content->content_year      = $request->content_year;
@@ -280,12 +318,14 @@ class ContentController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $id = Crypt::decryptString($id);
+            $content = Content::where('id', $id)->firstOrFail();
+
             $user = Auth::user();
 
             if (Gate::allows('edit_content', $user)) {
                 $validator = Validator::make($request->all(), [
                     'content_name'  => 'required',
-                    'content'       => 'required',
                     'content_type'  => 'required',
                     'category_id'   => 'required|exists:categories,id',
                     'content_year'  => 'required|digits:4',
@@ -299,7 +339,7 @@ class ContentController extends Controller
                     ], 422);
                 }
 
-                $slug = Str::slug($request->content_name);
+                $slug = \Str::slug($request->content_name);
                 $count = Content::where('slug', $slug)->where('id', '!=', $content->id)->count();
 
                 if ($count > 0) {
@@ -337,6 +377,7 @@ class ContentController extends Controller
                 $content->content_type      = $request->content_type;
                 $content->content_name      = $request->content_name;
                 $content->slug              = $slug;
+                $content->description       = $request->description;
                 $content->extension         = $extension ?? $content->extension;
                 $content->content           = $contentPath;
                 $content->content_year      = $request->content_year;
@@ -352,7 +393,7 @@ class ContentController extends Controller
 
                 return response()->json([
                     'success' => true,
-                    'message' => 'Content Updated Successfully!',
+                    'message' => 'Content Details Updated Successfully!',
                 ]);
             } else {
                 return response()->json([
@@ -382,15 +423,25 @@ class ContentController extends Controller
                 $id = Crypt::decryptString($id);
                 $content = Content::where('id', $id)->firstOrFail();
 
-                $content->status        = 2;
-                $content->updated_by    = $user->id;
+                if ($content) {
+                    $contentExist = UserContentActivity::where('content_id', ($content->id ?? 0))->delete();
 
-                $content->save();
+                    if ($content->content) {
+                        \Storage::disk('public')->delete($content->content);
+                    }
+                    
+                    $content->delete();
 
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Content Deleted Successfully!',
-                ]);
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Content Deleted Successfully!',
+                    ]);
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Content Not Found!',
+                    ]);
+                }
             } else {
                 return response()->json([
                     'success' => false,
@@ -419,66 +470,29 @@ class ContentController extends Controller
                 $id = Crypt::decryptString($id);
                 $content = Content::where('id', $id)->firstOrFail();
                 
-                $content->status        = 3;
-                $content->updated_by    = $user->id;
+                if ($content->status == 3) {
+                    $content->status        = 0;
 
-                $content->save();
+                    $content->updated_by    = $user->id;
 
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Content Archived Successfully!',
-                ]);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => "You don't have permission!",
-                ], 403);
-            }
-        } catch (\Exception $e) {
-            \Log::error($e->getMessage());
+                    $content->save();
 
-            return response()->json([
-                'success' => false,
-                'message' => 'An unexpected error occurred. Please try again.',
-            ], 500);
-        }
-    }
-
-    /**
-     * Bulk delete or archive contents
-     */
-    public function bulkAction(Request $request)
-    {
-        try {
-            $user = Auth::user();
-
-            if (Gate::allows('manage_content', $user)) {
-                $validator = Validator::make($request->all(), [
-                    'ids'       => 'required|array',
-                    'action'    => 'required|in:delete,archive',
-                ]);
-
-                if ($validator->fails()) {
                     return response()->json([
-                        'success' => false,
-                        'message' => 'Validation Error!',
-                        'errors' => $validator->errors()
-                    ], 422);
+                        'success' => true,
+                        'message' => 'Content Unarchived Successfully!',
+                    ]);
+                } else {
+                    $content->status        = 3;
+
+                    $content->updated_by    = $user->id;
+
+                    $content->save();
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Content Archived Successfully!',
+                    ]);
                 }
-
-                $status = $request->action === 'delete' ? 2 : 3;
-
-                Content::whereIn('id', $request->ids)->update([
-                    'status'        => $status,
-                    'updated_by'    => $user->id,
-                ]);
-
-                $message = $request->action === 'delete' ? 'Contents Deleted Successfully!' : 'Contents Archived Successfully!';
-
-                return response()->json([
-                    'success' => true,
-                    'message' => $message,
-                ]);
             } else {
                 return response()->json([
                     'success' => false,
@@ -502,16 +516,34 @@ class ContentController extends Controller
     {
         try {
             $user = Auth::user();
+
             if (Gate::allows('manage_content', $user)) {
                 $id = Crypt::decryptString($id);
                 $content = Content::findOrFail($id);
-                $content->is_favorite = !$content->is_favorite;
-                $content->save();
+
+                $contentExist = UserContentActivity::where('user_id', Auth::id())->where('content_id', ($content->id ?? 0))->where('activity_type', 1)->first();
+
+                if (!$contentExist) {
+                    UserContentActivity::create([
+                        'user_id' => $user->id,
+                        'category_id' => $content->category_id,
+                        'content_id' => $content->id,
+                        'activity_type' => 1,
+                        
+                        'created_by' => $user->id,
+                    ]);
+
+                    $message = 'Content added to favorites!';
+                } else {
+                    $contentExist->delete();
+
+                    $message = 'Content removed from favorites!';
+                }
 
                 return response()->json([
                     'success' => true,
-                    'is_favorite' => $content->is_favorite,
-                    'message' => 'Favorite status updated!',
+                    'is_favorite' => $contentExist,
+                    'message' => $message,
                 ]);
             } else {
                 return response()->json([
@@ -520,7 +552,8 @@ class ContentController extends Controller
                 ], 403);
             }
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
+
             return response()->json([
                 'success' => false,
                 'message' => 'An error occurred.',
@@ -538,13 +571,29 @@ class ContentController extends Controller
             if (Gate::allows('manage_content', $user)) {
                 $id = Crypt::decryptString($id);
                 $content = Content::findOrFail($id);
-                $content->is_saved = !$content->is_saved;
-                $content->save();
+
+                $contentExist = UserContentActivity::where('user_id', Auth::id())->where('content_id', ($content->id ?? 0))->where('activity_type', 2)->first();
+
+                if (!$contentExist) {
+                    UserContentActivity::create([
+                        'user_id' => $user->id,
+                        'category_id' => $content->category_id,
+                        'content_id' => $content->id,
+                        'activity_type' => 2,
+                        'created_by' => $user->id,
+                    ]);
+
+                    $message = 'Content saved successfully!';
+                } else {
+                    $contentExist->delete();
+
+                    $message = 'Content removed from saved!';
+                }
 
                 return response()->json([
                     'success' => true,
-                    'is_saved' => $content->is_saved,
-                    'message' => 'Save status updated!',
+                    'is_saved' => $contentExist,
+                    'message' => $message,
                 ]);
             } else {
                 return response()->json([
@@ -553,11 +602,63 @@ class ContentController extends Controller
                 ], 403);
             }
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
+
             return response()->json([
                 'success' => false,
                 'message' => 'An error occurred.',
             ], 500);
         }
     }
+
+    /**
+     * Bulk delete or archive contents
+     */
+    // public function bulkAction(Request $request)
+    // {
+    //     try {
+    //         $user = Auth::user();
+
+    //         if (Gate::allows('manage_content', $user)) {
+    //             $validator = Validator::make($request->all(), [
+    //                 'ids'       => 'required|array',
+    //                 'action'    => 'required|in:delete,archive',
+    //             ]);
+
+    //             if ($validator->fails()) {
+    //                 return response()->json([
+    //                     'success' => false,
+    //                     'message' => 'Validation Error!',
+    //                     'errors' => $validator->errors()
+    //                 ], 422);
+    //             }
+
+    //             $status = $request->action === 'delete' ? 2 : 3;
+
+    //             Content::whereIn('id', $request->ids)->update([
+    //                 'status'        => $status,
+    //                 'updated_by'    => $user->id,
+    //             ]);
+
+    //             $message = $request->action === 'delete' ? 'Contents Deleted Successfully!' : 'Contents Archived Successfully!';
+
+    //             return response()->json([
+    //                 'success' => true,
+    //                 'message' => $message,
+    //             ]);
+    //         } else {
+    //             return response()->json([
+    //                 'success' => false,
+    //                 'message' => "You don't have permission!",
+    //             ], 403);
+    //         }
+    //     } catch (\Exception $e) {
+    //         \Log::error($e->getMessage());
+
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'An unexpected error occurred. Please try again.',
+    //         ], 500);
+    //     }
+    // }
 }

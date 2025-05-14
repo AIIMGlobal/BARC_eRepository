@@ -18,7 +18,7 @@ class Category extends Model
 
     public function children()
     {
-        return $this->hasMany(Category::class, 'id', 'parent_id');
+        return $this->hasMany(Category::class, 'parent_id', 'id')->where('status', '!=', 2);
     }
 
     public function createdBy()

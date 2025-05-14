@@ -16,6 +16,11 @@ class Content extends Model
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
+    public function userActivities()
+    {
+        return $this->hasMany(UserContentActivity::class, 'content_id', 'id');
+    }
+
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by', 'id');

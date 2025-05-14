@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 17, 2025 at 02:29 PM
+-- Generation Time: May 14, 2025 at 02:18 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -193,7 +193,7 @@ INSERT INTO `categories` (`id`, `sl`, `parent_id`, `category_name`, `description
 (1, NULL, NULL, 'Crop Science & Production', 'Crop Science & Production Description', 'categories/1744800694_bangladesh-jute-research-institute-logo-BA95948254-seeklogo.com 1.png', 1, 1, 1, '2025-04-16 10:45:25', '2025-04-17 11:11:54'),
 (2, NULL, NULL, 'Livestock', 'Livestock Description', 'categories/1744801466_output-onlinepngtools 1.png', 1, 1, 1, '2025-04-16 10:45:44', '2025-04-17 11:12:24'),
 (3, NULL, 1, 'Plant Physiology', 'Plant Physiology Description', NULL, 1, 1, 1, '2025-04-16 10:47:18', '2025-04-17 11:13:07'),
-(4, NULL, 1, 'Seed Technology', NULL, NULL, 1, 1, 1, '2025-04-16 10:47:36', '2025-04-17 11:13:30'),
+(4, NULL, 1, 'Seed Technology', NULL, NULL, 1, 1, 1, '2025-04-16 10:47:36', '2025-05-14 10:07:56'),
 (5, NULL, 2, 'Poultry Science', NULL, NULL, 1, 1, 1, '2025-04-16 10:47:53', '2025-04-17 11:14:07'),
 (6, NULL, 2, 'Dairy Production', 'Dairy Production Description', NULL, 1, 1, 1, '2025-04-16 10:48:04', '2025-04-17 11:14:35'),
 (7, NULL, 3, 'Precision Agriculture', 'Precision Agriculture Description', NULL, 1, 1, 1, '2025-04-16 10:48:44', '2025-04-17 11:15:51'),
@@ -240,6 +240,44 @@ INSERT INTO `city_corporations` (`id`, `division_id`, `district_id`, `city_bbs`,
 (10, 6, '53', '66', 'RAJSHAHI CITY CORPORATION', 'রাজশাহী সিটি কর্পোরেশন', 9, 0, 0, 0, '1', NULL, NULL, '2024-10-30 10:53:39', '2024-10-30 10:53:39'),
 (11, 7, '56', '75', 'RANGPUR CITY CORPORATION', 'রংপুর সিটি কর্পোরেশন', 9, 0, 0, 0, '1', NULL, NULL, '2024-10-30 10:53:39', '2024-10-30 10:53:39'),
 (12, 8, '62', '50', 'SYLHET CITY CORPORATION', 'সিলেট সিটি কর্পোরেশন', 9, 0, 0, 0, '1', NULL, NULL, '2024-10-30 10:53:39', '2024-10-30 10:53:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contents`
+--
+
+CREATE TABLE `contents` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `sl` int(11) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `content_type` varchar(255) DEFAULT NULL,
+  `content_name` varchar(255) DEFAULT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `extension` varchar(255) DEFAULT NULL,
+  `content` varchar(255) DEFAULT NULL,
+  `content_year` year(4) DEFAULT NULL,
+  `thumbnail` varchar(255) DEFAULT NULL,
+  `meta_title` varchar(255) DEFAULT NULL,
+  `meta_description` text DEFAULT NULL,
+  `meta_keywords` text DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL COMMENT '0:unpublished, 1:published, 2:delete, 3:archived',
+  `approved_by` int(11) DEFAULT NULL,
+  `approved_at` int(11) DEFAULT NULL,
+  `published_at` timestamp NULL DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `contents`
+--
+
+INSERT INTO `contents` (`id`, `sl`, `category_id`, `content_type`, `content_name`, `slug`, `description`, `extension`, `content`, `content_year`, `thumbnail`, `meta_title`, `meta_description`, `meta_keywords`, `status`, `approved_by`, `approved_at`, `published_at`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, NULL, 1, 'Image', 'Content 1', 'content-1', NULL, 'pdf', 'contents/1747215112_2. Md._Jahidul_Islam.pdf', '2025', 'thumbnails/1747124509_PMS_Logo-1-removebg-preview 1.png', NULL, NULL, NULL, 0, NULL, NULL, '2025-05-14 11:03:18', 1, 1, '2025-05-13 08:21:49', '2025-05-14 12:06:57');
 
 -- --------------------------------------------------------
 
@@ -826,7 +864,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (40, '2023_09_14_053825_create_project_infos_table', 9),
 (41, '2023_09_17_070030_create_documents_table', 10),
 (46, '2025_03_11_161021_add_google_id_to_users_table', 11),
-(47, '2025_04_16_120211_create_categories_table', 11);
+(47, '2025_04_16_120211_create_categories_table', 11),
+(48, '2025_04_28_143558_create_contents_table', 12),
+(49, '2025_05_13_182109_create_user_content_activities_table', 13);
 
 -- --------------------------------------------------------
 
@@ -1183,7 +1223,14 @@ INSERT INTO `permissions` (`id`, `name_en`, `name_bn`, `status`, `created_by`, `
 (759, 'category_list', 'category_list', 1, 1, NULL, NULL),
 (760, 'manage_category', 'manage_category', 1, 1, NULL, NULL),
 (761, 'total_saved_content', 'total_saved_content', 1, 1, NULL, NULL),
-(762, 'total_favourite_content', 'total_favourite_content', 1, 1, NULL, NULL);
+(762, 'total_favourite_content', 'total_favourite_content', 1, 1, NULL, NULL),
+(763, 'manage_content', 'manage_content', 1, 1, NULL, NULL),
+(764, 'content_list', 'content_list', 1, 1, NULL, NULL),
+(765, 'delete_content', 'delete_content', 1, 1, NULL, NULL),
+(766, 'view_content', 'view_content', 1, 1, NULL, NULL),
+(767, 'edit_content', 'edit_content', 1, 1, NULL, NULL),
+(768, 'create_content', 'create_content', 1, 1, NULL, NULL),
+(769, 'archive_content', 'archive_content', 1, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1877,7 +1924,16 @@ INSERT INTO `role_permissions` (`id`, `user_id`, `permission_id`, `role_id`, `cr
 (2528, NULL, 759, 1, 1, NULL, '2025-04-16 10:41:31', '2025-04-16 10:41:31'),
 (2529, NULL, 760, 1, 1, NULL, '2025-04-16 10:41:31', '2025-04-16 10:41:31'),
 (2530, NULL, 761, 4, 1, NULL, '2025-04-17 11:42:49', '2025-04-17 11:42:49'),
-(2531, NULL, 762, 4, 1, NULL, '2025-04-17 11:42:49', '2025-04-17 11:42:49');
+(2531, NULL, 762, 4, 1, NULL, '2025-04-17 11:42:49', '2025-04-17 11:42:49'),
+(2532, NULL, 761, 1, 1, NULL, '2025-05-12 10:46:18', '2025-05-12 10:46:18'),
+(2533, NULL, 762, 1, 1, NULL, '2025-05-12 10:46:18', '2025-05-12 10:46:18'),
+(2534, NULL, 763, 1, 1, NULL, '2025-05-12 10:46:18', '2025-05-12 10:46:18'),
+(2535, NULL, 764, 1, 1, NULL, '2025-05-12 10:46:18', '2025-05-12 10:46:18'),
+(2536, NULL, 765, 1, 1, NULL, '2025-05-12 10:46:18', '2025-05-12 10:46:18'),
+(2537, NULL, 766, 1, 1, NULL, '2025-05-12 10:46:18', '2025-05-12 10:46:18'),
+(2538, NULL, 767, 1, 1, NULL, '2025-05-12 10:46:18', '2025-05-12 10:46:18'),
+(2539, NULL, 768, 1, 1, NULL, '2025-05-12 10:46:18', '2025-05-12 10:46:18'),
+(2540, NULL, 769, 1, 1, NULL, '2025-05-12 10:46:18', '2025-05-12 10:46:18');
 
 -- --------------------------------------------------------
 
@@ -11291,6 +11347,30 @@ CREATE TABLE `user_company_docs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `user_content_activities`
+--
+
+CREATE TABLE `user_content_activities` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `content_id` int(11) DEFAULT NULL,
+  `activity_type` int(11) DEFAULT NULL COMMENT '1:favorite, 2:saved, 3:searched',
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `user_content_activities`
+--
+
+INSERT INTO `user_content_activities` (`id`, `user_id`, `category_id`, `content_id`, `activity_type`, `created_by`, `created_at`, `updated_at`) VALUES
+(6, 1, 1, 1, 2, 1, '2025-05-14 10:47:33', '2025-05-14 10:47:33');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user_infos`
 --
 
@@ -11373,6 +11453,13 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `city_corporations`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `contents`
+--
+ALTER TABLE `contents`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `contents_slug_unique` (`slug`);
 
 --
 -- Indexes for table `departments`
@@ -11636,6 +11723,12 @@ ALTER TABLE `user_company_docs`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `user_content_activities`
+--
+ALTER TABLE `user_content_activities`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user_infos`
 --
 ALTER TABLE `user_infos`
@@ -11680,6 +11773,12 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `city_corporations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `contents`
+--
+ALTER TABLE `contents`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -11793,7 +11892,7 @@ ALTER TABLE `leave_categories`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -11811,7 +11910,7 @@ ALTER TABLE `offices`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=763;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=770;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -11871,7 +11970,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `role_permissions`
 --
 ALTER TABLE `role_permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2532;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2541;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -11926,6 +12025,12 @@ ALTER TABLE `user_categories`
 --
 ALTER TABLE `user_company_docs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user_content_activities`
+--
+ALTER TABLE `user_content_activities`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user_infos`

@@ -1,36 +1,62 @@
 @foreach($contents as $content)
-    <div class="col-md-3 mb-4">
+    @php
+        $contentFav = $content->userActivities->where('activity_type', 1)->first();
+        $contentSave = $content->userActivities->where('activity_type', 2)->first();
+    @endphp
+
+    <div class="col-md-3 col-sm-6 mb-4">
         <div class="content-card">
-            <img src="{{ $content->thumbnail ? Storage::url($content->thumbnail) : asset('images/placeholder.jpg') }}" alt="{{ $content->content_name }}">
+            <div class="thumbnail-wrapper">
+                <img src="{{ $content->thumbnail ? Storage::url($content->thumbnail) : asset('images/placeholder.jpg') }}" alt="{{ $content->content_name }}">
 
-            <div class="action-icons">
-                <i class="fas fa-heart {{ $content->is_favorite ? 'active' : '' }}" data-id="{{ Crypt::encryptString($content->id) }}" onclick="toggleFavorite(this)"></i>
-                <i class="fas fa-bookmark {{ $content->is_saved ? 'active' : '' }}" data-id="{{ Crypt::encryptString($content->id) }}" onclick="toggleSave(this)"></i>
-            </div>
+                <div class="overlay">
+                    <div class="action-icons">
+                        <i class="{{ $contentFav ? 'las la-heart' : 'lar la-heart' }} {{ $contentFav ? 'active' : '' }}" data-id="{{ Crypt::encryptString($content->id) }}" onclick="toggleFavorite(this)"></i>
 
-            <div class="card-body">
-                <h5 class="card-title">{{ Str::limit($content->content_name, 50) }}</h5>
-                
-                <div class="card-meta">
-                    <p>By: {{ $content->createdBy->name ?? 'Unknown' }}</p>
+                        <i class="{{ $contentSave ? 'las la-bookmark' : 'lar la-bookmark' }} {{ $contentSave ? 'active' : '' }}" data-id="{{ Crypt::encryptString($content->id) }}" onclick="toggleSave(this)"></i>
 
-                    @if ($content->content_type == 'Video')
-                        <p>Type: {{ $content->content_type }}</p>
-                    @elseif ($content->content_type == 'PDF')
-                        <p>Type: {{ $content->content_type }}</p>
-                    @elseif ($content->content_type == 'Article')
-                        <p>Type: {{ $content->content_type }}</p>
-                    @elseif ($content->content_type == 'Audio')
-                        <p>Type: {{ $content->content_type }}</p>
-                    @elseif ($content->content_type == 'Image')
-                        <p>Type: {{ $content->content_type }}</p>
-                    @else
-                        <p>Type: Other</p>
-                    @endif
+                        <div class="dropdown">
+                            <i class="las la-ellipsis-v" data-bs-toggle="dropdown" aria-expanded="false"></i>
 
-                    <p>{{ date('d M, Y h:i A', strtotime($content->published_at)) }}</p>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ route('admin.content.edit', Crypt::encryptString($content->id)) }}" target="_blank">Edit</a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.content.show', Crypt::encryptString($content->id)) }}" target="_blank">Show Details</a></li>
+
+                                @if ($content->status == 3)
+                                    <li><button class="dropdown-item" type="button" onclick="archiveContent('{{ Crypt::encryptString($content->id) }}')">Unarchive</button></li>
+                                @else
+                                    <li><button class="dropdown-item" type="button" onclick="archiveContent('{{ Crypt::encryptString($content->id) }}')">Archive</button></li>
+                                @endif
+
+                                <li><button class="dropdown-item" type="button" onclick="deleteContent('{{ Crypt::encryptString($content->id) }}')">Delete</button></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <a href="{{ route('admin.content.show', Crypt::encryptString($content->id)) }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ $content->content_name }}</h5>
+
+                    <div class="card-meta">
+                        <p>By: {{ $content->createdBy->name_en ?? 'Unknown' }}</p>
+                        <p>Category: {{ $content->category->category_name ?? '' }}</p>
+                        <p>Type: {{ $content->content_type ?? 'Unknown' }}</p>
+                        <p>{{ date('d M, Y h:i A', strtotime($content->published_at)) }}</p>
+
+                        @if ($content->status == 0)
+                            <p>Status: <span class="badge bg-primary">Unpublished</span></p>
+                        @elseif ($content->status == 1)
+                            <p>Status: <span class="badge bg-success">Published</span></p>
+                        @elseif ($content->status == 3)
+                            <p>Status: <span class="badge bg-info">Archived</span></p>
+                        @else
+                            <p>Status: <span class="badge bg-danger">Undefined</span></p>
+                        @endif
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
 @endforeach
