@@ -19,16 +19,25 @@
                             <i class="las la-ellipsis-v" data-bs-toggle="dropdown" aria-expanded="false"></i>
 
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('admin.content.edit', Crypt::encryptString($content->id)) }}" target="_blank">Edit</a></li>
-                                <li><a class="dropdown-item" href="{{ route('admin.content.show', Crypt::encryptString($content->id)) }}" target="_blank">Show Details</a></li>
+                                @can('edit_content')
+                                    <li><a class="dropdown-item" href="{{ route('admin.content.edit', Crypt::encryptString($content->id)) }}" target="_blank">Edit</a></li>
+                                @endcan
 
-                                @if ($content->status == 3)
-                                    <li><button class="dropdown-item" type="button" onclick="archiveContent('{{ Crypt::encryptString($content->id) }}')">Unarchive</button></li>
-                                @else
-                                    <li><button class="dropdown-item" type="button" onclick="archiveContent('{{ Crypt::encryptString($content->id) }}')">Archive</button></li>
-                                @endif
+                                @can('view_content')
+                                    <li><a class="dropdown-item" href="{{ route('admin.content.show', Crypt::encryptString($content->id)) }}" target="_blank">Show Details</a></li>
+                                @endcan
 
-                                <li><button class="dropdown-item" type="button" onclick="deleteContent('{{ Crypt::encryptString($content->id) }}')">Delete</button></li>
+                                @can('archive_content')
+                                    @if ($content->status == 3)
+                                        <li><button class="dropdown-item" type="button" onclick="archiveContent('{{ Crypt::encryptString($content->id) }}')">Unarchive</button></li>
+                                    @else
+                                        <li><button class="dropdown-item" type="button" onclick="archiveContent('{{ Crypt::encryptString($content->id) }}')">Archive</button></li>
+                                    @endif
+                                @endcan
+
+                                @can('delete_content')
+                                    <li><button class="dropdown-item" type="button" onclick="deleteContent('{{ Crypt::encryptString($content->id) }}')">Delete</button></li>
+                                @endcan
                             </ul>
                         </div>
                     </div>

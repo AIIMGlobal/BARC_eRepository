@@ -25,7 +25,7 @@ class ContentController extends Controller
     {
         $user = Auth::user();
 
-        if (Gate::allows('manage_content', $user)) {
+        if (Gate::allows('content_list', $user)) {
             $categories = Category::where('status', '!=', 2)->orderBy('category_name', 'asc')->get();
 
             $query = Content::query();
@@ -75,7 +75,7 @@ class ContentController extends Controller
     {
         $user = Auth::user();
 
-        if (Gate::allows('manage_content', $user)) {
+        if (Gate::allows('content_list', $user)) {
             $categories = Category::where('status', '!=', 2)
                                     ->orderBy('category_name', 'asc')
                                     ->get();
@@ -105,24 +105,25 @@ class ContentController extends Controller
             if ($request->from_date && $request->to_date) {
                 $fromDate = \Carbon\Carbon::parse($request->from_date)->startOfDay();
                 $toDate = \Carbon\Carbon::parse($request->to_date)->endOfDay();
-                $query->whereBetween('published_at', [$fromDate, $toDate]);
+                $query->whereBetween('created_at', [$fromDate, $toDate]);
             } elseif ($request->from_date) {
                 $fromDate = \Carbon\Carbon::parse($request->from_date)->startOfDay();
-                $query->where('published_at', '>=', $fromDate);
+                $query->where('created_at', '>=', $fromDate);
             } elseif ($request->to_date) {
                 $toDate = \Carbon\Carbon::parse($request->to_date)->endOfDay();
-                $query->where('published_at', '<=', $toDate);
+                $query->where('created_at', '<=', $toDate);
             }
 
             $perPage = $request->per_page ?? 24;
 
             $contents = $query->where('status', '!=', 2)
+                                ->where('created_by', Auth::id())
                                 ->with([
                                     'category',
                                     'createdBy',
                                     'userActivities' => fn($q) => $q->where('user_id', Auth::id())
                                 ])
-                                ->latest('published_at')
+                                ->latest()
                                 ->paginate($perPage);
 
             if ($request->ajax()) {
