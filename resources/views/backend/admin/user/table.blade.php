@@ -15,7 +15,7 @@
 
             <td class="text-center">{{ $user->mobile ?? '-' }}</td>
 
-            <td class="text-center">
+            <td>
                 @if ($user->user_type == 2)
                     Admin
                 @elseif ($user->user_type == 3)

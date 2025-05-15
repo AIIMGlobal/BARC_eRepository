@@ -62,11 +62,7 @@
                             <h2 class="text-white mb-1">{{ $employee->name_en }}</h2>
 
                             <p class="text-white-75" style="font-size: 1.2em; margin-bottom: 0;">
-                                @if ($employee->user_type == 4)
-                                    <td>{{ $employee->userInfo->designation ?? '' }}</td>
-                                @else
-                                    <td>{{ $employee->userInfo->post->name ?? '' }}</td>
-                                @endif
+                                <td>{{ $employee->userInfo->post->name ?? '' }}</td>
                             </p>
 
                             <p class="text-white-75" style="font-size: 1.2em;">
@@ -216,15 +212,21 @@
                                                     </div>
 
                                                     <div class="col-6 col-md-4">
+                                                        <label for="" class="text-dark">User Service Type:</label>
+
+                                                        <p>{{ $employee->categoryInfo->name ?? '' }}</p>
+                                                    </div>
+
+                                                    <div class="col-6 col-md-4">
                                                         <label for="" class="text-dark">Department:</label>
 
-                                                        <p>{{ $employee->userInfo->department->name ?? ''}}</p>
+                                                        <p>{{ $employee->userInfo->department->name ?? '' }}</p>
                                                     </div>
 
                                                     <div class="col-6 col-md-4">
                                                         <label for="" class="text-dark">Designation:</label>
 
-                                                        <p>{{ $employee->userInfo->post->name ?? ''}}</p>
+                                                        <p>{{ $employee->userInfo->post->name ?? '' }}</p>
                                                     </div>
 
                                                     {{-- <div class="col-6 col-md-4">

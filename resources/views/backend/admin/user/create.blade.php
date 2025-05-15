@@ -231,10 +231,10 @@
                                     
                                     <div class="col-md-4 col-sm-6 col-xsm-12">
                                         <div>
-                                            <label for="user_category_id" class="form-label">User Category: <span style="color:red;">*</span></label>
+                                            <label for="user_category_id" class="form-label">User Service Type: <span style="color:red;">*</span></label>
 
                                             <select class="form-control" name="user_category_id" id="user_category_id" required>
-                                                <option value="">--Select User Category--</option>
+                                                <option value="">--Select User Service Type--</option>
 
                                                 @foreach ($user_categories as $user_category)
                                                     <option value="{{ $user_category->id }}">{{ $user_category->name }}</option>

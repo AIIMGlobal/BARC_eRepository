@@ -179,7 +179,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <select name="user_category_id" id="user_category_id" class="form-control select2" required>
-                                                <option value="">--Select Account Type--</option>
+                                                <option value="">--Select User Service Type--</option>
 
                                                 @foreach ($categorys as $category)
                                                     <option value="{{ $category->id }}">{{ $category->name }}</option>

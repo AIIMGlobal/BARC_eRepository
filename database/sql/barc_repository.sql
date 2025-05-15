@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 14, 2025 at 02:18 PM
+-- Generation Time: May 15, 2025 at 01:25 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -277,7 +277,8 @@ CREATE TABLE `contents` (
 --
 
 INSERT INTO `contents` (`id`, `sl`, `category_id`, `content_type`, `content_name`, `slug`, `description`, `extension`, `content`, `content_year`, `thumbnail`, `meta_title`, `meta_description`, `meta_keywords`, `status`, `approved_by`, `approved_at`, `published_at`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, NULL, 1, 'Image', 'Content 1', 'content-1', NULL, 'pdf', 'contents/1747215112_2. Md._Jahidul_Islam.pdf', '2025', 'thumbnails/1747124509_PMS_Logo-1-removebg-preview 1.png', NULL, NULL, NULL, 0, NULL, NULL, '2025-05-14 11:03:18', 1, 1, '2025-05-13 08:21:49', '2025-05-14 12:06:57');
+(1, NULL, 1, 'Image', 'Content 1', 'content-1', NULL, 'pdf', 'contents/1747307942_Application Tracking Number.pdf', '2025', 'thumbnails/1747124509_PMS_Logo-1-removebg-preview 1.png', NULL, NULL, NULL, 0, NULL, NULL, '2025-05-14 11:03:18', 1, 1, '2025-05-13 08:21:49', '2025-05-15 11:23:35'),
+(3, NULL, 3, 'Video', 'Video Content', 'video-content', NULL, 'mp4', 'contents/1747287076_Kapoor daab ka roast!.mp4', '2025', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-15 06:59:47', 1, 1, '2025-05-15 05:31:16', '2025-05-15 06:59:47');
 
 -- --------------------------------------------------------
 
@@ -1933,7 +1934,14 @@ INSERT INTO `role_permissions` (`id`, `user_id`, `permission_id`, `role_id`, `cr
 (2537, NULL, 766, 1, 1, NULL, '2025-05-12 10:46:18', '2025-05-12 10:46:18'),
 (2538, NULL, 767, 1, 1, NULL, '2025-05-12 10:46:18', '2025-05-12 10:46:18'),
 (2539, NULL, 768, 1, 1, NULL, '2025-05-12 10:46:18', '2025-05-12 10:46:18'),
-(2540, NULL, 769, 1, 1, NULL, '2025-05-12 10:46:18', '2025-05-12 10:46:18');
+(2540, NULL, 769, 1, 1, NULL, '2025-05-12 10:46:18', '2025-05-12 10:46:18'),
+(2541, NULL, 763, 4, 1, NULL, '2025-05-15 08:42:44', '2025-05-15 08:42:44'),
+(2542, NULL, 764, 4, 1, NULL, '2025-05-15 08:42:45', '2025-05-15 08:42:45'),
+(2543, NULL, 765, 4, 1, NULL, '2025-05-15 08:42:45', '2025-05-15 08:42:45'),
+(2544, NULL, 766, 4, 1, NULL, '2025-05-15 08:42:46', '2025-05-15 08:42:46'),
+(2545, NULL, 767, 4, 1, NULL, '2025-05-15 08:42:47', '2025-05-15 08:42:47'),
+(2546, NULL, 768, 4, 1, NULL, '2025-05-15 08:42:47', '2025-05-15 08:42:47'),
+(2547, NULL, 769, 4, 1, NULL, '2025-05-15 08:42:47', '2025-05-15 08:42:47');
 
 -- --------------------------------------------------------
 
@@ -11366,7 +11374,8 @@ CREATE TABLE `user_content_activities` (
 --
 
 INSERT INTO `user_content_activities` (`id`, `user_id`, `category_id`, `content_id`, `activity_type`, `created_by`, `created_at`, `updated_at`) VALUES
-(6, 1, 1, 1, 2, 1, '2025-05-14 10:47:33', '2025-05-14 10:47:33');
+(6, 1, 1, 1, 2, 1, '2025-05-14 10:47:33', '2025-05-14 10:47:33'),
+(10, 1, 3, 3, 1, 1, '2025-05-15 09:42:22', '2025-05-15 09:42:22');
 
 -- --------------------------------------------------------
 
@@ -11778,7 +11787,7 @@ ALTER TABLE `city_corporations`
 -- AUTO_INCREMENT for table `contents`
 --
 ALTER TABLE `contents`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -11970,7 +11979,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `role_permissions`
 --
 ALTER TABLE `role_permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2541;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2548;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -12030,7 +12039,7 @@ ALTER TABLE `user_company_docs`
 -- AUTO_INCREMENT for table `user_content_activities`
 --
 ALTER TABLE `user_content_activities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `user_infos`
