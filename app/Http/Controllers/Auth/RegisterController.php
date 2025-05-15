@@ -106,7 +106,7 @@ class RegisterController extends Controller
             'name_en'           => 'required|string|max:255',
             'user_category_id'  => 'required|exists:user_categories,id',
             'office_id'         => 'required|exists:offices,id',
-            'designation_id'       => 'required|string|max:255',
+            'designation_id'    => 'required|string|max:255',
             'email'             => 'required|email|unique:users,email',
             'mobile'            => 'required|string|max:14|unique:users,mobile',
             'password'          => 'required|min:6|confirmed',
