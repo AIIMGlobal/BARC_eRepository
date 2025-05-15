@@ -224,11 +224,7 @@
                                                     <div class="col-6 col-md-4">
                                                         <label for="" class="text-dark">Designation:</label>
 
-                                                        @if ($employee->user_type == 4)
-                                                            <p>{{ $employee->userInfo->designation ?? ''}}</p>
-                                                        @else
-                                                            <p>{{ $employee->userInfo->post->name ?? ''}}</p>
-                                                        @endif
+                                                        <p>{{ $employee->userInfo->post->name ?? ''}}</p>
                                                     </div>
 
                                                     {{-- <div class="col-6 col-md-4">

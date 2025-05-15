@@ -127,9 +127,9 @@
 
                                     <div class="col-md-4 col-sm-6 col-xsm-12">
                                         <div>
-                                            <label for="department_id" class="form-label">Department: <span style="color:red;">*</span></label>
+                                            <label for="department_id" class="form-label">Department: </label>
 
-                                            <select  class="form-control select2" name="department_id" id="department_id" required>
+                                            <select  class="form-control select2" name="department_id" id="department_id">
                                                 <option value="">--Select Department--</option>
 
                                                 @foreach ($departments as $department)
@@ -143,17 +143,13 @@
                                         <div>
                                             <label for="designation_id" class="form-label">Designation: <span style="color:red;">*</span></label>
 
-                                            @if ($employee->user_type == 4)
-                                                <input type="text" class="form-control" name="designation" id="designation" placeholder="Enter Designation" value="{{ $employee->userInfo->designation ?? old('designation') }}">
-                                            @else
-                                                <select  class="form-control select2" name="designation_id" id="designation_id" required>
-                                                    <option value="">--Select Designation--</option>
+                                            <select  class="form-control select2" name="designation_id" id="designation_id" required>
+                                                <option value="">--Select Designation--</option>
 
-                                                    @foreach ($designations as $designation)
-                                                        <option @if (($employee->userInfo->designation_id ?? 0) == $designation->id) selected @endif value="{{ $designation->id }}">{{ $designation->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            @endif
+                                                @foreach ($designations as $designation)
+                                                    <option @if (($employee->userInfo->designation_id ?? 0) == $designation->id) selected @endif value="{{ $designation->id }}">{{ $designation->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
 

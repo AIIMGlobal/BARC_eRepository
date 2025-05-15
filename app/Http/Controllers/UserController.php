@@ -171,41 +171,22 @@ class UserController extends Controller
             $user = Auth::user();
 
             if (Gate::allows('add_user', $user)) {
-                if ($request->user_type == 4) {
-                    $this->validate($request, [
-                        // 'name_bn' => 'required',
-                        'name_en'               => 'required',
-                        'user_type'             => 'required',
-                        'mobile'                => 'unique:users|required',
-                        'email'                 => 'unique:users|required',
-                        'password'              => 'required',
-                        'role_id'               => 'required',
-                        // 'employee_id'           => 'required',
-                        'department_id'         => 'required',
-                        'designation'           => 'required',
-                        'office_id'             => 'required',
-                        // 'present_division_id'   => 'required',
-                        // 'present_district_id'   => 'required',
-                        // 'present_upazila_id'    => 'required',
-                    ]);
-                } else {
-                    $this->validate($request, [
-                        // 'name_bn' => 'required',
-                        'name_en'               => 'required',
-                        'user_type'             => 'required',
-                        'mobile'                => 'unique:users|required',
-                        'email'                 => 'unique:users|required',
-                        'password'              => 'required',
-                        'role_id'               => 'required',
-                        // 'employee_id'           => 'required',
-                        'department_id'         => 'required',
-                        'designation_id'        => 'required',
-                        'office_id'             => 'required',
-                        // 'present_division_id'   => 'required',
-                        // 'present_district_id'   => 'required',
-                        // 'present_upazila_id'    => 'required',
-                    ]);
-                }
+                $this->validate($request, [
+                    // 'name_bn' => 'required',
+                    'name_en'               => 'required',
+                    'user_type'             => 'required',
+                    'mobile'                => 'unique:users|required',
+                    'email'                 => 'unique:users|required',
+                    'password'              => 'required',
+                    'role_id'               => 'required',
+                    // 'employee_id'           => 'required',
+                    // 'department_id'         => 'required',
+                    'designation_id'        => 'required',
+                    'office_id'             => 'required',
+                    // 'present_division_id'   => 'required',
+                    // 'present_district_id'   => 'required',
+                    // 'present_upazila_id'    => 'required',
+                ]);
 
                 $newUser = new User;
 
@@ -444,39 +425,21 @@ class UserController extends Controller
             $newUser = User::where('id', $request->user_id)->first();
 
             if (Gate::allows('edit_user', $currentUser)) {
-                if ($request->user_type == 4) {
-                    $this->validate($request, [
-                        // 'name_bn' => 'required',
-                        'name_en'               => 'required',
-                        'user_type'             => 'required',
-                        'mobile'                => 'required|unique:users,mobile,' . $newUser->id,
-                        'email'                 => 'required|unique:users,email,' . $newUser->id,
-                        'role_id'               => 'required',
-                        // 'employee_id'           => 'required',
-                        'department_id'         => 'required',
-                        'designation'           => 'required',
-                        'office_id'             => 'required',
-                        // 'present_division_id'   => 'required',
-                        // 'present_district_id'   => 'required',
-                        // 'present_upazila_id'    => 'required',
-                    ]);
-                } else {
-                    $this->validate($request, [
-                        // 'name_bn' => 'required',
-                        'name_en'               => 'required',
-                        'user_type'             => 'required',
-                        'mobile'                => 'required|unique:users,mobile,' . $newUser->id,
-                        'email'                 => 'required|unique:users,email,' . $newUser->id,
-                        'role_id'               => 'required',
-                        // 'employee_id'           => 'required',
-                        'department_id'         => 'required',
-                        'designation_id'        => 'required',
-                        'office_id'             => 'required',
-                        // 'present_division_id'   => 'required',
-                        // 'present_district_id'   => 'required',
-                        // 'present_upazila_id'    => 'required',
-                    ]);
-                }
+                $this->validate($request, [
+                    // 'name_bn' => 'required',
+                    'name_en'               => 'required',
+                    'user_type'             => 'required',
+                    'mobile'                => 'required|unique:users,mobile,' . $newUser->id,
+                    'email'                 => 'required|unique:users,email,' . $newUser->id,
+                    'role_id'               => 'required',
+                    // 'employee_id'           => 'required',
+                    'department_id'         => 'required',
+                    'designation_id'        => 'required',
+                    'office_id'             => 'required',
+                    // 'present_division_id'   => 'required',
+                    // 'present_district_id'   => 'required',
+                    // 'present_upazila_id'    => 'required',
+                ]);
 
                 // $newUser->name_bn            = $request->name_bn;
                 $newUser->name_en           = $request->name_en;

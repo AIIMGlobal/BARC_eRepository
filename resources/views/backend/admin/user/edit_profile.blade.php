@@ -52,11 +52,7 @@
 
                                             <h5 class="fs-16 mb-1">{{ $user->name_en }} </h5>
 
-                                            @if (Auth::user()->user_type == 4)
-                                                <p class="text-muted mb-0">{{ Auth::user()->userInfo->designation ?? '' }}</p>
-                                            @else
-                                                <p class="text-muted mb-0">{{ Auth::user()->userInfo->post->name ?? '' }}</p>
-                                            @endif
+                                            <p class="text-muted mb-0">{{ Auth::user()->userInfo->post->name ?? '' }}</p>
 
                                             <div class="profile-user position-relative d-inline-block mx-auto my-2">
                                                 @if ((Auth::user()->userInfo->signature ?? '') && Storage::exists('public/signature/' . Auth::user()->userInfo->signature))

@@ -26,36 +26,60 @@ class ContentController extends Controller
         $user = Auth::user();
 
         if (Gate::allows('content_list', $user)) {
-            $categories = Category::where('status', '!=', 2)->orderBy('category_name', 'asc')->get();
+            $categories = Category::where('status', '!=', 2)
+                                 ->orderBy('category_name', 'asc')
+                                 ->with('children')
+                                 ->get();
 
             $query = Content::query();
 
             if ($request->category_id) {
+                if (!Category::where('id', $request->category_id)->exists()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Invalid category ID'
+                    ], 400);
+                }
+
                 $query->where('category_id', $request->category_id);
-            }
+            } else {
+                if ($request->content_name) {
+                    $query->where('content_name', 'like', '%' . $request->content_name . '%');
+                }
 
-            if ($request->content_id) {
-                $query->where('id', $request->content_id);
-            }
+                if ($request->content_type) {
+                    $query->where('content_type', $request->content_type);
+                }
 
-            if ($request->content_type) {
-                $query->where('content_type', $request->content_type);
-            }
+                if ($request->from_date && $request->to_date) {
+                    $fromDate = \Carbon\Carbon::parse($request->from_date)->startOfDay();
+                    $toDate = \Carbon\Carbon::parse($request->to_date)->endOfDay();
 
-            if ($request->from_date && $request->to_date) {
-                $query->whereBetween('published_at', [$request->from_date, $request->to_date]);
+                    $query->whereBetween('published_at', [$fromDate, $toDate]);
+                } elseif ($request->from_date) {
+                    $fromDate = \Carbon\Carbon::parse($request->from_date)->startOfDay();
+
+                    $query->where('published_at', '>=', $fromDate);
+                } elseif ($request->to_date) {
+                    $toDate = \Carbon\Carbon::parse($request->to_date)->endOfDay();
+                    
+                    $query->where('published_at', '<=', $toDate);
+                }
             }
 
             $perPage = $request->per_page ?? 24;
-            
+
             $contents = $query->where('status', 1)
-                            ->with(['category', 'createdBy'])
-                            ->latest()
-                            ->paginate($perPage);
+                             ->with([
+                                 'category',
+                                 'createdBy',
+                                 'userActivities' => fn($q) => $q->where('user_id', Auth::id())
+                             ])
+                             ->latest()
+                             ->paginate($perPage);
 
             if ($request->ajax()) {
                 $html = view('backend.admin.content.content', compact('contents'))->render();
-
                 $hasMore = $contents->hasMorePages();
 
                 return response()->json([
@@ -67,7 +91,10 @@ class ContentController extends Controller
 
             return view('backend.admin.content.index', compact('contents', 'categories'));
         } else {
-            return abort(403, "You don't have permission!");
+            return response()->json([
+                'success' => false,
+                'message' => "You don't have permission!"
+            ], 403);
         }
     }
 
@@ -77,54 +104,57 @@ class ContentController extends Controller
 
         if (Gate::allows('content_list', $user)) {
             $categories = Category::where('status', '!=', 2)
-                                    ->orderBy('category_name', 'asc')
-                                    ->get();
+                                 ->orderBy('category_name', 'asc')
+                                 ->with('children')
+                                 ->get();
 
             $query = Content::query();
 
             if ($request->category_id) {
-                $category = Category::find($request->category_id);
-
-                if ($category) {
-                    $categoryIds = [$category->id];
-
-                    $this->getChildCategoryIds($category, $categoryIds);
-
-                    $query->whereIn('category_id', $categoryIds);
+                if (!Category::where('id', $request->category_id)->exists()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Invalid category ID'
+                    ], 400);
                 }
-            }
 
-            if ($request->content_name) {
-                $query->where('content_name', 'like', '%' . $request->content_name . '%');
-            }
+                $query->where('category_id', $request->category_id);
+            } else {
+                if ($request->content_name) {
+                    $query->where('content_name', 'like', '%' . $request->content_name . '%');
+                }
 
-            if ($request->content_type) {
-                $query->where('content_type', $request->content_type);
-            }
+                if ($request->content_type) {
+                    $query->where('content_type', $request->content_type);
+                }
 
-            if ($request->from_date && $request->to_date) {
-                $fromDate = \Carbon\Carbon::parse($request->from_date)->startOfDay();
-                $toDate = \Carbon\Carbon::parse($request->to_date)->endOfDay();
-                $query->whereBetween('created_at', [$fromDate, $toDate]);
-            } elseif ($request->from_date) {
-                $fromDate = \Carbon\Carbon::parse($request->from_date)->startOfDay();
-                $query->where('created_at', '>=', $fromDate);
-            } elseif ($request->to_date) {
-                $toDate = \Carbon\Carbon::parse($request->to_date)->endOfDay();
-                $query->where('created_at', '<=', $toDate);
+                if ($request->from_date && $request->to_date) {
+                    $fromDate = \Carbon\Carbon::parse($request->from_date)->startOfDay();
+                    $toDate = \Carbon\Carbon::parse($request->to_date)->endOfDay();
+
+                    $query->whereBetween('created_at', [$fromDate, $toDate]);
+                } elseif ($request->from_date) {
+                    $fromDate = \Carbon\Carbon::parse($request->from_date)->startOfDay();
+
+                    $query->where('created_at', '>=', $fromDate);
+                } elseif ($request->to_date) {
+                    $toDate = \Carbon\Carbon::parse($request->to_date)->endOfDay();
+                    
+                    $query->where('created_at', '<=', $toDate);
+                }
             }
 
             $perPage = $request->per_page ?? 24;
 
             $contents = $query->where('status', '!=', 2)
-                                ->where('created_by', Auth::id())
-                                ->with([
-                                    'category',
-                                    'createdBy',
-                                    'userActivities' => fn($q) => $q->where('user_id', Auth::id())
-                                ])
-                                ->latest()
-                                ->paginate($perPage);
+                             ->where('created_by', Auth::id())
+                             ->with([
+                                 'category',
+                                 'createdBy',
+                                 'userActivities' => fn($q) => $q->where('user_id', Auth::id())
+                             ])
+                             ->latest()
+                             ->paginate($perPage);
 
             if ($request->ajax()) {
                 $html = view('backend.admin.content.content', compact('contents'))->render();
@@ -146,15 +176,151 @@ class ContentController extends Controller
         }
     }
 
-    /**
-     * Recursively collect child category IDs
-     */
-    private function getChildCategoryIds($category, &$categoryIds)
+    public function indexFavorite(Request $request)
     {
-        foreach ($category->children as $child) {
-            $categoryIds[] = $child->id;
+        $user = Auth::user();
 
-            $this->getChildCategoryIds($child, $categoryIds);
+        if (Gate::allows('content_list', $user)) {
+            $categories = Category::where('status', '!=', 2)
+                                 ->orderBy('category_name', 'asc')
+                                 ->with('children')
+                                 ->get();
+
+            $query = Content::query();
+
+            if ($request->category_id) {
+                if (!Category::where('id', $request->category_id)->exists()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Invalid category ID'
+                    ], 400);
+                }
+
+                $query->where('contents.category_id', $request->category_id);
+            } else {
+                if ($request->content_name) {
+                    $query->where('contents.content_name', 'like', '%' . $request->content_name . '%');
+                }
+
+                if ($request->content_type) {
+                    $query->where('contents.content_type', $request->content_type);
+                }
+
+                if ($request->from_date && $request->to_date) {
+                    $fromDate = \Carbon\Carbon::parse($request->from_date)->startOfDay();
+                    $toDate = \Carbon\Carbon::parse($request->to_date)->endOfDay();
+
+                    $query->whereBetween('contents.published_at', [$fromDate, $toDate]);
+                } elseif ($request->from_date) {
+                    $fromDate = \Carbon\Carbon::parse($request->from_date)->startOfDay();
+
+                    $query->where('contents.published_at', '>=', $fromDate);
+                } elseif ($request->to_date) {
+                    $toDate = \Carbon\Carbon::parse($request->to_date)->endOfDay();
+                    
+                    $query->where('contents.published_at', '<=', $toDate);
+                }
+            }
+
+            $perPage = $request->per_page ?? 24;
+
+            $contents = $query->join('user_content_activities', 'contents.id', '=', 'user_content_activities.content_id')
+                                ->where('user_content_activities.user_id', Auth::id())
+                                ->where('user_content_activities.activity_type', 1)
+                                ->where('contents.status', 1)
+                                ->paginate($perPage);
+
+            if ($request->ajax()) {
+                $html = view('backend.admin.content.contentFav', compact('contents'))->render();
+                $hasMore = $contents->hasMorePages();
+
+                return response()->json([
+                    'success' => true,
+                    'html' => $html,
+                    'hasMore' => $hasMore,
+                ]);
+            }
+
+            return view('backend.admin.content.indexFavorite', compact('contents', 'categories'));
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => "You don't have permission!"
+            ], 403);
+        }
+    }
+
+    public function indexSaved(Request $request)
+    {
+        $user = Auth::user();
+
+        if (Gate::allows('content_list', $user)) {
+            $categories = Category::where('status', '!=', 2)
+                                 ->orderBy('category_name', 'asc')
+                                 ->with('children')
+                                 ->get();
+
+            $query = Content::query();
+
+            if ($request->category_id) {
+                if (!Category::where('id', $request->category_id)->exists()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Invalid category ID'
+                    ], 400);
+                }
+
+                $query->where('contents.category_id', $request->category_id);
+            } else {
+                if ($request->content_name) {
+                    $query->where('contents.content_name', 'like', '%' . $request->content_name . '%');
+                }
+
+                if ($request->content_type) {
+                    $query->where('contents.content_type', $request->content_type);
+                }
+
+                if ($request->from_date && $request->to_date) {
+                    $fromDate = \Carbon\Carbon::parse($request->from_date)->startOfDay();
+                    $toDate = \Carbon\Carbon::parse($request->to_date)->endOfDay();
+
+                    $query->whereBetween('contents.published_at', [$fromDate, $toDate]);
+                } elseif ($request->from_date) {
+                    $fromDate = \Carbon\Carbon::parse($request->from_date)->startOfDay();
+
+                    $query->where('contents.published_at', '>=', $fromDate);
+                } elseif ($request->to_date) {
+                    $toDate = \Carbon\Carbon::parse($request->to_date)->endOfDay();
+                    
+                    $query->where('contents.published_at', '<=', $toDate);
+                }
+            }
+
+            $perPage = $request->per_page ?? 24;
+
+            $contents = $query->join('user_content_activities', 'contents.id', '=', 'user_content_activities.content_id')
+                                ->where('user_content_activities.user_id', Auth::id())
+                                ->where('user_content_activities.activity_type', 2)
+                                ->where('contents.status', 1)
+                                ->paginate($perPage);
+
+            if ($request->ajax()) {
+                $html = view('backend.admin.content.contentSaved', compact('contents'))->render();
+                $hasMore = $contents->hasMorePages();
+
+                return response()->json([
+                    'success' => true,
+                    'html' => $html,
+                    'hasMore' => $hasMore,
+                ]);
+            }
+
+            return view('backend.admin.content.indexSaved', compact('contents', 'categories'));
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => "You don't have permission!"
+            ], 403);
         }
     }
 

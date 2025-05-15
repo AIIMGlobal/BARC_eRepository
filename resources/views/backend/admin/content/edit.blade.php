@@ -105,7 +105,7 @@
                                         <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="image/*">
 
                                         <div id="thumbnail-preview" class="mt-2">
-                                            <img id="thumbnail-image" src="{{ $content->thumbnail ? asset('storage/' . $content->thumbnail) : asset('images/dummy-thumbnail.jpg') }}" alt="Thumbnail Preview" class="img-fluid rounded" style="max-width: 200px;">
+                                            <img id="thumbnail-image" src="{{ $content->thumbnail ? asset('storage/' . $content->thumbnail) : 'https://t4.ftcdn.net/jpg/05/17/53/57/360_F_517535712_q7f9QC9X6TQxWi6xYZZbMmw5cnLMr279.jpg' }}" alt="Thumbnail Preview" class="img-fluid rounded" style="max-width: 200px;">
                                         </div>
                                     </div>
                                 </div>

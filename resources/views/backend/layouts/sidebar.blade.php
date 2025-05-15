@@ -172,27 +172,27 @@
                             <ul class="nav nav-sm flex-column">
                                 @can('content_list')
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.content.index') }}" class="nav-link" data-key="t-crm">Content List</a>
+                                        <a href="{{ route('admin.content.index') }}" class="nav-link" data-key="t-crm">Contents</a>
                                     </li>
                                 @endcan
 
                                 @can('content_list')
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.content.indexMyContent') }}" class="nav-link" data-key="t-crm">My Content List</a>
+                                        <a href="{{ route('admin.content.indexMyContent') }}" class="nav-link" data-key="t-crm">My Contents</a>
                                     </li>
                                 @endcan
 
-                                {{-- @can('total_favourite_content')
+                                @can('total_favourite_content')
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.content.index') }}" class="nav-link" data-key="t-crm">Favorite Content List</a>
+                                        <a href="{{ route('admin.content.indexFavorite') }}" class="nav-link" data-key="t-crm">Favorite Contents</a>
                                     </li>
                                 @endcan
 
                                 @can('total_saved_content')
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.content.index') }}" class="nav-link" data-key="t-crm">Saved Content List</a>
+                                        <a href="{{ route('admin.content.indexSaved') }}" class="nav-link" data-key="t-crm">Saved Contents</a>
                                     </li>
-                                @endcan --}}
+                                @endcan
                             </ul>
                         </div>
                     </li>

@@ -202,7 +202,15 @@
 
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <input type="text" id="designation" class="form-control" name="designation" placeholder="Enter Desigantion" required="required">
+                                            <select name="designation_id" id="designation_id" class="form-control select2" required>
+                                                <option value="">--Select Designation--</option>
+
+                                                @foreach ($designations as $designation)
+                                                    <option value="{{ $designation->id }}">{{ $designation->name }}</option>
+                                                @endforeach
+
+                                                <option value="1000">Other</option>
+                                            </select>
                                         </div>
                                     </div>
 

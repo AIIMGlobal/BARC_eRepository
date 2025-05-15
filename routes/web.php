@@ -444,6 +444,8 @@ Route::group(['middleware' => ['AuthGates','set.locale'], 'prefix' => '/authoriz
     Route::group(['prefix' => '/content', 'as' => 'content.'], function() {
         Route::get('/', [ContentController::class, 'index'])->name('index');
         Route::get('/my-content', [ContentController::class, 'indexMyContent'])->name('indexMyContent');
+        Route::get('/favorite-content', [ContentController::class, 'indexFavorite'])->name('indexFavorite');
+        Route::get('/saved-content', [ContentController::class, 'indexSaved'])->name('indexSaved');
         Route::get('/create', [ContentController::class, 'create'])->name('create');
         Route::post('/store', [ContentController::class, 'store'])->name('store');
         Route::get('/show/{id}', [ContentController::class, 'show'])->name('show');

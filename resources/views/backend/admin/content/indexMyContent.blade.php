@@ -1,10 +1,9 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Content List | '.($global_setting->title ?? ""))
+@section('title', 'My Contents | '.($global_setting->title ?? ""))
 
 @push('css')
     <link href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css" rel="stylesheet" />
-
     <style>
         .hamburger-menu {
             position: relative;
@@ -35,7 +34,6 @@
             border-radius: 8px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             z-index: 1000;
-            /* padding: 10px 0; */
             border: 1px solid #e5e7eb;
         }
         .category-menu.show {
@@ -72,7 +70,6 @@
             border-radius: 8px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             min-width: 200px;
-            /* padding: 10px 0; */
             border: 1px solid #e5e7eb;
             z-index: 1001;
         }
@@ -101,7 +98,6 @@
         .content-card img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
         }
         .content-card .overlay {
             position: absolute;
@@ -158,6 +154,7 @@
             padding: 8px 20px;
             font-size: 0.9rem;
             color: #fff;
+            transition: ease-in 0.2s all;
         }
         .dropdown-item:hover {
             box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
@@ -191,7 +188,7 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Content List</li>
+                                <li class="breadcrumb-item active" aria-current="page">My Contents</li>
                             </ol>
                         </div>
                     </div>
@@ -204,7 +201,7 @@
 
                     <div class="card card-height-100">
                         <div class="card-header align-items-center d-flex">
-                            <h4 class="card-title mb-0 flex-grow-1">Content List</h4>
+                            <h4 class="card-title mb-0 flex-grow-1">My Contents</h4>
                             <div class="flex-shrink-0">
                                 @can('create_content')
                                     <a class="btn btn-primary" href="{{ route('admin.content.create') }}">
@@ -234,7 +231,6 @@
                                     <div class="col-md-2 col-sm-6">
                                         <select name="content_type" id="content_type" class="form-control select2">
                                             <option value="">--Search by Type--</option>
-
                                             <option value="Video">Video</option>
                                             <option value="PDF">PDF</option>
                                             <option value="Audio">Audio</option>
@@ -311,7 +307,6 @@
 
             $('#content_name').on('keyup', function() {
                 clearTimeout(typingTimer);
-
                 typingTimer = setTimeout(() => fetchFilteredData(1), 500);
             });
 
@@ -329,41 +324,34 @@
 
             $('#loadMore').on('click', function() {
                 let page = $(this).data('page') || 1;
-
                 page++;
-
                 fetchFilteredData(page, true);
-
                 $(this).data('page', page);
             });
 
             $(document).on('click', '.category-item', function(e) {
                 e.preventDefault();
+                e.stopPropagation();
 
+                let categoryId = $(this).data('id');
+
+                $('#content_name').val('');
+                $('#content_type').val('').trigger('change');
+                $('#from_date').val('');
+                $('#to_date').val('');
+                
                 setTimeout(() => {
                     $('.category-item').removeClass('selected');
 
                     $(this).addClass('selected');
 
-                    let categoryId = $(this).data('id');
-                    let hasSubMenu = $(this).siblings('.sub-menu').length > 0;
-
-                    let input = $('<input>').attr({
-                        type: 'hidden',
-                        name: 'category_id',
-                        value: categoryId
-                    });
-
-                    $('#filterForm').find('input[name="category_id"]').remove();
-                    $('#filterForm').append(input);
-
-                    fetchFilteredData(1);
+                    fetchFilteredData(1, false, categoryId);
                 }, 200);
             });
         });
 
-        function fetchFilteredData(page = 1, append = false) {
-            let data = $('#filterForm').serialize() + '&page=' + page;
+        function fetchFilteredData(page = 1, append = false, categoryId = null) {
+            let data = categoryId ? { category_id: categoryId, page: page } : $('#filterForm').serialize() + '&page=' + page;
 
             $.ajax({
                 url: "{{ route('admin.content.indexMyContent') }}",
@@ -393,7 +381,6 @@
 
         function toggleFavorite(element) {
             let id = $(element).data('id');
-
             $.ajax({
                 url: "{{ route('admin.content.toggleFavorite', ':id') }}".replace(':id', id),
                 type: "POST",
@@ -402,7 +389,6 @@
                     if (response.success) {
                         $(element).toggleClass('lar la-heart las la-heart');
                         $(element).toggleClass('active');
-
                         toastr.success(response.message, 'Success');
                     }
                 },
@@ -414,7 +400,6 @@
 
         function toggleSave(element) {
             let id = $(element).data('id');
-
             $.ajax({
                 url: "{{ route('admin.content.toggleSave', ':id') }}".replace(':id', id),
                 type: "POST",
@@ -423,7 +408,6 @@
                     if (response.success) {
                         $(element).toggleClass('las la-bookmark lar la-bookmark');
                         $(element).toggleClass('active');
-
                         toastr.success(response.message, 'Success');
                     }
                 },
@@ -454,7 +438,6 @@
                                     icon: 'success',
                                     showCancelButton: false,
                                 });
-
                                 setTimeout(() => window.location.reload(), 1000);
                             }
                         },
@@ -477,7 +460,6 @@
                             icon: 'success',
                             showCancelButton: false,
                         });
-
                         setTimeout(() => window.location.reload(), 1000);
                     }
                 },

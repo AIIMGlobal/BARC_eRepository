@@ -149,7 +149,7 @@
                                                 @if($contentType == 'video' || in_array($extension, $videoTypes))
                                                     <div class="video-container">
                                                         <video class="w-full h-full object-contain" controls controlsList="nodownload" disablePictureInPicture preload="metadata" playsinline>
-                                                            <source src="{{ $assetPath }}" type="video/{{ $extension == 'mp4' ? 'mp4' : ($extension == 'webm' ? 'webm' : 'ogg') }}">
+                                                            <source src="{{ $assetPath }}" type="video/{{ $extension }}">
 
                                                             <p class="text-center p-4">Your browser does not support this video format. <a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>Download the video</a>.</p>
                                                         </video>
@@ -157,7 +157,7 @@
                                                 @elseif($contentType == 'audio' || in_array($extension, $audioTypes))
                                                     <div class="w-full h-full flex items-center justify-center bg-gray-800">
                                                         <audio controls class="w-3/4" preload="metadata">
-                                                            <source src="{{ $assetPath }}" type="audio/{{ $extension == 'mp3' ? 'mpeg' : ($extension == 'wav' ? 'wav' : 'ogg') }}">
+                                                            <source src="{{ $assetPath }}" type="audio/{{ $extension }}">
 
                                                             <p class="text-center">Your browser does not support this audio format.</p>
                                                         </audio>
@@ -170,10 +170,10 @@
                                                 @elseif($contentType == 'image' || in_array($extension, $imageTypes))
                                                     <img src="{{ $assetPath }}" alt="{{ $content->content_name }}" class="w-full h-full object-contain">
                                                 @else
-                                                    <img src="{{ $content->thumbnail ? asset('storage/' . $content->thumbnail) : asset('images/dummy-content.jpg') }}" alt="Content" class="w-full h-full object-cover">
+                                                    <img src="{{ $content->thumbnail ? asset('storage/' . $content->thumbnail) : 'https://t4.ftcdn.net/jpg/05/17/53/57/360_F_517535712_q7f9QC9X6TQxWi6xYZZbMmw5cnLMr279.jpg' }}" alt="Content" class="w-full h-full object-cover">
                                                 @endif
                                             @else
-                                                <img src="{{ asset('images/dummy-content.jpg') }}" alt="Content" class="w-full h-full object-cover">
+                                                <img src="{{ 'https://t4.ftcdn.net/jpg/05/17/53/57/360_F_517535712_q7f9QC9X6TQxWi6xYZZbMmw5cnLMr279.jpg' }}" alt="Content" class="w-full h-full object-cover">
                                             @endif
                                         </div>
                                     </div>

@@ -95,8 +95,9 @@ class RegisterController extends Controller
     {
         $categorys = UserCategory::select('id', 'name')->where('status', 1)->orderBy('name', 'asc')->get();
         $orgs = Office::select('id', 'name')->where('status', 1)->orderBy('name', 'asc')->get();
+        $designations = Designation::where('status', 1)->orderBy('name', 'asc')->get();
 
-        return view('auth.register', compact('categorys', 'orgs'));
+        return view('auth.register', compact('categorys', 'orgs', 'designations'));
     }
 
     public function store(Request $request)
@@ -105,7 +106,7 @@ class RegisterController extends Controller
             'name_en'           => 'required|string|max:255',
             'user_category_id'  => 'required|exists:user_categories,id',
             'office_id'         => 'required|exists:offices,id',
-            'designation'       => 'required|string|max:255',
+            'designation_id'       => 'required|string|max:255',
             'email'             => 'required|email|unique:users,email',
             'mobile'            => 'required|string|max:14|unique:users,mobile',
             'password'          => 'required|min:6|confirmed',
@@ -144,11 +145,11 @@ class RegisterController extends Controller
 
             $userInfo = new UserInfo;
 
-            $userInfo->user_id      = $user->id;
-            $userInfo->office_id    = $request->office_id;
-            $userInfo->designation  = $request->designation;
-            $userInfo->image        = $imagePath;
-            $userInfo->created_by   = Auth::id();
+            $userInfo->user_id          = $user->id;
+            $userInfo->office_id        = $request->office_id;
+            $userInfo->designation_id   = $request->designation_id;
+            $userInfo->image            = $imagePath;
+            $userInfo->created_by       = Auth::id();
 
             $userInfo->save();
 

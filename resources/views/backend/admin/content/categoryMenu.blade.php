@@ -1,4 +1,4 @@
-<div class="category-item" data-id="{{ $category->id }}">
+<div class="category-item" data-id="{{ $category->id }}" data-category-name="{{ $category->category_name }}">
     <span>
         {{ $category->category_name }}
     </span>

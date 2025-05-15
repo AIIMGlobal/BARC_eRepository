@@ -27,11 +27,7 @@
 
             <td>{{ $user->role->display_name ?? '-' }}</td>
 
-            @if ($user->user_type == 4)
-                <td>{{ $user->userInfo->designation ?? '-' }}</td>
-            @else
-                <td>{{ $user->userInfo->post->name ?? '-' }}</td>
-            @endif
+            <td>{{ $user->userInfo->post->name ?? '-' }}</td>
 
             <td class="text-center">
                 @if ($user->status == 1)

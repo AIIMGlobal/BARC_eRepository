@@ -11,9 +11,9 @@
 
                 <div class="overlay">
                     <div class="action-icons">
-                        <i class="{{ $contentFav ? 'las la-heart' : 'lar la-heart' }} {{ $contentFav ? 'active' : '' }}" data-id="{{ Crypt::encryptString($content->id) }}" onclick="toggleFavorite(this)"></i>
+                        {{-- <i class="{{ $contentFav ? 'las la-heart' : 'lar la-heart' }} {{ $contentFav ? 'active' : '' }}" data-id="{{ Crypt::encryptString($content->id) }}" onclick="toggleFavorite(this)"></i>
 
-                        <i class="{{ $contentSave ? 'las la-bookmark' : 'lar la-bookmark' }} {{ $contentSave ? 'active' : '' }}" data-id="{{ Crypt::encryptString($content->id) }}" onclick="toggleSave(this)"></i>
+                        <i class="{{ $contentSave ? 'las la-bookmark' : 'lar la-bookmark' }} {{ $contentSave ? 'active' : '' }}" data-id="{{ Crypt::encryptString($content->id) }}" onclick="toggleSave(this)"></i> --}}
 
                         @if (Auth::id() == $content->created_by)
                             <div class="dropdown">

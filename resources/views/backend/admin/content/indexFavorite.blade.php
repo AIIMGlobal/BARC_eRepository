@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Contents | '.($global_setting->title ?? ""))
+@section('title', 'Saved Contents | '.($global_setting->title ?? ""))
 
 @push('css')
     <link href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css" rel="stylesheet" />
@@ -188,7 +188,7 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Contents</li>
+                                <li class="breadcrumb-item active" aria-current="page">Saved Contents</li>
                             </ol>
                         </div>
                     </div>
@@ -201,7 +201,7 @@
 
                     <div class="card card-height-100">
                         <div class="card-header align-items-center d-flex">
-                            <h4 class="card-title mb-0 flex-grow-1">Contents</h4>
+                            <h4 class="card-title mb-0 flex-grow-1">Saved Contents</h4>
 
                             <div class="flex-shrink-0">
                                 @can('create_content')
@@ -261,7 +261,7 @@
 
                         <div class="card-body">
                             <div class="row" id="contentContainer">
-                                @include('backend.admin.content.content', ['contents' => $contents])
+                                @include('backend.admin.content.contentFav', ['contents' => $contents])
                             </div>
 
                             @if ($contents->hasMorePages())
@@ -309,6 +309,7 @@
 
             $('#content_name').on('keyup', function() {
                 clearTimeout(typingTimer);
+
                 typingTimer = setTimeout(() => fetchFilteredData(1), 500);
             });
 
@@ -320,13 +321,17 @@
                 $('#to_date').val('');
                 $('.category-item').removeClass('selected');
                 $('input[name="category_id"]').remove();
+
                 fetchFilteredData(1);
             });
 
             $('#loadMore').on('click', function() {
                 let page = $(this).data('page') || 1;
+
                 page++;
+
                 fetchFilteredData(page, true);
+
                 $(this).data('page', page);
             });
 
@@ -355,7 +360,7 @@
             let data = categoryId ? { category_id: categoryId, page: page } : $('#filterForm').serialize() + '&page=' + page;
 
             $.ajax({
-                url: "{{ route('admin.content.index') }}",
+                url: "{{ route('admin.content.indexFavorite') }}",
                 type: "GET",
                 data: data,
                 success: function(response) {
