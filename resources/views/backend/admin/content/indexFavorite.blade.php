@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Saved Contents | '.($global_setting->title ?? ""))
+@section('title', 'Favorite Contents | '.($global_setting->title ?? ""))
 
 @push('css')
     <link href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css" rel="stylesheet" />
@@ -188,7 +188,7 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Saved Contents</li>
+                                <li class="breadcrumb-item active" aria-current="page">Favorite Contents</li>
                             </ol>
                         </div>
                     </div>
@@ -201,15 +201,15 @@
 
                     <div class="card card-height-100">
                         <div class="card-header align-items-center d-flex">
-                            <h4 class="card-title mb-0 flex-grow-1">Saved Contents</h4>
+                            <h4 class="card-title mb-0 flex-grow-1">Favorite Contents</h4>
 
-                            <div class="flex-shrink-0">
+                            {{-- <div class="flex-shrink-0">
                                 @can('create_content')
                                     <a class="btn btn-primary" href="{{ route('admin.content.create') }}">
                                         Add New Content
                                     </a>
                                 @endcan
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="card-body border border-dashed border-end-0 border-start-0">

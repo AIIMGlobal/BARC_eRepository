@@ -21,6 +21,11 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id', 'id')->where('status', '!=', 2);
     }
 
+    public function contents()
+    {
+        return $this->hasMany(Content::class, 'category_id', 'id')->where('status', 1);
+    }
+
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by', 'id');

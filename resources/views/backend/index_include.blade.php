@@ -57,19 +57,19 @@
             </div>
         @endcan
 
-        @can('project_count')
+        @can('total_categories')
             <div class="col-md-3 col-sm-12">
-                <a href="{{ route('admin.project.index') }}" class="text-decoration-none">
+                <a href="{{ route('admin.category.index') }}" class="text-decoration-none">
                     <div class="custom-card">
                         <div class="custom-icon">
                             <i class="bx bx-briefcase"></i>
                         </div>
             
                         <div class="custom-text">
-                            <p class="title">Total Projects</p>
+                            <p class="title">Total Categories</p>
                             
                             <h2 class="count">
-                                <span class="counter-value" data-target="{{ $employeesCount ?? 0 }}">{{ $employeesCount ?? 0 }}</span>
+                                <span class="counter-value" data-target="{{ $categorys->count() ?? 0 }}">{{ $categorys->count() ?? 0 }}</span>
                             </h2>
                         </div>
                     </div>
@@ -79,17 +79,17 @@
 
         @can('document_count')
             <div class="col-md-3 col-sm-12">
-                <a href="{{ route('admin.document.index') }}" class="text-decoration-none">
+                <a href="{{ route('admin.content.index') }}" class="text-decoration-none">
                     <div class="custom-card">
                         <div class="custom-icon">
                             <i class="bx bx-file"></i>
                         </div>
             
                         <div class="custom-text">
-                            <p class="title">Total Contents</p>
+                            <p class="title">Repository Contents</p>
                             
                             <h2 class="count">
-                                <span class="counter-value" data-target="{{ $employeesCount ?? 0 }}">{{ $employeesCount ?? 0 }}</span>
+                                <span class="counter-value" data-target="{{ $contents->count() ?? 0 }}">{{ $contents->count() ?? 0 }}</span>
                             </h2>
                         </div>
                     </div>
@@ -98,29 +98,29 @@
         @endcan
 
         @if (Auth::user()->user_type == 4)
-            @can('total_saved_content')
+            @can('total_uploaded_contents')
                 <div class="col-md-3 col-sm-12">
-                    <a href="#" class="text-decoration-none">
+                    <a href="{{ route('admin.content.indexMyContent') }}" class="text-decoration-none">
                         <div class="custom-card">
                             <div class="custom-icon">
                                 <i class="bx bx-file"></i>
                             </div>
                
                             <div class="custom-text">
-                                <p class="title">Total Saved Contents</p>
+                                <p class="title">Total Uploaded Contents</p>
                                
                                 <h2 class="count">
-                                    <span class="counter-value" data-target="0">0</span>
+                                    <span class="counter-value" data-target="{{ $uploadedCount ?? 0 }}">{{ $uploadedCount ?? 0 }}</span>
                                 </h2>
                             </div>
                         </div>
                     </a>
                 </div>
             @endcan
- 
+
             @can('total_favourite_content')
                 <div class="col-md-3 col-sm-12">
-                    <a href="#" class="text-decoration-none">
+                    <a href="{{ route('admin.content.indexFavorite') }}" class="text-decoration-none">
                         <div class="custom-card">
                             <div class="custom-icon">
                                 <i class="bx bx-file"></i>
@@ -130,7 +130,27 @@
                                 <p class="title">Total Favourite Contents</p>
                                
                                 <h2 class="count">
-                                    <span class="counter-value" data-target="0">0</span>
+                                    <span class="counter-value" data-target="{{ $favCount ?? 0 }}">{{ $favCount ?? 0 }}</span>
+                                </h2>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endcan
+
+            @can('total_saved_content')
+                <div class="col-md-3 col-sm-12">
+                    <a href="{{ route('admin.content.indexSaved') }}" class="text-decoration-none">
+                        <div class="custom-card">
+                            <div class="custom-icon">
+                                <i class="bx bx-file"></i>
+                            </div>
+               
+                            <div class="custom-text">
+                                <p class="title">Total Saved Contents</p>
+                               
+                                <h2 class="count">
+                                    <span class="counter-value" data-target="{{ $savedCount ?? 0 }}">{{ $savedCount ?? 0 }}</span>
                                 </h2>
                             </div>
                         </div>
@@ -150,7 +170,7 @@
         </div>
 
         <div class="col-md-4">
-            <h4 class="text-center">Content Graph</h4>
+            <h4 class="text-center">Content Graph ({{ date('Y') }})</h4>
 
             <div class="pieChart-container">
                 {{-- <canvas id="pieChart" width="500" height="500"></canvas> --}}
@@ -162,7 +182,7 @@
             <h4 class="text-center">User Status</h4>
 
             <div class="pieChart-container">
-                <canvas id="pieChartCategory" width="500" height="500"></canvas>
+                <canvas id="pieChart" width="500" height="500"></canvas>
             </div>
         </div>
     </div>
@@ -170,73 +190,45 @@
 
 @push('script')
     <script>
-        var options = {
-                series: [{
-                data: [@foreach($projects as $project) {{ $project->amount }},  @endforeach]
-            }],
-            chart: {
-                height: 350,
-                type: 'bar',
-                events: {
-                    click: function(chart, w, e) {
-                    // console.log(chart, w, e)
-                    }
-                }
-            },
-            plotOptions: {
-                bar: {
-                    columnWidth: '10%',
-                    distributed: false,
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            legend: {
-                show: false
-            },
-            xaxis: {
-                categories: [
-                    @foreach($projects as $project) 
-                        ['{!! Str::limit($project->name, 20, " ...") !!}'],  
-                    @endforeach
-                ],
-                labels: {
-                    style: {
-                        fontSize: '12px'
-                    }
-                }
+        var categorys = @json($categorys);
+
+        var labels = categorys.map(function(category) {
+            return category.category_name;
+        });
+        var data = categorys.map(function(category) {
+            return category.contents_count || 0;
+        });
+
+        function generateColors(count) {
+            var backgroundColors = [];
+            var borderColors = [];
+
+            for (var i = 0; i < count; i++) {
+                var r = Math.floor(Math.random() * 256);
+                var g = Math.floor(Math.random() * 256);
+                var b = Math.floor(Math.random() * 256);
+
+                backgroundColors.push(`rgb(${r}, ${g}, ${b})`);
+                borderColors.push(`rgb(${Math.max(r - 20, 0)}, ${Math.max(g - 20, 0)}, ${Math.max(b - 20, 0)})`);
             }
+
+            return { backgroundColors, borderColors };
         }
 
-        var chart = new ApexCharts(document.querySelector("#chartColumn"), options);
+        var colors = generateColors(labels.length);
 
-        chart.render();
-    </script>
-
-    <script>
         var ctx = document.getElementById('barChart').getContext('2d');
 
         var myBarChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Invention', 'Paper', 'News', 'Posts'],
+                labels: labels,
                 datasets: [{
-                    data: [12, 19, 18, 15],
-                    backgroundColor: [
-                        '#3ACB3B',
-                        '#FF0000',
-                        '#0D47A1',
-                        '#00A3AA'
-                    ],
-                    borderColor: [
-                        'rgba(24, 124, 25, 1)',
-                        'rgba(255, 0, 0, 1)',
-                        'rgba(9, 0, 136, 1)',
-                        'rgba(15, 32, 39, 1)'
-                    ],
+                    data: data,
+                    backgroundColor: colors.backgroundColors,
+                    borderColor: colors.borderColors,
                     borderWidth: 1,
-                    barThickness: 40
+                    barThickness: 20
                 }]
             },
             options: {
@@ -244,17 +236,14 @@
                     y: {
                         beginAtZero: true,
                         title: {
-                            display: false,
-                            text: 'Category'
+                            display: true,
+                            text: 'Content Uploaded'
                         }
                     },
                     x: {
                         title: {
-                            display: false,
-                            text: 'Months'
-                        },
-                        label: {
-                            display: false
+                            display: true,
+                            text: 'Category'
                         }
                     }
                 },
@@ -269,7 +258,94 @@
     </script>
 
     <script>
-        var ctx = document.getElementById('pieChartCategory').getContext('2d');
+        var contents = @json($contents);
+
+        var labels = Object.keys(contents);
+        var data = Object.values(contents);
+
+        if (!labels.length) {
+            labels = ['No Data'];
+            data = [0];
+        }
+
+        function generateGradientColors(ctx, count) {
+            var gradients = [];
+            var borderColors = [];
+
+            for (var i = 0; i < count; i++) {
+                var r = Math.floor(Math.random() * 256);
+                var g = Math.floor(Math.random() * 256);
+                var b = Math.floor(Math.random() * 256);
+
+                var gradient = ctx.createLinearGradient(0, 0, 0, 200);
+
+                gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.6)`);
+                gradient.addColorStop(1, `rgba(${Math.min(r + 50, 255)}, ${Math.min(g + 50, 255)}, ${Math.min(b + 50, 255)}, 0.2)`);
+
+                gradients.push(gradient);
+
+                borderColors.push(`rgb(${Math.max(r - 20, 0)}, ${Math.max(g - 20, 0)}, ${Math.max(b - 20, 0)})`);
+            }
+            return { gradients, borderColors };
+        }
+
+        var ctx = document.getElementById('lineChart').getContext('2d');
+
+        var colors = generateGradientColors(ctx, labels.length);
+
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: colors.gradients[0],
+                    borderColor: colors.borderColors[0],
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Content Uploaded'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Month'
+                        }
+                    }
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
+
+    <script>
+        var chartData = @json($chartData);
+
+        var labels = chartData.labels;
+        var counts = chartData.counts;
+        var percentages = chartData.percentages;
+
+        if (!labels.length) {
+            labels = ['No Data'];
+            counts = [0];
+            percentages = [0];
+        }
+
+        var ctx = document.getElementById('pieChart').getContext('2d');
 
         var gradientGreen = ctx.createLinearGradient(0, 0, 400, 400);
         gradientGreen.addColorStop(0, '#3ACB3B');
@@ -283,22 +359,28 @@
         gradientBlue.addColorStop(0, '#0B48A1');
         gradientBlue.addColorStop(1, '#0D47A1');
 
+        var gradientGray = ctx.createLinearGradient(0, 0, 400, 400);
+        gradientGray.addColorStop(0, '#616161');
+        gradientGray.addColorStop(1, '#212121');
+
         var myPieChart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: ['Approved', 'Inactive', 'Pending'],
+                labels: labels,
                 datasets: [{
-                    label: 'Content Upload Stats',
-                    data: [65, 25, 10],
+                    label: 'User Status Distribution',
+                    data: percentages,
                     backgroundColor: [
+                        gradientBlue,
                         gradientGreen,
                         gradientRed,
-                        gradientBlue,
+                        gradientGray
                     ],
                     borderColor: [
-                        'rgba(24, 124, 25, 1)',
-                        'rgba(255, 0, 0, 1)',
-                        'rgba(9, 0, 136, 1)'
+                        'rgba(9, 0, 136, 1)',  
+                        'rgba(24, 124, 25, 1)', 
+                        'rgba(255, 0, 0, 1)', 
+                        'rgba(33, 33, 33, 1)' 
                     ],
                     borderWidth: 1
                 }]
@@ -308,100 +390,18 @@
                 plugins: {
                     legend: {
                         position: 'top',
+                        display: true
                     },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
                                 let label = context.label || '';
-                                let value = context.raw || 0;
-
-                                return `${label}: ${value}%`;
+                                let percentage = context.raw || 0;
+                                let count = counts[context.dataIndex] || 0;
+                                
+                                return `${label}: ${percentage}% (${count} users)`;
                             }
                         }
-                    }
-                }
-            }
-        });
-    </script>
-
-    <script>
-        var ctx = document.getElementById('lineChart').getContext('2d');
-
-        var gradientGreen = ctx.createLinearGradient(0, 0, 0, 200);
-        gradientGreen.addColorStop(0, 'rgba(15, 64, 16, 0.6)');
-        gradientGreen.addColorStop(1, 'rgba(58, 203, 59, 0.2)');
-
-        var gradientRed = ctx.createLinearGradient(0, 0, 0, 200);
-        gradientRed.addColorStop(0, 'rgba(128, 0, 0, 0.6)');
-        gradientRed.addColorStop(1, 'rgba(255, 102, 102, 0.2)');
-
-        var gradientBlue = ctx.createLinearGradient(0, 0, 0, 200);
-        gradientBlue.addColorStop(0, 'rgba(5, 0, 68, 0.6)');
-        gradientBlue.addColorStop(1, 'rgba(51, 51, 255, 0.2)');
-
-        var gradientDark = ctx.createLinearGradient(0, 0, 0, 200);
-        gradientDark.addColorStop(0, 'rgba(10, 23, 28, 0.6)');
-        gradientDark.addColorStop(1, 'rgba(44, 83, 100, 0.2)');
-
-        var myLineChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['January', 'February', 'March', 'April'],
-                datasets: [
-                    {
-                        data: [50, 75, 60, 90],
-                        backgroundColor: gradientGreen,
-                        borderColor: 'rgba(24, 124, 25, 1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4
-                    },
-                    {
-                        data: [30, 45, 55, 70],
-                        backgroundColor: gradientRed,
-                        borderColor: 'rgba(255, 0, 0, 1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4
-                    },
-                    {
-                        data: [20, 35, 25, 50],
-                        backgroundColor: gradientBlue,
-                        borderColor: 'rgba(9, 0, 136, 1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4
-                    },
-                    {
-                        data: [10, 25, 15, 40],
-                        backgroundColor: gradientDark,
-                        borderColor: 'rgba(15, 32, 39, 1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4
-                    }
-                ]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Contents'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Months'
-                        }
-                    }
-                },
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: false
                     }
                 }
             }

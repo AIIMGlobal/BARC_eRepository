@@ -5,50 +5,87 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use Response;
-use Session;
-use Illuminate\Support\Facades\App;
 use Auth;
+use Session;
+use Response;
+Use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 
 /* included models */
 use App\Models\User;
-use App\Models\Project;
-use App\Models\Document;
-use App\Models\District;
+use App\Models\Office;
 use App\Models\Upazila;
+use App\Models\Content;
+use App\Models\District;
+use App\Models\Category;
+use App\Models\UserContentActivity;
 
 class IndexController extends Controller
 {
     public function index(Request $request)
     {
-        $now =  date('Y-m-d');
-        $year =  date('Y');
-        $projectsCount = Project::count();
-        $documentsCount = Document::where('type', 1)->count();
-        $clientsCount = User::where('user_type', 7)->where('status', 1)->count();
+        $categorys = Category::where('status', 1)
+                                ->withCount(['contents' => function ($query) {
+                                    $query->where('status', 1);
+                                }])
+                                ->orderByDesc('contents_count')
+                                ->get();
+
+        $currentYear = date('Y');
+
+        $contents = Content::where('status', 1)
+                            ->whereYear('created_at', $currentYear)
+                            ->get()
+                            ->groupBy(function ($content) {
+                                return Carbon::parse($content->created_at)->format('F');
+                            })
+                            ->map(function ($group) {
+                                return $group->count();
+                            })
+                            ->sortKeys();
+
+        $users = User::with('userInfo')
+                        ->where('user_type', 4)
+                        ->whereIn('status', [0, 1, 2, 3])
+                        ->get();
+
+        $statusMap = [
+            0 => 'Pending',
+            1 => 'Approved',
+            2 => 'Declined',
+            3 => 'Archived'
+        ];
+
+        $statusCounts = $users->groupBy('status')->map(function ($group) {
+            return $group->count();
+        })->mapWithKeys(function ($count, $status) use ($statusMap) {
+            return [$statusMap[$status] ?? 'Unknown' => $count];
+        })->only(array_values($statusMap));
+
+        $statusCounts = collect($statusMap)->mapWithKeys(function ($label) use ($statusCounts) {
+            return [$label => $statusCounts->get($label, 0)];
+        });
+
+        $totalUsers = $statusCounts->sum();
+
+        $chartData = [
+            'labels' => $statusCounts->keys()->toArray(),
+            'counts' => $statusCounts->values()->toArray(),
+            'percentages' => $statusCounts->map(function ($count) use ($totalUsers) {
+                return $totalUsers > 0 ? round(($count / $totalUsers) * 100, 2) : 0;
+            })->values()->toArray()
+        ];
+
+        $offices = Office::whereIn('id', $users->pluck('userInfo.office_id')->unique())->pluck('name', 'id');
+
+        $uploadedCount = Content::where('status', 1)->where('created_by', Auth::id())->count();
+        $favCount = UserContentActivity::where('activity_type', 1)->where('user_id', Auth::id())->count();
+        $savedCount = UserContentActivity::where('activity_type', 2)->where('user_id', Auth::id())->count();
         $employeesCount = User::where('user_type', 3)->where('status', 1)->count();
         $usersCount = User::where('user_type', 4)->where('status', 1)->count();
 
-        $latestProjects = Project::where('end_date', '>=', $now)->orderByRaw('ISNULL(end_date), end_date ASC')->take(5)->get();
-
-        $query = Project::query();
-
-        if ($request->from_date || $request->to_date) {
-            if ($request->from_date && $request->from_date != '') {
-                $query->whereDate('start_date', '>=', $request->from_date);
-            }
-            
-            if ($request->to_date && $request->to_date != '') {
-                $query->whereDate('start_date', '<=', $request->to_date);
-            }
-        } else {
-            $query->latest()->take(10);
-        }
-
-        $projects = $query->get();
-
-        return view('backend.index', compact('employeesCount', 'projectsCount', 'clientsCount', 'documentsCount', 'latestProjects', 'projects', 'usersCount'));
+        return view('backend.index', compact('employeesCount', 'categorys', 'contents', 'usersCount', 'favCount', 'savedCount', 'uploadedCount', 'users', 'offices', 'chartData'));
     }
 
     public function getDistrictsAJAX(Request $request)
