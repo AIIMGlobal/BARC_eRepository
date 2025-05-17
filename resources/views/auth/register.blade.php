@@ -212,6 +212,10 @@
                                                 <option value="1000">Other</option>
                                             </select>
                                         </div>
+
+                                        <div class="form-group" id="other_designation_group" style="display: none;">
+                                            <input type="text" name="other_designation" id="other_designation" class="form-control" placeholder="Enter new designation">
+                                        </div>
                                     </div>
 
                                     <div class="col-6">
@@ -283,6 +287,16 @@
             $(document).ready(function () {
                 $('.select2').select2();
 
+                $('#designation_id').on('change', function() {
+                    if ($(this).val() === '1000') {
+                        $('#other_designation_group').show();
+                        $('#other_designation').attr('required', true);
+                    } else {
+                        $('#other_designation_group').hide();
+                        $('#other_designation').removeAttr('required').val('');
+                    }
+                });
+
                 $("#registerForm").on("submit", function (e) {
                     e.preventDefault();
 
@@ -304,9 +318,9 @@
                                     icon: "success",
                                     title: "Success",
                                     text: response.message
+                                }).then(() => {
+                                    window.location.href = response.redirect;
                                 });
-
-                                window.location.href = response.redirect;
                             } else {
                                 Swal.fire({
                                     icon: "error",
@@ -316,7 +330,17 @@
                             }
                         },
                         error: function (xhr) {
-                            toastr.error("An error occurred. Please try again.");
+                            if (xhr.status === 422) {
+                                let errors = xhr.responseJSON.message;
+
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Validation Error",
+                                    text: errors
+                                });
+                            } else {
+                                toastr.error("An error occurred. Please try again.");
+                            }
                         },
                         complete: function () {
                             submitButton.prop("disabled", false);

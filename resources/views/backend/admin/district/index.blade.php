@@ -46,7 +46,7 @@
                                         <select class="form-control" data-choices data-choices-search-false name="division" id="idStatus">
                                             <option value="">{{__('pages.Select District')}}</option>
                                             @foreach ($regions as $region)
-                                                    <option @if(isset($_GET['division']) and $_GET['division']==$region->id) selected @endif value="{{$region->id}}">{{$region->name}}</option>
+                                                    <option @if(isset($_GET['division']) and $_GET['division']==$region->id) selected @endif value="{{$region->id}}">{{$region->name_en}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -54,7 +54,7 @@
                                 <!--end col-->
                                 <div class="col-xxl-2 col-sm-6">
                                     <div class="search-box">
-                                        <input @if(isset($_GET['name']) and $_GET['name']!='') value="{{$_GET['name']}}" @endif type="text" class="form-control search" name="name" placeholder="{{__('pages.District Name')}}">
+                                        <input @if(isset($_GET['name_en']) and $_GET['name_en']!='') value="{{$_GET['name_en']}}" @endif type="text" class="form-control search" name="name_en" placeholder="{{__('pages.District Name')}}">
                                         <i class="ri-search-line search-icon"></i>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                                         <th>{{__('pages.District Name')}}</th>
                                         <th>{{__('pages.Division')}}</th>
                                         <th class="text-center">{{__('pages.Status')}}</th>
-                                        <th>{{__('pages.Created By')}}</th>
+                                        {{-- <th>{{__('pages.Created By')}}</th> --}}
                                         <th class="text-center">{{__('pages.Action')}}</th>
                                     </tr>
                                 </thead>
@@ -104,8 +104,8 @@
                                         @foreach ($districts as $district)
                                             <tr>
                                                 <td class="text-center">{{$i}}</td>
-                                                <td>{{$district->name ?? '-'}}</td>
-                                                <td>{{$district->divisionInfo->name ?? '-'}}</td>
+                                                <td>{{$district->name_en ?? '-'}}</td>
+                                                <td>{{$district->divisionInfo->name_en ?? '-'}}</td>
                                                 <td class="text-center">
                                                     @if ($district->status == 1)
                                                         <span class="badge bg-success">{{__('pages.Active')}}</span>
@@ -113,7 +113,7 @@
                                                         <span class="badge bg-danger">{{__('pages.Inactive')}}</span>
                                                     @endif
                                                 </td>
-                                                <td>{{$district->createdBy->full_name ?? '-'}}</td>
+                                                {{-- <td>{{$district->createdBy->full_name ?? '-'}}</td> --}}
                                                 <td class="text-center">
 
                                                     @can('view_district')

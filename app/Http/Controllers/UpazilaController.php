@@ -17,15 +17,15 @@ class UpazilaController extends Controller
     {
         $user = Auth::user();
         if(Gate::allows('manage_upazila', $user)){
-            $query = Upazila::orderBy('sl','ASC');
+            $query = Upazila::orderBy('name_en','ASC');
             if (isset($request->division) and $request->division != '') {
                 $query->whereHas('districtInfo',function($new_query) use ($request){
                     $new_query->where('division_id',$request->division);
                 });
             }
 
-            if (isset($request->name) and $request->name != '') {
-                $query->where('name','like','%'.$request->name.'%');
+            if (isset($request->name_en) and $request->name_en != '') {
+                $query->where('name_en','like','%'.$request->name_en.'%');
             }
             $upazilas = $query->with('districtInfo.divisionInfo')->paginate(20);
             $regions = Division::where('status',1)->latest()->get();
@@ -56,7 +56,7 @@ class UpazilaController extends Controller
         $user = Auth::user();
         if(Gate::allows('add_upazila', $user)){
             $validated = $request->validate([
-                'name' => 'required|unique:upazilas',
+                'name_en' => 'required|unique:upazilas',
             ]);
             $data = $request->all();
             $data['created_by'] = auth()->user()->id;
@@ -100,7 +100,7 @@ class UpazilaController extends Controller
         $user = Auth::user();
         if(Gate::allows('edit_upazila', $user)){
             $request->validate([
-                'name' => 'required|unique:upazilas,name,' . $id,
+                'name_en' => 'required|unique:upazilas,name_en,' . $id,
             ]);
 
             $data = $request->all();

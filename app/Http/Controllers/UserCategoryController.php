@@ -53,7 +53,7 @@ class UserCategoryController extends Controller
             $user_category->sl = $request->sl;
             $user_category->save();
             
-            return redirect()->route('admin.user_category.index')->with('success', 'New User Category added successfully..!');
+            return redirect()->route('admin.user_category.index')->with('success', 'New Service Type added successfully..!');
 
         }else{
             return abort(403, "You don't have permission..!");
@@ -78,7 +78,7 @@ class UserCategoryController extends Controller
             $user_category->sl = $request->sl;
             $user_category->save();
 
-            return redirect()->route('admin.user_category.index')->with('success', 'User Category Updated successfully..!');
+            return redirect()->route('admin.user_category.index')->with('success', 'Service Type Updated successfully..!');
         }else{
             return abort(403, "You don't have permission..!");
         }
@@ -98,7 +98,7 @@ class UserCategoryController extends Controller
             
             $user_category->delete();
 
-            return redirect()->route('admin.user_category.index')->with('success', 'User Category Deleted successfully..!');
+            return redirect()->route('admin.user_category.index')->with('success', 'Service Type Deleted successfully..!');
         }else{
             return abort(403, "You don't have permission..!");
         }

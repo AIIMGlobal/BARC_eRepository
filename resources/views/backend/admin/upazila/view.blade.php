@@ -37,16 +37,16 @@
                         <tbody>
                             <tr>
                                 <td>{{__('pages.Name')}}:</td>
-                                <td>{{$upazila->name}}</td>
+                                <td>{{$upazila->name_en}}</td>
                             </tr>
 
                             <tr>
                                 <td>{{__('pages.Division')}}:</td>
-                                <td>{{$upazila->districtInfo->divisionInfo->name ?? '-'}}</td>
+                                <td>{{$upazila->districtInfo->divisionInfo->name_en ?? '-'}}</td>
                             </tr>
                             <tr>
                                 <td>{{__('pages.District')}}:</td>
-                                <td>{{$upazila->districtInfo->name ?? '-'}}</td>
+                                <td>{{$upazila->districtInfo->name_en ?? '-'}}</td>
                             </tr>
                             <tr>
                                 <td>{{__('pages.Status')}}:</td>

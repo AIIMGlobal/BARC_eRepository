@@ -106,15 +106,15 @@
                                 
                                 @can('user_category_management')
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.user_category.index') }}" class="nav-link">User Category</a>
+                                        <a href="{{ route('admin.user_category.index') }}" class="nav-link">User Service Type</a>
                                     </li>
                                 @endcan
 
-                                @can('employee_category_report')
+                                {{-- @can('employee_category_report')
                                     <li class="nav-item">
                                         <a href="{{ route('admin.report.employeeCategory') }}" class="nav-link" data-key="t-basic">User Category Summary</a>
                                     </li>
-                                @endcan
+                                @endcan --}}
 
                                 @can('all_roles')
                                     <li class="nav-item">

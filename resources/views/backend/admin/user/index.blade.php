@@ -53,8 +53,21 @@
 
                                                     @foreach ($users as $user)
                                                         <option @if (isset($_GET['user_id']) && $_GET['user_id'] == $user->id) selected @endif
-                                                        value="{{ $user->id }}">{{ $user->name_en }}</option>
+                                                        value="{{ $user->id }}">{{ $user->name_en }} ({{ $user->mobile }})</option>
                                                     @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-6 col-12 pt-1">
+                                        <div class="search-box">
+                                            <div>
+                                                <select class="form-control select2" name="user_type" id="user_type">
+                                                    <option value="">--Search by User Type--</option>
+
+                                                    <option value="3">Employee</option>
+                                                    <option value="4">Registered User</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -114,13 +127,14 @@
 
 @push('script')
     <script>
-        $('#searchText, #user_id').on('change keyup', function () {
+        $('#searchText, #user_id, #user_type').on('change keyup', function () {
             fetchFilteredData();
         });
 
         $('#resetButton').on('click', function () {
             // $('#searchText').val('');
             $('#user_id').val('').trigger('change');
+            $('#user_type').val('').trigger('change');
 
             fetchFilteredData();
         });
@@ -128,6 +142,7 @@
         function fetchFilteredData() {
             // const searchText = $('#searchText').val();
             const user_id = $('#user_id').val();
+            const user_type = $('#user_type').val();
 
             $.ajax({
                 url: "{{ route('admin.user.index') }}",
@@ -135,6 +150,7 @@
                 data: {
                     // searchText: searchText,
                     user_id: user_id,
+                    user_type: user_type,
                 },
                 beforeSend: function () {
                     $('#datatable tbody').html('<tr><td colspan="8" class="text-center">Loading...</td></tr>');

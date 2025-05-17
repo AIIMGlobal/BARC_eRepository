@@ -78,7 +78,7 @@
                                         <th class="text-center">{{__('pages.No')}}</th>
                                         <th>{{__('pages.Department Name')}}</th>
                                         <th class="text-center">{{__('pages.Status')}}</th>
-                                        <th>{{__('pages.Created By')}}</th>
+                                        {{-- <th>{{__('pages.Created By')}}</th> --}}
                                         <th class="text-center">{{__('pages.Action')}}</th>
                                     </tr>
                                 </thead>
@@ -99,7 +99,7 @@
                                                         <span class="badge bg-danger">{{__('pages.Inactive')}}</span>
                                                     @endif
                                                 </td>
-                                                <td>{{$department->createdBy->full_name ?? '--'}}</td>
+                                                {{-- <td>{{$department->createdBy->full_name ?? '--'}}</td> --}}
                                                 <td class="text-center">
 
                                                     @can('edit_department')

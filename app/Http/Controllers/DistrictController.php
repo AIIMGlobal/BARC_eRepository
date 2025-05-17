@@ -16,12 +16,12 @@ class DistrictController extends Controller
     {
         $user = Auth::user();
         if(Gate::allows('manage_district', $user)){
-            $query = District::orderBy('sl','ASC');
+            $query = District::orderBy('name_en','ASC');
             if (isset($request->division) and $request->division != '') {
                 $query->where('division_id',$request->division);
             }
-            if (isset($request->name) and $request->name != '') {
-                $query->where('name','like','%'.$request->name.'%');
+            if (isset($request->name_en) and $request->name_en != '') {
+                $query->where('name_en','like','%'.$request->name_en.'%');
             }
             $districts = $query->paginate(20);
             $regions = Division::where('status',1)->latest()->get();
@@ -37,7 +37,7 @@ class DistrictController extends Controller
         $user = Auth::user();
         if(Gate::allows('add_district', $user)){
             $validated = $request->validate([
-                'name' => 'required|unique:districts',
+                'name_en' => 'required|unique:districts',
             ]);
             $data = $request->all();
             $data['created_by'] = auth()->user()->id;
@@ -67,7 +67,7 @@ class DistrictController extends Controller
         $user = Auth::user();
         if(Gate::allows('edit_district', $user)){
             $request->validate([
-                'name' => 'required|unique:districts,name,' . $id,
+                'name_en' => 'required|unique:districts,name_en,' . $id,
             ]);
             $data = $request->all();
             $data['status'] = $request->status ?? 0;

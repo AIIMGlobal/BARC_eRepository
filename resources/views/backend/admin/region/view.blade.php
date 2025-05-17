@@ -41,7 +41,7 @@
                             </tr> --}}
                             <tr>
                                 <td>{{__('pages.Name')}}:</td>
-                                <td>{{$region->name}}</td>
+                                <td>{{$region->name_en}}</td>
                             </tr>
                             <tr>
                                 <td>{{__('pages.Status')}}:</td>

@@ -36,7 +36,7 @@ class DesignationController extends Controller
             $designation->created_by = Auth::user()->id;
             $designation->status = 1;
             $designation->save();
-            return redirect()->route('admin.designation.index')->with('success', 'New Designation has been added');
+            return redirect()->route('admin.designation.index')->with('success', 'New Designation Added Successfully!');
         }else{
             return abort(403, "You don't have permission..!");
         }
@@ -52,7 +52,7 @@ class DesignationController extends Controller
             $designation->created_by = Auth::user()->id;
             $designation->status = 1;
             $designation->save();
-            return redirect()->route('admin.designation.index')->with('success', 'Designation has been updated');
+            return redirect()->route('admin.designation.index')->with('success', 'Designation Updated Successfully!');
         }else{
             return abort(403, "You don't have permission..!");
         }

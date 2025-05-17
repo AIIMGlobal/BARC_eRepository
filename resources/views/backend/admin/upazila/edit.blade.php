@@ -43,7 +43,7 @@
                                 <div class="col-md-4 col-sm-6 col-xsm-12">
                                     <div>
                                         <label for="name" class="form-label">{{__('pages.Upazila Name')}} <span style="color:red;">*</span></label>
-                                        <input type="text" class="form-control" name="name" placeholder="{{__('pages.Upazila Name')}}" value="{{$upazila->name}}" required>
+                                        <input type="text" class="form-control" name="name_en" placeholder="{{__('pages.Upazila Name')}}" value="{{$upazila->name}}" required>
                                     </div>
                                 </div>
 
@@ -53,7 +53,7 @@
                                         <select id="my-select" class="form-control select2" name="district_id" required>
                                             <option value="">--{{__('pages.Select District')}}--</option>
                                             @foreach ($districts as $district)
-                                                <option @if($district->id == $upazila->district_id) selected @endif value="{{$district->id}}">{{$district->name}} ({{$district->divisionInfo->name ?? '-'}})</option>
+                                                <option @if($district->id == $upazila->district_id) selected @endif value="{{$district->id}}">{{$district->name_en}} ({{$district->divisionInfo->name_en ?? '-'}})</option>
                                             @endforeach
                                         </select>
                                     </div>

@@ -107,6 +107,7 @@ class RegisterController extends Controller
             'user_category_id'  => 'required|exists:user_categories,id',
             'office_id'         => 'required|exists:offices,id',
             'designation_id'    => 'required|string|max:255',
+            'other_designation' => 'required_if:designation_id,1000|string|max:255|nullable',
             'email'             => 'required|email|unique:users,email',
             'mobile'            => 'required|string|max:14|unique:users,mobile',
             'password'          => 'required|min:6|confirmed',
@@ -121,17 +122,38 @@ class RegisterController extends Controller
         }
 
         try {
+            DB::beginTransaction();
+
+            $imagePath = null;
+
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $imagePath = $image->store('userImages', 'public');
-            } else {
-                $imagePath = null;
             }
 
-            DB::beginTransaction();
+            $designationId = $request->designation_id;
+
+            if ($request->designation_id == '1000') {
+                $existingDesignation = Designation::where('name', $request->other_designation)->first();
+                
+                if ($existingDesignation) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Designation already exists.'
+                    ], 422);
+                }
+
+                $newDesignation = new Designation;
+
+                $newDesignation->name = $request->other_designation;
+
+                $newDesignation->save();
+                
+                $designationId = $newDesignation->id;
+            }
 
             $user = new User;
-            
+
             $user->name_en           = $request->name_en;
             $user->user_category_id  = $request->user_category_id;
             $user->email             = $request->email;
@@ -140,14 +162,13 @@ class RegisterController extends Controller
             $user->role_id           = 4;
             $user->password          = Hash::make($request->password);
             $user->status            = 4;
-
             $user->save();
 
             $userInfo = new UserInfo;
 
             $userInfo->user_id          = $user->id;
             $userInfo->office_id        = $request->office_id;
-            $userInfo->designation_id   = $request->designation_id;
+            $userInfo->designation_id   = $designationId;
             $userInfo->image            = $imagePath;
             $userInfo->created_by       = Auth::id();
 
@@ -157,22 +178,16 @@ class RegisterController extends Controller
 
             $verifyLink = url('email-verify/' . Crypt::encryptString($user->id));
 
-            if ($user) {
-                Mail::to($user->email)->send(new EmailVerificationMail($setting, $user, $verifyLink));
+            Mail::to($user->email)->send(new EmailVerificationMail($setting, $user, $verifyLink));
 
-                DB::commit();
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Registration is in progress. Please verify your email.',
-                    'redirect' => route('verify', Crypt::encryptString($user->id))
-                ]);
-            }
+            DB::commit();
 
             return response()->json([
-                'success' => false,
-                'message' => 'Registration failed, please try again.'
-            ], 500);
+                'success' => true,
+                'message' => 'Registration is in progress. Please verify your email.',
+                'redirect' => route('verify', Crypt::encryptString($user->id))
+            ]);
+
         } catch (\Exception $e) {
             DB::rollBack();
 

@@ -15,7 +15,7 @@ class DivisionController extends Controller
     {
         $user = Auth::user();
         if(Gate::allows('manage_region', $user)){
-            $query = Division::orderBy('sl','ASC');
+            $query = Division::orderBy('name_en','ASC');
             $regions = $query->paginate(20);
             return view('backend.admin.region.index', compact("regions"));
         }else{
@@ -29,7 +29,7 @@ class DivisionController extends Controller
         $user = Auth::user();
         if(Gate::allows('add_region', $user)){
             $validated = $request->validate([
-                'name' => 'required|unique:divisions',
+                'name_en' => 'required|unique:divisions',
             ]);
             $data = $request->all();
             $data['created_by'] = auth()->user()->id;
@@ -59,7 +59,7 @@ class DivisionController extends Controller
         $user = Auth::user();
         if(Gate::allows('edit_region', $user)){
             $request->validate([
-                'name' => 'required|unique:divisions,name,' . $id,
+                'name_en' => 'required|unique:divisions,name_en,' . $id,
             ]);
 
             $data = $request->all();

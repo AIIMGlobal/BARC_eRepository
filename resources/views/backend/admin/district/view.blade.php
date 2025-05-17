@@ -41,12 +41,12 @@
                             </tr> --}}
                             <tr>
                                 <td>{{__('pages.Name')}}:</td>
-                                <td>{{$district->name}}</td>
+                                <td>{{$district->name_en}}</td>
                             </tr>
 
                             <tr>
                                 <td>{{__('pages.Division')}}:</td>
-                                <td>{{$district->divisionInfo->name ?? '-'}}</td>
+                                <td>{{$district->divisionInfo->name_en ?? '-'}}</td>
                             </tr>
                             <tr>
                                 <td>{{__('pages.Status')}}:</td>

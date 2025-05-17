@@ -44,10 +44,10 @@
                         <div class="card-body border border-dashed border-end-0 border-start-0">
                             <form>
                                 <div class="row g-3">
-                                    <div class="col-md-2 col-sm-6">
+                                    <div class="col-md-4 col-sm-6">
                                         <div class="search-box">
                                             <select name="office_id" id="office_id" class="form-control select2">
-                                                <option value="">--Search by Office--</option>
+                                                <option value="">--Search by Organization--</option>
 
                                                 @if (count($orgs) > 0)
                                                     @foreach ($orgs as $org)

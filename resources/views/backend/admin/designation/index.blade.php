@@ -79,8 +79,8 @@
                                     <tr>
                                         <th class="text-center">{{__('pages.No')}}</th>
                                         <th>{{__('pages.Designation')}}</th>
-                                        <th>{{__('pages.Created By')}}</th>
-                                        <th>{{__('pages.Created At')}}</th>
+                                        {{-- <th>{{__('pages.Created By')}}</th> --}}
+                                        {{-- <th>{{__('pages.Created At')}}</th> --}}
                                         <th class="text-center">{{__('pages.Action')}}</th>
                                     </tr>
                                 </thead>
@@ -94,10 +94,10 @@
                                             <tr>
                                                 <td class="text-center">{{$i}}</td>
                                                 <td>{{$designation->name ?? '-'}}</td>
-                                                <td>{{$designation->createdUser ? $designation->createdUser->full_name : '-'}}</td>
+                                                {{-- <td>{{$designation->createdUser ? $designation->createdUser->full_name : '-'}}</td>
                                                 <td>
                                                     {{$designation->created_at->format('d-m-Y')}}
-                                                </td>
+                                                </td> --}}
                                                 <td class="text-center">
                                                     @can('edit_designation')
                                                         <button type="button" title="Edit" class="btn btn-icon btn-sm btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#editdesignation{{$designation->id}}">

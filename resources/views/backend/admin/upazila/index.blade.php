@@ -45,7 +45,7 @@
                                         <select class="form-control" data-choices data-choices-search-false name="division" id="idStatus">
                                             <option value="">{{__('pages.Select Division')}}</option>
                                             @foreach ($regions as $region)
-                                                    <option @if(isset($_GET['division']) and $_GET['division']==$region->id) selected @endif value="{{$region->id}}">{{$region->name}}</option>
+                                                    <option @if(isset($_GET['division']) and $_GET['division']==$region->id) selected @endif value="{{$region->id}}">{{$region->name_en}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -53,7 +53,7 @@
                                 <!--end col-->
                                 <div class="col-xxl-2 col-sm-6">
                                     <div class="search-box">
-                                        <input type="text" class="form-control search" name="name" placeholder="{{__('pages.Upazila Name')}}" @if(isset($_GET['name']) and $_GET['name']!='') value="{{$_GET['name']}}" @endif>
+                                        <input type="text" class="form-control search" name="name_en" placeholder="{{__('pages.Upazila Name')}}" @if(isset($_GET['name_en']) and $_GET['name_en']!='') value="{{$_GET['name_en']}}" @endif>
                                         <i class="ri-search-line search-icon"></i>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                                         <th>{{__('pages.Division')}}</th>
                                         <th>{{__('pages.District')}}</th>
                                         <th class="text-center">{{__('pages.Status')}}</th>
-                                        <th>{{__('pages.Created By')}}</th>
+                                        {{-- <th>{{__('pages.Created By')}}</th> --}}
                                         <th class="text-center">{{__('pages.Action')}}</th>
                                     </tr>
                                 </thead>
@@ -104,9 +104,9 @@
                                         @foreach ($upazilas as $upazila)
                                             <tr>
                                                 <td class="text-center">{{$i}}</td>
-                                                <td>{{$upazila->name ?? '-'}}</td>
-                                                <td>{{$upazila->districtInfo->divisionInfo->name ?? '-'}}</td>
-                                                <td>{{$upazila->districtInfo->name ?? '-'}}</td>
+                                                <td>{{$upazila->name_en ?? '-'}}</td>
+                                                <td>{{$upazila->districtInfo->divisionInfo->name_en ?? '-'}}</td>
+                                                <td>{{$upazila->districtInfo->name_en ?? '-'}}</td>
                                                 <td class="text-center">
                                                     @if ($upazila->status == 1)
                                                         <span class="badge bg-success">{{__('pages.Active')}}</span>
@@ -114,7 +114,7 @@
                                                         <span class="badge bg-danger">{{__('pages.Inactive')}}</span>
                                                     @endif
                                                 </td>
-                                                <td>{{$upazila->createdBy->full_name ?? '-'}}</td>
+                                                {{-- <td>{{$upazila->createdBy->full_name ?? '-'}}</td> --}}
                                                 <td class="text-center">
 
                                                     @can('view_upazila')

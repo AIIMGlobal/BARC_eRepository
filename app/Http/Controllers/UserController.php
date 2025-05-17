@@ -51,8 +51,12 @@ class UserController extends Controller
             if ($request->filled('user_id')) {
                 $query->where('id', $request->user_id);
             }
+
+            if ($request->filled('user_type')) {
+                $query->where('user_type', $request->user_type);
+            }
             
-            $users = $query->where('role_id', '!=', 1)->whereNotIn('status', [3,5])->latest()->get();
+            $users = $query->where('role_id', '!=', 1)->where('status', '!=', 5)->latest()->get();
 
             if ($request->ajax()) {
                 $html = view('backend.admin.user.table', compact('users'))->render();

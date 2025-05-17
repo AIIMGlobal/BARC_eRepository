@@ -48,7 +48,7 @@
                                         <th class="text-center">{{__('pages.No')}}</th>
                                         <th>{{__('pages.Division Name')}}</th>
                                         <th class="text-center">{{__('pages.Status')}}</th>
-                                        <th>{{__('pages.Created By')}}</th>
+                                        {{-- <th>{{__('pages.Created By')}}</th> --}}
                                         <th class="text-center">{{__('pages.Action')}} </th>
                                     </tr>
                                 </thead>
@@ -61,7 +61,7 @@
                                         @foreach ($regions as $region)
                                             <tr>
                                                 <td class="text-center">{{$i}}</td>
-                                                <td>{{$region->name ?? '-'}}</td>
+                                                <td>{{$region->name_en ?? '-'}}</td>
                                                 <td class="text-center">
                                                     @if ($region->status == 1)
                                                         <span class="badge bg-success">{{__('pages.Active')}}</span>
@@ -69,7 +69,7 @@
                                                         <span class="badge bg-danger">{{__('pages.Inactive')}}</span>
                                                     @endif
                                                 </td>
-                                                <td>{{$region->createdBy->full_name ?? '-'}}</td>
+                                                {{-- <td>{{$region->createdBy->full_name ?? '-'}}</td> --}}
                                                 <td class="text-center">
 
                                                     @can('view_region')
@@ -112,8 +112,8 @@
                                                                 <div class="row g-3">
                                                                     <div class="col-12">
                                                                         <div>
-                                                                            <label for="name" class="form-label">{{__('pages.Division Name')}}<span style="color:red;">*</span></label>
-                                                                            <input type="text" class="form-control" name="name" placeholder=" Division Name" value="{{$region->name}}" required>
+                                                                            <label for="name_en" class="form-label">{{__('pages.Division Name')}}<span style="color:red;">*</span></label>
+                                                                            <input type="text" class="form-control" name="name_en" placeholder=" Division Name" value="{{$region->name_en}}" required>
                                                                         </div>
                                                                     </div><!--end col-->
 
@@ -191,8 +191,8 @@
 
                         <div class="col-12">
                             <div>
-                                <label for="Name" class="form-label">{{__('pages.Division Name')}} <span style="color:red;">*</span></label>
-                                <input type="text" class="form-control" name="name" placeholder=" Division Name" required>
+                                <label for="name_en" class="form-label">{{__('pages.Division Name')}} <span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" name="name_en" placeholder=" Division Name" required>
                             </div>
                         </div><!--end col-->
                         {{-- <div class="col-lg-12">
