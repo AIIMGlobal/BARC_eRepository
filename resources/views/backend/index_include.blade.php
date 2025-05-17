@@ -89,7 +89,7 @@
                             <p class="title">Repository Contents</p>
                             
                             <h2 class="count">
-                                <span class="counter-value" data-target="{{ $contents->count() ?? 0 }}">{{ $contents->count() ?? 0 }}</span>
+                                <span class="counter-value" data-target="{{ $contentCount ?? 0 }}">{{ $contentCount ?? 0 }}</span>
                             </h2>
                         </div>
                     </div>
@@ -333,20 +333,26 @@
     </script>
 
     <script>
+        // Pass PHP chart data to JavaScript
         var chartData = @json($chartData);
 
+        // Extract labels, counts, percentages, and office counts
         var labels = chartData.labels;
         var counts = chartData.counts;
         var percentages = chartData.percentages;
+        var officeCounts = chartData.office_counts;
 
+        // If no data, set fallback
         if (!labels.length) {
             labels = ['No Data'];
             counts = [0];
             percentages = [0];
+            officeCounts = {};
         }
 
-        var ctx = document.getElementById('pieChart').getContext('2d');
+        var ctx = document.getElementById('pieChartCategory').getContext('2d');
 
+        // Define gradients
         var gradientGreen = ctx.createLinearGradient(0, 0, 400, 400);
         gradientGreen.addColorStop(0, '#3ACB3B');
         gradientGreen.addColorStop(1, '#0F4010');
@@ -371,16 +377,16 @@
                     label: 'User Status Distribution',
                     data: percentages,
                     backgroundColor: [
-                        gradientBlue,
-                        gradientGreen,
-                        gradientRed,
-                        gradientGray
+                        gradientGreen, // Pending
+                        gradientRed,   // Approved
+                        gradientBlue,  // Declined
+                        gradientGray   // Archived
                     ],
                     borderColor: [
-                        'rgba(9, 0, 136, 1)',  
-                        'rgba(24, 124, 25, 1)', 
-                        'rgba(255, 0, 0, 1)', 
-                        'rgba(33, 33, 33, 1)' 
+                        'rgba(24, 124, 25, 1)',  // Pending
+                        'rgba(255, 0, 0, 1)',    // Approved
+                        'rgba(9, 0, 136, 1)',    // Declined
+                        'rgba(33, 33, 33, 1)'    // Archived
                     ],
                     borderWidth: 1
                 }]
@@ -397,9 +403,19 @@
                             label: function(context) {
                                 let label = context.label || '';
                                 let percentage = context.raw || 0;
-                                let count = counts[context.dataIndex] || 0;
-                                
-                                return `${label}: ${percentage}% (${count} users)`;
+                                let totalCount = counts[context.dataIndex] || 0;
+                                let officeData = officeCounts[label] || {};
+
+                                // Start with status and percentage
+                                let tooltipLines = [`${label}: ${percentage}% (${totalCount} users)`];
+
+                                // Add office-specific counts
+                                for (let officeId in officeData) {
+                                    let office = officeData[officeId];
+                                    tooltipLines.push(`${office.name}: ${office.count} users`);
+                                }
+
+                                return tooltipLines;
                             }
                         }
                     }

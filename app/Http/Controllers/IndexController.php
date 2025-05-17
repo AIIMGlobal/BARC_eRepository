@@ -45,39 +45,59 @@ class IndexController extends Controller
                             })
                             ->sortKeys();
 
-        $users = User::with('userInfo')
-                        ->where('user_type', 4)
-                        ->whereIn('status', [0, 1, 2, 3])
-                        ->get();
+        $contentCount = Content::where('status', 1)->count();
 
+        $users = User::with('userInfo')
+            ->where('user_type', 4)
+            ->whereIn('status', [0, 1, 2, 4])
+            ->get();
+
+        // Define status mapping
         $statusMap = [
             0 => 'Pending',
             1 => 'Approved',
             2 => 'Declined',
-            3 => 'Archived'
+            4 => 'Archived'
         ];
 
-        $statusCounts = $users->groupBy('status')->map(function ($group) {
-            return $group->count();
-        })->mapWithKeys(function ($count, $status) use ($statusMap) {
-            return [$statusMap[$status] ?? 'Unknown' => $count];
+        // Group users by status and office_id
+        $statusOfficeCounts = $users->groupBy('status')->map(function ($statusGroup) {
+            return $statusGroup->groupBy('userInfo.office_id')->map->count();
+        })->mapWithKeys(function ($officeCounts, $status) use ($statusMap) {
+            return [$statusMap[$status] ?? 'Unknown' => $officeCounts];
         })->only(array_values($statusMap));
 
-        $statusCounts = collect($statusMap)->mapWithKeys(function ($label) use ($statusCounts) {
-            return [$label => $statusCounts->get($label, 0)];
+        // Ensure all statuses are present (even if empty)
+        $statusOfficeCounts = collect($statusMap)->mapWithKeys(function ($label) use ($statusOfficeCounts) {
+            return [$label => $statusOfficeCounts->get($label, collect())];
         });
 
+        // Calculate total counts per status
+        $statusCounts = $statusOfficeCounts->map(function ($officeCounts) {
+            return $officeCounts->sum();
+        });
+
+        // Calculate total users for percentages
         $totalUsers = $statusCounts->sum();
 
+        // Fetch office names
+        $officeIds = $users->pluck('userInfo.office_id')->unique()->filter();
+        $offices = Office::whereIn('id', $officeIds)->pluck('name', 'id')->toArray();
+
+        // Prepare chart data
         $chartData = [
-            'labels' => $statusCounts->keys()->toArray(),
+            'labels' => $statusCounts->keys()->toArray(), // ['Pending', 'Approved', 'Declined', 'Archived']
             'counts' => $statusCounts->values()->toArray(),
             'percentages' => $statusCounts->map(function ($count) use ($totalUsers) {
                 return $totalUsers > 0 ? round(($count / $totalUsers) * 100, 2) : 0;
-            })->values()->toArray()
+            })->values()->toArray(),
+            'office_counts' => $statusOfficeCounts->map(function ($officeCounts) use ($offices) {
+                return $officeCounts->mapWithKeys(function ($count, $officeId) use ($offices) {
+                    $officeName = $offices[$officeId] ?? 'Unknown Office';
+                    return [$officeId => ['name' => $officeName, 'count' => $count]];
+                })->toArray();
+            })->toArray()
         ];
-
-        $offices = Office::whereIn('id', $users->pluck('userInfo.office_id')->unique())->pluck('name', 'id');
 
         $uploadedCount = Content::where('status', 1)->where('created_by', Auth::id())->count();
         $favCount = UserContentActivity::where('activity_type', 1)->where('user_id', Auth::id())->count();
@@ -85,7 +105,7 @@ class IndexController extends Controller
         $employeesCount = User::where('user_type', 3)->where('status', 1)->count();
         $usersCount = User::where('user_type', 4)->where('status', 1)->count();
 
-        return view('backend.index', compact('employeesCount', 'categorys', 'contents', 'usersCount', 'favCount', 'savedCount', 'uploadedCount', 'users', 'offices', 'chartData'));
+        return view('backend.index', compact('employeesCount', 'categorys', 'contents', 'usersCount', 'favCount', 'savedCount', 'uploadedCount', 'users', 'offices', 'chartData', 'contentCount'));
     }
 
     public function getDistrictsAJAX(Request $request)
