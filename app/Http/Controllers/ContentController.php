@@ -67,7 +67,7 @@ class ContentController extends Controller
                 }
             }
 
-            $perPage = $request->per_page ?? 24;
+            $perPage = $request->per_page ?? 12;
 
             $contents = $query->where('status', 1)
                              ->with([
@@ -144,7 +144,7 @@ class ContentController extends Controller
                 }
             }
 
-            $perPage = $request->per_page ?? 24;
+            $perPage = $request->per_page ?? 12;
 
             $contents = $query->where('status', '!=', 2)
                              ->where('created_by', Auth::id())
@@ -222,7 +222,7 @@ class ContentController extends Controller
                 }
             }
 
-            $perPage = $request->per_page ?? 24;
+            $perPage = $request->per_page ?? 12;
 
             $contents = $query->join('user_content_activities', 'contents.id', '=', 'user_content_activities.content_id')
                                 ->where('user_content_activities.user_id', Auth::id())
@@ -296,7 +296,7 @@ class ContentController extends Controller
                 }
             }
 
-            $perPage = $request->per_page ?? 24;
+            $perPage = $request->per_page ?? 12;
 
             $contents = $query->join('user_content_activities', 'contents.id', '=', 'user_content_activities.content_id')
                                 ->where('user_content_activities.user_id', Auth::id())

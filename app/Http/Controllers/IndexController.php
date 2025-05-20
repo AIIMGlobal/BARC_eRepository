@@ -26,78 +26,55 @@ class IndexController extends Controller
     public function index(Request $request)
     {
         $categorys = Category::where('status', 1)
-                                ->withCount(['contents' => function ($query) {
-                                    $query->where('status', 1);
-                                }])
-                                ->orderByDesc('contents_count')
-                                ->get();
+            ->withCount(['contents' => function ($query) {
+                $query->where('status', 1);
+            }])
+            ->orderByDesc('contents_count')
+            ->get();
 
         $currentYear = date('Y');
 
-        $contents = Content::where('status', 1)
-                            ->whereYear('created_at', $currentYear)
-                            ->get()
-                            ->groupBy(function ($content) {
-                                return Carbon::parse($content->created_at)->format('F');
-                            })
-                            ->map(function ($group) {
-                                return $group->count();
-                            })
-                            ->sortKeys();
+        if (Auth::check() && Auth::user()->user_type == 4) {
+            $contents = Content::where('status', 1)
+                                ->where('created_by', Auth::id())
+                                ->get()
+                                ->groupBy(function ($content) {
+                                    $date = Carbon::parse($content->published_at);
+                                    return $date->format('Y-m');
+                                })
+                                ->mapWithKeys(function ($group, $yearMonth) {
+                                    $date = Carbon::createFromFormat('Y-m', $yearMonth);
+                                    $label = $date->format('F (Y)');
+                                    return [$label => $group->count()];
+                                })
+                                ->sortKeysUsing(function ($a, $b) {
+                                    $dateA = Carbon::createFromFormat('F (Y)', $a);
+                                    $dateB = Carbon::createFromFormat('F (Y)', $b);
+                                    return $dateA <=> $dateB;
+                                })
+                                ->toArray();
+        } else {
+            $contents = Content::where('status', 1)
+                                ->whereYear('published_at', $currentYear)
+                                ->get()
+                                ->groupBy(function ($content) {
+                                    $date = Carbon::parse($content->published_at);
+                                    return $date->format('Y-m');
+                                })
+                                ->mapWithKeys(function ($group, $yearMonth) {
+                                    $date = Carbon::createFromFormat('Y-m', $yearMonth);
+                                    $label = $date->format('F (Y)');
+                                    return [$label => $group->count()];
+                                })
+                                ->sortKeysUsing(function ($a, $b) {
+                                    $dateA = Carbon::createFromFormat('F (Y)', $a);
+                                    $dateB = Carbon::createFromFormat('F (Y)', $b);
+                                    return $dateA <=> $dateB;
+                                })
+                                ->toArray();
+        }
 
         $contentCount = Content::where('status', 1)->count();
-
-        $users = User::with('userInfo')
-            ->where('user_type', 4)
-            ->whereIn('status', [0, 1, 2, 4])
-            ->get();
-
-        // Define status mapping
-        $statusMap = [
-            0 => 'Pending',
-            1 => 'Approved',
-            2 => 'Declined',
-            4 => 'Archived'
-        ];
-
-        // Group users by status and office_id
-        $statusOfficeCounts = $users->groupBy('status')->map(function ($statusGroup) {
-            return $statusGroup->groupBy('userInfo.office_id')->map->count();
-        })->mapWithKeys(function ($officeCounts, $status) use ($statusMap) {
-            return [$statusMap[$status] ?? 'Unknown' => $officeCounts];
-        })->only(array_values($statusMap));
-
-        // Ensure all statuses are present (even if empty)
-        $statusOfficeCounts = collect($statusMap)->mapWithKeys(function ($label) use ($statusOfficeCounts) {
-            return [$label => $statusOfficeCounts->get($label, collect())];
-        });
-
-        // Calculate total counts per status
-        $statusCounts = $statusOfficeCounts->map(function ($officeCounts) {
-            return $officeCounts->sum();
-        });
-
-        // Calculate total users for percentages
-        $totalUsers = $statusCounts->sum();
-
-        // Fetch office names
-        $officeIds = $users->pluck('userInfo.office_id')->unique()->filter();
-        $offices = Office::whereIn('id', $officeIds)->pluck('name', 'id')->toArray();
-
-        // Prepare chart data
-        $chartData = [
-            'labels' => $statusCounts->keys()->toArray(), // ['Pending', 'Approved', 'Declined', 'Archived']
-            'counts' => $statusCounts->values()->toArray(),
-            'percentages' => $statusCounts->map(function ($count) use ($totalUsers) {
-                return $totalUsers > 0 ? round(($count / $totalUsers) * 100, 2) : 0;
-            })->values()->toArray(),
-            'office_counts' => $statusOfficeCounts->map(function ($officeCounts) use ($offices) {
-                return $officeCounts->mapWithKeys(function ($count, $officeId) use ($offices) {
-                    $officeName = $offices[$officeId] ?? 'Unknown Office';
-                    return [$officeId => ['name' => $officeName, 'count' => $count]];
-                })->toArray();
-            })->toArray()
-        ];
 
         $uploadedCount = Content::where('status', 1)->where('created_by', Auth::id())->count();
         $favCount = UserContentActivity::where('activity_type', 1)->where('user_id', Auth::id())->count();
@@ -105,7 +82,29 @@ class IndexController extends Controller
         $employeesCount = User::where('user_type', 3)->where('status', 1)->count();
         $usersCount = User::where('user_type', 4)->where('status', 1)->count();
 
-        return view('backend.index', compact('employeesCount', 'categorys', 'contents', 'usersCount', 'favCount', 'savedCount', 'uploadedCount', 'users', 'offices', 'chartData', 'contentCount'));
+        $approvedUsers = User::with('userInfo')
+            ->where('user_type', 4)
+            ->where('status', 1)
+            ->get();
+
+        $totalApprovedUsers = $approvedUsers->count();
+
+        $officeCounts = $approvedUsers->groupBy('userInfo.office_id')->map->count();
+
+        $officeIds = $approvedUsers->pluck('userInfo.office_id')->unique()->filter();
+        $offices = Office::whereIn('id', $officeIds)->pluck('name', 'id')->toArray();
+
+        $chartData = [
+            'labels' => $officeCounts->mapWithKeys(function ($count, $officeId) use ($offices) {
+                return [$officeId => $offices[$officeId] ?? 'Unknown Office'];
+            })->values()->toArray(),
+            'counts' => $officeCounts->values()->toArray(),
+            'percentages' => $officeCounts->map(function ($count) use ($totalApprovedUsers) {
+                return $totalApprovedUsers > 0 ? round(($count / $totalApprovedUsers) * 100, 2) : 0;
+            })->values()->toArray()
+        ];
+
+        return view('backend.index', compact('employeesCount', 'categorys', 'contents', 'usersCount', 'favCount', 'savedCount', 'uploadedCount', 'chartData', 'contentCount'));
     }
 
     public function getDistrictsAJAX(Request $request)

@@ -4,6 +4,7 @@
 
 @push('css')
     <link href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css" rel="stylesheet" />
+
     <style>
         .hamburger-menu {
             position: relative;
@@ -136,6 +137,8 @@
             margin-bottom: 8px;
             color: #1f2937;
             font-weight: 600;
+            text-align: justify;
+            line-height: 22px;
         }
         .content-card .card-meta {
             font-size: 0.7rem;

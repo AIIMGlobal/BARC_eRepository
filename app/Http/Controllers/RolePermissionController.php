@@ -27,12 +27,12 @@ class RolePermissionController extends Controller
                 $selected_role_id = Auth::user()->role_id;
             }
 
-            // only super admin will see all roles
-            if($user->role_id == 1){
+            if ($user->role_id == 1) {
                 $roles = Role::where('status', 1)->get();
-            }else{
+            } else {
                 $roles = Role::where('id', '!=', 1)->where('status', 1)->get();
             }
+            
             $rolePermissions = RolePermission::with('permissionName')->where('role_id', $selected_role_id)->get();
 
             $assignedIds = array();

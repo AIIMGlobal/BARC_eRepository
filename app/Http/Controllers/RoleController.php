@@ -19,9 +19,9 @@ class RoleController extends Controller
 
         if(Gate::allows('all_roles', $user)){
 
-            if($user->role_id == 1){
+            if ($user->role_id == 1) {
                 $roles = Role::with('createdUser')->get();
-            }else{
+            } else {
                 $roles = Role::with('createdUser')->where('id', '!=', 1)->get();
             }
 

@@ -161,30 +161,45 @@
     </div>
 
     <div class="row my-4">
-        <div class="col-md-4">
-            <h4 class="text-center">Category Record</h4>
+        @can('category_bar_chart')
+            <div class="col-md-4">
+                <h4 class="text-center">Category Record</h4>
 
-            <div class="barChart-container">
-                <canvas id="barChart" width="500" height="500"></canvas>
+                <div class="barChart-container">
+                    <canvas id="barChart" width="500" height="500"></canvas>
+                </div>
             </div>
-        </div>
+        @endcan
 
-        <div class="col-md-4">
-            <h4 class="text-center">Content Graph ({{ date('Y') }})</h4>
+        @can('content_line_chart')
+            @if (Auth::user()->user_type != 4)
+                <div class="col-md-4">
+                    <h4 class="text-center">Content Graph</h4>
 
-            <div class="pieChart-container">
-                {{-- <canvas id="pieChart" width="500" height="500"></canvas> --}}
-                <canvas id="lineChart" width="500" height="500"></canvas>
+                    <div class="pieChart-container">
+                        <canvas id="lineChart" width="500" height="500"></canvas>
+                    </div>
+                </div>
+            @else
+                <div class="col-md-12">
+                    <h4 class="text-center">Content Graph</h4>
+
+                    <div class="pieChart-container">
+                        <canvas id="lineChart" height="500" style="width: 100%;"></canvas>
+                    </div>
+                </div>
+            @endif
+        @endcan
+
+        @can('organization_pie_chart')
+            <div class="col-md-4">
+                <h4 class="text-center">Organization-wise Users</h4>
+
+                <div class="pieChart-container">
+                    <canvas id="pieChart" width="500" height="500"></canvas>
+                </div>
             </div>
-        </div>
-
-        <div class="col-md-4">
-            <h4 class="text-center">User Status</h4>
-
-            <div class="pieChart-container">
-                <canvas id="pieChart" width="500" height="500"></canvas>
-            </div>
-        </div>
+        @endcan
     </div>
 </div>
 
@@ -268,30 +283,24 @@
             data = [0];
         }
 
-        function generateGradientColors(ctx, count) {
-            var gradients = [];
-            var borderColors = [];
+        function generateGradientColors(ctx) {
+            var r = Math.floor(Math.random() * 256);
+            var g = Math.floor(Math.random() * 256);
+            var b = Math.floor(Math.random() * 256);
 
-            for (var i = 0; i < count; i++) {
-                var r = Math.floor(Math.random() * 256);
-                var g = Math.floor(Math.random() * 256);
-                var b = Math.floor(Math.random() * 256);
+            var gradient = ctx.createLinearGradient(0, 0, 0, 200);
 
-                var gradient = ctx.createLinearGradient(0, 0, 0, 200);
+            gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.6)`);
+            gradient.addColorStop(1, `rgba(${Math.min(r + 50, 255)}, ${Math.min(g + 50, 255)}, ${Math.min(b + 50, 255)}, 0.2)`);
 
-                gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.6)`);
-                gradient.addColorStop(1, `rgba(${Math.min(r + 50, 255)}, ${Math.min(g + 50, 255)}, ${Math.min(b + 50, 255)}, 0.2)`);
+            var borderColor = `rgb(${Math.max(r - 20, 0)}, ${Math.max(g - 20, 0)}, ${Math.max(b - 20, 0)})`;
 
-                gradients.push(gradient);
-
-                borderColors.push(`rgb(${Math.max(r - 20, 0)}, ${Math.max(g - 20, 0)}, ${Math.max(b - 20, 0)})`);
-            }
-            return { gradients, borderColors };
+            return { gradient, borderColor };
         }
 
         var ctx = document.getElementById('lineChart').getContext('2d');
 
-        var colors = generateGradientColors(ctx, labels.length);
+        var colors = generateGradientColors(ctx);
 
         var myLineChart = new Chart(ctx, {
             type: 'line',
@@ -299,8 +308,8 @@
                 labels: labels,
                 datasets: [{
                     data: data,
-                    backgroundColor: colors.gradients[0],
-                    borderColor: colors.borderColors[0],
+                    backgroundColor: colors.gradient,
+                    borderColor: colors.borderColor,
                     borderWidth: 2,
                     fill: true,
                     tension: 0.4
@@ -317,8 +326,8 @@
                     },
                     x: {
                         title: {
-                            display: true,
-                            text: 'Month'
+                            display: false,
+                            text: 'Month (Year)'
                         }
                     }
                 },
@@ -326,6 +335,16 @@
                 plugins: {
                     legend: {
                         display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                let value = context.raw || 0;
+
+                                return `${label}: ${value} contents`;
+                            }
+                        }
                     }
                 }
             }
@@ -333,61 +352,53 @@
     </script>
 
     <script>
-        // Pass PHP chart data to JavaScript
         var chartData = @json($chartData);
 
-        // Extract labels, counts, percentages, and office counts
         var labels = chartData.labels;
         var counts = chartData.counts;
         var percentages = chartData.percentages;
-        var officeCounts = chartData.office_counts;
 
-        // If no data, set fallback
         if (!labels.length) {
             labels = ['No Data'];
             counts = [0];
             percentages = [0];
-            officeCounts = {};
         }
 
-        var ctx = document.getElementById('pieChartCategory').getContext('2d');
+        var ctx = document.getElementById('pieChart').getContext('2d');
 
-        // Define gradients
-        var gradientGreen = ctx.createLinearGradient(0, 0, 400, 400);
-        gradientGreen.addColorStop(0, '#3ACB3B');
-        gradientGreen.addColorStop(1, '#0F4010');
+        function generateGradientColors(ctx, count) {
+            var gradients = [];
+            var borderColors = [];
 
-        var gradientRed = ctx.createLinearGradient(0, 0, 100, 500);
-        gradientRed.addColorStop(0, '#FF0000');
-        gradientRed.addColorStop(1, '#800000');
+            for (var i = 0; i < count; i++) {
+                var r = Math.floor(Math.random() * 256);
+                var g = Math.floor(Math.random() * 256);
+                var b = Math.floor(Math.random() * 256);
 
-        var gradientBlue = ctx.createLinearGradient(0, 0, 400, 500);
-        gradientBlue.addColorStop(0, '#0B48A1');
-        gradientBlue.addColorStop(1, '#0D47A1');
+                var gradient = ctx.createLinearGradient(0, 0, 400, 400);
 
-        var gradientGray = ctx.createLinearGradient(0, 0, 400, 400);
-        gradientGray.addColorStop(0, '#616161');
-        gradientGray.addColorStop(1, '#212121');
+                gradient.addColorStop(0, `rgb(${r}, ${g}, ${b})`);
+                gradient.addColorStop(1, `rgb(${Math.max(r - 50, 0)}, ${Math.max(g - 50, 0)}, ${Math.max(b - 50, 0)})`);
+
+                gradients.push(gradient);
+
+                borderColors.push(`rgb(${Math.max(r - 20, 0)}, ${Math.max(g - 20, 0)}, ${Math.max(b - 20, 0)})`);
+            }
+
+            return { gradients, borderColors };
+        }
+
+        var colors = generateGradientColors(ctx, labels.length);
 
         var myPieChart = new Chart(ctx, {
             type: 'pie',
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'User Status Distribution',
+                    label: 'Approved Users by Organization',
                     data: percentages,
-                    backgroundColor: [
-                        gradientGreen, // Pending
-                        gradientRed,   // Approved
-                        gradientBlue,  // Declined
-                        gradientGray   // Archived
-                    ],
-                    borderColor: [
-                        'rgba(24, 124, 25, 1)',  // Pending
-                        'rgba(255, 0, 0, 1)',    // Approved
-                        'rgba(9, 0, 136, 1)',    // Declined
-                        'rgba(33, 33, 33, 1)'    // Archived
-                    ],
+                    backgroundColor: colors.gradients,
+                    borderColor: colors.borderColors,
                     borderWidth: 1
                 }]
             },
@@ -395,27 +406,16 @@
                 responsive: true,
                 plugins: {
                     legend: {
-                        position: 'top',
-                        display: true
+                        display: false
                     },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
                                 let label = context.label || '';
                                 let percentage = context.raw || 0;
-                                let totalCount = counts[context.dataIndex] || 0;
-                                let officeData = officeCounts[label] || {};
+                                let count = counts[context.dataIndex] || 0;
 
-                                // Start with status and percentage
-                                let tooltipLines = [`${label}: ${percentage}% (${totalCount} users)`];
-
-                                // Add office-specific counts
-                                for (let officeId in officeData) {
-                                    let office = officeData[officeId];
-                                    tooltipLines.push(`${office.name}: ${office.count} users`);
-                                }
-
-                                return tooltipLines;
+                                return `${label}: ${percentage}% (${count} users)`;
                             }
                         }
                     }

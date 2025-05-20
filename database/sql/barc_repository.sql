@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2025 at 01:25 PM
+-- Generation Time: May 20, 2025 at 07:45 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -190,9 +190,9 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `sl`, `parent_id`, `category_name`, `description`, `image`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, NULL, NULL, 'Crop Science & Production', 'Crop Science & Production Description', 'categories/1744800694_bangladesh-jute-research-institute-logo-BA95948254-seeklogo.com 1.png', 1, 1, 1, '2025-04-16 10:45:25', '2025-04-17 11:11:54'),
+(1, NULL, NULL, 'E-Book', 'E-Book Description', 'categories/1744800694_bangladesh-jute-research-institute-logo-BA95948254-seeklogo.com 1.png', 1, 1, 1, '2025-04-16 10:45:25', '2025-05-17 09:31:15'),
 (2, NULL, NULL, 'Livestock', 'Livestock Description', 'categories/1744801466_output-onlinepngtools 1.png', 1, 1, 1, '2025-04-16 10:45:44', '2025-04-17 11:12:24'),
-(3, NULL, 1, 'Plant Physiology', 'Plant Physiology Description', NULL, 1, 1, 1, '2025-04-16 10:47:18', '2025-04-17 11:13:07'),
+(3, NULL, 1, 'Journal', 'Plant Physiology Description', NULL, 1, 1, 1, '2025-04-16 10:47:18', '2025-04-17 11:13:07'),
 (4, NULL, 1, 'Seed Technology', NULL, NULL, 1, 1, 1, '2025-04-16 10:47:36', '2025-05-14 10:07:56'),
 (5, NULL, 2, 'Poultry Science', NULL, NULL, 1, 1, 1, '2025-04-16 10:47:53', '2025-04-17 11:14:07'),
 (6, NULL, 2, 'Dairy Production', 'Dairy Production Description', NULL, 1, 1, 1, '2025-04-16 10:48:04', '2025-04-17 11:14:35'),
@@ -277,8 +277,10 @@ CREATE TABLE `contents` (
 --
 
 INSERT INTO `contents` (`id`, `sl`, `category_id`, `content_type`, `content_name`, `slug`, `description`, `extension`, `content`, `content_year`, `thumbnail`, `meta_title`, `meta_description`, `meta_keywords`, `status`, `approved_by`, `approved_at`, `published_at`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, NULL, 1, 'Image', 'Content 1', 'content-1', NULL, 'pdf', 'contents/1747307942_Application Tracking Number.pdf', '2025', 'thumbnails/1747124509_PMS_Logo-1-removebg-preview 1.png', NULL, NULL, NULL, 0, NULL, NULL, '2025-05-14 11:03:18', 1, 1, '2025-05-13 08:21:49', '2025-05-15 11:23:35'),
-(3, NULL, 3, 'Video', 'Video Content', 'video-content', NULL, 'mp4', 'contents/1747287076_Kapoor daab ka roast!.mp4', '2025', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-15 06:59:47', 1, 1, '2025-05-15 05:31:16', '2025-05-15 06:59:47');
+(1, NULL, 1, 'Image', 'Content 1', 'content-1', NULL, 'pdf', 'contents/1747307942_Application Tracking Number.pdf', '2025', 'thumbnails/1747124509_PMS_Logo-1-removebg-preview 1.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-14 11:03:18', 1, 1, '2025-05-13 08:21:49', '2025-05-17 09:47:03'),
+(3, NULL, 3, 'Video', 'Video Content', 'video-content', NULL, 'mp4', 'contents/1747287076_Kapoor daab ka roast!.mp4', '2025', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-15 06:59:47', 1, 1, '2025-05-15 05:31:16', '2025-05-15 06:59:47'),
+(4, NULL, 3, 'PDF', 'Content My 1', 'content-my-1', 'Content My 1 Desc', 'pdf', 'contents/1747483481_Employee Leave Request Form.pdf', '2025', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-17 12:04:41', 19, NULL, '2025-05-17 12:04:41', '2025-05-17 12:04:41'),
+(5, NULL, 2, 'PDF', 'Content My 2', 'content-my-2', 'Content My 2 Desc', 'pdf', 'contents/1747483515_TOR2_794371.pdf', '2025', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-17 12:05:15', 19, NULL, '2025-05-17 12:05:15', '2025-05-17 12:05:15');
 
 -- --------------------------------------------------------
 
@@ -333,7 +335,8 @@ INSERT INTO `designations` (`id`, `name`, `created_by`, `status`, `created_at`, 
 (8, 'Sr. Software Engineer', 1, 1, '2023-12-07 11:29:26', '2023-12-07 11:29:26'),
 (9, 'Project Manager', 1, 1, '2023-12-07 11:29:41', '2023-12-07 11:29:41'),
 (10, 'Jr. Software Engineer', 1, 1, '2023-12-07 15:51:23', '2023-12-07 15:51:23'),
-(11, 'Business Analyst', 45, 1, '2023-12-12 16:14:55', '2023-12-24 16:33:05');
+(11, 'Business Analyst', 45, 1, '2023-12-12 16:14:55', '2023-12-24 16:33:05'),
+(12, 'Senior Software Engineer', NULL, 1, '2025-05-17 05:36:05', '2025-05-17 05:36:05');
 
 -- --------------------------------------------------------
 
@@ -1231,7 +1234,9 @@ INSERT INTO `permissions` (`id`, `name_en`, `name_bn`, `status`, `created_by`, `
 (766, 'view_content', 'view_content', 1, 1, NULL, NULL),
 (767, 'edit_content', 'edit_content', 1, 1, NULL, NULL),
 (768, 'create_content', 'create_content', 1, 1, NULL, NULL),
-(769, 'archive_content', 'archive_content', 1, 1, NULL, NULL);
+(769, 'archive_content', 'archive_content', 1, 1, NULL, NULL),
+(770, 'total_categories', 'total_categories', 1, 1, NULL, NULL),
+(771, 'total_uploaded_contents', 'total_uploaded_contents', 1, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1941,7 +1946,10 @@ INSERT INTO `role_permissions` (`id`, `user_id`, `permission_id`, `role_id`, `cr
 (2544, NULL, 766, 4, 1, NULL, '2025-05-15 08:42:46', '2025-05-15 08:42:46'),
 (2545, NULL, 767, 4, 1, NULL, '2025-05-15 08:42:47', '2025-05-15 08:42:47'),
 (2546, NULL, 768, 4, 1, NULL, '2025-05-15 08:42:47', '2025-05-15 08:42:47'),
-(2547, NULL, 769, 4, 1, NULL, '2025-05-15 08:42:47', '2025-05-15 08:42:47');
+(2547, NULL, 769, 4, 1, NULL, '2025-05-15 08:42:47', '2025-05-15 08:42:47'),
+(2548, NULL, 770, 1, 1, NULL, '2025-05-17 06:51:13', '2025-05-17 06:51:13'),
+(2549, NULL, 643, 4, 1, NULL, '2025-05-17 06:52:04', '2025-05-17 06:52:04'),
+(2550, NULL, 771, 4, 1, NULL, '2025-05-17 06:52:04', '2025-05-17 06:52:04');
 
 -- --------------------------------------------------------
 
@@ -11265,9 +11273,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name_bn`, `name_en`, `email`, `mobile`, `user_type`, `role_id`, `user_category_id`, `client_id`, `google_id`, `details`, `status`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, NULL, 'Super Admin', 'rayhan.zaman123.rz@gmail.com', '01234567890', 1, 1, NULL, NULL, NULL, NULL, 1, NULL, '$2y$10$6hyf0B1NnkBd7cbmpU3M6un4te6r9WVVRQNh40Cxiak1njMT32HW2', NULL, '2022-08-25 12:33:48', '2025-04-17 09:59:03'),
-(7, NULL, 'Rayhan Zaman', 'rayhan.zaman@sebpo.com', '01521449100', 4, 4, 1, NULL, NULL, NULL, 1, NULL, '$2y$10$dXPXUfXIRKFmU.nIwFw9zeEcxxQaE5j0qnjCpeR8dWHC8kX7xUoce', NULL, '2025-03-12 08:40:50', '2025-03-25 11:45:44'),
+(7, NULL, 'Rayhan Zaman', 'rayhan.zaman@sebpo.com', '01521449100', 3, 3, 1, NULL, NULL, NULL, 1, NULL, '$2y$10$dXPXUfXIRKFmU.nIwFw9zeEcxxQaE5j0qnjCpeR8dWHC8kX7xUoce', NULL, '2025-03-12 08:40:50', '2025-05-17 05:52:08'),
 (17, NULL, 'Rayhan Zaman', 'test@gmail.com', '01521449875', 4, 4, 3, NULL, NULL, NULL, 3, NULL, '$2y$10$a6DaeDk8Ej9xPPYqIIJPhu3PwiEbyvwJmr/i3oZNTz8NGf2rw1yPK', NULL, '2025-04-06 08:12:58', '2025-04-10 09:57:00'),
-(19, NULL, 'Rayhan Zaman', 'rayhan.zaman333@gmail.com', '01955181028', 4, 4, 2, NULL, '100953447460615822249', NULL, 1, NULL, '$2y$10$KokuO0xmCdTOXLbOQOcG8Ojm1Pynl3bq74oYp9YfroP2pS1J9D6ti', NULL, '2025-04-10 12:08:10', '2025-04-10 12:21:30');
+(19, NULL, 'Rayhan Zaman', 'rayhan.zaman333@gmail.com', '01955181028', 4, 4, 1, NULL, '100953447460615822249', NULL, 1, NULL, '$2y$10$KokuO0xmCdTOXLbOQOcG8Ojm1Pynl3bq74oYp9YfroP2pS1J9D6ti', NULL, '2025-04-10 12:08:10', '2025-05-17 05:38:12'),
+(20, NULL, 'Rayhan Dev', 'rayhan.dev@gmail.com', '010201020102', 4, 4, 1, NULL, NULL, NULL, 4, NULL, '$2y$10$Yk.NvPGTdr6swS.ni4UVTeHQGGmrTSpOpBat3fU6dtPIsSUSZKugu', NULL, '2025-05-17 05:36:05', '2025-05-17 05:36:05');
 
 -- --------------------------------------------------------
 
@@ -11306,7 +11315,8 @@ INSERT INTO `user_addresses` (`id`, `user_id`, `present_division_id`, `present_d
 (4, NULL, 3, 13, 130, NULL, '3500', 3, 13, 130, NULL, '3500', NULL, NULL, 1, '2025-04-10 06:35:40', '2025-04-10 06:35:40'),
 (5, NULL, 3, 13, 130, 'CM', '3500', 3, 13, 130, 'CM', '3500', 'Road 1, 13/A', 'Road 1, 13/A', 1, '2025-04-10 08:58:14', '2025-04-10 08:58:14'),
 (6, NULL, 3, 13, 130, 'CM', '3500', 3, 13, 130, 'CM', '3500', 'Road 1, 13/A', 'Road 1, 13/A', 1, '2025-04-10 09:23:01', '2025-04-10 09:23:01'),
-(8, 19, 3, 13, 130, 'Savar', '3500', 3, 13, 130, 'Savar', '3500', 'Road #13, Block A', 'Road #13, Block A', 1, '2025-04-17 11:35:51', '2025-04-17 11:35:51');
+(8, 19, 3, 13, 130, 'Savar', '3500', 3, 13, 130, 'Savar', '3500', 'Road #13, Block A', 'Road #13, Block A', 1, '2025-04-17 11:35:51', '2025-04-17 11:35:51'),
+(9, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2025-05-17 05:52:08', '2025-05-17 05:52:08');
 
 -- --------------------------------------------------------
 
@@ -11375,7 +11385,10 @@ CREATE TABLE `user_content_activities` (
 
 INSERT INTO `user_content_activities` (`id`, `user_id`, `category_id`, `content_id`, `activity_type`, `created_by`, `created_at`, `updated_at`) VALUES
 (6, 1, 1, 1, 2, 1, '2025-05-14 10:47:33', '2025-05-14 10:47:33'),
-(10, 1, 3, 3, 1, 1, '2025-05-15 09:42:22', '2025-05-15 09:42:22');
+(10, 1, 3, 3, 1, 1, '2025-05-15 09:42:22', '2025-05-15 09:42:22'),
+(12, 19, 2, 5, 1, 19, '2025-05-17 12:05:25', '2025-05-17 12:05:25'),
+(13, 19, 3, 4, 2, 19, '2025-05-17 12:05:28', '2025-05-17 12:05:28'),
+(14, 19, 3, 3, 1, 19, '2025-05-17 12:05:51', '2025-05-17 12:05:51');
 
 -- --------------------------------------------------------
 
@@ -11419,9 +11432,10 @@ CREATE TABLE `user_infos` (
 
 INSERT INTO `user_infos` (`id`, `user_id`, `department_id`, `designation_id`, `organization`, `designation`, `address`, `image`, `office_id`, `employee_id`, `gender`, `dob`, `nid_no`, `passport_no`, `driving_license_no`, `religion`, `availablity`, `visitor_organization`, `visitor_designation`, `birth_certificate_no`, `marital_status`, `signature`, `start`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 1, NULL, NULL, NULL, 'userImage2025_03_13_051150_10417729.png', 3, NULL, 'Male', '2023-11-30', NULL, NULL, NULL, 'Islam', 1, NULL, NULL, NULL, NULL, 'signature2023_11_30_111448_48171751.jpg', NULL, 1, 1, '2023-11-30 16:06:56', '2025-04-17 10:01:27'),
-(6, 7, NULL, NULL, 'SEBPO', 'Senior Software Engineer', NULL, 'userImages/1kPgwNi5z5gTr89GfO2tN5wVM2bQvV2p8jYxbFbF.jpg', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-03-12 08:40:50', '2025-03-12 08:40:50'),
+(6, 7, 2, 12, 'SEBPO', NULL, NULL, 'userImages/1kPgwNi5z5gTr89GfO2tN5wVM2bQvV2p8jYxbFbF.jpg', 3, NULL, 'Male', NULL, NULL, NULL, NULL, 'Islam', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-03-12 08:40:50', '2025-05-17 05:52:08'),
 (16, 17, 1, 2, 'SEBPO', 'Ass. Manager', NULL, 'userImage2025_04_06_021258_54702425.jpg', 3, NULL, 'Male', '2025-04-14', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 'signature2025_04_06_021258_88147852.jpeg', NULL, 1, NULL, '2025-04-06 08:12:58', '2025-04-06 08:12:58'),
-(17, 19, 1, NULL, NULL, 'Software Engineer', NULL, 'userImage2025_04_10_121630_26508796.png', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'signature2025_04_10_121630_65643590.jpeg', NULL, NULL, 1, '2025-04-10 06:16:30', '2025-04-10 06:16:30');
+(17, 19, 2, 7, NULL, NULL, NULL, 'userImage2025_04_10_121630_26508796.png', 3, NULL, 'Male', NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'signature2025_04_10_121630_65643590.jpeg', NULL, NULL, 1, '2025-04-10 06:16:30', '2025-05-17 05:38:12'),
+(21, 20, NULL, 12, NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-17 05:36:05', '2025-05-17 05:36:05');
 
 --
 -- Indexes for dumped tables
@@ -11787,7 +11801,7 @@ ALTER TABLE `city_corporations`
 -- AUTO_INCREMENT for table `contents`
 --
 ALTER TABLE `contents`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -11799,7 +11813,7 @@ ALTER TABLE `departments`
 -- AUTO_INCREMENT for table `designations`
 --
 ALTER TABLE `designations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `districts`
@@ -11919,7 +11933,7 @@ ALTER TABLE `offices`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=770;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=772;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -11979,7 +11993,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `role_permissions`
 --
 ALTER TABLE `role_permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2548;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2552;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -12015,13 +12029,13 @@ ALTER TABLE `upazilas`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `user_addresses`
 --
 ALTER TABLE `user_addresses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user_categories`
@@ -12039,13 +12053,13 @@ ALTER TABLE `user_company_docs`
 -- AUTO_INCREMENT for table `user_content_activities`
 --
 ALTER TABLE `user_content_activities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `user_infos`
 --
 ALTER TABLE `user_infos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
