@@ -200,6 +200,7 @@
                         } else {
                             toastr.options.closeButton = true;
                             toastr.options.timeOut = 1500;
+                            
                             toastr.error("Something went wrong. Please try again.");
                         }
                     }

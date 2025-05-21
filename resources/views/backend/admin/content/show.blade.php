@@ -7,24 +7,20 @@
         .video-container {
             position: relative;
             width: 100%;
-            height: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
         }
 
         video {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
             outline: none;
-        }
-
-        video::-webkit-media-controls,
-        video::-webkit-media-controls-panel,
-        video::-webkit-media-controls-enclosure {
-            display: block !important;
-            opacity: 1 !important;
-            visibility: visible !important;
         }
 
         video[controls] {
@@ -34,25 +30,25 @@
         .pdf-container {
             position: relative;
             width: 100%;
-            height: 100%;
+            height: 550px;
             display: flex;
             flex-direction: column;
         }
 
-        iframe {
+        .pdf-container iframe {
             width: 100%;
             height: 100%;
             border: none;
             flex-grow: 1;
         }
 
-        .pdf-fallback {
+        .pdf-fallback, .media-fallback {
             text-align: center;
             padding: 1rem;
             margin: 0;
             color: #fff;
             background: rgba(0, 0, 0, 0.7);
-            display: block; /* Always visible for now, toggle via JS if needed */
+            display: none;
         }
 
         audio {
@@ -64,6 +60,7 @@
         .relative {
             overflow: visible !important;
         }
+
         .details-card {
             background: linear-gradient(145deg, #ffffff, #f0f4f8);
             border: none;
@@ -72,9 +69,11 @@
             transition: transform 0.3s ease;
             padding: 10px;
         }
+
         .details-card:hover {
             /* transform: translateY(-5px); */
         }
+
         .detail-label {
             color: #4b5563;
             font-weight: 600;
@@ -82,20 +81,28 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
+
         .detail-value {
             color: #1f2937;
             font-size: 0.8rem;
             font-weight: 500;
             margin-bottom: 0;
         }
+
         .dark .details-card {
             background: linear-gradient(145deg, #1f2937, #374151);
         }
+
         .dark .detail-label {
             color: #9ca3af;
         }
+
         .dark .detail-value {
             color: #e5e7eb;
+        }
+
+        .media-container {
+            margin-bottom: 1.5rem;
         }
     </style>
 @endpush
@@ -135,7 +142,7 @@
                             <div class="container mx-auto px-4 py-6 max-w-7xl">
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="relative w-full bg-black rounded-lg overflow-hidden mb-6 shadow-lg" style="aspect-ratio: 16/9; min-height: 400px;">
+                                        <div class="relative w-full bg-black rounded-lg overflow-hidden media-container" style="min-height: 400px;">
                                             @if ($content->content)
                                                 @php
                                                     $extension = strtolower($content->extension);
@@ -148,10 +155,10 @@
 
                                                 @if($contentType == 'video' || in_array($extension, $videoTypes))
                                                     <div class="video-container">
-                                                        <video class="w-full h-full object-contain" controls controlsList="nodownload" disablePictureInPicture preload="metadata" playsinline>
+                                                        <video class="w-full h-full object-contain" controls disablePictureInPicture preload="metadata" playsinline>
                                                             <source src="{{ $assetPath }}" type="video/{{ $extension }}">
 
-                                                            <p class="text-center p-4">Your browser does not support this video format. <a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>Download the video</a>.</p>
+                                                            <p class="media-fallback">Your browser does not support this video format. <a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>Download the video</a>.</p>
                                                         </video>
                                                     </div>
                                                 @elseif($contentType == 'audio' || in_array($extension, $audioTypes))
@@ -159,21 +166,30 @@
                                                         <audio controls class="w-3/4" preload="metadata">
                                                             <source src="{{ $assetPath }}" type="audio/{{ $extension }}">
 
-                                                            <p class="text-center">Your browser does not support this audio format.</p>
+                                                            <p class="media-fallback">Your browser does not support this audio format. <a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>Download the audio</a>.</p>
                                                         </audio>
                                                     </div>
                                                 @elseif($contentType == 'pdf' || $extension == 'pdf')
                                                     <div class="pdf-container">
-                                                        <iframe src="{{ $assetPath }}#toolbar=0&view=FitH" class="w-full h-full" frameborder="0" title="PDF Viewer"></iframe>
+                                                        <iframe src="{{ $assetPath }}#view=FitH&pagemode=none" class="w-full h-full" frameborder="0" title="PDF Viewer" scrolling="auto"></iframe>
+
                                                         <p class="pdf-fallback">If the PDF does not display, <a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>download it here</a>.</p>
                                                     </div>
                                                 @elseif($contentType == 'image' || in_array($extension, $imageTypes))
-                                                    <img src="{{ $assetPath }}" alt="{{ $content->content_name }}" class="w-full h-full object-contain">
+                                                    <div class="image-container">
+                                                        <img src="{{ $assetPath }}" alt="{{ $content->content_name }}" class="w-full h-full object-contain">
+
+                                                        <p class="media-fallback">If the image does not display, <a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>download it here</a>.</p>
+                                                    </div>
                                                 @else
                                                     <img src="{{ $content->thumbnail ? asset('storage/' . $content->thumbnail) : 'https://t4.ftcdn.net/jpg/05/17/53/57/360_F_517535712_q7f9QC9X6TQxWi6xYZZbMmw5cnLMr279.jpg' }}" alt="Content" class="w-full h-full object-cover">
+
+                                                    <p class="media-fallback">If the content does not display, <a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>download it here</a>.</p>
                                                 @endif
                                             @else
                                                 <img src="{{ 'https://t4.ftcdn.net/jpg/05/17/53/57/360_F_517535712_q7f9QC9X6TQxWi6xYZZbMmw5cnLMr279.jpg' }}" alt="Content" class="w-full h-full object-cover">
+
+                                                <p class="media-fallback">No content available. <a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>Download the default content</a>.</p>
                                             @endif
                                         </div>
                                     </div>
@@ -260,12 +276,11 @@
 
 @push('script')
     <script>
-        // $('[href*="{{ $menu_expand }}"]').addClass('active');
         $('[href*="{{ $menu_expand }}"]').closest('.menu-dropdown').addClass('show');
         $('[href*="{{ $menu_expand }}"]').closest('.menu-dropdown').parent().find('.nav-link').attr('aria-expanded', 'true');
         $('[href*="{{ $menu_expand }}"]').closest('.first-dropdown').find('.menu-link').attr('aria-expanded', 'true');
         $('[href*="{{ $menu_expand }}"]').closest('.first-dropdown').find('.menu-dropdown:first').addClass('show');
-        
+
         document.addEventListener('DOMContentLoaded', function () {
             const video = document.querySelector('video');
             const audio = document.querySelector('audio');
@@ -276,17 +291,35 @@
 
                 video.addEventListener('error', function (e) {
                     console.error('Video error:', e);
-                    alert('Failed to load video. Please check the file format or source path.');
+
+                    const fallback = video.parentElement.querySelector('.media-fallback');
+
+                    if (fallback) {
+                        fallback.style.display = 'block';
+                    }
+
+                    toastr.options.closeButton = true;
+                    toastr.options.timeOut = 1500;
+                    
+                    toastr.error("Failed to load video. Please check the file format or source path.");
                 });
 
                 video.addEventListener('loadeddata', function () {
                     console.log('Video loaded successfully');
+
                     video.controls = true;
+
+                    const fallback = video.parentElement.querySelector('.media-fallback');
+
+                    if (fallback) {
+                        fallback.style.display = 'none';
+                    }
                 });
 
                 video.addEventListener('mouseover', function () {
                     video.controls = true;
                 });
+
                 video.addEventListener('click', function () {
                     video.controls = true;
                 });
@@ -295,40 +328,82 @@
             if (audio) {
                 audio.addEventListener('error', function (e) {
                     console.error('Audio error:', e);
-                    alert('Failed to load audio. Please check the file format or source path.');
+
+                    const fallback = audio.parentElement.querySelector('.media-fallback');
+
+                    if (fallback) {
+                        fallback.style.display = 'block';
+                    }
+                    
+                    toastr.options.closeButton = true;
+                    toastr.options.timeOut = 1500;
+                    
+                    toastr.error("Failed to load audio. Please check the file format or source path.");
+                });
+
+                audio.addEventListener('loadeddata', function () {
+                    const fallback = audio.parentElement.querySelector('.media-fallback');
+
+                    if (fallback) {
+                        fallback.style.display = 'none';
+                    }
                 });
             }
 
             if (pdfIframe) {
                 const fallback = pdfIframe.parentElement.querySelector('.pdf-fallback');
 
-                // Show fallback on iframe error
                 pdfIframe.addEventListener('error', function (e) {
                     console.error('PDF iframe error:', e);
+
                     if (fallback) {
                         fallback.style.display = 'block';
                     }
                 });
 
-                // Check if PDF loaded successfully
                 pdfIframe.addEventListener('load', function () {
                     try {
                         if (pdfIframe.contentDocument && pdfIframe.contentDocument.contentType === 'application/pdf') {
                             console.log('PDF loaded successfully');
+
                             if (fallback) {
-                                fallback.style.display = 'none'; // Hide fallback if PDF loads
+                                fallback.style.display = 'none';
                             }
                         } else {
                             console.error('PDF not loaded');
+
                             if (fallback) {
-                                fallback.style.display = 'block'; // Show fallback if not a PDF
+                                fallback.style.display = 'block';
                             }
                         }
                     } catch (e) {
                         console.error('PDF load check error:', e);
+
                         if (fallback) {
-                            fallback.style.display = 'block'; // Show fallback on error
+                            fallback.style.display = 'block';
                         }
+                    }
+                });
+            }
+
+            const image = document.querySelector('.image-container img');
+
+            if (image) {
+                image.addEventListener('error', function (e) {
+                    console.error('Image error:', e);
+
+                    const fallback = image.parentElement.querySelector('.media-fallback');
+
+                    if (fallback) {
+                        fallback.style.display = 'block';
+                    }
+                });
+
+                image.addEventListener('load', function () {
+                    const fallback = image.parentElement.querySelector('.media-fallback');
+
+                    if (fallback) {
+                        fallback.style.display = 'none';
                     }
                 });
             }

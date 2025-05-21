@@ -73,6 +73,36 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-md-3 col-sm-6 col-12 pt-1">
+                                        <div class="search-box">
+                                            <div>
+                                                <select class="form-control select2" name="office_id" id="office_id">
+                                                    <option value="">--Search by Organization--</option>
+
+                                                    @foreach ($offices as $office)
+                                                        <option value="{{ $office->id }}">{{ $office->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2 col-sm-6 col-12 pt-1">
+                                        <div class="search-box">
+                                            <div>
+                                                <select class="form-control select2" name="status" id="userStatus">
+                                                    <option value="">--Search by Status--</option>
+
+                                                    <option value="1">Approved</option>
+                                                    <option value="0">Pending</option>
+                                                    <option value="2">Declined</option>
+                                                    <option value="3">Archived</option>
+                                                    <option value="4">Pending Email Verification</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-1 col-sm-4 col-6 pt-1">
                                         <div class="d-flex flex-row bd-highlight mb-0">
                                             <div class="pl-1 bd-highlight">
@@ -96,8 +126,9 @@
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th class="text-center">Mobile</th>
-                                            <th>User Type</th>
                                             <th>Role</th>
+                                            <th>User Type</th>
+                                            <th>Organization</th>
                                             <th>Designation</th>
                                             <th class="text-center">Status</th>
                                             <th class="text-center">Action</th>
@@ -127,7 +158,7 @@
 
 @push('script')
     <script>
-        $('#searchText, #user_id, #user_type').on('change keyup', function () {
+        $('#searchText, #user_id, #user_type, #office_id, #userStatus').on('change keyup', function () {
             fetchFilteredData();
         });
 
@@ -135,6 +166,8 @@
             // $('#searchText').val('');
             $('#user_id').val('').trigger('change');
             $('#user_type').val('').trigger('change');
+            $('#office_id').val('').trigger('change');
+            $('#userStatus').val('').trigger('change');
 
             fetchFilteredData();
         });
@@ -143,6 +176,8 @@
             // const searchText = $('#searchText').val();
             const user_id = $('#user_id').val();
             const user_type = $('#user_type').val();
+            const office_id = $('#office_id').val();
+            const userStatus = $('#userStatus').val();
 
             $.ajax({
                 url: "{{ route('admin.user.index') }}",
@@ -151,23 +186,25 @@
                     // searchText: searchText,
                     user_id: user_id,
                     user_type: user_type,
+                    office_id: office_id,
+                    status: userStatus,
                 },
                 beforeSend: function () {
-                    $('#datatable tbody').html('<tr><td colspan="8" class="text-center">Loading...</td></tr>');
+                    $('#datatable tbody').html('<tr><td colspan="10" class="text-center">Loading...</td></tr>');
                 },
                 success: function (response) {
                     if (response.success) {
                         if (response.html != '') {
                             $('#datatable tbody').html(response.html);
                         } else{
-                            $('#datatable tbody').html('<tr><td colspan="8" class="text-center">No data found</td></tr>');
+                            $('#datatable tbody').html('<tr><td colspan="10" class="text-center">No data found</td></tr>');
                         }
                     } else {
-                        $('#datatable tbody').html('<tr><td colspan="8" class="text-center">No data found</td></tr>');
+                        $('#datatable tbody').html('<tr><td colspan="10" class="text-center">No data found</td></tr>');
                     }
                 },
                 error: function (xhr, status, error) {
-                    $('#datatable tbody').html('<tr><td colspan="8" class="text-center text-danger">An error occurred</td></tr>');
+                    $('#datatable tbody').html('<tr><td colspan="10" class="text-center text-danger">An error occurred</td></tr>');
                 },
             });
         }

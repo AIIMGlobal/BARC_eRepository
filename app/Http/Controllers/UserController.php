@@ -46,6 +46,8 @@ class UserController extends Controller
         $user = Auth::user();
 
         if (Gate::allows('user_management', $user)) {
+            $offices = Office::where('status', 1)->get();
+
             $query = User::with('userInfo');
 
             if ($request->filled('user_id')) {
@@ -54,6 +56,16 @@ class UserController extends Controller
 
             if ($request->filled('user_type')) {
                 $query->where('user_type', $request->user_type);
+            }
+
+            if ($request->filled('office_id')) {
+                $query->whereHas('userInfo', function($query2) use ($request) {
+                    $query2->where('office_id', $request->office_id);
+                });
+            }
+
+            if ($request->filled('status')) {
+                $query->where('status', $request->status);
             }
             
             $users = $query->where('role_id', '!=', 1)->where('status', '!=', 5)->latest()->get();
@@ -67,7 +79,7 @@ class UserController extends Controller
                 ]);
             }
 
-            return view('backend.admin.user.index', compact('users'));
+            return view('backend.admin.user.index', compact('users', 'offices'));
         } else {
             return abort(403, "You don't have permission..!");
         }

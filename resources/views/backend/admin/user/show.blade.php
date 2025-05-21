@@ -114,6 +114,8 @@
                                                                     <td><span class="badge bg-primary">Pending</span></td>
                                                                 @elseif ($employee->status == 2)
                                                                     <td><span class="badge bg-danger">Declined</span></td>
+                                                                 @elseif ($employee->status == 3)
+                                                                    <td><span class="badge bg-danger">Archived</span></td>
                                                                 @elseif ($employee->status == 4)
                                                                     <td><span class="badge bg-info">Pending Email Verification</span></td>
                                                                 @endif
@@ -635,6 +637,7 @@
                 confirmButtonText: 'Approve'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    $('.btn-danger').prop('disabled', true);
                     $.ajax({
                         url: "{{ route('admin.user.approve') }}",
                         type: "GET",
@@ -643,9 +646,17 @@
                             id: Id
                         },
                         beforeSend: function() {
-                            $('.btn-danger').prop('disabled', true);
+                            $('#approve').prop('disabled', true);
+                            $('#approve').html(`<span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Loading...`);
+
+                            $('#decline').prop('disabled', true);
                         },
                         success: function(response) {
+                            $('#approve').prop('disabled', false);
+                            $('#approve').html(`Approve`);
+
+                            $('#decline').prop('disabled', false);
+
                             if (response.success) {
                                 Swal.fire({
                                     title: response.message,
@@ -663,10 +674,18 @@
                             }
                         },
                         error: function(xhr, status, error) {
+                            $('#approve').prop('disabled', false);
+                            $('#approve').html(`Approve`);
+
+                            $('#decline').prop('disabled', false);
+
                             Swal.fire('Error', xhr.responseJSON.message || 'An error occurred.', 'error');
                         },
                         complete: function() {
-                            $('.btn-danger').prop('disabled', false);
+                            $('#approve').prop('disabled', false);
+                            $('#approve').html(`Approve`);
+
+                            $('#decline').prop('disabled', false);
                         }
                     });
                 }

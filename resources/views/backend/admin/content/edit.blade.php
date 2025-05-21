@@ -200,9 +200,11 @@
                         if (xhr.status === 422) {
                             let errors = xhr.responseJSON.errors;
                             let errorMessages = "";
+
                             $.each(errors, function(key, value) {
                                 errorMessages += value[0] + "\n";
                             });
+                            
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Validation Error!',

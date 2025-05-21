@@ -3,10 +3,6 @@
         .barChart-container {
             width: 500px;
             height: 500px;
-        }
-        .pieChart-container {
-            max-width: 500px;
-            max-height: 500px;
             width: 100%;
             height: 100%;
         }
@@ -173,14 +169,34 @@
 
         @can('content_line_chart')
             @if (Auth::user()->user_type != 4)
+                @push('css')
+                    <style>
+                        .pieChart-container {
+                            max-width: 500px;
+                            max-height: 500px;
+                            width: 100%;
+                            height: 100%;
+                        }
+                    </style>
+                @endpush
+
                 <div class="col-md-4">
-                    <h4 class="text-center">Content Graph</h4>
+                    <h4 class="text-center">Content Graph ({{ date('Y') }})</h4>
 
                     <div class="pieChart-container">
                         <canvas id="lineChart" width="500" height="500"></canvas>
                     </div>
                 </div>
             @else
+                @push('css')
+                    <style>
+                        .pieChart-container {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    </style>
+                @endpush
+
                 <div class="col-md-12">
                     <h4 class="text-center">Content Graph</h4>
 

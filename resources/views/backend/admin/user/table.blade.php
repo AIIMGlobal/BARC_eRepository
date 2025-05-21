@@ -15,6 +15,8 @@
 
             <td class="text-center">{{ $user->mobile ?? '-' }}</td>
 
+            <td>{{ $user->role->display_name ?? '-' }}</td>
+
             <td>
                 @if ($user->user_type == 2)
                     Admin
@@ -25,7 +27,7 @@
                 @endif
             </td>
 
-            <td>{{ $user->role->display_name ?? '-' }}</td>
+            <td>{{ $user->userInfo->office->name ?? '-' }}</td>
 
             <td>{{ $user->userInfo->post->name ?? '-' }}</td>
 
@@ -36,6 +38,8 @@
                     <span class="badge bg-primary">Pending</span>
                 @elseif ($user->status == 2)
                     <span class="badge bg-danger">Declined</span>
+                @elseif ($user->status == 3)
+                    <span class="badge bg-secondary">Archived</span>
                 @elseif ($user->status == 4)
                     <span class="badge bg-info">Pending Email Verification</span>
                 @endif
@@ -76,6 +80,6 @@
     @endforeach
 @else
     {{-- <tr>
-        <td colspan="8" class="text-center"><b>No Data Found</b></td>
+        <td colspan="10" class="text-center"><b>No Data Found</b></td>
     </tr> --}}
 @endif
