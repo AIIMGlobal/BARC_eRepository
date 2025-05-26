@@ -266,9 +266,11 @@
 
                         <div class="collapse menu-dropdown" id="manage_report">
                             <ul class="nav nav-sm flex-column">
-                                @can('project_report')
+                                @can('organization_user_report')
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.report.projectReport') }}" class="nav-link" data-key="t-basic">Project Summary Report</a>
+                                        <a class="nav-link menu-link" href="{{ route('admin.report.orgUserReport') }}">
+                                            <span data-key="t-dashboards">Organization-wise User Report</span>
+                                        </a>
                                     </li>
                                 @endcan
                             </ul>

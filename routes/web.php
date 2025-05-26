@@ -147,17 +147,6 @@ Route::group(['middleware' => ['AuthGates','set.locale'], 'prefix' => '/authoriz
         Route::get('/company-document-delete/{id}', [UserController::class, 'companyDocDelete'])->name('companyDocDelete');
     });
 
-    Route::group(['prefix' => '/appraisal', 'as' => 'appraisal.'], function () {
-        Route::get('/', [AppraisalController::class, 'index'])->name('index');
-        Route::get('/create', [AppraisalController::class, 'create'])->name('create');
-        Route::post('/store', [AppraisalController::class, 'store'])->name('store');
-        Route::get('/view/{id}', [AppraisalController::class, 'show'])->name('view');
-        Route::get('/edit/{id}', [AppraisalController::class, 'edit'])->name('edit');
-        Route::post('/update/{id}', [AppraisalController::class, 'update'])->name('update');
-        Route::get('/delete/{id}', [AppraisalController::class, 'destroy'])->name('delete');
-        Route::get('/history/{user_id}', [AppraisalController::class, 'view_history'])->name('view_history');
-    });
-
     Route::group(['prefix' => '/role', 'as' => 'role.'], function() {
         Route::get('/', [RoleController::class, 'index'])->name('index');
         Route::post('/store', [RoleController::class, 'store'])->name('store');
@@ -236,55 +225,6 @@ Route::group(['middleware' => ['AuthGates','set.locale'], 'prefix' => '/authoriz
         Route::get('/', [SettingController::class, 'index'])->name('setting.index');
         Route::post('/update/{id}', [SettingController::class, 'update'])->name('setting.update');
     });
-
-    Route::group(['prefix' => '/projects', 'as' => 'project.'], function() {
-        Route::get('/', [ProjectController::class, 'index'])->name('index');
-        Route::get('/create', [ProjectController::class, 'create'])->name('create');
-        Route::post('/store', [ProjectController::class, 'store'])->name('store');
-        Route::get('/show/{id}', [ProjectController::class, 'show'])->name('show');
-        Route::get('/edit/{id}', [ProjectController::class, 'edit'])->name('edit');
-        Route::post('/update/{id}', [ProjectController::class, 'update'])->name('update');
-        Route::get('/delete/{id}', [ProjectController::class, 'delete'])->name('delete');
-    });
-
-    Route::group(['prefix' => '/project-categories', 'as' => 'project_category.'], function() {
-        Route::get('/', [ProjectCategoryController::class, 'index'])->name('index');
-        Route::get('/create', [ProjectCategoryController::class, 'create'])->name('create');
-        Route::post('/store', [ProjectCategoryController::class, 'store'])->name('store');
-        Route::get('/show/{id}', [ProjectCategoryController::class, 'show'])->name('show');
-        Route::get('/edit/{id}', [ProjectCategoryController::class, 'edit'])->name('edit');
-        Route::post('/update/{id}', [ProjectCategoryController::class, 'update'])->name('update');
-        Route::get('/delete/{id}', [ProjectCategoryController::class, 'delete'])->name('delete');
-    });
-
-    Route::group(['prefix' => '/documents', 'as' => 'document.'], function() {
-        Route::get('/', [DocumentController::class, 'index'])->name('index');
-        Route::get('/create', [DocumentController::class, 'create'])->name('create');
-        Route::post('/store', [DocumentController::class, 'store'])->name('store');
-        Route::get('/show/{id}', [DocumentController::class, 'show'])->name('show');
-        Route::get('/edit/{id}', [DocumentController::class, 'edit'])->name('edit');
-        Route::post('/update/{id}', [DocumentController::class, 'update'])->name('update');
-        Route::get('/delete/{id}', [DocumentController::class, 'delete'])->name('delete');
-        Route::post('/mass-delete', [DocumentController::class, 'massDelete'])->name('massDelete');
-
-        Route::get('/legalIndex', [DocumentController::class, 'legalIndex'])->name('legalIndex');
-        Route::get('/membershipIndex', [DocumentController::class, 'membershipIndex'])->name('membershipIndex');
-        Route::get('/financialIndex', [DocumentController::class, 'financialIndex'])->name('financialIndex');
-
-        Route::get('/legalCreate', [DocumentController::class, 'legalCreate'])->name('legalCreate');
-        Route::get('/membershipCreate', [DocumentController::class, 'membershipCreate'])->name('membershipCreate');
-        Route::get('/financialCreate', [DocumentController::class, 'financialCreate'])->name('financialCreate');
-    });
-
-    Route::group(['prefix' => '/project-transaction', 'as' => 'project_transaction.'], function() {
-        Route::get('/', [ProjectTransactionController::class, 'index'])->name('index');
-        Route::get('/create', [ProjectTransactionController::class, 'create'])->name('create');
-        Route::post('/store', [ProjectTransactionController::class, 'store'])->name('store');
-        Route::get('/show/{id}', [ProjectTransactionController::class, 'show'])->name('show');
-        Route::get('/edit/{id}', [ProjectTransactionController::class, 'edit'])->name('edit');
-        Route::post('/update/{id}', [ProjectTransactionController::class, 'update'])->name('update');
-        Route::get('/destroy/{id}', [ProjectTransactionController::class, 'destroy'])->name('delete');
-    });
     
     Route::group(['prefix' => '/user-category', 'as' => 'user_category.'], function() {
         Route::get('/', [UserCategoryController::class, 'index'])->name('index');
@@ -294,47 +234,6 @@ Route::group(['middleware' => ['AuthGates','set.locale'], 'prefix' => '/authoriz
         Route::get('/edit/{id}', [UserCategoryController::class, 'edit'])->name('edit');
         Route::post('/update/{id}', [UserCategoryController::class, 'update'])->name('update');
         Route::get('/destroy/{id}', [UserCategoryController::class, 'destroy'])->name('delete');
-    });
-
-    Route::group(['prefix' => '/leave-category', 'as' => 'leaveCategory.'], function() {
-        Route::get('/', [LeaveCategoryController::class, 'index'])->name('index');
-        Route::get('/create', [LeaveCategoryController::class, 'create'])->name('create');
-        Route::post('/store', [LeaveCategoryController::class, 'store'])->name('store');
-        Route::get('/show/{id}', [LeaveCategoryController::class, 'show'])->name('show');
-        Route::get('/edit/{id}', [LeaveCategoryController::class, 'edit'])->name('edit');
-        Route::post('/update/{id}', [LeaveCategoryController::class, 'update'])->name('update');
-        Route::get('/destroy/{id}', [LeaveCategoryController::class, 'destroy'])->name('delete');
-    });
-
-    Route::group(['prefix' => '/leave-application', 'as' => 'leave.'], function() {
-        Route::get('/', [LeaveController::class, 'index'])->name('index');
-        Route::get('/leave-summary', [LeaveController::class, 'leaveSummary'])->name('leaveSummary');
-        Route::get('/leave-summary-monthwise', [LeaveController::class, 'leaveSummaryMonthwise'])->name('leaveSummaryMonthwise');
-        Route::get('/create', [LeaveController::class, 'create'])->name('create');
-        Route::post('/store', [LeaveController::class, 'store'])->name('store');
-        Route::get('/show/{id}', [LeaveController::class, 'show'])->name('show');
-        Route::get('/edit/{id}', [LeaveController::class, 'edit'])->name('edit');
-        Route::post('/update/{id}', [LeaveController::class, 'update'])->name('update');
-        Route::get('/destroy/{id}', [LeaveController::class, 'destroy'])->name('delete');
-        Route::post('/status-change/{id}', [LeaveController::class, 'statusChange'])->name('statusChange');
-    });
-
-    /* Report Management */
-    Route::group(['prefix' => '/report', 'as' => 'report.'], function() {
-        
-        Route::get('/project-report', [ReportController::class, 'projectReport'])->name('projectReport');
-        Route::get('/export-project-summary', [ReportController::class, 'exportProjectSummary'])->name('exportProjectSummary');
-        Route::get('/export-doc-project-summary', [ReportController::class, 'exportDocProjectSummary'])->name('exportDocProjectSummary');
-
-        Route::get('/view-pl-report/{id}', [ReportController::class, 'showPL'])->name('showPL');
-        Route::get('/export-pl-doc-report/{id}', [ReportController::class, 'exportDocPlReport'])->name('exportDocPlReport');
-        Route::get('/export-pl-excel-report/{id}', [ReportController::class, 'excelExportPlReport'])->name('excelExportPlReport');
-        
-        Route::get('/leave-report', [ReportController::class, 'leaveReport'])->name('leaveReport');
-        Route::get('/export-leave-summary', [ReportController::class, 'excelExportLeaveReport'])->name('excelExportLeaveReport');
-        Route::get('/export-doc-leave-summary', [ReportController::class, 'exportDocLeaveReport'])->name('exportDocLeaveReport');
-
-        Route::get('/employee-category-report', [ReportController::class, 'employeeCategory'])->name('employeeCategory');
     });
 
     Route::group(['prefix' => '/exams', 'as' => 'exam.'], function () {
@@ -405,30 +304,6 @@ Route::group(['middleware' => ['AuthGates','set.locale'], 'prefix' => '/authoriz
         Route::get('/delete/{id}', [DurationController::class, 'destroy'])->name('delete');
     });
 
-    //e-ticket routes
-    Route::group(['prefix' => '/e-ticket-type', 'as' => 'eTicketType.'], function() {
-        Route::get('/', [ETicketTypeController::class, 'index'])->name('index');
-        Route::get('/create', [ETicketTypeController::class, 'create'])->name('create');
-        Route::post('/store', [ETicketTypeController::class, 'store'])->name('store');
-        Route::get('/show/{id}', [ETicketTypeController::class, 'show'])->name('show');
-        Route::get('/edit/{id}', [ETicketTypeController::class, 'edit'])->name('edit');
-        Route::post('/update/{id}', [ETicketTypeController::class, 'update'])->name('update');
-        Route::get('/destroy/{id}', [ETicketTypeController::class, 'destroy'])->name('delete');
-    });
-
-    Route::group(['prefix' => '/e-ticket', 'as' => 'eTicket.'], function() {
-        Route::get('/', [ETicketController::class, 'index'])->name('index');
-        Route::get('/create', [ETicketController::class, 'create'])->name('create');
-        Route::post('/store', [ETicketController::class, 'store'])->name('store');
-        Route::get('/show/{id}', [ETicketController::class, 'show'])->name('show');
-        Route::get('/edit/{id}', [ETicketController::class, 'edit'])->name('edit');
-        Route::post('/update/{id}', [ETicketController::class, 'update'])->name('update');
-        Route::get('/destroy/{id}', [ETicketController::class, 'destroy'])->name('delete');
-        
-        Route::get('/delete-file/{id}', [ETicketController::class, 'deleteFile'])->name('deleteFile');
-        Route::get('/change-status/{id}', [ETicketController::class, 'changeStatus'])->name('changeStatus');
-    });
-
     // category routes
     Route::group(['prefix' => '/category', 'as' => 'category.'], function() {
         Route::get('/', [CategoryController::class, 'index'])->name('index');
@@ -457,5 +332,10 @@ Route::group(['middleware' => ['AuthGates','set.locale'], 'prefix' => '/authoriz
         Route::post('/bulk-action', [ContentController::class, 'bulkAction'])->name('bulkAction');
         Route::post('/toggle-favorite/{id}', [ContentController::class, 'toggleFavorite'])->name('toggleFavorite');
         Route::post('/toggle-save/{id}', [ContentController::class, 'toggleSave'])->name('toggleSave');
+    });
+
+    /* Report Management */
+    Route::group(['prefix' => '/report', 'as' => 'report.'], function() {
+        Route::get('/organization-user-report', [ReportController::class, 'orgUserReport'])->name('orgUserReport');
     });
 });
