@@ -205,7 +205,7 @@
     <div class="col-md-3 col-sm-6 mb-4">
         <div class="content-card">
             <div class="thumbnail-wrapper">
-                <img src="{{ $content->thumbnail ? Storage::url($content->thumbnail) : 'https://t4.ftcdn.net/jpg/05/17/53/57/360_F_517535712_q7f9QC9X6TQxWi6xYZZbMmw5cnLMr279.jpg' }}" alt="{{ $content->content_name }}">
+                <img src="{{ $content->thumbnail && Storage::exists($content->thumbnail) ? Storage::url($content->thumbnail) : 'https://t4.ftcdn.net/jpg/05/17/53/57/360_F_517535712_q7f9QC9X6TQxWi6xYZZbMmw5cnLMr279.jpg' }}" alt="{{ $content->content_name }}">
 
                 <div class="overlay">
                     <div class="action-icons">

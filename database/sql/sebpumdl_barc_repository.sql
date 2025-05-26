@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 21, 2025 at 05:57 AM
+-- Generation Time: May 26, 2025 at 05:20 AM
 -- Server version: 10.6.21-MariaDB-cll-lve-log
 -- PHP Version: 8.3.19
 
@@ -273,30 +273,29 @@ CREATE TABLE `contents` (
 --
 
 INSERT INTO `contents` (`id`, `sl`, `category_id`, `content_type`, `content_name`, `slug`, `description`, `extension`, `content`, `content_year`, `thumbnail`, `meta_title`, `meta_description`, `meta_keywords`, `status`, `approved_by`, `approved_at`, `published_at`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, NULL, 3, 'PDF', 'Annual Report 2011=12', 'annual-report-201112', NULL, 'pdf', 'contents/1747552531_Annual Report 2011-12.pdf', '2013', 'thumbnails/1747552531_Screenshot 2025-05-18 131225.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-18 17:15:31', 1, NULL, '2025-05-18 17:15:31', '2025-05-18 17:15:31'),
-(2, NULL, 3, 'PDF', 'Annual Report 2012-13', 'annual-report-2012-13', NULL, 'pdf', 'contents/1747553041_Annual Report 2012-13.pdf', '2024', 'thumbnails/1747553041_Screenshot 2025-05-18 132005.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-18 17:24:01', 1, NULL, '2025-05-18 17:24:01', '2025-05-18 17:24:01'),
-(3, NULL, 3, 'PDF', 'Annual Report 2013-14', 'annual-report-2013-14', NULL, 'pdf', 'contents/1747553375_Annual Report 2013-14.pdf', '2015', 'thumbnails/1747553375_Screenshot 2025-05-18 132730.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-18 17:29:35', 1, NULL, '2025-05-18 17:29:35', '2025-05-18 17:29:35'),
-(4, NULL, 3, 'PDF', 'Annual Report 2014-15', 'annual-report-2014-15', NULL, 'pdf', 'contents/1747554110_Annual Report 2014-15.pdf', '2016', 'thumbnails/1747554110_Screenshot 2025-05-18 133454.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-18 17:41:50', 1, NULL, '2025-05-18 17:41:50', '2025-05-18 17:41:50'),
-(5, NULL, 3, 'PDF', 'Annual Report 2019-20', 'annual-report-2019-20', NULL, 'pdf', 'contents/1747554388_Annual Report 2019-20.pdf', '2021', 'thumbnails/1747554388_Screenshot 2025-05-18 134433.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-18 17:46:28', 1, NULL, '2025-05-18 17:46:28', '2025-05-18 17:46:28'),
+(1, NULL, 3, 'PDF', 'Annual Report 2011=12', 'annual-report-201112', NULL, 'pdf', 'contents/1747552531_Annual Report 2011-12.pdf', '2013', 'thumbnails/1747552531_Screenshot 2025-05-18 131225.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-01-18 18:15:31', 1, NULL, '2025-05-18 17:15:31', '2025-05-18 17:15:31'),
+(2, NULL, 3, 'PDF', 'Annual Report 2012-13', 'annual-report-2012-13', NULL, 'pdf', 'contents/1747553041_Annual Report 2012-13.pdf', '2024', 'thumbnails/1747553041_Screenshot 2025-05-18 132005.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-01-18 18:24:01', 1, NULL, '2025-05-18 17:24:01', '2025-05-18 17:24:01'),
+(3, NULL, 3, 'PDF', 'Annual Report 2013-14', 'annual-report-2013-14', NULL, 'pdf', 'contents/1747553375_Annual Report 2013-14.pdf', '2015', 'thumbnails/1747553375_Screenshot 2025-05-18 132730.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-02-18 18:29:35', 1, NULL, '2025-05-18 17:29:35', '2025-05-18 17:29:35'),
+(4, NULL, 3, 'PDF', 'Annual Report 2014-15', 'annual-report-2014-15', NULL, 'pdf', 'contents/1747554110_Annual Report 2014-15.pdf', '2016', 'thumbnails/1747554110_Screenshot 2025-05-18 133454.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-02-18 18:41:50', 1, NULL, '2025-05-18 17:41:50', '2025-05-18 17:41:50'),
 (6, NULL, 1, 'PDF', 'CLIMATE SMART AGRICULTURE FOR ADAPTATION', 'climate-smart-agriculture-for-adaptation', NULL, 'pdf', 'contents/1747653505_CLIOMATE SMART AGRICULTURE FOR ADAPTATION.pdf', '2023', 'thumbnails/1747653505_Screenshot 2025-05-19 171608.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 21:18:25', 1, 1, '2025-05-19 21:18:25', '2025-05-19 21:24:47'),
 (7, NULL, 1, 'PDF', 'PROGRAM BASED RESEARCH GRANT (PBRG) Sub-project Completion Report on MICROBIAL CHARACTERIZATION OF BANGLADESH SOIL AND DEVELOPMENT OF CLIMATE SMART BIOFERTILIZERS FOR CROP PRODUCTION AND SOIL FERTILITY', 'program-based-research-grant-pbrg-sub-project-completion-report-on-microbial-characterization-of-bangladesh-soil-and-development-of-climate-smart-biofertilizers-for-crop-production-and-soil-fertility', NULL, 'pdf', 'contents/1747654446_MICROBIAL CHARACTERIZATION OF BANGLADESH SOIL AVD DEVELOPMENT OF CLIMATE SMART BIOFERTILIZERS  FOR CROP CROP PRODUCTIOON AND SOIL FETILITY.pdf', '2022', 'thumbnails/1747654446_Screenshot 2025-05-19 173058.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 21:34:06', 1, NULL, '2025-05-19 21:34:06', '2025-05-19 21:34:06'),
-(8, NULL, 2, 'PDF', 'BANGLADESH JOURNAL OF AGRICULTURE', 'bangladesh-journal-of-agriculture', NULL, 'pdf', 'contents/1747654706_Bangladesh Journal Of Agriculture Vol.3 No.1 June.1978.pdf', '1978', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 21:39:44', 1, 1, '2025-05-19 21:38:26', '2025-05-19 21:39:44'),
+(8, NULL, 2, 'PDF', 'BANGLADESH JOURNAL OF AGRICULTURE', 'bangladesh-journal-of-agriculture', NULL, 'pdf', 'contents/1747654706_Bangladesh Journal Of Agriculture Vol.3 No.1 June.1978.pdf', '1978', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-03-19 21:39:44', 1, 1, '2025-05-19 21:38:26', '2025-05-19 21:39:44'),
 (9, NULL, 2, 'PDF', 'BANGLADESH JOURNAL OF AGRICULTURE', 'bangladesh-journal-of-agriculture-1747655032', 'VOL. 5 NO. 4 DECEMBER, 1980', 'pdf', 'contents/1747655032_Bangladesh Journal Of Agriculature  Vol 5  No 4 -DECEMBER 198Opdf.pdf', '1980', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 21:43:52', 1, NULL, '2025-05-19 21:43:52', '2025-05-19 21:43:52'),
 (10, NULL, 2, 'PDF', 'BANGLADESH JOURNAL OF AGRICULTURE', 'bangladesh-journal-of-agriculture-1747655330', 'Vol 14 No 1 Jan - Mar 1989', 'pdf', 'contents/1747655330_Bangladesh Journal Of Agriculature  Vol 14 No 1 -Jun-Mar 1989.pdf', '1989', 'thumbnails/1747655330_Screenshot 2025-05-19 174702.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 21:48:50', 1, NULL, '2025-05-19 21:48:50', '2025-05-19 21:48:50'),
 (11, NULL, 4, 'Video', 'বাংলাদেশ কৃষি গবেষণা কাউন্সিল(Bangladesh Agricultural Research Council)_ পরিচয়, উদ্দেশ্য ও কার্যাবলী', 'banglades-krrishi-gbeshna-kaunsilbangladesh-agricultural-research-council-pricz-uddesz-oo-karzablee', NULL, 'mp4', 'contents/1747657794_বাংলাদেশ কৃষি গবেষণা কাউন্সিল(Bangladesh Agricultural Research Council)_ পরিচয়, উদ্দেশ্য ও কার্যাবলী.mp4', '2021', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 22:29:55', 1, NULL, '2025-05-19 22:29:55', '2025-05-19 22:29:55'),
 (12, NULL, 1, 'PDF', 'MEDICINAL PLANTS OF BANGLADESH', 'medicinal-plants-of-bangladesh', NULL, 'pdf', 'contents/1747657997_MEDICINAL PLANTS OF BANGLADESH.pdf', '2014', 'thumbnails/1747657997_Screenshot 2025-05-19 182941.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 22:33:17', 1, NULL, '2025-05-19 22:33:17', '2025-05-19 22:33:17'),
 (13, NULL, 1, 'PDF', 'Seaweed Cultivation', 'seaweed-cultivation', NULL, 'pdf', 'contents/1747658825_Seaweed Cultivation.pdf', '2021', 'thumbnails/1747658825_Screenshot 2025-05-19 184527.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 22:47:05', 1, NULL, '2025-05-19 22:47:05', '2025-05-19 22:47:05'),
 (14, NULL, 1, 'PDF', 'GUIDE TO BANGLADESH AGRICULTURE', 'guide-to-bangladesh-agriculture', NULL, 'pdf', 'contents/1747659169_GUIDE TO BANGLADESH AGRICULTURE.pdf', '1982', 'thumbnails/1747659169_Screenshot 2025-05-19 184958.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 22:52:49', 1, NULL, '2025-05-19 22:52:49', '2025-05-19 22:52:49'),
-(16, NULL, 4, 'Video', 'Khamari App Tutorial (খামারি অ্যাপ টিউটোরিয়াল)', 'khamari-app-tutorial-khamari-ozap-tiutorizal-1747718581', NULL, 'mp4', 'contents/1747718581_Khamari App Tutorial (খামারি অ্যাপ টিউটোরিয়াল).mp4', '2022', 'thumbnails/1747718581_Screenshot 2025-05-20 110959.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 15:23:01', 19, NULL, '2025-05-20 15:23:01', '2025-05-20 15:23:01'),
+(16, NULL, 4, 'Video', 'Khamari App Tutorial (খামারি অ্যাপ টিউটোরিয়াল)', 'khamari-app-tutorial-khamari-ozap-tiutorizal-1747718581', NULL, 'mp4', 'contents/1747718581_Khamari App Tutorial (খামারি অ্যাপ টিউটোরিয়াল).mp4', '2022', 'thumbnails/1747718581_Screenshot 2025-05-20 110959.png', NULL, NULL, NULL, 1, NULL, NULL, '2022-05-20 15:23:01', 19, NULL, '2025-05-20 15:23:01', '2025-05-20 15:23:01'),
 (17, NULL, 4, 'Video', 'Improvement of Rural Agricultural Technology Extension system in  Asia', 'improvement-of-rural-agricultural-technology-extension-system-in-asia', 'Documentary', 'mp4', 'contents/1747720753_AFACI-RATES Project TTMU BARC (2022-2025) (1) (1).mp4', '2025', 'thumbnails/1747720753_Screenshot 2025-05-20 112659.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 15:59:13', 19, NULL, '2025-05-20 15:59:13', '2025-05-20 15:59:13'),
-(18, NULL, 1, 'PDF', 'খাদ্য ও পুষ্টি নিরাপত্তা নাসভুক্ত প্রতিষ্ঠান কতৃক উদ্ভাবিত হস্তান্তরযোগ্য প্রযুক্তি', 'khadz-oo-pushti-niraptta-nasvukt-prtishthan-ktrrik-udvabit-hstantrzogz-przukti', NULL, 'pdf', 'contents/1747722556_খাদ্য ও পুষ্টি নিরাপত্তা নাসভুক্ত প্রতিষ্ঠান কতৃক উদ্ভাবিত হস্তান্তরযোগ্য প্রযুক্তি.pdf', '2015', 'thumbnails/1747722556_Screenshot 2025-05-20 122405.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 16:29:16', 19, NULL, '2025-05-20 16:29:16', '2025-05-20 16:29:16'),
-(19, NULL, 1, 'PDF', 'ফল বৃক্ষ রোপন ও পরিচর্যা স্বল্প প্রচলিত ফল  দ্বিতীয় খন্ড', 'fl-brriksh-ropn-oo-pricrza-swlp-prclit-fl-dwiteey-khnd', NULL, 'pdf', 'contents/1747723559_ফল বৃক্ষ রোপন ও পরিচর্যা স্বল্প প্রচলিত ফল  দ্বিতীয় খন্ড.pdf', '2003', 'thumbnails/1747723559_Screenshot 2025-05-20 122658.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 16:45:59', 19, NULL, '2025-05-20 16:45:59', '2025-05-20 16:45:59'),
-(20, NULL, 1, 'PDF', 'দেশের দক্ষিণ অঞ্চলের পতিত জমির ব্যবহার ও ফসল উৎপাদন পরিকল্পনা', 'deser-dkshin-oncler-ptit-jmir-bzbhar-oo-fsl-uttpadn-priklpna', NULL, 'pdf', 'contents/1747723845_দেশের দক্ষিণ অঞ্চলের পতিত জমির ব্যবহার ও ফসল উৎপাদন পরিকল্পনা.pdf', '2011', 'thumbnails/1747723845_Screenshot 2025-05-20 124709.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 16:50:45', 19, NULL, '2025-05-20 16:50:45', '2025-05-20 16:50:45'),
-(21, NULL, 1, 'PDF', 'কৃষি ক্ষেত্রে  প্রাকৃতিক দুর্যোগ ব্যবস্থাপনা', 'krrishi-kshetre-prakrritik-durzog-bzbsthapna', NULL, 'pdf', 'contents/1747724214_কৃষি ক্ষেত্রে  প্রাকৃতিক দুর্যোগ ব্যবস্থাপনা.pdf', '1993', 'thumbnails/1747724214_Screenshot 2025-05-20 125158.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 16:56:54', 19, NULL, '2025-05-20 16:56:54', '2025-05-20 16:56:54'),
+(18, NULL, 1, 'PDF', 'খাদ্য ও পুষ্টি নিরাপত্তা নাসভুক্ত প্রতিষ্ঠান কতৃক উদ্ভাবিত হস্তান্তরযোগ্য প্রযুক্তি', 'khadz-oo-pushti-niraptta-nasvukt-prtishthan-ktrrik-udvabit-hstantrzogz-przukti', NULL, 'pdf', 'contents/1747722556_খাদ্য ও পুষ্টি নিরাপত্তা নাসভুক্ত প্রতিষ্ঠান কতৃক উদ্ভাবিত হস্তান্তরযোগ্য প্রযুক্তি.pdf', '2015', 'thumbnails/1747722556_Screenshot 2025-05-20 122405.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-04-20 16:29:16', 19, NULL, '2025-05-20 16:29:16', '2025-05-20 16:29:16'),
+(19, NULL, 1, 'PDF', 'ফল বৃক্ষ রোপন ও পরিচর্যা স্বল্প প্রচলিত ফল  দ্বিতীয় খন্ড', 'fl-brriksh-ropn-oo-pricrza-swlp-prclit-fl-dwiteey-khnd', NULL, 'pdf', 'contents/1747723559_ফল বৃক্ষ রোপন ও পরিচর্যা স্বল্প প্রচলিত ফল  দ্বিতীয় খন্ড.pdf', '2003', 'thumbnails/1747723559_Screenshot 2025-05-20 122658.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-04-20 16:45:59', 19, NULL, '2025-05-20 16:45:59', '2025-05-20 16:45:59'),
+(20, NULL, 1, 'PDF', 'দেশের দক্ষিণ অঞ্চলের পতিত জমির ব্যবহার ও ফসল উৎপাদন পরিকল্পনা', 'deser-dkshin-oncler-ptit-jmir-bzbhar-oo-fsl-uttpadn-priklpna', NULL, 'pdf', 'contents/1747723845_দেশের দক্ষিণ অঞ্চলের পতিত জমির ব্যবহার ও ফসল উৎপাদন পরিকল্পনা.pdf', '2011', 'thumbnails/1747723845_Screenshot 2025-05-20 124709.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-04-20 16:50:45', 19, NULL, '2025-05-20 16:50:45', '2025-05-20 16:50:45'),
+(21, NULL, 1, 'PDF', 'কৃষি ক্ষেত্রে  প্রাকৃতিক দুর্যোগ ব্যবস্থাপনা', 'krrishi-kshetre-prakrritik-durzog-bzbsthapna', NULL, 'pdf', 'contents/1747724214_কৃষি ক্ষেত্রে  প্রাকৃতিক দুর্যোগ ব্যবস্থাপনা.pdf', '1993', 'thumbnails/1747724214_Screenshot 2025-05-20 125158.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-04-20 16:56:54', 19, NULL, '2025-05-20 16:56:54', '2025-05-20 16:56:54'),
 (22, NULL, 1, 'PDF', 'খাদ্য প্রক্রিয়া ও বিশ্লেষণ', 'khadz-prkriza-oo-bisleshn', NULL, 'pdf', 'contents/1747724625_খাদ্য প্রক্রিয়া ও বিশ্লেষণ.pdf', '1983', 'thumbnails/1747724625_Screenshot 2025-05-20 125806.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:03:46', 19, NULL, '2025-05-20 17:03:46', '2025-05-20 17:03:46'),
 (23, NULL, 1, 'PDF', 'বারি সোলার পাম্প ভিওিক সোলার হোম সিস্টেম  স্হাপন ব্যবহার ও রক্ষণাবেক্ষণ  প্রশিক্ষণ ম্যানুয়াল', 'bari-solar-pamp-viooik-solar-hom-sistem-shapn-bzbhar-oo-rkshnabekshn-prsikshn-mzanuyal', NULL, 'pdf', '0', '2020', 'thumbnails/1747724827_Screenshot 2025-05-20 130552.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:07:07', 19, NULL, '2025-05-20 17:07:07', '2025-05-20 17:07:07'),
-(24, NULL, 1, 'PDF', 'দারিদ্র্য বিমোচনে-একটি বাড়ি একটি খামার কৃষি প্রযুক্তি', 'daridrz-bimocne-ekti-bari-ekti-khamar-krrishi-przukti', NULL, 'pdf', 'contents/1747725339_দারিদ্র্য বিমোচনে-একটি বাড়ি একটি খামার কৃষি প্রযুক্তি.pdf', '2011', 'thumbnails/1747725339_Screenshot 2025-05-20 131002.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:15:40', 19, NULL, '2025-05-20 17:15:40', '2025-05-20 17:15:40'),
-(25, NULL, 1, 'PDF', 'বারি সীউইড-১ (গ্রাসিলারিয়া টেনুস্টিপিটাটা) চাষাবাদ ও সংগ্রহোত্তর প্রযুক্তিসমূহ', 'bari-seeuid-1-grasilariya-tenustipitata-cashabad-oo-snggrhottr-przuktismuuh', NULL, 'pdf', 'contents/1747725497_বারি সীউইড-১ (গ্রাসিলারিয়া টেনুস্টিপিটাটা) চাষাবাদ ও সংগ্রহোত্তর প্রযুক্তিসমূহ.pdf', '2020', 'thumbnails/1747725497_Screenshot 2025-05-20 131702.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:18:17', 19, NULL, '2025-05-20 17:18:17', '2025-05-20 17:18:17'),
+(24, NULL, 1, 'PDF', 'দারিদ্র্য বিমোচনে-একটি বাড়ি একটি খামার কৃষি প্রযুক্তি', 'daridrz-bimocne-ekti-bari-ekti-khamar-krrishi-przukti', NULL, 'pdf', 'contents/1747725339_দারিদ্র্য বিমোচনে-একটি বাড়ি একটি খামার কৃষি প্রযুক্তি.pdf', '2011', 'thumbnails/1747725339_Screenshot 2025-05-20 131002.png', NULL, NULL, NULL, 1, NULL, NULL, '2023-12-20 18:15:40', 19, NULL, '2025-05-20 17:15:40', '2025-05-20 17:15:40'),
+(25, NULL, 1, 'PDF', 'বারি সীউইড-১ (গ্রাসিলারিয়া টেনুস্টিপিটাটা) চাষাবাদ ও সংগ্রহোত্তর প্রযুক্তিসমূহ', 'bari-seeuid-1-grasilariya-tenustipitata-cashabad-oo-snggrhottr-przuktismuuh', NULL, 'pdf', 'contents/1747725497_বারি সীউইড-১ (গ্রাসিলারিয়া টেনুস্টিপিটাটা) চাষাবাদ ও সংগ্রহোত্তর প্রযুক্তিসমূহ.pdf', '2020', 'thumbnails/1747725497_Screenshot 2025-05-20 131702.png', NULL, NULL, NULL, 1, NULL, NULL, '2024-06-20 17:18:17', 19, NULL, '2025-05-20 17:18:17', '2025-05-20 17:18:17'),
 (26, NULL, 1, 'PDF', 'বারি সীউইড-২ (উলভা ল্যাকটুকা) চাষাবাদ ও সংগ্রহোত্তর প্রযুক্তিসমূহ', 'bari-seeuid-2-ulva-lzaktuka-cashabad-oo-snggrhottr-przuktismuuh', NULL, 'pdf', 'contents/1747725612_বারি সীউইড-২ (উলভা ল্যাকটুকা) চাষাবাদ ও সংগ্রহোত্তর প্রযুক্তিসমূহ.pdf', '2022', 'thumbnails/1747725612_Screenshot 2025-05-20 131853.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:20:12', 19, NULL, '2025-05-20 17:20:12', '2025-05-20 17:20:12'),
 (27, NULL, 1, 'PDF', 'Bamboo Production and Utilization', 'bamboo-production-and-utilization', NULL, 'pdf', 'contents/1747725830_Bamboo Production and Utilization.pdf', '2012', 'thumbnails/1747725830_Screenshot 2025-05-20 132125.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:23:50', 19, NULL, '2025-05-20 17:23:50', '2025-05-20 17:23:50'),
 (28, NULL, 2, 'PDF', 'Bangladesh Journal Of Agriculature  Vol 17  Jun-Dec 1992', 'bangladesh-journal-of-agriculature-vol-17-jun-dec-1992', NULL, 'pdf', 'contents/1747726253_Bangladesh Journal Of Agriculature  Vol 17  Jun-Dec 1992.pdf', '1993', 'thumbnails/1747726253_Screenshot 2025-05-20 132800.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:30:53', 19, 19, '2025-05-20 17:30:53', '2025-05-20 17:34:49'),
@@ -927,8 +926,9 @@ CREATE TABLE `notifications` (
 INSERT INTO `notifications` (`id`, `type`, `title`, `message`, `route_name`, `sender_role_id`, `sender_user_id`, `receiver_role_id`, `receiver_user_id`, `read_status`, `read_at`, `created_at`, `updated_at`) VALUES
 (1, 4, 'New User Registration', 'A new user has registered.', 'http://localhost:8000/admin/user/show/eyJpdiI6InN5Um9UVytYUkNySzQ1ek5pSnJaMXc9PSIsInZhbHVlIjoiRllLdDRDV0FKUUZrTUNjaDFncml0dz09IiwibWFjIjoiMjA2MDY0MGZjNDkzZWYxZmFjMjM3Yzk0YTFiZmY3NTVhNGQ3N2NmZDUwNDdlMGQ3YTM5Y2UwYmZiNTJmYTRhZiIsInRhZyI6IiJ9', 4, 7, 1, 1, 1, '2025-03-12 15:58:14', '2025-03-12 08:40:57', '2025-03-12 09:58:14'),
 (2, 4, 'New User Registration', 'A new user has registered.', 'http://localhost:8000/authorized-user/user/show/eyJpdiI6ImtqYlQvWTRTMHEwNUxQUXEvS1I1a2c9PSIsInZhbHVlIjoidjYyVXNDVFg2clI4MElmcFZIbFIyUT09IiwibWFjIjoiZGM0OTJiMmNjZmIwNjk2YzNkNzQ3ZThhZWMzNjliNWYwZGYzOTdlOTg3MDUwY2FlYzA0MDg4M2QzYWE5ZWQwYyIsInRhZyI6IiJ9', 4, 19, 1, 1, 1, '2025-04-16 11:59:20', '2025-04-10 12:08:18', '2025-04-16 05:59:20'),
-(3, 4, 'New User Registration', 'A new user has registered.', 'https://repository.barc.sebpobd.net/authorized-user/user/show/eyJpdiI6IjZUVmNtRFA1eXZXa3BvNFF5MlltdVE9PSIsInZhbHVlIjoiTU1RMlA3dVF4VXV0WUV0SEFRN3JOZz09IiwibWFjIjoiMzM2OGVkZmNkMjMwODkwZjA0MzQzYWQ1Mjk4NGU5MThiNThhZDBiZTRjMTQzOTE2OGQ1ZThiNmNhNmY3MzVmYiIsInRhZyI6IiJ9', 4, 20, 1, 1, 0, NULL, '2025-05-21 16:48:53', '2025-05-21 16:48:53'),
-(4, 4, 'New User Registration', 'A new user has registered.', 'https://repository.barc.sebpobd.net/authorized-user/user/show/eyJpdiI6InVxcGEvaWlyR1ZOd3kyNnhEQS9icGc9PSIsInZhbHVlIjoiSzBaelpvVlVCelBUbDAvR2ovdVNXUT09IiwibWFjIjoiZjRjMzk5MGIzOWM2OWJkYThlYzhhZDA5ZGNjYjc0Y2EzNTc5YjExNzZmMjcxZjVhOTM4N2VlYTZmNjY4ODVmYiIsInRhZyI6IiJ9', 4, 21, 1, 1, 0, NULL, '2025-05-21 16:59:52', '2025-05-21 16:59:52');
+(3, 4, 'New User Registration', 'A new user has registered.', 'https://repository.barc.sebpobd.net/authorized-user/user/show/eyJpdiI6IjZUVmNtRFA1eXZXa3BvNFF5MlltdVE9PSIsInZhbHVlIjoiTU1RMlA3dVF4VXV0WUV0SEFRN3JOZz09IiwibWFjIjoiMzM2OGVkZmNkMjMwODkwZjA0MzQzYWQ1Mjk4NGU5MThiNThhZDBiZTRjMTQzOTE2OGQ1ZThiNmNhNmY3MzVmYiIsInRhZyI6IiJ9', 4, 20, 1, 1, 1, '2025-05-21 18:07:46', '2025-05-21 16:48:53', '2025-05-21 22:07:46'),
+(4, 4, 'New User Registration', 'A new user has registered.', 'https://repository.barc.sebpobd.net/authorized-user/user/show/eyJpdiI6InVxcGEvaWlyR1ZOd3kyNnhEQS9icGc9PSIsInZhbHVlIjoiSzBaelpvVlVCelBUbDAvR2ovdVNXUT09IiwibWFjIjoiZjRjMzk5MGIzOWM2OWJkYThlYzhhZDA5ZGNjYjc0Y2EzNTc5YjExNzZmMjcxZjVhOTM4N2VlYTZmNjY4ODVmYiIsInRhZyI6IiJ9', 4, 21, 1, 1, 1, '2025-05-21 18:07:41', '2025-05-21 16:59:52', '2025-05-21 22:07:41'),
+(5, 4, 'New User Registration', 'A new user has registered.', 'https://repository.barc.sebpobd.net/authorized-user/user/show/eyJpdiI6IlRnZEs0TnI2b05YRm1XSTJzYndBUnc9PSIsInZhbHVlIjoiZWQyMGhPUmNpUzFJQ1MvNzdwL2xZZz09IiwibWFjIjoiMWRlYjZmZTI0ZGEyNmJjYTNlYmViNmE0MGE4MTVjMmI0ZjM2ZDQwOTk4MTU3ODRkMTE4MTUwNGRiZjNlMWQ2MyIsInRhZyI6IiJ9', 4, 22, 1, 1, 1, '2025-05-22 11:48:59', '2025-05-21 22:15:42', '2025-05-22 15:48:59');
 
 -- --------------------------------------------------------
 
@@ -977,17 +977,21 @@ INSERT INTO `offices` (`id`, `head_office`, `name`, `short_name`, `division_id`,
 (17, NULL, 'Sher-e-Bangla Agricultural University', 'SAU', 3, 13, 175, 'sau.edu.bd', 'organizations/1747803924_SAU.png', 1, 1, NULL, '2025-05-21 15:05:24', '2025-05-21 15:05:24'),
 (18, NULL, 'University of Dhaka', 'DU', 3, 13, 173, 'du.ac.bd', 'organizations/1747804360_DU.png', 1, 1, NULL, '2025-05-21 15:12:40', '2025-05-21 15:12:40'),
 (19, NULL, 'University of Chittagong', 'CU', 2, 9, 83, 'cu.ac.bd', 'organizations/1747804498_CU.png', 1, 1, NULL, '2025-05-21 15:14:58', '2025-05-21 15:14:58'),
-(20, NULL, 'Rajshahi University of Engineering & Technology', 'RUET', 6, 53, 481, 'ruet.ac.bd', 'organizations/1747804750_RUET.png', 1, 1, NULL, '2025-05-21 15:19:10', '2025-05-21 15:19:10'),
+(20, NULL, 'Rajshahi University of Engineering & Technology', 'RUET', 6, 53, 481, 'ruet.ac.bd', 'organizations/1747804750_RUET.png', 2, 1, NULL, '2025-05-21 15:19:10', '2025-05-21 22:30:18'),
 (21, NULL, 'Shahjalal University of Science and Technology', 'SUST', 8, 62, 571, 'sust.edu', 'organizations/1747804896_SUST.png', 1, 1, NULL, '2025-05-21 15:21:36', '2025-05-21 15:21:36'),
-(22, NULL, 'Chittagong University of Engineering & Technology', 'CUET', 2, 9, 94, 'cuet.ac.bd', 'organizations/1747805095_CUET.png', 1, 1, NULL, '2025-05-21 15:24:55', '2025-05-21 15:24:55'),
-(23, NULL, 'Khulna University of Engineering & Technology', 'KUET', 4, 27, 292, 'kuet.ac.bd', 'organizations/1747805621_kuet.png', 1, 1, NULL, '2025-05-21 15:33:41', '2025-05-21 15:33:41'),
+(22, NULL, 'Chittagong University of Engineering & Technology', 'CUET', 2, 9, 94, 'cuet.ac.bd', 'organizations/1747805095_CUET.png', 2, 1, NULL, '2025-05-21 15:24:55', '2025-05-21 22:28:21'),
+(23, NULL, 'Khulna University of Engineering & Technology', 'KUET', 4, 27, 292, 'kuet.ac.bd', 'organizations/1747805621_kuet.png', 2, 1, NULL, '2025-05-21 15:33:41', '2025-05-21 22:30:45'),
 (24, NULL, 'Khulna University', 'KU', 4, 27, 292, 'ku.ac.bd', 'organizations/1747805840_KU.png', 1, 1, NULL, '2025-05-21 15:37:21', '2025-05-21 15:37:21'),
-(25, NULL, 'Bangladesh University of Engineering and Technology', 'BUET', 3, 13, 163, 'buet.ac.bd', 'organizations/1747806154_BUET.png', 1, 1, NULL, '2025-05-21 15:42:34', '2025-05-21 15:42:34'),
-(26, NULL, 'Jashore University of Science and Technology', 'JUST', 4, 23, 263, 'just.edu.bd', 'organizations/1747806649_JUST.png', 1, 1, NULL, '2025-05-21 15:50:50', '2025-05-21 15:50:50'),
-(27, NULL, 'Begum Rokeya University, Rangpur', 'BRUR', 7, 56, 509, 'brur.ac.bd', 'organizations/1747806980_BRUR.png', 1, 1, NULL, '2025-05-21 15:56:20', '2025-05-21 15:56:20'),
-(28, NULL, 'Bangabandhu Sheikh Mujib Medical University', 'BSMMU', 3, 13, 173, 'bsmmu.edu.bd', 'organizations/1747807069_BSMMU.png', 1, 1, NULL, '2025-05-21 15:57:49', '2025-05-21 15:57:49'),
-(29, NULL, 'Bangladesh Atomic Energy Commission', 'BAEC', 3, 13, 175, 'baec.gov.bd', 'organizations/1747807906_baec.png', 1, 1, NULL, '2025-05-21 16:11:46', '2025-05-21 16:11:46'),
-(30, NULL, 'Bangladesh Agricultural Research Council', 'BARC', 3, 13, 177, 'barc.gov.bd', 'organizations/1747809303_BARC.jpeg', 1, 1, NULL, '2025-05-21 16:35:03', '2025-05-21 16:35:03');
+(25, NULL, 'Bangladesh University of Engineering and Technology', 'BUET', 3, 13, 163, 'buet.ac.bd', 'organizations/1747806154_BUET.png', 2, 1, NULL, '2025-05-21 15:42:34', '2025-05-21 22:27:54'),
+(26, NULL, 'Jashore University of Science and Technology', 'JUST', 4, 23, 263, 'just.edu.bd', 'organizations/1747806649_JUST.png', 2, 1, NULL, '2025-05-21 15:50:50', '2025-05-21 22:28:38'),
+(27, NULL, 'Begum Rokeya University, Rangpur', 'BRUR', 7, 56, 509, 'brur.ac.bd', 'organizations/1747806980_BRUR.png', 2, 1, NULL, '2025-05-21 15:56:20', '2025-05-21 22:27:37'),
+(28, NULL, 'Bangabandhu Sheikh Mujib Medical University', 'BSMMU', 3, 13, 173, 'bsmmu.edu.bd', 'organizations/1747807069_BSMMU.png', 2, 1, NULL, '2025-05-21 15:57:49', '2025-05-21 22:27:02'),
+(29, NULL, 'Bangladesh Atomic Energy Commission', 'BAEC', 3, 13, 175, 'baec.gov.bd', 'organizations/1747807906_baec.png', 2, 1, NULL, '2025-05-21 16:11:46', '2025-05-21 22:35:53'),
+(30, NULL, 'Bangladesh Agricultural Research Council', 'BARC', 3, 13, 177, 'barc.gov.bd', 'organizations/1747809303_BARC.jpeg', 1, 1, NULL, '2025-05-21 16:35:03', '2025-05-21 16:35:03'),
+(31, NULL, 'Sylhet Agricultural University', 'Sylhet AU', 8, 62, 571, 'sau.ac.bd', 'organizations/1747831258_sau_logo.png', 1, 1, NULL, '2025-05-21 22:40:58', '2025-05-21 22:40:58'),
+(32, NULL, 'Patuakhali Science and Technology University', 'PSTU', 1, 52, 470, 'pstu.ac.bd', 'organizations/1747831761_Pust.png', 1, 1, NULL, '2025-05-21 22:49:21', '2025-05-21 22:49:21'),
+(33, NULL, 'Chattogram Veterinary and Animal Sciences University', 'CVASU', 2, 9, 86, 'cvasu.ac.bd', 'organizations/1747896275_cvasu-logo-resized.jpg', 1, 1, NULL, '2025-05-22 16:44:35', '2025-05-22 16:44:35'),
+(34, NULL, 'Habiganj Agricultural University', 'HAU', 8, 20, 241, 'hau.ac.bd', 'organizations/1747896482_hau-logo.png', 1, 1, NULL, '2025-05-22 16:48:02', '2025-05-22 16:48:02');
 
 -- --------------------------------------------------------
 
@@ -11337,7 +11341,8 @@ INSERT INTO `users` (`id`, `name_bn`, `name_en`, `email`, `mobile`, `user_type`,
 (17, NULL, 'Rayhan Zaman', 'test@gmail.com', '01521449875', 4, 4, 3, NULL, NULL, NULL, 3, NULL, '$2y$10$a6DaeDk8Ej9xPPYqIIJPhu3PwiEbyvwJmr/i3oZNTz8NGf2rw1yPK', NULL, '2025-04-06 08:12:58', '2025-04-10 09:57:00'),
 (19, NULL, 'Md. Mostafizur Rahman', 'mostafizur.rahman@sebpo.com', '01516754654', 4, 4, 2, NULL, '100953447460615822249', NULL, 1, NULL, '$2y$10$KokuO0xmCdTOXLbOQOcG8Ojm1Pynl3bq74oYp9YfroP2pS1J9D6ti', NULL, '2025-04-10 12:08:10', '2025-04-10 12:21:30'),
 (20, NULL, 'Mostafizur Rahman', 'mfr637@gmail.com', '01521105154', 4, 4, 4, NULL, NULL, NULL, 1, '2025-05-21 16:48:52', '$2y$10$QjGFbdJUATl2Mhpp.93quOmCdDUoRb87aCmKlvQhzejtHePBdtoIG', NULL, '2025-05-21 16:46:42', '2025-05-21 16:52:26'),
-(21, NULL, 'Abu Sayeem Siddique', 'sayeem.siddique@sebpo.com', '01608881651', 4, 4, 3, NULL, NULL, NULL, 1, '2025-05-21 16:59:51', '$2y$10$gRf9enGwliMIzK5xPsEMUuoeJalydogtG9mPABMCduek1qovF93pe', NULL, '2025-05-21 16:58:39', '2025-05-21 17:06:05');
+(21, NULL, 'Abu Sayeem Siddique', 'sayeem.siddique@sebpo.com', '01608881651', 4, 4, 3, NULL, NULL, NULL, 1, '2025-05-21 16:59:51', '$2y$10$gRf9enGwliMIzK5xPsEMUuoeJalydogtG9mPABMCduek1qovF93pe', NULL, '2025-05-21 16:58:39', '2025-05-21 17:06:05'),
+(22, NULL, 'Ummul Hasnat Rafea', 'ummul.rafea@sebpo.com', '01758011597', 4, 4, 2, NULL, NULL, NULL, 1, '2025-05-21 22:15:42', '$2y$10$d3GrQTBLeDUtUcnyP9aSnO634ekzTZ1H01wLWjrHYBuHJVn2ViDqC', NULL, '2025-05-21 22:11:06', '2025-05-21 22:26:25');
 
 -- --------------------------------------------------------
 
@@ -11485,7 +11490,8 @@ INSERT INTO `user_infos` (`id`, `user_id`, `department_id`, `designation_id`, `o
 (16, 17, 1, 2, 'SEBPO', 'Ass. Manager', NULL, 'userImage2025_04_06_021258_54702425.jpg', 3, NULL, 'Male', '2025-04-14', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 'signature2025_04_06_021258_88147852.jpeg', NULL, 1, NULL, '2025-04-06 08:12:58', '2025-04-06 08:12:58'),
 (17, 19, 1, NULL, NULL, 'Software Engineer', NULL, 'userImage2025_04_10_121630_26508796.png', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'signature2025_04_10_121630_65643590.jpeg', NULL, NULL, 1, '2025-04-10 06:16:30', '2025-04-10 06:16:30'),
 (21, 20, NULL, 11, NULL, NULL, NULL, 'userImages/eVIoijpLrgRi1BcNNG5d7xS5NusJFElZdHcePXSz.jpg', 30, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-21 16:46:42', '2025-05-21 16:46:42'),
-(22, 21, NULL, 2, NULL, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-21 16:58:39', '2025-05-21 16:58:39');
+(22, 21, NULL, 2, NULL, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-21 16:58:39', '2025-05-21 16:58:39'),
+(23, 22, NULL, 1, NULL, NULL, NULL, NULL, 9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-21 22:11:06', '2025-05-21 22:11:06');
 
 --
 -- Indexes for dumped tables
@@ -11971,13 +11977,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `offices`
 --
 ALTER TABLE `offices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -12079,7 +12085,7 @@ ALTER TABLE `upazilas`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `user_addresses`
@@ -12109,7 +12115,7 @@ ALTER TABLE `user_content_activities`
 -- AUTO_INCREMENT for table `user_infos`
 --
 ALTER TABLE `user_infos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
