@@ -30,7 +30,7 @@
         .pdf-container {
             position: relative;
             width: 100%;
-            height: 550px;
+            height: 800px;
             display: flex;
             flex-direction: column;
         }
@@ -40,6 +40,23 @@
             height: 100%;
             border: none;
             flex-grow: 1;
+        }
+
+        .link-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .link-container img {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
 
         .pdf-fallback, .media-fallback {
@@ -181,14 +198,22 @@
 
                                                         <p class="media-fallback">If the image does not display, <a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>download it here</a>.</p>
                                                     </div>
+                                                @elseif($contentType == 'link')
+                                                    <div class="link-container">
+                                                        <a href="{{ $content->content }}" target="_blank" rel="noopener noreferrer">
+                                                            <img src="https://media.istockphoto.com/id/1302329383/vector/two-chain-links-icon-attach-lock-symbol.jpg?s=612x612&w=0&k=20&c=c-dxZOv-E63rdJJ40lKPbO2wbb9y9jJpZ-s10ArX2l8=" alt="Link Thumbnail" class="w-full h-full object-contain">
+                                                        </a>
+
+                                                        <p class="media-fallback">If the link thumbnail does not display, <a href="{{ $content->content }}" style="color: #129faf;" class="underline" target="_blank" rel="noopener noreferrer">visit the link here</a>.</p>
+                                                    </div>
                                                 @else
                                                     <img src="{{ $content->thumbnail ? asset('storage/' . $content->thumbnail) : 'https://t4.ftcdn.net/jpg/05/17/53/57/360_F_517535712_q7f9QC9X6TQxWi6xYZZbMmw5cnLMr279.jpg' }}" alt="Content" class="w-full h-full object-cover">
 
                                                     <p class="media-fallback">If the content does not display, <a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>download it here</a>.</p>
                                                 @endif
                                             @else
-                                                <img src="{{ 'https://t4.ftcdn.net/jpg/05/17/53/57/360_F_517535712_q7f9QC9X6TQxWi6xYZZbMmw5cnLMr279.jpg' }}" alt="Content" class="w-full h-full object-cover">
-
+                                                <img src="https://t4.ftcdn.net/jpg/05/17/53/57/360_F_517535712_q7f9QC9X6TQxWi6xYZZbMmw5cnLMr279.jpg" alt="Content" class="w-full h-full object-cover">
+                                                
                                                 <p class="media-fallback">No content available. <a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>Download the default content</a>.</p>
                                             @endif
                                         </div>
@@ -285,32 +310,26 @@
             const video = document.querySelector('video');
             const audio = document.querySelector('audio');
             const pdfIframe = document.querySelector('.pdf-container iframe');
+            const linkImg = document.querySelector('.link-container img');
 
             if (video) {
                 video.controls = true;
 
                 video.addEventListener('error', function (e) {
                     console.error('Video error:', e);
-
                     const fallback = video.parentElement.querySelector('.media-fallback');
-
                     if (fallback) {
                         fallback.style.display = 'block';
                     }
-
                     toastr.options.closeButton = true;
                     toastr.options.timeOut = 1500;
-                    
                     toastr.error("Failed to load video. Please check the file format or source path.");
                 });
 
                 video.addEventListener('loadeddata', function () {
                     console.log('Video loaded successfully');
-
                     video.controls = true;
-
                     const fallback = video.parentElement.querySelector('.media-fallback');
-
                     if (fallback) {
                         fallback.style.display = 'none';
                     }
@@ -328,22 +347,17 @@
             if (audio) {
                 audio.addEventListener('error', function (e) {
                     console.error('Audio error:', e);
-
                     const fallback = audio.parentElement.querySelector('.media-fallback');
-
                     if (fallback) {
                         fallback.style.display = 'block';
                     }
-                    
                     toastr.options.closeButton = true;
                     toastr.options.timeOut = 1500;
-                    
                     toastr.error("Failed to load audio. Please check the file format or source path.");
                 });
 
                 audio.addEventListener('loadeddata', function () {
                     const fallback = audio.parentElement.querySelector('.media-fallback');
-
                     if (fallback) {
                         fallback.style.display = 'none';
                     }
@@ -352,10 +366,8 @@
 
             if (pdfIframe) {
                 const fallback = pdfIframe.parentElement.querySelector('.pdf-fallback');
-
                 pdfIframe.addEventListener('error', function (e) {
                     console.error('PDF iframe error:', e);
-
                     if (fallback) {
                         fallback.style.display = 'block';
                     }
@@ -365,20 +377,17 @@
                     try {
                         if (pdfIframe.contentDocument && pdfIframe.contentDocument.contentType === 'application/pdf') {
                             console.log('PDF loaded successfully');
-
                             if (fallback) {
                                 fallback.style.display = 'none';
                             }
                         } else {
                             console.error('PDF not loaded');
-
                             if (fallback) {
                                 fallback.style.display = 'block';
                             }
                         }
                     } catch (e) {
                         console.error('PDF load check error:', e);
-
                         if (fallback) {
                             fallback.style.display = 'block';
                         }
@@ -386,14 +395,28 @@
                 });
             }
 
-            const image = document.querySelector('.image-container img');
+            if (linkImg) {
+                linkImg.addEventListener('error', function (e) {
+                    console.error('Link thumbnail error:', e);
+                    const fallback = linkImg.parentElement.parentElement.querySelector('.media-fallback');
+                    if (fallback) {
+                        fallback.style.display = 'block';
+                    }
+                });
 
+                linkImg.addEventListener('load', function () {
+                    const fallback = linkImg.parentElement.parentElement.querySelector('.media-fallback');
+                    if (fallback) {
+                        fallback.style.display = 'none';
+                    }
+                });
+            }
+
+            const image = document.querySelector('.image-container img');
             if (image) {
                 image.addEventListener('error', function (e) {
                     console.error('Image error:', e);
-
                     const fallback = image.parentElement.querySelector('.media-fallback');
-
                     if (fallback) {
                         fallback.style.display = 'block';
                     }
@@ -401,7 +424,6 @@
 
                 image.addEventListener('load', function () {
                     const fallback = image.parentElement.querySelector('.media-fallback');
-
                     if (fallback) {
                         fallback.style.display = 'none';
                     }

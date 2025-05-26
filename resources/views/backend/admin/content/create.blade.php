@@ -10,12 +10,11 @@
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <div class="page-title-right">
-                            <ol class="breadcrumb m-0">
+                            <ol class="breadcrumb m0">
                                 <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Dashboard</a></li>
-
                                 <li class="breadcrumb-item active" aria-current="page">Create Content</li>
                             </ol>
-                        </nav>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -27,7 +26,6 @@
                     <div class="card card-height-100">
                         <div class="card-header align-items-center d-flex">
                             <h4 class="card-title mb-0 flex-grow-1">Create New Content</h4>
-
                             <div class="flex-shrink-0">
                                 <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a>
                             </div>
@@ -36,7 +34,6 @@
                         <div class="card-body">
                             <form id="createForm" action="{{ route('admin.content.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-
                                 <input type="hidden" id="contentStatus" name="status">
 
                                 <div class="row g-4">
@@ -69,37 +66,19 @@
 
                                         <select name="content_type" class="form-control select2" id="content_type" required>
                                             <option value="">--Select Content Type--</option>
-
                                             <option value="Video">Video</option>
                                             <option value="PDF">PDF</option>
                                             <option value="Audio">Audio</option>
                                             <option value="Image">Image</option>
+                                            <option value="Link">Link</option>
                                             <option value="Other">Other</option>
                                         </select>
                                     </div>
 
-                                    {{-- <div class="col-md-6">
-                                        <label for="extension" class="form-label fw-bold">Extension</label>
-
-                                        <input type="text" class="form-control" id="extension" name="extension" placeholder="Enter extension (e.g., pdf, mp4)" value="{{ old('extension') }}">
-                                    </div> --}}
-
-                                    {{-- <div class="col-md-6">
-                                        <label for="sl" class="form-label fw-bold">Serial Number</label>
-
-                                        <input type="text" class="form-control" id="sl" name="sl" placeholder="Enter serial number" value="{{ old('sl') }}">
-                                    </div> --}}
-
-                                    <div class="col-md-12">
-                                        <label for="meta_description" class="form-label fw-bold">Description</label>
-
-                                        <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter Description">{{ old('description') }}</textarea>
-                                    </div>
-
                                     <div class="col-md-6">
-                                        <label for="content" class="form-label fw-bold">Content File: <span class="text-danger">*</span></label>
+                                        <label for="content" class="form-label fw-bold content-label">Content File: <span class="text-danger">*</span></label>
 
-                                        <input type="file" class="form-control" id="content" name="content" required>
+                                        <input type="file" class="form-control content-input" id="content" name="content" required>
                                     </div>
 
                                     <div class="col-md-6">
@@ -112,26 +91,13 @@
                                         </div>
                                     </div>
 
-                                    {{-- <div class="col-md-12">
-                                        <label for="meta_title" class="form-label fw-bold">Meta Title</label>
-
-                                        <input type="text" class="form-control" id="meta_title" name="meta_title" placeholder="Enter meta title" value="{{ old('meta_title') }}">
-                                    </div>
-
                                     <div class="col-md-12">
-                                        <label for="meta_description" class="form-label fw-bold">Meta Description</label>
+                                        <label for="description" class="form-label fw-bold">Description</label>
 
-                                        <textarea class="form-control" id="meta_description" name="meta_description" rows="4" placeholder="Enter meta description">{{ old('meta_description') }}</textarea>
+                                        <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter Description">{{ old('description') }}</textarea>
                                     </div>
-
-                                    <div class="col-md-12">
-                                        <label for="meta_keywords" class="form-label fw-bold">Meta Keywords</label>
-
-                                        <input type="text" class="form-control" id="meta_keywords" name="meta_keywords" placeholder="Enter meta keywords (comma-separated)" value="{{ old('meta_keywords') }}">
-                                    </div> --}}
                                 </div>
 
-                                <!-- Action Buttons -->
                                 <div class="d-flex gap-2 justify-content-end mt-4">
                                     <button type="submit" class="btn btn-success" id="saveBtn" data-status="0">Save</button>
 
@@ -157,17 +123,33 @@
         $(document).ready(function() {
             $('#thumbnail').on('change', function(event) {
                 const file = event.target.files[0];
-
                 if (file) {
                     const reader = new FileReader();
-
                     reader.onload = function(e) {
                         $('#thumbnail-image').attr('src', e.target.result).show();
                     };
-
                     reader.readAsDataURL(file);
                 } else {
                     $('#thumbnail-image').hide();
+                }
+            });
+
+            $('#content_type').on('change', function() {
+                const contentType = $(this).val();
+                const contentLabel = $('.content-label');
+                const contentInput = $('.content-input');
+                const contentContainer = contentInput.parent();
+
+                if (contentType === 'Link') {
+                    contentLabel.html('Link URL: <span class="text-danger">*</span>');
+                    contentContainer.find('#content').remove();
+                    contentContainer.append('<input type="text" class="form-control content-input" id="content" name="content" placeholder="Enter URL" required>');
+                    contentContainer.find('#content').val('{{ old('content') }}');
+                } else {
+                    contentLabel.html('Content File: <span class="text-danger">*</span>');
+                    contentContainer.find('#content').remove();
+                    contentContainer.append('<input type="file" class="form-control content-input" id="content" name="content" required>');
+                    contentContainer.find('#content').val('');
                 }
             });
 
@@ -202,15 +184,6 @@
                                 icon: 'success',
                                 showCancelButton: false,
                             });
-
-                            // form.trigger('reset');
-
-                            // $('#thumbnail-image').hide();
-
-                            // if ($('.select2').length > 0) {
-                            //     $('.select2').val('').trigger('change');
-                            // }
-
                             setTimeout(() => window.location.reload(), 1000);
                         } else {
                             Swal.fire({
@@ -219,22 +192,18 @@
                                 showCancelButton: false,
                             });
                         }
-
                         submitBtn.prop('disabled', false);
                         submitBtn.html(btnText);
                     },
                     error: function(xhr) {
                         submitBtn.prop('disabled', false);
                         submitBtn.html(btnText);
-
                         if (xhr.status === 422) {
                             let errors = xhr.responseJSON.errors;
                             let errorMessages = "";
-
                             $.each(errors, function(key, value) {
                                 errorMessages += value[0] + "\n";
                             });
-
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Validation Error!',

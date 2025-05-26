@@ -171,15 +171,27 @@
             display: block;
             margin: 20px auto;
             padding: 10px 30px;
-            background: #2563eb;
             color: #fff;
+            background: linear-gradient(90deg, #0F2027, #203A43, #2C5364);
             border-radius: 6px;
             border: none;
             font-weight: 500;
-            transition: background 0.2s;
+            transition: all 0.3s ease;
+            position: relative;
         }
-        .load-more-btn:hover {
-            background: #1d4ed8;
+        .load-more-btn:hover::after {
+            left: 0;
+        }
+        .load-more-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #1A2F36, #2D4A53, #3B6476);
+            transition: all 0.3s ease;
+            z-index: -1;
         }
     </style>
 @endpush

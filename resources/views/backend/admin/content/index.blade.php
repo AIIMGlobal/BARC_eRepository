@@ -61,6 +61,7 @@
                                             <option value="PDF">PDF</option>
                                             <option value="Audio">Audio</option>
                                             <option value="Image">Image</option>
+                                            <option value="Link">Link</option>
                                             <option value="Other">Other</option>
                                         </select>
                                     </div>

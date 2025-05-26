@@ -39,14 +39,14 @@
                                 <div class="d-flex">
                                     <div class="flex-1">
                                         <a href="{{ route('admin.notification.read_notification', $notification->id) }}" class="stretched-link">
-                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold">{{ $notification->title }}</h6>
+                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold text-white">{{ $notification->title }}</h6>
                                         </a>
 
-                                        <div class="fs-13 text-muted">
-                                            <p class="mb-1">{{ $notification->message ?? '-'}}</p>
+                                        <div class="fs-13">
+                                            <p class="mb-1" style="color: #cacde1;">{{ $notification->message ?? '-'}}</p>
                                         </div>
 
-                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                        <p class="mb-0 fs-11 fw-medium text-uppercase" style="color: #cacde1;">
                                             <span><i class="mdi mdi-clock-outline"></i>
                                                 {{ date('d-m-Y h:i A', strtotime($notification->created_at)) }}
                                             </span>
@@ -60,7 +60,7 @@
                             <div class="d-flex">
                                 <div class="flex-1">
                                     <a href="#" class="stretched-link">
-                                        <h6 class="mt-0 mb-1 fs-13 fw-semibold">No New Notificaiton Found</h6>
+                                        <h6 class="mt-0 mb-1 fs-13 fw-semibold text-white">No New Notificaiton Found</h6>
                                     </a>
                                 </div>
                             </div>

@@ -383,13 +383,17 @@ class ContentController extends Controller
                     $thumbnail = null;
                 }
 
-                if ($request->hasFile('content')) {
-                    $filecontent = $request->file('content');
-                    $fileNamecontent = time() . '_' . $filecontent->getClientOriginalName();
-                    $extension = $filecontent->getClientOriginalExtension();
-                    $contentPath = $filecontent->storeAs('contents', $fileNamecontent, 'public');
+                if ($request->content_type === 'Link') {
+                    $contentPath = $request->content;
                 } else {
-                    $contentPath = null;
+                    if ($request->hasFile('content')) {
+                        $filecontent = $request->file('content');
+                        $fileNamecontent = time() . '_' . $filecontent->getClientOriginalName();
+                        $extension = $filecontent->getClientOriginalExtension();
+                        $contentPath = $filecontent->storeAs('contents', $fileNamecontent, 'public');
+                    } else {
+                        $contentPath = null;
+                    }
                 }
 
                 $content = new Content;
@@ -525,18 +529,22 @@ class ContentController extends Controller
                     $thumbnail = $content->thumbnail;
                 }
 
-                if ($request->hasFile('content')) {
-                    if ($content->content) {
-                        \Storage::disk('public')->delete($content->content);
-                    }
-
-                    $filecontent = $request->file('content');
-                    $fileNamecontent = time() . '_' . $filecontent->getClientOriginalName();
-                    $extension = $filecontent->getClientOriginalExtension();
-                    $contentPath = $filecontent->storeAs('contents', $fileNamecontent, 'public');
+                if ($request->content_type === 'Link') {
+                    $contentPath = $request->content;
                 } else {
-                    $contentPath = $content->content;
-                    $extension = $content->extension;
+                    if ($request->hasFile('content')) {
+                        if ($content->content) {
+                            \Storage::disk('public')->delete($content->content);
+                        }
+
+                        $filecontent = $request->file('content');
+                        $fileNamecontent = time() . '_' . $filecontent->getClientOriginalName();
+                        $extension = $filecontent->getClientOriginalExtension();
+                        $contentPath = $filecontent->storeAs('contents', $fileNamecontent, 'public');
+                    } else {
+                        $contentPath = $content->content;
+                        $extension = $content->extension;
+                    }
                 }
 
                 $content->sl                = $request->sl;

@@ -77,26 +77,27 @@
                                             <option value="PDF" {{ $content->content_type == 'PDF' ? 'selected' : '' }}>PDF</option>
                                             <option value="Audio" {{ $content->content_type == 'Audio' ? 'selected' : '' }}>Audio</option>
                                             <option value="Image" {{ $content->content_type == 'Image' ? 'selected' : '' }}>Image</option>
+                                            <option value="Link" {{ $content->content_type == 'Link' ? 'selected' : '' }}>Link</option>
                                             <option value="Other" {{ $content->content_type == 'Other' ? 'selected' : '' }}>Other</option>
                                         </select>
                                     </div>
 
-                                    <div class="col-md-12">
-                                        <label for="meta_description" class="form-label fw-bold">Description</label>
-
-                                        <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter Description">{{ old('description') }}</textarea>
-                                    </div>
-
                                     <div class="col-md-6">
-                                        <label for="content" class="form-label fw-bold">
-                                            Content File:
+                                        @if ($content->content_type == 'Link')
+                                            <label for="content" class="form-label fw-bold content-label">Link URL: <span class="text-danger">*</span></label>
 
-                                            @if ($content->content)
-                                                <a href="{{ route('admin.content.show', Crypt::encryptString($content->id)) }}" class="btn btn-info btn-sm mt-2" style="margin-top: 0 !important;" target="_blank">View Content</a>
-                                            @endif
-                                        </label>
+                                            <input type="text" class="form-control content-input" id="content" name="content" placeholder="Enter URL" value="{{ $content->content }}" required>
+                                        @else
+                                            <label for="content" class="form-label fw-bold content-label">
+                                                Content File: <span class="text-danger">*</span>
 
-                                        <input type="file" class="form-control" id="content" name="content">
+                                                @if ($content->content)
+                                                    <a href="{{ route('admin.content.show', Crypt::encryptString($content->id)) }}" class="btn btn-info btn-sm mt-2" style="margin-top: 0 !important;" target="_blank">View Content</a>
+                                                @endif
+                                            </label>
+
+                                            <input type="file" class="form-control" id="content" name="content" class="content-input">
+                                        @endif
                                     </div>
 
                                     <div class="col-md-6">
@@ -107,6 +108,12 @@
                                         <div id="thumbnail-preview" class="mt-2">
                                             <img id="thumbnail-image" src="{{ $content->thumbnail ? asset('storage/' . $content->thumbnail) : 'https://t4.ftcdn.net/jpg/05/17/53/57/360_F_517535712_q7f9QC9X6TQxWi6xYZZbMmw5cnLMr279.jpg' }}" alt="Thumbnail Preview" class="img-fluid rounded" style="max-width: 200px;">
                                         </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="description" class="form-label fw-bold">Description</label>
+
+                                        <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter Description">{{ old('description') }}</textarea>
                                     </div>
                                 </div>
 
@@ -143,6 +150,25 @@
                     reader.readAsDataURL(file);
                 } else {
                     $('#thumbnail-image').attr('src', '{{ $content->thumbnail ? asset('storage/' . $content->thumbnail) : asset('images/dummy-thumbnail.jpg') }}');
+                }
+            });
+
+            $('#content_type').on('change', function() {
+                const contentType = $(this).val();
+                const contentLabel = $('.content-label');
+                const contentInput = $('.content-input');
+                const contentContainer = contentInput.parent();
+
+                if (contentType === 'Link') {
+                    contentLabel.html('Link URL: <span class="text-danger">*</span>');
+                    contentContainer.find('#content').remove();
+                    contentContainer.append('<input type="text" class="form-control content-input" id="content" name="content" placeholder="Enter URL" required>');
+                    contentContainer.find('#content').val('{{ old('content') }}');
+                } else {
+                    contentLabel.html('Content File: <span class="text-danger">*</span>');
+                    contentContainer.find('#content').remove();
+                    contentContainer.append('<input type="file" class="form-control content-input" id="content" name="content" required>');
+                    contentContainer.find('#content').val('');
                 }
             });
 
