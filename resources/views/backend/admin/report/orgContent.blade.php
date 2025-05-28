@@ -1,14 +1,14 @@
 @extends('backend.layouts.app')
 
-@section('title', 'User Report (Organization-wise) | ' . ($global_setting->title ?? ""))
+@section('title', 'Content Report (Organization-wise) | ' . ($global_setting->title ?? ""))
 
 @section('content')
     @push('css')
         <style>
             @media screen {
-                tfoot {
+                /* tfoot {
                     display: none;
-                }
+                } */
                 .head-logo {
                     display: none;
                 }
@@ -57,13 +57,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        {{-- <h4 class="mb-sm-0">User Report (Organization-wise)</h4> --}}
-
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Dashboard</a></li>
 
-                                <li class="breadcrumb-item active">User Report (Organization-wise)</li>
+                                <li class="breadcrumb-item active">Content Report (Organization-wise)</li>
                             </ol>
                         </div>
                     </div>
@@ -78,7 +76,7 @@
                     <div class="card card-height-100">
                         <div class="card-header align-items-center d-flex">
                             <h5 class="mb-0 flex-grow-1">
-                                User Report (Organization-wise)
+                                Content Report (Organization-wise)
                             </h5>
 
                             <div class="flex-shrink-0">
@@ -104,25 +102,25 @@
                                             </div>
 
                                             <div class="col-md-4">
-                                                <label for="designation" class="form-label">Designation</label>
+                                                <label for="category" class="form-label">Category</label>
 
-                                                <select name="designation" id="designation" class="form-select select2">
-                                                    <option value="">Select Designation</option>
+                                                <select name="category" id="category" class="form-select select2">
+                                                    <option value="">Select Category</option>
 
-                                                    @foreach($designations as $designation)
-                                                        <option value="{{ $designation->id }}">{{ $designation->name }}</option>
+                                                    @foreach($categorys as $category)
+                                                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
 
                                             <div class="col-md-4">
-                                                <label for="service_type" class="form-label">User Service Type</label>
+                                                <label for="user_id" class="form-label">User</label>
 
-                                                <select name="service_type" id="service_type" class="form-select select2">
-                                                    <option value="">Select User Service Type</option>
+                                                <select name="user_id" id="user_id" class="form-select select2">
+                                                    <option value="">Select User</option>
 
-                                                    @foreach($categorys as $service_type)
-                                                        <option value="{{ $service_type->id }}">{{ $service_type->name }}</option>
+                                                    @foreach($users as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->name_en }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -150,8 +148,9 @@
                                             </tr>
 
                                             <tr class="text-center tableHeading" style="border: none; display:none;">
-                                                <th colspan="7" style="border: none;" class="py-4">
-                                                    <h1>User Report (Organization-wise)</h1>
+                                                <th colspan="8" style="border: none;" class="py-4">
+                                                    <h1>Content Report (Organization-wise)</h1>
+                                                    <h3><strong>Total Result: {{ $totalCount ?? 0 }}</strong></h3>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -164,18 +163,25 @@
                                                     <tr>
                                                         <th class="text-center">#</th>
                                                         <th>Organization Name</th>
-                                                        <th>User</th>
-                                                        <th>Email</th>
-                                                        <th>Mobile</th>
-                                                        <th>Designation</th>
-                                                        <th>User Service Type</th>
+                                                        <th>Content Title</th>
+                                                        <th>Category</th>
+                                                        <th>Created By</th>
+                                                        <th class="text-center">Content Count</th>
                                                         <th class="actionBtn text-center">Action</th>
                                                     </tr>
                                                 </thead>
 
                                                 <tbody id="reportTableBody">
-                                                    {{-- <tr><td colspan="7" class="text-center">Please apply filters to view data.</td></tr> --}}
+                                                    {{-- <tr><td colspan="7" class="text-center"><div class="alert alert-info text-center">Please apply filters to view data.</div></td></tr> --}}
                                                 </tbody>
+
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="5" style="text-align: right;"><b>Total: </b></td>
+                                                        <td class="text-center" id="totalContentCount"><b>0</b></td>
+                                                        <td class="actionBtn"></td>
+                                                    </tr>
+                                                </tfoot>
                                             </table>
                                         </div>
                                     </div>
@@ -183,7 +189,7 @@
                             </div><!--end row-->
 
                             <div class="row">
-                                <div class="card-footer">
+                                <div class="card-footer" style="display: none;">
                                     <table>
                                         <tfoot>
                                             <tr>
@@ -214,6 +220,31 @@
 @push('script')
     <script>
         $(document).ready(function() {
+            let table = null;
+
+            // function initializeDataTable() {
+            //     if (table) {
+            //         table.destroy();
+            //     }
+            //     table = $('#reportTable').DataTable({
+            //         searching: false,
+            //         paging: false,
+            //         ordering: false,
+            //         info: false,
+            //         responsive: true,
+            //         pageLength: 100,
+            //         order: [[0, 'asc']],
+            //         columnDefs: [
+            //             { orderable: false, targets: [-1] }
+            //         ],
+            //         language: {
+            //             emptyTable: '<div class="alert alert-info text-center">Please apply filters to view data.</div>'
+            //         }
+            //     });
+            // }
+
+            // initializeDataTable();
+
             $('#reportTable').DataTable({
                 searching: false,
                 paging: false,
@@ -227,7 +258,16 @@
                 }
             });
 
-            // $('#organization, #designation, #service_type').on('change keyup', function() {
+            // $('#filterBtn').on('click', function() {
+            //     if (!$('#organization').val() && !$('#category').val() && !$('#user_id').val()) {
+            //         $('#reportTableBody').html('<tr><td colspan="7" class="text-center"><div class="alert alert-info text-center">Please apply filters to view data.</div></td></tr>');
+            //         $('#totalContentCount').text('0');
+
+            //         initializeDataTable();
+
+            //         return;
+            //     }
+
             //     fetchFilteredData();
             // });
 
@@ -237,44 +277,49 @@
 
             $('#resetBtn').on('click', function() {
                 $('#filterForm')[0].reset();
-                $('#organization, #designation, #service_type').val('').trigger('change');
-                $('#reportTableBody').html('<tr><td colspan="8" class="text-center"><div class="alert alert-info text-center">Please apply filters to view data.</div></td></tr>');
+                $('#organization, #category, #user_id').val('').trigger('change');
+                $('#reportTableBody').html('<tr><td colspan="7" class="text-center"><div class="alert alert-info text-center">Please apply filters to view data.</div></td></tr>');
+                $('#totalContentCount').text('0');
 
-                // fetchFilteredData();
+                // initializeDataTable();
             });
 
             function fetchFilteredData() {
                 const organization = $('#organization').val();
-                const designation = $('#designation').val();
-                const service_type = $('#service_type').val();
+                const category = $('#category').val();
+                const user_id = $('#user_id').val();
 
                 $.ajax({
-                    url: "{{ route('admin.report.orgUserReport') }}",
+                    url: "{{ route('admin.report.orgContentReport') }}",
                     type: "GET",
                     data: {
                         organization: organization,
-                        designation: designation,
-                        service_type: service_type
+                        category: category,
+                        user_id: user_id
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     beforeSend: function() {
                         $('#reportTableBody').html('<tr><td colspan="7" class="text-center">Loading...</td></tr>');
+                        $('#totalContentCount').text('0');
                     },
                     success: function(response) {
-                        if (response.success) {
-                            if (response.html != '') {
-                                $('#reportTableBody').html(response.html);
-                            } else {
-                                $('#reportTableBody').html('<tr><td colspan="7" class="text-center">No data found</td></tr>');
-                            }
+                        if (response.success && response.html) {
+                            $('#reportTableBody').html(response.html);
+                            $('#totalContentCount').text(response.totalCount);
                         } else {
                             $('#reportTableBody').html('<tr><td colspan="7" class="text-center">No data found</td></tr>');
+                            $('#totalContentCount').text('0');
                         }
+                        
+                        // initializeDataTable();
                     },
                     error: function(xhr, status, error) {
                         $('#reportTableBody').html('<tr><td colspan="7" class="text-center text-danger">An error occurred</td></tr>');
+                        $('#totalContentCount').text('0');
+
+                        // initializeDataTable();
                     }
                 });
             }
@@ -282,6 +327,7 @@
 
         function printDiv(divName) {
             $('.head-logo').show();
+            $('.card-footer').show();
             $('.tableHeading').show();
             $('.actionBtn').hide();
             $('body').css('background', '#fff');

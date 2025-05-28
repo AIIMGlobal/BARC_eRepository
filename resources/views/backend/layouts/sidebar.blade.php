@@ -269,7 +269,15 @@
                                 @can('organization_user_report')
                                     <li class="nav-item">
                                         <a class="nav-link menu-link" href="{{ route('admin.report.orgUserReport') }}">
-                                            <span data-key="t-dashboards">Organization-wise User Report</span>
+                                            <span data-key="t-dashboards">User Report (Organization-wise)</span>
+                                        </a>
+                                    </li>
+                                @endcan
+
+                                @can('organization_content_report')
+                                    <li class="nav-item">
+                                        <a class="nav-link menu-link" href="{{ route('admin.report.orgContentReport') }}">
+                                            <span data-key="t-dashboards">Content Report (Organization-wise)</span>
                                         </a>
                                     </li>
                                 @endcan

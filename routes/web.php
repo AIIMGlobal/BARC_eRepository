@@ -337,5 +337,6 @@ Route::group(['middleware' => ['AuthGates','set.locale'], 'prefix' => '/authoriz
     /* Report Management */
     Route::group(['prefix' => '/report', 'as' => 'report.'], function() {
         Route::get('/organization-user-report', [ReportController::class, 'orgUserReport'])->name('orgUserReport');
+        Route::get('/organization-content-report', [ReportController::class, 'orgContentReport'])->name('orgContentReport');
     });
 });

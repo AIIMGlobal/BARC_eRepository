@@ -14,6 +14,8 @@ use App\Models\User;
 use App\Models\Office;
 use App\Models\Designation;
 use App\Models\UserCategory;
+use App\Models\Category;
+use App\Models\Content;
 
 class ReportController extends Controller
 {
@@ -63,6 +65,61 @@ class ReportController extends Controller
             }
 
             return view('backend.admin.report.orgUser', compact('orgs', 'designations', 'categorys'));
+        } else {
+            return abort(403, "You don't have permission..!");
+        }
+    }
+
+    public function orgContentReport(Request $request)
+    {
+        $user = Auth::user();
+
+        if (Gate::allows('organization_content_report', $user)) {
+            $orgs = Office::where('status', 1)->get();
+            $categorys = Category::where('status', 1)->get();
+            $users = User::where('user_type', 4)->where('status', 1)->get();
+
+            if ($request->ajax()) {
+                $query = Content::query();
+
+                dd($request->all());
+
+                if ($request->organization) {
+                    $query->whereHas('createdBy.userInfo', function($query2) use($request) {
+                        $query2->where('office_id', $request->organization);
+                    });
+                }
+
+                if ($request->category) {
+                    $query->where('category_id', $request->category);
+                }
+
+                if ($request->user_id) {
+                    $query->where('created_by', $request->user_id);
+                }
+
+                $reports = $query->where('status', 1)->with(['createdBy.userInfo.office', 'createdBy.userInfo.post'])->get();
+
+                $totalCount = $reports->count();
+
+                if ($reports->isEmpty()) {
+                    return response()->json([
+                        'success' => false,
+                        'html' => '<tr><td colspan="7" class="text-center">No data found</td></tr>',
+                        'totalCount' => 0
+                    ]);
+                }
+
+                $html = view('backend.admin.report.orgContentTable', compact('reports'))->render();
+
+                return response()->json([
+                    'success' => true,
+                    'html' => $html,
+                    'totalCount' => $totalCount
+                ]);
+            }
+
+            return view('backend.admin.report.orgContent', compact('orgs', 'users', 'categorys', 'request'));
         } else {
             return abort(403, "You don't have permission..!");
         }
