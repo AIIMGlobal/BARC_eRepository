@@ -21,6 +21,7 @@
 
         <!-- JAVASCRIPT -->
         <script src="{{ asset('backend-assets/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
         <script src="{{ asset('backend-assets/assets/libs/simplebar/simplebar.min.js') }}"></script>
         <script src="{{ asset('backend-assets/assets/libs/node-waves/waves.min.js') }}"></script>
         <script src="{{ asset('backend-assets/assets/libs/feather-icons/feather.min.js') }}"></script>

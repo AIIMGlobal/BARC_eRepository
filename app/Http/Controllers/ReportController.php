@@ -82,8 +82,6 @@ class ReportController extends Controller
             if ($request->ajax()) {
                 $query = Content::query();
 
-                dd($request->all());
-
                 if ($request->organization) {
                     $query->whereHas('createdBy.userInfo', function($query2) use($request) {
                         $query2->where('office_id', $request->organization);
@@ -120,6 +118,52 @@ class ReportController extends Controller
             }
 
             return view('backend.admin.report.orgContent', compact('orgs', 'users', 'categorys', 'request'));
+        } else {
+            return abort(403, "You don't have permission..!");
+        }
+    }
+
+    public function contentReport(Request $request)
+    {
+        $user = Auth::user();
+
+        if (Gate::allows('content_report', $user)) {
+            $categorys = Category::where('status', 1)->get();
+            $contentTypes = ['Video', 'PDF', 'Audio', 'Image', 'Link', 'Other'];
+
+            if ($request->ajax()) {
+                $query = Content::query();
+
+                if ($request->category) {
+                    $query->where('category_id', $request->category);
+                }
+
+                if ($request->content_type) {
+                    $query->where('content_type', $request->content_type);
+                }
+
+                $reports = $query->where('status', 1)->with(['createdBy.userInfo.office', 'category'])->get();
+
+                $totalCount = $reports->count();
+
+                if ($reports->isEmpty()) {
+                    return response()->json([
+                        'success' => false,
+                        'html' => '<tr><td colspan="7" class="text-center">No data found</td></tr>',
+                        'totalCount' => 0
+                    ]);
+                }
+
+                $html = view('backend.admin.report.contentReportTable', compact('reports'))->render();
+
+                return response()->json([
+                    'success' => true,
+                    'html' => $html,
+                    'totalCount' => $totalCount
+                ]);
+            }
+
+            return view('backend.admin.report.contentReport', compact('categorys', 'contentTypes', 'request'));
         } else {
             return abort(403, "You don't have permission..!");
         }

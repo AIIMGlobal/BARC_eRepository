@@ -218,9 +218,11 @@
                                 <i class="las la-ellipsis-v" data-bs-toggle="dropdown" aria-expanded="false"></i>
 
                                 <ul class="dropdown-menu">
-                                    @can('edit_content')
-                                        <li><a class="dropdown-item" href="{{ route('admin.content.edit', Crypt::encryptString($content->id)) }}" target="_blank">Edit</a></li>
-                                    @endcan
+                                    @if (Auth::id() == $content->created_by)
+                                        @can('edit_content')
+                                            <li><a class="dropdown-item" href="{{ route('admin.content.edit', Crypt::encryptString($content->id)) }}" target="_blank">Edit</a></li>
+                                        @endcan
+                                    @endif
 
                                     @can('view_content')
                                         <li><a class="dropdown-item" href="{{ route('admin.content.show', Crypt::encryptString($content->id)) }}" target="_blank">Show Details</a></li>

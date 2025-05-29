@@ -162,41 +162,75 @@
                     </li>
                 @endcan
 
-                @can('manage_content')
-                    <li class="nav-item first-dropdown">
-                        <a class="nav-link menu-link" href="#content" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="content">
-                            <i class="ri-building-line"></i> <span data-key="t-content">Content Management</span>
-                        </a>
+                @if (Auth::user()->user_type == 4)
+                    @can('content_list')
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="{{ route('admin.content.index') }}">
+                                <i class="ri-building-line"></i> <span data-key="t-dashboards">Contents</span>
+                            </a>
+                        </li>
+                    @endcan
 
-                        <div class="collapse menu-dropdown" id="content">
-                            <ul class="nav nav-sm flex-column">
-                                @can('content_list')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.content.index') }}" class="nav-link" data-key="t-crm">Contents</a>
-                                    </li>
-                                @endcan
+                    @can('content_list')
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="{{ route('admin.content.indexMyContent') }}">
+                                <i class="ri-building-line"></i> <span data-key="t-dashboards">My Contents</span>
+                            </a>
+                        </li>
+                    @endcan
 
-                                @can('content_list')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.content.indexMyContent') }}" class="nav-link" data-key="t-crm">My Contents</a>
-                                    </li>
-                                @endcan
+                    @can('content_list')
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="{{ route('admin.content.indexFavorite') }}">
+                                <i class="ri-building-line"></i> <span data-key="t-dashboards">Favorite Contents</span>
+                            </a>
+                        </li>
+                    @endcan
 
-                                @can('total_favourite_content')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.content.indexFavorite') }}" class="nav-link" data-key="t-crm">Favorite Contents</a>
-                                    </li>
-                                @endcan
+                    @can('content_list')
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="{{ route('admin.content.indexSaved') }}">
+                                <i class="ri-building-line"></i> <span data-key="t-dashboards">Saved Contents</span>
+                            </a>
+                        </li>
+                    @endcan
+                @else
+                    @can('manage_content')
+                        <li class="nav-item first-dropdown">
+                            <a class="nav-link menu-link" href="#content" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="content">
+                                <i class="ri-building-line"></i> <span data-key="t-content">Content Management</span>
+                            </a>
 
-                                @can('total_saved_content')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.content.indexSaved') }}" class="nav-link" data-key="t-crm">Saved Contents</a>
-                                    </li>
-                                @endcan
-                            </ul>
-                        </div>
-                    </li>
-                @endcan
+                            <div class="collapse menu-dropdown" id="content">
+                                <ul class="nav nav-sm flex-column">
+                                    @can('content_list')
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.content.index') }}" class="nav-link" data-key="t-crm">Contents</a>
+                                        </li>
+                                    @endcan
+
+                                    @can('content_list')
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.content.indexMyContent') }}" class="nav-link" data-key="t-crm">My Contents</a>
+                                        </li>
+                                    @endcan
+
+                                    @can('total_favourite_content')
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.content.indexFavorite') }}" class="nav-link" data-key="t-crm">Favorite Contents</a>
+                                        </li>
+                                    @endcan
+
+                                    @can('total_saved_content')
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.content.indexSaved') }}" class="nav-link" data-key="t-crm">Saved Contents</a>
+                                        </li>
+                                    @endcan
+                                </ul>
+                            </div>
+                        </li>
+                    @endcan
+                @endif
                 
                 @can('office_management')
                     <li class="nav-item first-dropdown">
@@ -266,10 +300,10 @@
 
                         <div class="collapse menu-dropdown" id="manage_report">
                             <ul class="nav nav-sm flex-column">
-                                @can('organization_user_report')
+                                @can('content_report')
                                     <li class="nav-item">
-                                        <a class="nav-link menu-link" href="{{ route('admin.report.orgUserReport') }}">
-                                            <span data-key="t-dashboards">User Report (Organization-wise)</span>
+                                        <a class="nav-link menu-link" href="{{ route('admin.report.contentReport') }}">
+                                            <span data-key="t-dashboards">Content Report</span>
                                         </a>
                                     </li>
                                 @endcan
@@ -278,6 +312,14 @@
                                     <li class="nav-item">
                                         <a class="nav-link menu-link" href="{{ route('admin.report.orgContentReport') }}">
                                             <span data-key="t-dashboards">Content Report (Organization-wise)</span>
+                                        </a>
+                                    </li>
+                                @endcan
+
+                                @can('organization_user_report')
+                                    <li class="nav-item">
+                                        <a class="nav-link menu-link" href="{{ route('admin.report.orgUserReport') }}">
+                                            <span data-key="t-dashboards">User Report (Organization-wise)</span>
                                         </a>
                                     </li>
                                 @endcan
