@@ -134,22 +134,34 @@ class ReportController extends Controller
             if ($request->ajax()) {
                 $query = Content::query();
 
-                if ($request->category) {
-                    $query->where('category_id', $request->category);
+                if ($request->category_id) {
+                    $query->where('category_id', $request->category_id);
                 }
 
                 if ($request->content_type) {
                     $query->where('content_type', $request->content_type);
                 }
 
-                $reports = $query->where('status', 1)->with(['createdBy.userInfo.office', 'category'])->get();
+                if ($request->from_date) {
+                    $query->whereDate('published_at', '>=', $request->from_date);
+                }
+
+                if ($request->to_date) {
+                    $query->whereDate('published_at', '<=', $request->to_date);
+                }
+
+                if (Auth::user()->user_type == 4) {
+                    $reports = $query->where('created_by', $user->id)->where('status', 1)->with(['createdBy.userInfo.office', 'category'])->get();
+                } else {
+                    $reports = $query->where('status', 1)->with(['createdBy.userInfo.office', 'category'])->get();
+                }
 
                 $totalCount = $reports->count();
 
                 if ($reports->isEmpty()) {
                     return response()->json([
                         'success' => false,
-                        'html' => '<tr><td colspan="7" class="text-center">No data found</td></tr>',
+                        'html' => '<tr><td colspan="8" class="text-center">No data found</td></tr>',
                         'totalCount' => 0
                     ]);
                 }

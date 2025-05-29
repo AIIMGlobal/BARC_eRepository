@@ -96,6 +96,12 @@
 
                                         <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter Description">{{ old('description') }}</textarea>
                                     </div>
+
+                                    <div class="col-md-12">
+                                        <div class="switchery-demo">
+                                            <input type="checkbox" name="can_download" class="js-switch" value="1" checked> Can Download?
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="d-flex gap-2 justify-content-end mt-4">

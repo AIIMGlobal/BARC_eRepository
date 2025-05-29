@@ -113,7 +113,13 @@
                                     <div class="col-md-12">
                                         <label for="description" class="form-label fw-bold">Description</label>
 
-                                        <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter Description">{{ old('description') }}</textarea>
+                                        <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter Description">{{ $content->description ?? old('description') }}</textarea>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="switchery-demo">
+                                            <input type="checkbox" name="can_download" class="js-switch" value="1" {{ $content->can_download == 1 ? 'checked' : '' }}> Can Download?
+                                        </div>
                                     </div>
                                 </div>
 

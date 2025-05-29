@@ -51,7 +51,6 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Dashboard</a></li>
-
                                 <li class="breadcrumb-item active">Content Report</li>
                             </ol>
                         </div>
@@ -67,7 +66,6 @@
                     <div class="card card-height-100">
                         <div class="card-header align-items-center d-flex">
                             <h5 class="mb-0 flex-grow-1">Content Report</h5>
-
                             <div class="flex-shrink-0">
                                 <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a>
                             </div>
@@ -79,11 +77,9 @@
                                     <form id="filterForm">
                                         <div class="row g-3">
                                             <div class="col-md-4">
-                                                <label for="category" class="form-label">Category</label>
-
-                                                <select name="category" id="category" class="form-select select2">
+                                                <label for="category_id" class="form-label">Category</label>
+                                                <select name="category_id" id="category_id" class="form-select select2">
                                                     <option value="">Select Category</option>
-
                                                     @foreach($categorys as $category)
                                                         <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                                     @endforeach
@@ -92,21 +88,27 @@
 
                                             <div class="col-md-4">
                                                 <label for="content_type" class="form-label">Content Type</label>
-
                                                 <select name="content_type" id="content_type" class="form-select select2">
                                                     <option value="">Select Content Type</option>
-
                                                     @foreach($contentTypes as $type)
                                                         <option value="{{ $type }}">{{ $type }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
 
+                                            <div class="col-md-4">
+                                                <label for="from_date" class="form-label">From Date</label>
+                                                <input type="date" name="from_date" id="from_date" class="form-control">
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label for="to_date" class="form-label">To Date</label>
+                                                <input type="date" name="to_date" id="to_date" class="form-control">
+                                            </div>
+
                                             <div class="col-md-12 mt-3">
                                                 <button type="button" class="btn btn-primary" id="filterBtn">Filter</button>
-                                                
                                                 <button type="button" class="btn btn-danger" id="resetBtn">Reset</button>
-
                                                 <button type="button" style="max-width: 150px;" class="btn btn-info" onclick="printDiv('printDiv')">Print</button>
                                             </div>
                                         </div>
@@ -121,7 +123,6 @@
                                             <tr class="head-logo" style="display: none;">
                                                 <th style="border: none;"><img style="max-height: 100px;" src="{{ asset('storage/soft_logo/' . ($global_setting->soft_logo ?? '')) }}" alt=""></th>
                                             </tr>
-
                                             <tr class="text-center tableHeading" style="border: none; display:none;">
                                                 <th colspan="8" style="border: none;">
                                                     <h1>Content Report</h1>
@@ -146,9 +147,8 @@
                                                         <th class="actionBtn text-center">Action</th>
                                                     </tr>
                                                 </thead>
-                                                
                                                 <tbody id="reportTableBody">
-                                                    
+                                                    <!-- Data will be populated via AJAX -->
                                                 </tbody>
                                             </table>
                                         </div>
@@ -223,7 +223,8 @@
 
             $('#resetBtn').on('click', function() {
                 $('#filterForm')[0].reset();
-                $('#category, #content_type').val('').trigger('change');
+                $('#category_id, #content_type').val('').trigger('change');
+                $('#from_date, #to_date').val('');
                 $('#reportTableBody').html('<tr><td colspan="8" class="text-center"><div class="alert alert-info text-center">Please apply filters to view data.</div></td></tr>');
                 $('#totalContentCount').text('0');
                 $('#totalCountDisplay').text('0');
@@ -231,15 +232,19 @@
             });
 
             function fetchFilteredData() {
-                const category = $('#category').val() || '';
+                const category_id = $('#category_id').val() || '';
                 const content_type = $('#content_type').val() || '';
+                const from_date = $('#from_date').val() || '';
+                const to_date = $('#to_date').val() || '';
 
                 $.ajax({
                     url: "{{ route('admin.report.contentReport') }}",
                     type: "GET",
                     data: {
-                        category: category,
+                        category_id: category_id,
                         content_type: content_type,
+                        from_date: from_date,
+                        to_date: to_date
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -264,6 +269,7 @@
                         }
                     },
                     error: function(xhr, status, error) {
+                        console.log('AJAX Error:', xhr, status, error);
                         $('#reportTableBody').html('<tr><td colspan="8" class="text-center text-danger">An error occurred</td></tr>');
                         $('#totalContentCount').text('0');
                         $('#totalCountDisplay').text('0');

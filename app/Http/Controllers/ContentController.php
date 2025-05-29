@@ -411,6 +411,7 @@ class ContentController extends Controller
                 $content->meta_title        = $request->meta_title;
                 $content->meta_description  = $request->meta_description;
                 $content->meta_keywords     = $request->meta_keywords;
+                $content->can_download      = $request->can_download ?? 0;
                 $content->status            = $request->status ?? 0;
                 $content->created_by        = $user->id;
                 $content->published_at      = $request->status == 1 ? now() : null;
@@ -560,6 +561,7 @@ class ContentController extends Controller
                 $content->meta_title        = $request->meta_title;
                 $content->meta_description  = $request->meta_description;
                 $content->meta_keywords     = $request->meta_keywords;
+                $content->can_download      = $request->can_download ?? 0;
                 $content->status            = $request->status ?? 0;
                 $content->updated_by        = $user->id;
                 $content->published_at      = $request->status == 1 ? ($content->published_at ?? now()) : null;
