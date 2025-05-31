@@ -78,8 +78,10 @@
                                         <div class="row g-3">
                                             <div class="col-md-4">
                                                 <label for="category_id" class="form-label">Category</label>
+
                                                 <select name="category_id" id="category_id" class="form-select select2">
                                                     <option value="">Select Category</option>
+
                                                     @foreach($categorys as $category)
                                                         <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                                     @endforeach
@@ -88,8 +90,10 @@
 
                                             <div class="col-md-4">
                                                 <label for="content_type" class="form-label">Content Type</label>
+                                                
                                                 <select name="content_type" id="content_type" class="form-select select2">
                                                     <option value="">Select Content Type</option>
+
                                                     @foreach($contentTypes as $type)
                                                         <option value="{{ $type }}">{{ $type }}</option>
                                                     @endforeach
@@ -123,6 +127,7 @@
                                             <tr class="head-logo" style="display: none;">
                                                 <th style="border: none;"><img style="max-height: 100px;" src="{{ asset('storage/soft_logo/' . ($global_setting->soft_logo ?? '')) }}" alt=""></th>
                                             </tr>
+                                            
                                             <tr class="text-center tableHeading" style="border: none; display:none;">
                                                 <th colspan="8" style="border: none;">
                                                     <h1>Content Report</h1>

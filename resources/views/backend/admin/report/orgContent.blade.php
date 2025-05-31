@@ -5,15 +5,6 @@
 @section('content')
     @push('css')
         <style>
-            @media screen {
-                /* tfoot {
-                    display: none;
-                } */
-                .head-logo {
-                    display: none;
-                }
-            }
-
             @media print {
                 @page {
                     size: A4;
@@ -143,14 +134,14 @@
                                 <div class="col-md-12">
                                     <table class="table" style="background: #fff !important;">
                                         <thead>
-                                            <tr class="head-logo">
+                                            <tr class="head-logo" style="display: none;">
                                                 <th style="border: none;"><img style="max-height: 100px;" src="{{ asset('storage/soft_logo/' . ($global_setting->soft_logo ?? '')) }}" alt=""></th>
                                             </tr>
-
+                                            
                                             <tr class="text-center tableHeading" style="border: none; display:none;">
-                                                <th colspan="8" style="border: none;" class="py-4">
+                                                <th colspan="7" style="border: none;">
                                                     <h1>Content Report (Organization-wise)</h1>
-                                                    <h3><strong>Total Result: {{ $totalCount ?? 0 }}</strong></h3>
+                                                    <h3><strong>Total Result: <span id="totalCountDisplay">0</span></strong></h3>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -172,16 +163,8 @@
                                                 </thead>
 
                                                 <tbody id="reportTableBody">
-                                                    {{-- <tr><td colspan="7" class="text-center"><div class="alert alert-info text-center">Please apply filters to view data.</div></td></tr> --}}
+                                                    
                                                 </tbody>
-
-                                                <tfoot>
-                                                    <tr>
-                                                        <td colspan="5" style="text-align: right;"><b>Total: </b></td>
-                                                        <td class="text-center" id="totalContentCount"><b>0</b></td>
-                                                        <td class="actionBtn"></td>
-                                                    </tr>
-                                                </tfoot>
                                             </table>
                                         </div>
                                     </div>
@@ -261,7 +244,7 @@
             // $('#filterBtn').on('click', function() {
             //     if (!$('#organization').val() && !$('#category').val() && !$('#user_id').val()) {
             //         $('#reportTableBody').html('<tr><td colspan="7" class="text-center"><div class="alert alert-info text-center">Please apply filters to view data.</div></td></tr>');
-            //         $('#totalContentCount').text('0');
+            //         $('#totalCountDisplay').text('0');
 
             //         initializeDataTable();
 
@@ -279,7 +262,8 @@
                 $('#filterForm')[0].reset();
                 $('#organization, #category, #user_id').val('').trigger('change');
                 $('#reportTableBody').html('<tr><td colspan="7" class="text-center"><div class="alert alert-info text-center">Please apply filters to view data.</div></td></tr>');
-                $('#totalContentCount').text('0');
+                $('#totalCountDisplay').text('0');
+                $('.tableHeading').hide();
 
                 // initializeDataTable();
             });
@@ -302,22 +286,26 @@
                     },
                     beforeSend: function() {
                         $('#reportTableBody').html('<tr><td colspan="7" class="text-center">Loading...</td></tr>');
-                        $('#totalContentCount').text('0');
+                        $('#totalCountDisplay').text('0');
+                        $('.tableHeading').hide();
                     },
                     success: function(response) {
                         if (response.success && response.html) {
                             $('#reportTableBody').html(response.html);
-                            $('#totalContentCount').text(response.totalCount);
+                            $('#totalCountDisplay').text(response.totalCount);
+                            $('.tableHeading').show();
                         } else {
                             $('#reportTableBody').html('<tr><td colspan="7" class="text-center">No data found</td></tr>');
-                            $('#totalContentCount').text('0');
+                            $('#totalCountDisplay').text('0');
+                            $('.tableHeading').hide();
                         }
                         
                         // initializeDataTable();
                     },
                     error: function(xhr, status, error) {
                         $('#reportTableBody').html('<tr><td colspan="7" class="text-center text-danger">An error occurred</td></tr>');
-                        $('#totalContentCount').text('0');
+                        $('#totalCountDisplay').text('0');
+                        $('.tableHeading').hide();
 
                         // initializeDataTable();
                     }

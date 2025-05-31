@@ -49,10 +49,13 @@ class ReportController extends Controller
 
                 $reports = $query->get();
 
+                $totalCount = $reports->count();
+
                 if ($reports->isEmpty()) {
                     return response()->json([
                         'success' => false,
-                        'html' => '<tr><td colspan="6" class="text-center">No data found</td></tr>'
+                        'html' => '<tr><td colspan="6" class="text-center">No data found</td></tr>',
+                        'totalCount' => 0
                     ]);
                 }
 
@@ -60,7 +63,8 @@ class ReportController extends Controller
 
                 return response()->json([
                     'success' => true,
-                    'html' => $html
+                    'html' => $html,
+                    'totalCount' => $totalCount
                 ]);
             }
 
