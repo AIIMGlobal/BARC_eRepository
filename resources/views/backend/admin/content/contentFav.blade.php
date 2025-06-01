@@ -213,19 +213,17 @@
 
                         <i class="{{ $contentSave ? 'las la-bookmark' : 'lar la-bookmark' }} {{ $contentSave ? 'active' : '' }}" data-id="{{ Crypt::encryptString($content->id) }}" onclick="toggleSave(this)"></i> --}}
 
-                        @if (Auth::id() == $content->created_by)
-                            <div class="dropdown">
-                                <i class="las la-ellipsis-v" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                        <div class="dropdown">
+                            <i class="las la-ellipsis-v" data-bs-toggle="dropdown" aria-expanded="false"></i>
 
-                                <ul class="dropdown-menu">
-                                    @if (Auth::id() == $content->created_by)
-                                        @can('edit_content')
-                                            <li><a class="dropdown-item" href="{{ route('admin.content.edit', Crypt::encryptString($content->id)) }}" target="_blank">Edit</a></li>
-                                        @endcan
-                                    @endif
+                            <ul class="dropdown-menu">
+                                @can('view_content')
+                                    <li><a class="dropdown-item" href="{{ route('admin.content.show', Crypt::encryptString($content->id)) }}" target="_blank">Show Details</a></li>
+                                @endcan
 
-                                    @can('view_content')
-                                        <li><a class="dropdown-item" href="{{ route('admin.content.show', Crypt::encryptString($content->id)) }}" target="_blank">Show Details</a></li>
+                                @if (Auth::id() == $content->created_by)
+                                    @can('edit_content')
+                                        <li><a class="dropdown-item" href="{{ route('admin.content.edit', Crypt::encryptString($content->id)) }}" target="_blank">Edit</a></li>
                                     @endcan
 
                                     @can('archive_content')
@@ -239,9 +237,9 @@
                                     @can('delete_content')
                                         <li><button class="dropdown-item" type="button" onclick="deleteContent('{{ Crypt::encryptString($content->id) }}')">Delete</button></li>
                                     @endcan
-                                </ul>
-                            </div>
-                        @endif
+                                @endif
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

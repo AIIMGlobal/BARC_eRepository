@@ -175,7 +175,7 @@
                             </div><!--end row-->
 
                             <div class="row">
-                                <div class="card-footer">
+                                <div class="card-footer" style="display: none;">
                                     <table>
                                         <tfoot>
                                             <tr>

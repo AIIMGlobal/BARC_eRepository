@@ -150,23 +150,7 @@
         .content-card .card-meta p {
             margin-bottom: 4px;
         }
-        .dropdown-menu {
-            border-radius: 6px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            background: linear-gradient(90deg, #0F2027, #203A43, #2C5364) !important;
-            padding: 0;
-        }
-        .dropdown-item {
-            padding: 8px 20px;
-            font-size: 0.9rem;
-            color: #fff;
-            transition: ease-in 0.2s all;
-        }
-        .dropdown-item:hover {
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
-            background: none;
-            color: #fff;
-        }
+        
         .load-more-btn {
             display: block;
             margin: 20px auto;
@@ -213,19 +197,17 @@
 
                         <i class="{{ $contentSave ? 'las la-bookmark' : 'lar la-bookmark' }} {{ $contentSave ? 'active' : '' }}" data-id="{{ Crypt::encryptString($content->id) }}" onclick="toggleSave(this)"></i>
 
-                        @if (Auth::id() == $content->created_by)
-                            <div class="dropdown">
-                                <i class="las la-ellipsis-v" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                        <div class="dropdown">
+                            <i class="las la-ellipsis-v" data-bs-toggle="dropdown" aria-expanded="false"></i>
 
-                                <ul class="dropdown-menu">
-                                    @if (Auth::id() == $content->created_by)
-                                        @can('edit_content')
-                                            <li><a class="dropdown-item" href="{{ route('admin.content.edit', Crypt::encryptString($content->id)) }}" target="_blank">Edit</a></li>
-                                        @endcan
-                                    @endif
+                            <ul class="dropdown-menu">
+                                @can('view_content')
+                                    <li><a class="dropdown-item" href="{{ route('admin.content.show', Crypt::encryptString($content->id)) }}" target="_blank">Show Details</a></li>
+                                @endcan
 
-                                    @can('view_content')
-                                        <li><a class="dropdown-item" href="{{ route('admin.content.show', Crypt::encryptString($content->id)) }}" target="_blank">Show Details</a></li>
+                                @if (Auth::id() == $content->created_by)
+                                    @can('edit_content')
+                                        <li><a class="dropdown-item" href="{{ route('admin.content.edit', Crypt::encryptString($content->id)) }}" target="_blank">Edit</a></li>
                                     @endcan
 
                                     @can('archive_content')
@@ -239,9 +221,9 @@
                                     @can('delete_content')
                                         <li><button class="dropdown-item" type="button" onclick="deleteContent('{{ Crypt::encryptString($content->id) }}')">Delete</button></li>
                                     @endcan
-                                </ul>
-                            </div>
-                        @endif
+                                @endif
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
