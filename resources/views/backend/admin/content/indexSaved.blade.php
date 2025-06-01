@@ -256,7 +256,16 @@
                                         <input type="text" class="form-control" id="content_name" name="content_name" placeholder="Search by Content Name">
                                     </div>
 
-                                    <div class="col-md-2 col-sm-4">
+                                    <div class="col-md-1 col-sm-6">
+                                        <select name="per_page" id="per_page" class="form-control select2">
+                                            <option value="12">12</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-1 col-sm-4">
                                         <button type="button" class="btn btn-danger w-100" id="resetButton">Reset</button>
                                     </div>
                                 </div>
@@ -323,6 +332,7 @@
                 $('#content_type').val('').trigger('change');
                 $('#from_date').val('');
                 $('#to_date').val('');
+                $('#per_page').val('12');
                 $('.category-item').removeClass('selected');
                 $('input[name="category_id"]').remove();
 
@@ -349,6 +359,7 @@
                 $('#content_type').val('').trigger('change');
                 $('#from_date').val('');
                 $('#to_date').val('');
+                $('#per_page').val('');
                 
                 setTimeout(() => {
                     $('.category-item').removeClass('selected');

@@ -12,6 +12,7 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Dashboard</a></li>
+
                                 <li class="breadcrumb-item active" aria-current="page">Contents</li>
                             </ol>
                         </div>
@@ -77,7 +78,16 @@
                                         <input type="text" class="form-control" id="content_name" name="content_name" placeholder="Search by Content Name">
                                     </div>
 
-                                    <div class="col-md-2 col-sm-4">
+                                    <div class="col-md-1 col-sm-6">
+                                        <select name="per_page" id="per_page" class="form-control select2">
+                                            <option value="12">12</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-1 col-sm-4">
                                         <button type="button" class="btn btn-danger w-100" id="resetButton">Reset</button>
                                     </div>
                                 </div>
@@ -134,6 +144,7 @@
 
             $('#content_name').on('keyup', function() {
                 clearTimeout(typingTimer);
+
                 typingTimer = setTimeout(() => fetchFilteredData(1), 500);
             });
 
@@ -143,15 +154,19 @@
                 $('#content_type').val('').trigger('change');
                 $('#from_date').val('');
                 $('#to_date').val('');
+                $('#per_page').val('12');
                 $('.category-item').removeClass('selected');
                 $('input[name="category_id"]').remove();
+
                 fetchFilteredData(1);
             });
 
             $('#loadMore').on('click', function() {
                 let page = $(this).data('page') || 1;
                 page++;
+
                 fetchFilteredData(page, true);
+
                 $(this).data('page', page);
             });
 
@@ -165,6 +180,7 @@
                 $('#content_type').val('').trigger('change');
                 $('#from_date').val('');
                 $('#to_date').val('');
+                $('#per_page').val('12');
                 
                 setTimeout(() => {
                     $('.category-item').removeClass('selected');
