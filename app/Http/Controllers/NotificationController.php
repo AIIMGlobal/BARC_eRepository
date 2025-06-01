@@ -24,4 +24,30 @@ class NotificationController extends Controller
 
         return redirect($notification->route_name);
     }
+
+    public function markAllRead()
+    {
+        try {
+            $notifications = Notification::where('read_status', '!=', 1)->get();
+
+            foreach ($notifications as $notification) {
+                $notification->read_status = 1;
+                $notification->read_at = now();
+
+                $notification->save();
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'All Notifications Marked Read!',
+            ]);
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An unexpected error occurred. Please try again.',
+            ], 500);
+        }
+    }
 }

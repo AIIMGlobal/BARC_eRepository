@@ -113,6 +113,7 @@ Route::group(['middleware' => ['AuthGates','set.locale'], 'prefix' => '/authoriz
         Route::get('/', [NotificationController::class, 'index'])->name('notification.index');
         Route::get('/read/{message}/{reference_id}', [NotificationController::class, 'read_view'])->name('notification.read_view');
         Route::get('/read-notification/{id}', [NotificationController::class, 'read_notification'])->name('notification.read_notification');
+        Route::post('/mark-all-read', [NotificationController::class, 'markAllRead'])->name('notification.markAllRead');
     });
 
     Route::get('/edit-profile', [UserController::class, 'edit_profile'])->name('edit_profile');

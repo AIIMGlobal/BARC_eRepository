@@ -135,6 +135,7 @@
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Dashboard</a></li>
                                 <li class="breadcrumb-item"><a href="{{ route('admin.content.index') }}">Content List</a></li>
+
                                 <li class="breadcrumb-item active" aria-current="page">View Content Details</li>
                             </ol>
                         </div>
@@ -172,70 +173,49 @@
 
                                                 @if($contentType == 'video' || in_array($extension, $videoTypes))
                                                     <div class="video-container">
-                                                        <video class="w-full h-full object-contain" controls {{ $content->can_download == 1 ? '' : 'controlsList="nodownload"' }} disablePictureInPicture preload="metadata" playsinline>
+                                                        <video class="w-full h-full object-contain" {{ $content->can_download == 1 ? 'controls' : 'controls controlsList="nodownload nofullscreen noremoteplayback"' }} disablePictureInPicture preload="metadata" playsinline>
                                                             <source src="{{ $assetPath }}" type="video/{{ $extension }}">
-                                                            @if ($content->can_download == 1)
-                                                                <p class="media-fallback">Your browser does not support this video format. <a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>Download the video</a>.</p>
-                                                            @else
-                                                                <p class="media-fallback">Your browser does not support this video format.</p>
-                                                            @endif
+
+                                                            <p class="media-fallback">Your browser does not support this video format. @if ($content->can_download == 1)<a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>Download the video</a>.@else Please contact the administrator.@endif</p>
                                                         </video>
                                                     </div>
                                                 @elseif($contentType == 'audio' || in_array($extension, $audioTypes))
                                                     <div class="w-full h-full flex items-center justify-center bg-gray-800">
                                                         <audio {{ $content->can_download == 1 ? 'controls' : '' }} class="w-3/4" preload="metadata">
                                                             <source src="{{ $assetPath }}" type="audio/{{ $extension }}">
-                                                            @if ($content->can_download == 1)
-                                                                <p class="media-fallback">Your browser does not support this audio format. <a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>Download the audio</a>.</p>
-                                                            @else
-                                                                <p class="media-fallback">Your browser does not support this audio format.</p>
-                                                            @endif
+
+                                                            <p class="media-fallback">Your browser does not support this audio format. @if ($content->can_download == 1)<a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>Download the audio</a>.@else Please contact the administrator.@endif</p>
                                                         </audio>
                                                     </div>
                                                 @elseif($contentType == 'pdf' || $extension == 'pdf')
                                                     <div class="pdf-container">
-                                                        <iframe src="{{ $assetPath }}#view=FitH&pagemode=none{{ $content->can_download == 1 ? '' : '&toolbar=0' }}" class="w-full h-full" frameborder="0" title="PDF Viewer" scrolling="auto"></iframe>
-                                                        @if ($content->can_download == 1)
-                                                            <p class="pdf-fallback">If the PDF does not display, <a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>download it here</a>.</p>
-                                                        @else
-                                                            <p class="pdf-fallback">If the PDF does not display, please contact the administrator.</p>
-                                                        @endif
+                                                        <iframe src="{{ $assetPath }}#view=FitH&pagemode=none{{ $content->can_download == 1 ? '' : '&toolbar=0&navpanes=0' }}" class="w-full h-full" frameborder="0" title="PDF Viewer" scrolling="auto"></iframe>
+
+                                                        <p class="pdf-fallback">If the PDF does not display, @if ($content->can_download == 1)<a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>download it here</a>.@else please contact the administrator.@endif</p>
                                                     </div>
                                                 @elseif($contentType == 'image' || in_array($extension, $imageTypes))
                                                     <div class="image-container">
                                                         <img src="{{ $assetPath }}" alt="{{ $content->content_name }}" class="w-full h-full object-contain">
-                                                        @if ($content->can_download == 1)
-                                                            <p class="media-fallback">If the image does not display, <a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>download it here</a>.</p>
-                                                        @else
-                                                            <p class="media-fallback">If the image does not display, please contact the administrator.</p>
-                                                        @endif
+
+                                                        <p class="media-fallback">If the image does not display, @if ($content->can_download == 1)<a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>download it here</a>.@else please contact the administrator.@endif</p>
                                                     </div>
                                                 @elseif($contentType == 'link')
                                                     <div class="link-container">
                                                         <a href="{{ $content->content }}" target="_blank" rel="noopener noreferrer">
                                                             <img src="https://media.istockphoto.com/id/1302329383/vector/two-chain-links-icon-attach-lock-symbol.jpg?s=612x612&w=0&k=20&c=c-dxZOv-E63rdJJ40lKPbO2wbb9y9jJpZ-s10ArX2l8=" alt="Link Thumbnail" class="w-full h-full object-contain">
                                                         </a>
-                                                        @if ($content->can_download == 1)
-                                                            <p class="media-fallback">If the link thumbnail does not display, <a href="{{ $content->content }}" style="color: #129faf;" class="underline" target="_blank" rel="noopener noreferrer">visit the link here</a>.</p>
-                                                        @else
-                                                            <p class="media-fallback">If the link thumbnail does not display, please contact the administrator.</p>
-                                                        @endif
+
+                                                        <p class="media-fallback">If the link thumbnail does not display, @if ($content->can_download == 1)<a href="{{ $content->content }}" style="color: #129faf;" class="underline" target="_blank" rel="noopener noreferrer">visit the link here</a>.@else please contact the administrator.@endif</p>
                                                     </div>
                                                 @else
                                                     <img src="{{ $content->thumbnail ? asset('storage/' . $content->thumbnail) : 'https://t4.ftcdn.net/jpg/05/17/53/57/360_F_517535712_q7f9QC9X6TQxWi6xYZZbMmw5cnLMr279.jpg' }}" alt="Content" class="w-full h-full object-cover">
-                                                    @if ($content->can_download == 1)
-                                                        <p class="media-fallback">No content available. <a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>Download the default content</a>.</p>
-                                                    @else
-                                                        <p class="media-fallback">No content available. Please contact the administrator.</p>
-                                                    @endif
+
+                                                    <p class="media-fallback">No content available. @if ($content->can_download == 1)<a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>Download the default content</a>.@else Please contact the administrator.@endif</p>
                                                 @endif
                                             @else
                                                 <img src="https://t4.ftcdn.net/jpg/05/17/53/57/360_F_517535712_q7f9QC9X6TQxWi6xYZZbMmw5cnLMr279.jpg" alt="Content" class="w-full h-full object-cover">
-                                                @if ($content->can_download == 1)
-                                                    <p class="media-fallback">No content available. <a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>Download the default content</a>.</p>
-                                                @else
-                                                    <p class="media-fallback">No content available. Please contact the administrator.</p>
-                                                @endif
+
+                                                <p class="media-fallback">No content available. @if ($content->can_download == 1)<a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>Download the default content</a>.@else Please contact the administrator.@endif</p>
                                             @endif
                                         </div>
                                     </div>
@@ -295,6 +275,7 @@
 
                                                 <div class="col-12">
                                                     <span class="detail-label">Status</span>
+
                                                     <p class="detail-value mb-0">
                                                         @if ($content->status == 0)
                                                             <span class="badge bg-primary">Unpublished</span>
@@ -334,16 +315,27 @@
             const linkImg = document.querySelector('.link-container img');
 
             if (video) {
-                @if ($content->can_download == 1)
-                    video.controls = true;
+                @if ($content->can_download == 0)
+                    video.addEventListener('contextmenu', function (e) {
+                        e.preventDefault();
+                    });
+                    
+                    video.controlsList = 'nodownload nofullscreen noremoteplayback';
+
+                    video.addEventListener('loadedmetadata', function () {
+                        video.controlsList = 'nodownload nofullscreen noremoteplayback';
+                    });
                 @endif
 
                 video.addEventListener('error', function (e) {
                     console.error('Video error:', e);
+
                     const fallback = video.parentElement.querySelector('.media-fallback');
+
                     if (fallback) {
                         fallback.style.display = 'block';
                     }
+
                     toastr.options.closeButton = true;
                     toastr.options.timeOut = 1500;
                     toastr.error("Failed to load video. Please check the file format or source path.");
@@ -351,35 +343,25 @@
 
                 video.addEventListener('loadeddata', function () {
                     console.log('Video loaded successfully');
-                    @if ($content->can_download == 1)
-                        video.controls = true;
-                    @endif
+
                     const fallback = video.parentElement.querySelector('.media-fallback');
+
                     if (fallback) {
                         fallback.style.display = 'none';
                     }
-                });
-
-                video.addEventListener('mouseover', function () {
-                    @if ($content->can_download == 1)
-                        video.controls = true;
-                    @endif
-                });
-
-                video.addEventListener('click', function () {
-                    @if ($content->can_download == 1)
-                        video.controls = true;
-                    @endif
                 });
             }
 
             if (audio) {
                 audio.addEventListener('error', function (e) {
                     console.error('Audio error:', e);
+
                     const fallback = audio.parentElement.querySelector('.media-fallback');
+
                     if (fallback) {
                         fallback.style.display = 'block';
                     }
+
                     toastr.options.closeButton = true;
                     toastr.options.timeOut = 1500;
                     toastr.error("Failed to load audio. Please check the file format or source path.");
@@ -387,6 +369,7 @@
 
                 audio.addEventListener('loadeddata', function () {
                     const fallback = audio.parentElement.querySelector('.media-fallback');
+
                     if (fallback) {
                         fallback.style.display = 'none';
                     }
@@ -395,8 +378,10 @@
 
             if (pdfIframe) {
                 const fallback = pdfIframe.parentElement.querySelector('.pdf-fallback');
+
                 pdfIframe.addEventListener('error', function (e) {
                     console.error('PDF iframe error:', e);
+
                     if (fallback) {
                         fallback.style.display = 'block';
                     }
@@ -406,17 +391,20 @@
                     try {
                         if (pdfIframe.contentDocument && pdfIframe.contentDocument.contentType === 'application/pdf') {
                             console.log('PDF loaded successfully');
+
                             if (fallback) {
                                 fallback.style.display = 'none';
                             }
                         } else {
                             console.error('PDF not loaded');
+
                             if (fallback) {
                                 fallback.style.display = 'block';
                             }
                         }
                     } catch (e) {
                         console.error('PDF load check error:', e);
+
                         if (fallback) {
                             fallback.style.display = 'block';
                         }
@@ -427,7 +415,9 @@
             if (linkImg) {
                 linkImg.addEventListener('error', function (e) {
                     console.error('Link thumbnail error:', e);
+
                     const fallback = linkImg.parentElement.parentElement.querySelector('.media-fallback');
+
                     if (fallback) {
                         fallback.style.display = 'block';
                     }
@@ -435,6 +425,7 @@
 
                 linkImg.addEventListener('load', function () {
                     const fallback = linkImg.parentElement.parentElement.querySelector('.media-fallback');
+
                     if (fallback) {
                         fallback.style.display = 'none';
                     }
@@ -442,10 +433,13 @@
             }
 
             const image = document.querySelector('.image-container img');
+            
             if (image) {
                 image.addEventListener('error', function (e) {
                     console.error('Image error:', e);
+
                     const fallback = image.parentElement.querySelector('.media-fallback');
+
                     if (fallback) {
                         fallback.style.display = 'block';
                     }
@@ -453,6 +447,7 @@
 
                 image.addEventListener('load', function () {
                     const fallback = image.parentElement.querySelector('.media-fallback');
+
                     if (fallback) {
                         fallback.style.display = 'none';
                     }

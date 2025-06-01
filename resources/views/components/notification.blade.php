@@ -9,12 +9,16 @@
         <div class="dropdown-head bg-primary bg-pattern rounded-top">
             <div class="p-3">
                 <div class="row align-items-center">
-                    <div class="col">
+                    <div class="col-md-6">
                         <h6 class="m-0 fs-16 fw-semibold text-white">Notification</h6>
                     </div>
 
-                    <div class="col-auto dropdown-tabs">
-                        {{-- <span class="badge badge-soft-light fs-13"> 4 New</span> --}}
+                    {{-- <div class="col-auto dropdown-tabs">
+                        <span class="badge badge-soft-light fs-13"> 4 New</span>
+                    </div> --}}
+
+                    <div class="col-md-6">
+                        <button id="markAllReadBtn" class="btn btn-sm btn-primary ms-2">Mark All Read</button>
                     </div>
                 </div>
             </div>
@@ -71,3 +75,41 @@
         </div>
     </div>
 </div>
+
+@push('script')
+    <script>
+        $(document).on('click', '#markAllReadBtn', function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: "Are you sure you want to mark all notifications as read?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('admin.notification.markAllRead') }}",
+                        type: "POST",
+                        data: {
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            // Swal.fire("Success!", response.message, "success")
+                            //     .then(() => {
+                            //         $('.notification-unread').removeClass('notification-unread');
+                            //     });
+                            Swal.fire("Success!", response.message, "success")
+                                .then(() => location.reload());
+                        },
+                        error: function(xhr) {
+                            Swal.fire("Error!", xhr.responseJSON.message, "error");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+@endpush
