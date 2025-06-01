@@ -17,9 +17,11 @@
                         <span class="badge badge-soft-light fs-13"> 4 New</span>
                     </div> --}}
 
-                    <div class="col-md-6">
-                        <button id="markAllReadBtn" class="btn btn-sm btn-primary ms-2">Mark All Read</button>
-                    </div>
+                    @if ($notifications->count() > 0)
+                        <div class="col-md-6">
+                            <button id="markAllReadBtn" class="btn btn-sm btn-primary ms-2">Mark All Read</button>
+                        </div>
+                    @endif
                 </div>
             </div>
 

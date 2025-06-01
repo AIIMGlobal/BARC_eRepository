@@ -156,8 +156,9 @@
                                                         <th>Organization Name</th>
                                                         <th>Content Title</th>
                                                         <th>Category</th>
+                                                        <th>Content Type</th>
                                                         <th>Created By</th>
-                                                        <th class="text-center">Content Count</th>
+                                                        {{-- <th class="text-center">Content Count</th> --}}
                                                         <th class="actionBtn text-center">Action</th>
                                                     </tr>
                                                 </thead>

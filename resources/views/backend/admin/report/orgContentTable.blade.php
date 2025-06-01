@@ -9,9 +9,10 @@
         <td>{{ $report->createdBy->userInfo->office->name ?? 'N/A' }}</td>
         <td>{{ $report->content_name ?? 'N/A' }}</td>
         <td>{{ $report->category->category_name ?? 'N/A' }}</td>
+        <td>{{ $report->content_type ?? 'N/A' }}</td>
         <td>{{ $report->createdBy->name_en ?? 'N/A' }}</td>
 
-        <td class="text-center">1</td>
+        {{-- <td class="text-center">1</td> --}}
 
         <td class="actionBtn text-center">
             @can('view_content')
