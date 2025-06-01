@@ -41,7 +41,7 @@
                                     <div class="card-body">
                                         <div class="text-center">
                                             <div class="profile-user position-relative d-inline-block mx-auto mb-2">
-                                                @if ($user->userInfo && Storage::exists('public/userImages/' . ($user->userInfo->image ?? '')))
+                                                @if ($user->userInfo->image && Storage::exists('public/userImages/' . ($user->userInfo->image ?? '')))
                                                     <img src="{{ asset('storage/userImages/' . ($user->userInfo->image ?? '')) }}" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="User Image">
                                                 @else
                                                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="User Image">
@@ -135,9 +135,9 @@
                     
                                                         <div class="col-md-6 col-sm-6 col-xsm-12">
                                                             <div class="mb-3">
-                                                                <label for="department_id" class="form-label">Department: <span style="color:red;">*</span></label>
+                                                                <label for="department_id" class="form-label">Department:</label>
                     
-                                                                <select  class="form-control select2" name="department_id" id="department_id" required>
+                                                                <select  class="form-control select2" name="department_id" id="department_id">
                                                                     <option value="">--Select Department--</option>
                     
                                                                     @foreach ($departments as $department)

@@ -332,7 +332,7 @@
                 $('#content_type').val('').trigger('change');
                 $('#from_date').val('');
                 $('#to_date').val('');
-                $('#per_page').val('12');
+                $('#per_page').val('12').trigger('change');
                 $('.category-item').removeClass('selected');
                 $('input[name="category_id"]').remove();
 
@@ -359,7 +359,7 @@
                 $('#content_type').val('').trigger('change');
                 $('#from_date').val('');
                 $('#to_date').val('');
-                $('#per_page').val('');
+                $('#per_page').val('12').trigger('change');
                 
                 setTimeout(() => {
                     $('.category-item').removeClass('selected');

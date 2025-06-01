@@ -205,7 +205,7 @@
                                     <li><a class="dropdown-item" href="{{ route('admin.content.show', Crypt::encryptString($content->id)) }}" target="_blank">Show Details</a></li>
                                 @endcan
 
-                                @if (Auth::id() == $content->created_by)
+                                @if (Auth::id() == $content->created_by || Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
                                     @can('edit_content')
                                         <li><a class="dropdown-item" href="{{ route('admin.content.edit', Crypt::encryptString($content->id)) }}" target="_blank">Edit</a></li>
                                     @endcan

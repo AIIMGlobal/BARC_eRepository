@@ -150,23 +150,7 @@
         .content-card .card-meta p {
             margin-bottom: 4px;
         }
-        .dropdown-menu {
-            border-radius: 6px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            background: linear-gradient(90deg, #0F2027, #203A43, #2C5364) !important;
-            padding: 0;
-        }
-        .dropdown-item {
-            padding: 8px 20px;
-            font-size: 0.9rem;
-            color: #fff;
-            transition: ease-in 0.2s all;
-        }
-        .dropdown-item:hover {
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
-            background: none;
-            color: #fff;
-        }
+        
         .load-more-btn {
             display: block;
             margin: 20px auto;
@@ -221,7 +205,7 @@
                                     <li><a class="dropdown-item" href="{{ route('admin.content.show', Crypt::encryptString($content->id)) }}" target="_blank">Show Details</a></li>
                                 @endcan
 
-                                @if (Auth::id() == $content->created_by)
+                                @if (Auth::id() == $content->created_by || Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
                                     @can('edit_content')
                                         <li><a class="dropdown-item" href="{{ route('admin.content.edit', Crypt::encryptString($content->id)) }}" target="_blank">Edit</a></li>
                                     @endcan
