@@ -764,8 +764,92 @@
                 }
             }
 
-            @media screen and (max-width: 467px) {
-                
+            @media only screen and (max-width: 480px) and (-webkit-min-device-pixel-ratio: 1.5), (max-width: 480px) and (min-resolution: 144dpi) {
+            
+                body {
+                    font-size: 14px;
+                    line-height: 1.5;
+                    margin: 0;
+                    padding: 10px;
+                }
+
+                .container {
+                    width: 100%;
+                    max-width: 480px;
+                    padding: 0 15px;
+                    box-sizing: border-box;
+                }
+
+                img {
+                    max-width: 100%;
+                    height: auto;
+                    display: block;
+                }
+
+                button, a.button {
+                    min-height: 48px;
+                    min-width: 48px;
+                    padding: 10px 20px;
+                    font-size: 14px;
+                    border-radius: 8px;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                h1 {
+                    font-size: 24px !important;
+                }
+
+                h2 {
+                    font-size: 20px !important;
+                }
+
+                h3 {
+                    font-size: 16px !important;
+                }
+
+                p {
+                    font-size: 14px;
+                }
+
+                nav {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                }
+
+                nav a {
+                    padding: 10px;
+                    font-size: 14px;
+                }
+
+                input, textarea, select {
+                    width: 100%;
+                    padding: 10px;
+                    font-size: 14px;
+                    border-radius: 4px;
+                    box-sizing: border-box;
+                }
+
+                .menu-item, .list-item {
+                    padding: 12px 0;
+                }
+
+                #page-topbar {
+                    left: 0;
+                }
+
+                .main-content {
+                    margin-left: 0;
+                }
+
+                .footer {
+                    margin: 10px 10px 10px 10px;
+                }
+                .custom-card {
+                    margin-bottom: 10px;
+                }
             }
         </style>
 
