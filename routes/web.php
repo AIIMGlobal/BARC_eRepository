@@ -194,7 +194,7 @@ Route::group(['middleware' => ['AuthGates','set.locale'], 'prefix' => '/authoriz
         Route::post('/update/{id}', [DesignationController::class, 'update'])->name('update');
     });
 
-    Route::group(['prefix' => '/region'], function() {
+    Route::group(['prefix' => '/division'], function() {
         Route::get('/', [DivisionController::class, 'index'])->name('region.index');
         Route::post('/store', [DivisionController::class, 'store'])->name('region.store');
         Route::get('/edit/{region_id}', [DivisionController::class, 'edit'])->name('region.edit');

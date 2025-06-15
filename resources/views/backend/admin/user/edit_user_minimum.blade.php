@@ -46,7 +46,7 @@
                                         <img src="{{url('storage/userImages').'/'.$user->image}}" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="User Image">
                                     </div>
                                     <p style="color:rgb(4, 199, 4);">({{$user->role ? $user->role->display_name : ''}})</p>
-                                    <h5 class="fs-16 mb-1">{{$user->full_name}} </h5>
+                                    <h5 class="fs-16 mb-1">{{$user->name_en}} </h5>
                                     <p class="text-muted mb-0">{{$user->designation ? $user->designation->name : '-'}}</p>
                                 </div>
                             </div>

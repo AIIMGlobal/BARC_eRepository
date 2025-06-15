@@ -94,7 +94,7 @@
                                             <tr>
                                                 <td class="text-center">{{$i}}</td>
                                                 <td>{{$designation->name ?? '-'}}</td>
-                                                {{-- <td>{{$designation->createdUser ? $designation->createdUser->full_name : '-'}}</td>
+                                                {{-- <td>{{$designation->createdUser ? $designation->createdUser->name_en : '-'}}</td>
                                                 <td>
                                                     {{$designation->created_at->format('d-m-Y')}}
                                                 </td> --}}

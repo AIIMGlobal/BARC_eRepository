@@ -99,7 +99,7 @@
                                                         <span class="badge bg-danger">{{__('pages.Inactive')}}</span>
                                                     @endif
                                                 </td>
-                                                {{-- <td>{{$department->createdBy->full_name ?? '--'}}</td> --}}
+                                                {{-- <td>{{$department->createdBy->name_en ?? '--'}}</td> --}}
                                                 <td class="text-center">
 
                                                     @can('edit_department')

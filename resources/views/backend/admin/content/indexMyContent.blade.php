@@ -12,6 +12,7 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Dashboard</a></li>
+                                
                                 <li class="breadcrumb-item active" aria-current="page">My Contents</li>
                             </ol>
                         </div>
@@ -135,15 +136,14 @@
             });
 
             $('#filterForm').on('change', 'select, input', function() {
-                fetchFilteredData(1);
+                debounceFetchFilteredData(1);
             });
 
             let typingTimer;
 
             $('#content_name').on('keyup', function() {
                 clearTimeout(typingTimer);
-
-                typingTimer = setTimeout(() => fetchFilteredData(1), 500);
+                typingTimer = setTimeout(() => debounceFetchFilteredData(1), 500);
             });
 
             $('#resetButton').on('click', function() {
@@ -153,43 +153,70 @@
                 $('#from_date').val('');
                 $('#to_date').val('');
                 $('#per_page').val('12').trigger('change');
-                $('.category-item').removeClass('selected');
-                $('input[name="category_id"]').remove();
+                $('.category-item').removeClass('selected active');
 
-                fetchFilteredData(1);
+                currentCategoryId = null;
+                
+                $('#loadMore').data('page', 1);
+                
+                $('#filterForm').find('input[name="category_id"]').remove();
+                
+                debounceFetchFilteredData(1, false);
             });
 
             $('#loadMore').on('click', function() {
                 let page = $(this).data('page') || 1;
+
                 page++;
-                fetchFilteredData(page, true);
+
+                debounceFetchFilteredData(page, true);
+
                 $(this).data('page', page);
             });
 
-            $(document).on('click', '.category-item', function(e) {
+            $(document).off('click', '.category-item').on('click', '.category-item', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
 
-                let categoryId = $(this).data('id');
+                const categoryId = $(this).data('id');
+                const categoryName = $(this).data('category-name');
 
-                $('#content_name').val('');
-                $('#content_type').val('').trigger('change');
-                $('#from_date').val('');
-                $('#to_date').val('');
-                $('#per_page').val('12').trigger('change');
-                
-                setTimeout(() => {
-                    $('.category-item').removeClass('selected');
+                $('.category-item').removeClass('selected active');
+                $(this).addClass('selected active');
 
-                    $(this).addClass('selected');
+                // console.log('Fetching data for category:', categoryId, categoryName);
 
-                    fetchFilteredData(1, false, categoryId);
-                }, 200);
+                currentCategoryId = categoryId;
+
+                debounceFetchFilteredData(1, false, categoryId);
             });
         });
 
+        let currentCategoryId = null;
+        let fetchTimer;
+
+        function debounceFetchFilteredData(page, append, categoryId) {
+            clearTimeout(fetchTimer);
+            fetchTimer = setTimeout(() => fetchFilteredData(page, append, categoryId), 100);
+        }
+
         function fetchFilteredData(page = 1, append = false, categoryId = null) {
-            let data = categoryId ? { category_id: categoryId, page: page } : $('#filterForm').serialize() + '&page=' + page;
+            let formData = $('#filterForm').serializeArray();
+            let data = { page: page };
+
+            formData.forEach(item => {
+                if (item.value && item.name !== 'category_id') {
+                    data[item.name] = item.value;
+                }
+            });
+
+            if (categoryId !== null) {
+                data.category_id = categoryId;
+            } else if (currentCategoryId !== null && !data.category_id) {
+                data.category_id = currentCategoryId;
+            }
+
+            // console.log('AJAX request data:', data);
 
             $.ajax({
                 url: "{{ route('admin.content.indexMyContent') }}",
@@ -202,6 +229,7 @@
                         } else {
                             $('#contentContainer').html(response.html);
                         }
+                        
                         if (!response.hasMore) {
                             $('#loadMore').hide();
                         } else {

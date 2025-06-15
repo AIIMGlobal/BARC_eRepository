@@ -81,7 +81,7 @@
                                                         <span class="badge bg-warning">আর্কাইভ</span>
                                                     @endif
                                                 </td>
-                                                <td>{{$office->createdUser ? $office->createdUser->full_name : '-'}}</td>
+                                                <td>{{$office->createdUser ? $office->createdUser->name_en : '-'}}</td>
                                                 <td>
                                                     {{$office->created_at->format('d-m-Y')}}
                                                 </td>

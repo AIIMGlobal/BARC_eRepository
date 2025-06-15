@@ -20,9 +20,9 @@ class RoleController extends Controller
         if(Gate::allows('all_roles', $user)){
 
             if ($user->role_id == 1) {
-                $roles = Role::with('createdUser')->get();
+                $roles = Role::with('createdUser')->where('status', '!=', 3)->orderBy('sl')->get();
             } else {
-                $roles = Role::with('createdUser')->where('id', '!=', 1)->get();
+                $roles = Role::with('createdUser')->where('status', '!=', 3)->where('id', '!=', 1)->orderBy('sl')->get();
             }
 
             return view('backend.admin.role.index', compact('roles'));
@@ -36,6 +36,7 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
+
         if(Gate::allows('add_role', $user)){
             $role = new Role;
             $role->name_en = $request->roleName;

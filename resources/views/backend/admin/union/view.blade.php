@@ -71,7 +71,7 @@
                                     প্রস্তুতকারি
                                 </td>
                                 <td>
-                                    {{$union->createdBy->full_name ?? ''}}
+                                    {{$union->createdBy->name_en ?? ''}}
                                 </td>
                             </tr>
                             <tr>
@@ -79,7 +79,7 @@
                                     আপডেট করেছেন
                                 </td>
                                 <td>
-                                    {{$union->updatedBy->full_name ?? ''}}
+                                    {{$union->updatedBy->name_en ?? ''}}
                                 </td>
                             </tr>
                         </tbody>

@@ -26,6 +26,7 @@
                     <div class="card card-height-100">
                         <div class="card-header align-items-center d-flex">
                             <h4 class="card-title mb-0 flex-grow-1">Create New Content</h4>
+
                             <div class="flex-shrink-0">
                                 <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a>
                             </div>
@@ -34,6 +35,7 @@
                         <div class="card-body">
                             <form id="createForm" action="{{ route('admin.content.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
+                                
                                 <input type="hidden" id="contentStatus" name="status">
 
                                 <div class="row g-4">
@@ -105,9 +107,9 @@
                                 </div>
 
                                 <div class="d-flex gap-2 justify-content-end mt-4">
-                                    <button type="submit" class="btn btn-success" id="saveBtn" data-status="0">Save</button>
+                                    <button type="submit" class="btn btn-success" id="saveBtn" data-status="0">Submit</button>
 
-                                    <button type="submit" class="btn btn-primary" id="publishBtn" data-status="1">Publish</button>
+                                    {{-- <button type="submit" class="btn btn-primary" id="publishBtn" data-status="1">Publish</button> --}}
                                 </div>
                             </form>
                         </div>

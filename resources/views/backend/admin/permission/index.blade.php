@@ -1,6 +1,7 @@
 @extends('backend.layouts.app')
 
-@section('title', ''.($global_setting->title ?? "").' | Permission List')
+@section('title', 'Permission List | '.($global_setting->title ?? ""))
+
 @section('content')
     <div class="page-content">
         <div class="container-fluid">
@@ -74,8 +75,9 @@
                                         <tr>
                                             <th class="text-center">#</th>
                                             <th>Permission Name</th>
-                                            <th>Created By</th>
-                                            <th class="text-center">Created At</th>
+                                            {{-- <th>Created By</th> --}}
+                                            {{-- <th class="text-center">Created At</th> --}}
+                                            <th class="text-center">Status</th>
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -89,11 +91,21 @@
                                             @foreach ($permissions as $permission)
                                                 <tr>
                                                     <td class="text-center">{{ $i }}</td>
+
                                                     <td>{{ $permission->name_en ?? '-' }}</td>
-                                                    <td>{{ $permission->createdUser->full_name ?? '-' }}</td>
+
+                                                    <td class="text-center">
+                                                        @if ($permission->status == 1)
+                                                            <span class="badge bg-success">Active</span>
+                                                        @else
+                                                            <span class="badge bg-danger">Disabled</span>
+                                                        @endif
+                                                    </td>
+
+                                                    {{-- <td>{{ $permission->createdUser->name_en ?? '-' }}</td>
                                                     <td class="text-center">
                                                         {{ $permission->created_at ? $permission->created_at->format('d-m-Y') : '-' }}
-                                                    </td>
+                                                    </td> --}}
 
                                                     <td class="text-center">
                                                         @can('edit_permission')

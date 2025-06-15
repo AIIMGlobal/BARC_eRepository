@@ -117,7 +117,7 @@
                                                         <span class="badge bg-danger">নিষ্ক্রিয়</span>
                                                     @endif
                                                 </td>
-                                                <td>{{$union->createdBy->full_name ?? '-'}}</td>
+                                                <td>{{$union->createdBy->name_en ?? '-'}}</td>
                                                 <td class="text-center">
 
                                                     @can('view_union')

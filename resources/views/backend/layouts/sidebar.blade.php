@@ -190,7 +190,7 @@
                     @can('content_list')
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="{{ route('admin.content.indexSaved') }}">
-                                <i class="ri-building-line"></i> <span data-key="t-dashboards">Saved Contents</span>
+                                <i class="ri-building-line"></i> <span data-key="t-dashboards">Watch Later</span>
                             </a>
                         </li>
                     @endcan
@@ -223,7 +223,7 @@
 
                                     @can('total_saved_content')
                                         <li class="nav-item">
-                                            <a href="{{ route('admin.content.indexSaved') }}" class="nav-link" data-key="t-crm">Saved Contents</a>
+                                            <a href="{{ route('admin.content.indexSaved') }}" class="nav-link" data-key="t-crm">Watch Later</a>
                                         </li>
                                     @endcan
                                 </ul>
@@ -272,19 +272,19 @@
                             <ul class="nav nav-sm flex-column">
                                 @can('manage_region')
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.region.index') }}" class="nav-link" data-key="t-crm">{{__('menu.Division List')}}</a>
+                                        <a href="{{ route('admin.region.index') }}" class="nav-link" data-key="t-crm">{{__('menu.Division List')}} (Location)</a>
                                     </li>
                                 @endcan
 
                                 @can('manage_district')
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.district.index') }}" class="nav-link" data-key="t-crm">{{__('menu.District List')}}</a>
+                                        <a href="{{ route('admin.district.index') }}" class="nav-link" data-key="t-crm">{{__('menu.District List')}} (Location)</a>
                                     </li>
                                 @endcan
 
                                 @can('manage_upazila')
                                     <li class="nav-item">
-                                        <a href="{{route('admin.upazila.index')}}" class="nav-link" data-key="t-crm">{{__('menu.Upazila List')}}</a>
+                                        <a href="{{route('admin.upazila.index')}}" class="nav-link" data-key="t-crm">{{__('menu.Upazila List')}} (Location)</a>
                                     </li>
                                 @endcan
                             </ul>

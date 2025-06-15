@@ -193,9 +193,9 @@
 
                 <div class="overlay">
                     <div class="action-icons">
-                        <i class="{{ $contentFav ? 'las la-heart' : 'lar la-heart' }} {{ $contentFav ? 'active' : '' }}" data-id="{{ Crypt::encryptString($content->id) }}" onclick="toggleFavorite(this)"></i>
+                        <i class="{{ $contentFav ? 'las la-heart' : 'lar la-heart' }} {{ $contentFav ? 'active' : '' }}" data-id="{{ Crypt::encryptString($content->id) }}" onclick="toggleFavorite(this)" title="Favorite"></i>
 
-                        <i class="{{ $contentSave ? 'las la-bookmark' : 'lar la-bookmark' }} {{ $contentSave ? 'active' : '' }}" data-id="{{ Crypt::encryptString($content->id) }}" onclick="toggleSave(this)"></i>
+                        <i class="{{ $contentSave ? 'las la-bookmark' : 'lar la-bookmark' }} {{ $contentSave ? 'active' : '' }}" data-id="{{ Crypt::encryptString($content->id) }}" onclick="toggleSave(this)" title="Watch Later"></i>
 
                         <div class="dropdown">
                             <i class="las la-ellipsis-v" data-bs-toggle="dropdown" aria-expanded="false"></i>

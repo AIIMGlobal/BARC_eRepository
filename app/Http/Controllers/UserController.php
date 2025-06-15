@@ -68,7 +68,13 @@ class UserController extends Controller
                 $query->where('status', $request->status);
             }
             
-            $users = $query->where('role_id', '!=', 1)->where('status', '!=', 5)->latest()->get();
+            if (Auth::user()->role_id == 3) {
+                $users = $query->whereHas('userInfo', function($query3) {
+                            $query3->where('office_id', (Auth::user()->userInfo->office_id ?? ''));
+                        })->where('role_id', '!=', 1)->where('status', '!=', 5)->latest()->get();
+            } else {
+                $users = $query->where('role_id', '!=', 1)->where('status', '!=', 5)->latest()->get();
+            }
 
             if ($request->ajax()) {
                 $html = view('backend.admin.user.table', compact('users'))->render();
@@ -1051,7 +1057,7 @@ class UserController extends Controller
         $user = User::where('id', $request->user_id)->first();
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
-        $user->full_name = $request->first_name.' '.$request->last_name;
+        $user->name_en = $request->first_name.' '.$request->last_name;
 
         // check email already exist on user update
         if($request->email != $user->email){

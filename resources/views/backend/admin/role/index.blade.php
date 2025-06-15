@@ -1,6 +1,7 @@
 @extends('backend.layouts.app')
 
-@section('title', ''.($global_setting->title ?? "").' | Role List')
+@section('title', 'Role List | '.($global_setting->title ?? ""))
+
 @section('content')
     <div class="page-content">
         <div class="container-fluid">
@@ -46,11 +47,15 @@
                                 <table class="table table-bordered table-striped align-middle mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-center">No</th>
+                                            <th class="text-center">SL</th>
+
                                             <th>Role Name</th>
+
                                             <th class="text-center">Status</th>
-                                            <th>Created By</th>
-                                            <th>Created At</th>
+
+                                            {{-- <th>Created By</th> --}}
+                                            {{-- <th>Created At</th> --}}
+
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -63,22 +68,23 @@
 
                                             @foreach ($roles as $role)
                                                 <tr>
-                                                    <td class="text-center">{{ $i }}</td>
+                                                    <td class="text-center">{{ $role->sl ?? $i }}</td>
+
                                                     <td>{{ $role->display_name ?? '-' }}</td>
 
                                                     <td class="text-center">
                                                         @if ($role->status == 1)
                                                             <span class="badge bg-success">Active</span>
                                                         @else
-                                                            <span class="badge bg-danger">Inactive</span>
+                                                            <span class="badge bg-danger">Disabled</span>
                                                         @endif
                                                     </td>
 
-                                                    <td>{{ $role->createdUser ? $role->createdUser->full_name : '-' }}</td>
+                                                    {{-- <td>{{ $role->createdUser ? $role->createdUser->name_en : '-' }}</td> --}}
 
-                                                    <td>
+                                                    {{-- <td>
                                                         {{ $role->created_at ? $role->created_at->format('d-m-Y') : '' }}
-                                                    </td>
+                                                    </td> --}}
 
                                                     <td class="text-center">
                                                         @can('edit_role')
@@ -122,14 +128,16 @@
                                                                         <div class="col-xxl-12">
                                                                             <div>
                                                                                 <label for="roleName" class="form-label">Role Name: <span style="color:red;">*</span></label>
-                                                                                <input type="text" class="form-control" name="roleName" id="roleName" value="{{$role->display_name ?? '-'}}" required>
+
+                                                                                <input type="text" class="form-control" name="roleName" id="roleName" value="{{ $role->display_name ?? '-' }}" required>
                                                                             </div>
                                                                         </div>
 
                                                                         <div class="col-xxl-12">
                                                                             <div>
-                                                                                <label for="roleName" class="form-label">Serial No: <span style="color:red;">*</span></label>
-                                                                                <input type="number" class="form-control" name="sl" id="sl" placeholder="Serial" required value="{{ $role->sl }}">
+                                                                                <label for="roleName" class="form-label">SL: <span style="color:red;">*</span></label>
+
+                                                                                <input type="number" class="form-control" name="sl" id="sl" placeholder="Enter Serial" value="{{ $role->sl }}" required>
                                                                             </div>
                                                                         </div>
 
@@ -185,6 +193,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalgridLabel">Add New Role</h5>
+
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -196,14 +205,16 @@
                         <div class="col-xxl-12">
                             <div>
                                 <label for="roleName" class="form-label">Role Name: <span style="color:red;">*</span></label>
+
                                 <input type="text" class="form-control" name="roleName" id="roleName" placeholder="Role Name" required>
                             </div>
                         </div>
 
                         <div class="col-xxl-12">
                             <div>
-                                <label for="roleName" class="form-label">Serial No: <span style="color:red;">*</span></label>
-                                <input type="number" class="form-control" name="sl" id="sl" placeholder="Serial" required>
+                                <label for="roleName" class="form-label">SL: <span style="color:red;">*</span></label>
+
+                                <input type="number" class="form-control" name="sl" id="sl" placeholder="Enter Serial" required>
                             </div>
                         </div>
                         

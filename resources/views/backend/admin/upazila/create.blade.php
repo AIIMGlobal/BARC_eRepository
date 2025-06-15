@@ -1,92 +1,96 @@
 @extends('backend.layouts.app')
-@section('title', ''.($global_setting->title ?? "").' | '.__('pages.Add New Upazila'))
+
+@section('title', 'Add New Upazila | '.($global_setting->title ?? ""))
+
 @section('content')
-<div class="page-content">
-    <div class="container-fluid">
+    <div class="page-content">
+        <div class="container-fluid">
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        {{-- <h4 class="mb-sm-0">{{__('pages.Add New Upazila')}}</h4> --}}
 
-        <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">{{__('pages.Add New Upazila')}}</h4>
-
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{__('menu.Dashboard')}}</a></li>
-                            <li class="breadcrumb-item active">{{__('pages.Add New Upazila')}}</li>
-                        </ol>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!-- end page title -->
-
-            <div class="col-xxl-12">
-
-                @include('backend.admin.partials.alert')
-
-                <div class="card card-height-100">
-                    <div class="card-header align-items-center d-flex">
-                        <h4 class="card-title mb-0 flex-grow-1">{{__('pages.Add New Upazila')}}</h4>
-                        <div class="flex-shrink-0">
-                            <a href="{{URL::previous()}}" class="btn btn-primary">{{__('pages.Back')}}</a>
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{__('menu.Dashboard')}}</a></li>
+                                <li class="breadcrumb-item active">{{__('pages.Add New Upazila')}}</li>
+                            </ol>
                         </div>
+
                     </div>
-                    
-
-                    <div class="card-body">
-                        <form action="{{route('admin.upazila.store')}}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="row g-3">
-
-                                <div class="col-md-4 col-sm-6 col-xsm-12">
-                                    <div>
-                                        <label for="name_en" class="form-label">{{__('pages.Upazila Name')}} <span style="color:red;">*</span></label>
-                                        <input type="text" class="form-control" name="name_en" placeholder=" Upazila Name" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 col-sm-6 col-xsm-12">
-                                    <div>
-                                        <label for="district_id" class="form-label">{{__('pages.Select District')}} <span style="color:red;">*</span></label>
-                                        <select id="my-select" class="form-control select2" name="district_id" required>
-                                            <option value="">--{{__('pages.Select District')}}--</option>
-                                            @foreach ($districts as $district)
-                                                <option value="{{$district->id}}">{{$district->name_en}} ({{$district->divisionInfo->name_en ?? '-'}})</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 col-sm-6 col-xsm-12" style="margin-top: 3%">
-                                    <div class="form-check form-switch form-switch-custom form-switch-success mb-3">
-                                        <label class="form-check-label form-label" for="SwitchCheck11">{{__('pages.Status')}}</label>
-                                        <input class="form-check-input form-control" type="checkbox" role="switch" name="status" id="SwitchCheck11" value="1" checked>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="hstack gap-2 justify-content-end">
-                                        <button type="submit" class="btn btn-primary">{{__('pages.Submit')}}</button>
-                                    </div>
-                                </div><!--end col-->
-
-                            </div><!--end row-->
-                        </form>
-                    </div>
-                    <!-- end card body -->
                 </div>
-                <!-- end card -->
             </div>
-            <!-- end col -->
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-md-12">
+                    @include('backend.admin.partials.alert')
+
+                    <div class="card card-height-100">
+                        <div class="card-header align-items-center d-flex">
+                            <h4 class="card-title mb-0 flex-grow-1">{{__('pages.Add New Upazila')}}</h4>
+                            
+                            <div class="flex-shrink-0">
+                                <a href="{{URL::previous()}}" class="btn btn-primary">{{__('pages.Back')}}</a>
+                            </div>
+                        </div>
+                        
+
+                        <div class="card-body">
+                            <form action="{{route('admin.upazila.store')}}" method="POST" enctype="multipart/form-data">
+                                @csrf
+
+                                <div class="row g-3">
+
+                                    <div class="col-md-4 col-sm-6 col-xsm-12">
+                                        <div>
+                                            <label for="name_en" class="form-label">{{__('pages.Upazila Name')}} <span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" name="name_en" placeholder=" Upazila Name" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-6 col-xsm-12">
+                                        <div>
+                                            <label for="district_id" class="form-label">{{__('pages.Select District')}} <span style="color:red;">*</span></label>
+
+                                            <select id="my-select" class="form-control select2" name="district_id" required>
+                                                <option value="">--{{__('pages.Select District')}}--</option>
+                                                
+                                                @foreach ($districts as $district)
+                                                    <option value="{{$district->id}}">{{$district->name_en}} ({{$district->divisionInfo->name_en ?? '-'}})</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-6 col-xsm-12" style="margin-top: 3%">
+                                        <div class="form-check form-switch form-switch-custom form-switch-success mb-3">
+                                            <label class="form-check-label form-label" for="SwitchCheck11">{{__('pages.Status')}}</label>
+                                            <input class="form-check-input form-control" type="checkbox" role="switch" name="status" id="SwitchCheck11" value="1" checked>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="hstack gap-2 justify-content-end">
+                                            <button type="submit" class="btn btn-primary">{{__('pages.Submit')}}</button>
+                                        </div>
+                                    </div><!--end col-->
+
+                                </div><!--end row-->
+                            </form>
+                        </div>
+                        <!-- end card body -->
+                    </div>
+                    <!-- end card -->
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+
         </div>
-        <!-- end row -->
-
+        <!-- container-fluid -->
     </div>
-    <!-- container-fluid -->
-</div>
-
 @endsection
 
 @push('script')

@@ -33,16 +33,27 @@ class ContentController extends Controller
 
             $query = Content::query();
 
-            if ($request->category_id) {
-                if (!Category::where('id', $request->category_id)->exists()) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Invalid category ID'
-                    ], 400);
+            // if ($request->category_id) {
+            //     if (!Category::where('id', $request->category_id)->exists()) {
+            //         return response()->json([
+            //             'success' => false,
+            //             'message' => 'Invalid category ID'
+            //         ], 400);
+            //     }
+
+            //     $query->where('category_id', $request->category_id);
+            // } else {
+                if ($request->category_id) {
+                    if (!Category::where('id', $request->category_id)->exists()) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Invalid category ID'
+                        ], 400);
+                    }
+
+                    $query->where('category_id', $request->category_id);
                 }
 
-                $query->where('category_id', $request->category_id);
-            } else {
                 if ($request->content_name) {
                     $query->where('content_name', 'like', '%' . $request->content_name . '%');
                 }
@@ -52,40 +63,36 @@ class ContentController extends Controller
                 }
 
                 if ($request->from_date && $request->to_date) {
-                    $fromDate = \Carbon\Carbon::parse($request->from_date)->startOfDay();
-                    $toDate = \Carbon\Carbon::parse($request->to_date)->endOfDay();
-
+                    $fromDate = Carbon::parse($request->from_date)->startOfDay();
+                    $toDate = Carbon::parse($request->to_date)->endOfDay();
                     $query->whereBetween('published_at', [$fromDate, $toDate]);
                 } elseif ($request->from_date) {
-                    $fromDate = \Carbon\Carbon::parse($request->from_date)->startOfDay();
-
+                    $fromDate = Carbon::parse($request->from_date)->startOfDay();
                     $query->where('published_at', '>=', $fromDate);
                 } elseif ($request->to_date) {
-                    $toDate = \Carbon\Carbon::parse($request->to_date)->endOfDay();
-                    
+                    $toDate = Carbon::parse($request->to_date)->endOfDay();
                     $query->where('published_at', '<=', $toDate);
                 }
-            }
+            // }
 
             $perPage = $request->per_page ?? 12;
 
             $contents = $query->where('status', 1)
-                             ->with([
-                                 'category',
-                                 'createdBy',
-                                 'userActivities' => fn($q) => $q->where('user_id', Auth::id())
-                             ])
-                             ->latest()
-                             ->paginate($perPage);
+                            ->with([
+                                'category',
+                                'createdBy',
+                                'userActivities' => fn($q) => $q->where('user_id', Auth::id())
+                            ])
+                            ->latest()
+                            ->paginate($perPage);
 
             if ($request->ajax()) {
                 $html = view('backend.admin.content.content', compact('contents'))->render();
-                $hasMore = $contents->hasMorePages();
-
                 return response()->json([
                     'success' => true,
                     'html' => $html,
-                    'hasMore' => $hasMore,
+                    'hasMore' => $contents->hasMorePages(),
+                    'currentPage' => $contents->currentPage(),
                 ]);
             }
 
@@ -353,7 +360,7 @@ class ContentController extends Controller
             if (Gate::allows('create_content', $user)) {
                 $validator = Validator::make($request->all(), [
                     'content_name'  => 'required',
-                    'content'       => 'required',
+                    'content'       => 'required|file|max:307200',
                     'content_type'  => 'required',
                     'category_id'   => 'required|exists:categories,id',
                     'content_year'  => 'required|digits:4',
@@ -498,6 +505,7 @@ class ContentController extends Controller
             if (Gate::allows('edit_content', $user)) {
                 $validator = Validator::make($request->all(), [
                     'content_name'  => 'required',
+                    'content'       => 'file|max:307200',
                     'content_type'  => 'required',
                     'category_id'   => 'required|exists:categories,id',
                     'content_year'  => 'required|digits:4',
@@ -760,11 +768,11 @@ class ContentController extends Controller
                         'created_by' => $user->id,
                     ]);
 
-                    $message = 'Content saved successfully!';
+                    $message = 'Content added to watch later list!';
                 } else {
                     $contentExist->delete();
 
-                    $message = 'Content removed from saved!';
+                    $message = 'Content removed from watch later list!';
                 }
 
                 return response()->json([
