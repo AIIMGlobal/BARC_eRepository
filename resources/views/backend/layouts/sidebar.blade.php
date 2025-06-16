@@ -278,13 +278,13 @@
 
                                 @can('manage_district')
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.district.index') }}" class="nav-link" data-key="t-crm">{{__('menu.District List')}} (Location)</a>
+                                        <a href="{{ route('admin.district.index') }}" class="nav-link" data-key="t-crm">{{__('menu.District List')}}</a>
                                     </li>
                                 @endcan
 
                                 @can('manage_upazila')
                                     <li class="nav-item">
-                                        <a href="{{route('admin.upazila.index')}}" class="nav-link" data-key="t-crm">{{__('menu.Upazila List')}} (Location)</a>
+                                        <a href="{{route('admin.upazila.index')}}" class="nav-link" data-key="t-crm">{{__('menu.Upazila List')}}</a>
                                     </li>
                                 @endcan
                             </ul>
