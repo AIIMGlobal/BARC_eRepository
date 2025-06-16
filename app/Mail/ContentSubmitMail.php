@@ -9,22 +9,22 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ETicketMail extends Mailable
+class ContentSubmitMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $admin;
     public $setting;
-    public $eTicket;
+    public $content;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($admin, $setting, $eTicket)
+    public function __construct($admin, $setting, $content)
     {
         $this->admin        = $admin;
         $this->setting      = $setting;
-        $this->eTicket      = $eTicket;
+        $this->content      = $content;
     }
 
     /**
@@ -33,7 +33,7 @@ class ETicketMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New E-Ticket Mail',
+            subject: 'Content Submit Mail',
         );
     }
 
@@ -43,7 +43,7 @@ class ETicketMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.eTicket',
+            view: 'emails.contentSubmit',
         );
     }
 

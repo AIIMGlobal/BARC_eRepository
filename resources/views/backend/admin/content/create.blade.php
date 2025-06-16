@@ -6,7 +6,7 @@
     <div class="page-content">
         <div class="container-fluid">
             <!-- Page Title -->
-            <div class="row mb-4">
+            <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <div class="page-title-right">
@@ -109,7 +109,9 @@
                                 <div class="d-flex gap-2 justify-content-end mt-4">
                                     <button type="submit" class="btn btn-success" id="saveBtn" data-status="0">Submit</button>
 
-                                    {{-- <button type="submit" class="btn btn-primary" id="publishBtn" data-status="1">Publish</button> --}}
+                                    @can('can_publish')
+                                        <button type="submit" class="btn btn-primary" id="publishBtn" data-status="1">Publish</button>
+                                    @endcan
                                 </div>
                             </form>
                         </div>

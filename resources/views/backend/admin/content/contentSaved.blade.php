@@ -205,10 +205,16 @@
                                     <li><a class="dropdown-item" href="{{ route('admin.content.show', Crypt::encryptString($content->id)) }}" target="_blank">Show Details</a></li>
                                 @endcan
 
-                                @if (Auth::id() == $content->created_by || Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
-                                    @can('edit_content')
-                                        <li><a class="dropdown-item" href="{{ route('admin.content.edit', Crypt::encryptString($content->id)) }}" target="_blank">Edit</a></li>
-                                    @endcan
+                                @if (Auth::id() == $content->created_by || Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 3)
+                                    @if ($content->status == 0 || Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 3)
+                                        @can('edit_content')
+                                            <li><a class="dropdown-item" href="{{ route('admin.content.edit', Crypt::encryptString($content->id)) }}" target="_blank">Edit</a></li>
+                                        @endcan
+
+                                        @can('can_publish')
+                                            <li><button class="dropdown-item" type="button" onclick="publishContent('{{ Crypt::encryptString($content->id) }}')">Publish</button></li>
+                                        @endcan
+                                    @endif
 
                                     @can('archive_content')
                                         @if ($content->status == 3)
@@ -236,7 +242,16 @@
                         <p>By: {{ $content->createdBy->name_en ?? 'Unknown' }}</p>
                         <p>Category: {{ $content->category->category_name ?? '' }}</p>
                         <p>Type: {{ $content->content_type ?? 'Unknown' }}</p>
-                        <p>{{ date('d M, Y h:i A', strtotime($content->published_at)) }}</p>
+
+                        @if ($content->status == 1)
+                            <p>Publish At: {{ date('d M, Y h:i A', strtotime($content->published_at)) }}</p>
+                        @else
+                            <p>Submitted At: {{ date('d M, Y h:i A', strtotime($content->created_at)) }}</p>
+
+                            @if ($content->updated_by)
+                                <p>Updated At: {{ date('d M, Y h:i A', strtotime($content->updated_at)) }}</p>
+                            @endif
+                        @endif
 
                         @if ($content->status == 0)
                             <p>Status: <span class="badge bg-primary">Unpublished</span></p>

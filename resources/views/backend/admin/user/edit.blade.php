@@ -1164,6 +1164,9 @@
                                 showCancelButton: false,
                             });
 
+                            $('#submitBtn').prop('disabled', false);
+                            $('#submitBtn').html(`Update`);
+
                             setTimeout(() => window.location.reload(), 1000);
                         } else {
                             Swal.fire('Error', response.message || 'An error occurred.', 'error');
@@ -1174,6 +1177,9 @@
                     },
                     error: function(xhr) {
                         Swal.fire('Error', xhr.responseJSON.message || 'An error occurred.', 'error');
+
+                        $('#submitBtn').prop('disabled', false);
+                        $('#submitBtn').html(`Update`);
                     }
                 });
             });

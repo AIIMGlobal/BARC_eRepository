@@ -329,6 +329,7 @@ Route::group(['middleware' => ['AuthGates','set.locale'], 'prefix' => '/authoriz
         Route::put('/update/{id}', [ContentController::class, 'update'])->name('update');
         Route::get('/destroy/{id}', [ContentController::class, 'destroy'])->name('destroy');
         
+        Route::get('/publish/{id}', [ContentController::class, 'publish'])->name('publish');
         Route::get('/archive/{id}', [ContentController::class, 'archive'])->name('archive');
         Route::post('/bulk-action', [ContentController::class, 'bulkAction'])->name('bulkAction');
         Route::post('/toggle-favorite/{id}', [ContentController::class, 'toggleFavorite'])->name('toggleFavorite');

@@ -455,7 +455,7 @@ class UserController extends Controller
                     'email'                 => 'required|unique:users,email,' . $newUser->id,
                     'role_id'               => 'required',
                     // 'employee_id'           => 'required',
-                    'department_id'         => 'required',
+                    // 'department_id'         => 'required',
                     'designation_id'        => 'required',
                     'office_id'             => 'required',
                     // 'present_division_id'   => 'required',

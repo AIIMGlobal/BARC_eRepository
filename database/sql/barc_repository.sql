@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2025 at 02:40 PM
+-- Generation Time: Jun 16, 2025 at 06:33 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -258,6 +258,7 @@ CREATE TABLE `contents` (
   `meta_title` varchar(255) DEFAULT NULL,
   `meta_description` text DEFAULT NULL,
   `meta_keywords` text DEFAULT NULL,
+  `can_download` tinyint(4) DEFAULT NULL COMMENT '1=Yes, 0=No',
   `status` tinyint(4) DEFAULT NULL COMMENT '0:unpublished, 1:published, 2:delete, 3:archived',
   `approved_by` int(11) DEFAULT NULL,
   `approved_at` int(11) DEFAULT NULL,
@@ -272,36 +273,37 @@ CREATE TABLE `contents` (
 -- Dumping data for table `contents`
 --
 
-INSERT INTO `contents` (`id`, `sl`, `category_id`, `content_type`, `content_name`, `slug`, `description`, `extension`, `content`, `content_year`, `thumbnail`, `meta_title`, `meta_description`, `meta_keywords`, `status`, `approved_by`, `approved_at`, `published_at`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, NULL, 3, 'PDF', 'Annual Report 2011=12', 'annual-report-201112', NULL, 'pdf', 'contents/1747552531_Annual Report 2011-12.pdf', '2013', 'thumbnails/1747552531_Screenshot 2025-05-18 131225.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-01-18 18:15:31', 1, NULL, '2025-05-18 17:15:31', '2025-05-18 17:15:31'),
-(2, NULL, 3, 'PDF', 'Annual Report 2012-13', 'annual-report-2012-13', NULL, 'pdf', 'contents/1747553041_Annual Report 2012-13.pdf', '2024', 'thumbnails/1747553041_Screenshot 2025-05-18 132005.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-01-18 18:24:01', 1, NULL, '2025-05-18 17:24:01', '2025-05-18 17:24:01'),
-(3, NULL, 3, 'PDF', 'Annual Report 2013-14', 'annual-report-2013-14', NULL, 'pdf', 'contents/1747553375_Annual Report 2013-14.pdf', '2015', 'thumbnails/1747553375_Screenshot 2025-05-18 132730.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-02-18 18:29:35', 1, NULL, '2025-05-18 17:29:35', '2025-05-18 17:29:35'),
-(4, NULL, 3, 'PDF', 'Annual Report 2014-15', 'annual-report-2014-15', NULL, 'pdf', 'contents/1747554110_Annual Report 2014-15.pdf', '2016', 'thumbnails/1747554110_Screenshot 2025-05-18 133454.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-02-18 18:41:50', 1, NULL, '2025-05-18 17:41:50', '2025-05-18 17:41:50'),
-(6, NULL, 1, 'PDF', 'CLIMATE SMART AGRICULTURE FOR ADAPTATION', 'climate-smart-agriculture-for-adaptation', NULL, 'pdf', 'contents/1747653505_CLIOMATE SMART AGRICULTURE FOR ADAPTATION.pdf', '2023', 'thumbnails/1747653505_Screenshot 2025-05-19 171608.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 21:18:25', 1, 1, '2025-05-19 21:18:25', '2025-05-19 21:24:47'),
-(7, NULL, 1, 'PDF', 'PROGRAM BASED RESEARCH GRANT (PBRG) Sub-project Completion Report on MICROBIAL CHARACTERIZATION OF BANGLADESH SOIL AND DEVELOPMENT OF CLIMATE SMART BIOFERTILIZERS FOR CROP PRODUCTION AND SOIL FERTILITY', 'program-based-research-grant-pbrg-sub-project-completion-report-on-microbial-characterization-of-bangladesh-soil-and-development-of-climate-smart-biofertilizers-for-crop-production-and-soil-fertility', NULL, 'pdf', 'contents/1747654446_MICROBIAL CHARACTERIZATION OF BANGLADESH SOIL AVD DEVELOPMENT OF CLIMATE SMART BIOFERTILIZERS  FOR CROP CROP PRODUCTIOON AND SOIL FETILITY.pdf', '2022', 'thumbnails/1747654446_Screenshot 2025-05-19 173058.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 21:34:06', 1, NULL, '2025-05-19 21:34:06', '2025-05-19 21:34:06'),
-(8, NULL, 2, 'PDF', 'BANGLADESH JOURNAL OF AGRICULTURE', 'bangladesh-journal-of-agriculture', NULL, 'pdf', 'contents/1747654706_Bangladesh Journal Of Agriculture Vol.3 No.1 June.1978.pdf', '1978', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-03-19 21:39:44', 1, 1, '2025-05-19 21:38:26', '2025-05-19 21:39:44'),
-(9, NULL, 2, 'PDF', 'BANGLADESH JOURNAL OF AGRICULTURE', 'bangladesh-journal-of-agriculture-1747655032', 'VOL. 5 NO. 4 DECEMBER, 1980', 'pdf', 'contents/1747655032_Bangladesh Journal Of Agriculature  Vol 5  No 4 -DECEMBER 198Opdf.pdf', '1980', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 21:43:52', 1, NULL, '2025-05-19 21:43:52', '2025-05-19 21:43:52'),
-(10, NULL, 2, 'PDF', 'BANGLADESH JOURNAL OF AGRICULTURE', 'bangladesh-journal-of-agriculture-1747655330', 'Vol 14 No 1 Jan - Mar 1989', 'pdf', 'contents/1747655330_Bangladesh Journal Of Agriculature  Vol 14 No 1 -Jun-Mar 1989.pdf', '1989', 'thumbnails/1747655330_Screenshot 2025-05-19 174702.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 21:48:50', 1, NULL, '2025-05-19 21:48:50', '2025-05-19 21:48:50'),
-(11, NULL, 4, 'Video', 'বাংলাদেশ কৃষি গবেষণা কাউন্সিল(Bangladesh Agricultural Research Council)_ পরিচয়, উদ্দেশ্য ও কার্যাবলী', 'banglades-krrishi-gbeshna-kaunsilbangladesh-agricultural-research-council-pricz-uddesz-oo-karzablee', NULL, 'mp4', 'contents/1747657794_বাংলাদেশ কৃষি গবেষণা কাউন্সিল(Bangladesh Agricultural Research Council)_ পরিচয়, উদ্দেশ্য ও কার্যাবলী.mp4', '2021', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 22:29:55', 1, NULL, '2025-05-19 22:29:55', '2025-05-19 22:29:55'),
-(12, NULL, 1, 'PDF', 'MEDICINAL PLANTS OF BANGLADESH', 'medicinal-plants-of-bangladesh', NULL, 'pdf', 'contents/1747657997_MEDICINAL PLANTS OF BANGLADESH.pdf', '2014', 'thumbnails/1747657997_Screenshot 2025-05-19 182941.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 22:33:17', 1, NULL, '2025-05-19 22:33:17', '2025-05-19 22:33:17'),
-(13, NULL, 1, 'PDF', 'Seaweed Cultivation', 'seaweed-cultivation', NULL, 'pdf', 'contents/1747658825_Seaweed Cultivation.pdf', '2021', 'thumbnails/1747658825_Screenshot 2025-05-19 184527.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 22:47:05', 1, NULL, '2025-05-19 22:47:05', '2025-05-19 22:47:05'),
-(14, NULL, 1, 'PDF', 'GUIDE TO BANGLADESH AGRICULTURE', 'guide-to-bangladesh-agriculture', NULL, 'pdf', 'contents/1747659169_GUIDE TO BANGLADESH AGRICULTURE.pdf', '1982', 'thumbnails/1747659169_Screenshot 2025-05-19 184958.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 22:52:49', 1, NULL, '2025-05-19 22:52:49', '2025-05-19 22:52:49'),
-(16, NULL, 4, 'Video', 'Khamari App Tutorial (খামারি অ্যাপ টিউটোরিয়াল)', 'khamari-app-tutorial-khamari-ozap-tiutorizal-1747718581', NULL, 'mp4', 'contents/1747718581_Khamari App Tutorial (খামারি অ্যাপ টিউটোরিয়াল).mp4', '2022', 'thumbnails/1747718581_Screenshot 2025-05-20 110959.png', NULL, NULL, NULL, 1, NULL, NULL, '2022-05-20 15:23:01', 19, NULL, '2025-05-20 15:23:01', '2025-05-20 15:23:01'),
-(17, NULL, 4, 'Video', 'Improvement of Rural Agricultural Technology Extension system in  Asia', 'improvement-of-rural-agricultural-technology-extension-system-in-asia', 'Documentary', 'mp4', 'contents/1747720753_AFACI-RATES Project TTMU BARC (2022-2025) (1) (1).mp4', '2025', 'thumbnails/1747720753_Screenshot 2025-05-20 112659.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 15:59:13', 19, NULL, '2025-05-20 15:59:13', '2025-05-20 15:59:13'),
-(18, NULL, 1, 'PDF', 'খাদ্য ও পুষ্টি নিরাপত্তা নাসভুক্ত প্রতিষ্ঠান কতৃক উদ্ভাবিত হস্তান্তরযোগ্য প্রযুক্তি', 'khadz-oo-pushti-niraptta-nasvukt-prtishthan-ktrrik-udvabit-hstantrzogz-przukti', NULL, 'pdf', 'contents/1747722556_খাদ্য ও পুষ্টি নিরাপত্তা নাসভুক্ত প্রতিষ্ঠান কতৃক উদ্ভাবিত হস্তান্তরযোগ্য প্রযুক্তি.pdf', '2015', 'thumbnails/1747722556_Screenshot 2025-05-20 122405.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-04-20 16:29:16', 19, NULL, '2025-05-20 16:29:16', '2025-05-20 16:29:16'),
-(19, NULL, 1, 'PDF', 'ফল বৃক্ষ রোপন ও পরিচর্যা স্বল্প প্রচলিত ফল  দ্বিতীয় খন্ড', 'fl-brriksh-ropn-oo-pricrza-swlp-prclit-fl-dwiteey-khnd', NULL, 'pdf', 'contents/1747723559_ফল বৃক্ষ রোপন ও পরিচর্যা স্বল্প প্রচলিত ফল  দ্বিতীয় খন্ড.pdf', '2003', 'thumbnails/1747723559_Screenshot 2025-05-20 122658.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-04-20 16:45:59', 19, NULL, '2025-05-20 16:45:59', '2025-05-20 16:45:59'),
-(20, NULL, 1, 'PDF', 'দেশের দক্ষিণ অঞ্চলের পতিত জমির ব্যবহার ও ফসল উৎপাদন পরিকল্পনা', 'deser-dkshin-oncler-ptit-jmir-bzbhar-oo-fsl-uttpadn-priklpna', NULL, 'pdf', 'contents/1747723845_দেশের দক্ষিণ অঞ্চলের পতিত জমির ব্যবহার ও ফসল উৎপাদন পরিকল্পনা.pdf', '2011', 'thumbnails/1747723845_Screenshot 2025-05-20 124709.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-04-20 16:50:45', 19, NULL, '2025-05-20 16:50:45', '2025-05-20 16:50:45'),
-(21, NULL, 1, 'PDF', 'কৃষি ক্ষেত্রে  প্রাকৃতিক দুর্যোগ ব্যবস্থাপনা', 'krrishi-kshetre-prakrritik-durzog-bzbsthapna', NULL, 'pdf', 'contents/1747724214_কৃষি ক্ষেত্রে  প্রাকৃতিক দুর্যোগ ব্যবস্থাপনা.pdf', '1993', 'thumbnails/1747724214_Screenshot 2025-05-20 125158.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-04-20 16:56:54', 19, NULL, '2025-05-20 16:56:54', '2025-05-20 16:56:54'),
-(22, NULL, 1, 'PDF', 'খাদ্য প্রক্রিয়া ও বিশ্লেষণ', 'khadz-prkriza-oo-bisleshn', NULL, 'pdf', 'contents/1747724625_খাদ্য প্রক্রিয়া ও বিশ্লেষণ.pdf', '1983', 'thumbnails/1747724625_Screenshot 2025-05-20 125806.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:03:46', 19, NULL, '2025-05-20 17:03:46', '2025-05-20 17:03:46'),
-(23, NULL, 1, 'PDF', 'বারি সোলার পাম্প ভিওিক সোলার হোম সিস্টেম  স্হাপন ব্যবহার ও রক্ষণাবেক্ষণ  প্রশিক্ষণ ম্যানুয়াল', 'bari-solar-pamp-viooik-solar-hom-sistem-shapn-bzbhar-oo-rkshnabekshn-prsikshn-mzanuyal', NULL, 'pdf', '0', '2020', 'thumbnails/1747724827_Screenshot 2025-05-20 130552.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:07:07', 19, NULL, '2025-05-20 17:07:07', '2025-05-20 17:07:07'),
-(24, NULL, 1, 'PDF', 'দারিদ্র্য বিমোচনে-একটি বাড়ি একটি খামার কৃষি প্রযুক্তি', 'daridrz-bimocne-ekti-bari-ekti-khamar-krrishi-przukti', NULL, 'pdf', 'contents/1747725339_দারিদ্র্য বিমোচনে-একটি বাড়ি একটি খামার কৃষি প্রযুক্তি.pdf', '2011', 'thumbnails/1747725339_Screenshot 2025-05-20 131002.png', NULL, NULL, NULL, 1, NULL, NULL, '2023-12-20 18:15:40', 19, NULL, '2025-05-20 17:15:40', '2025-05-20 17:15:40'),
-(25, NULL, 1, 'PDF', 'বারি সীউইড-১ (গ্রাসিলারিয়া টেনুস্টিপিটাটা) চাষাবাদ ও সংগ্রহোত্তর প্রযুক্তিসমূহ', 'bari-seeuid-1-grasilariya-tenustipitata-cashabad-oo-snggrhottr-przuktismuuh', NULL, 'pdf', 'contents/1747725497_বারি সীউইড-১ (গ্রাসিলারিয়া টেনুস্টিপিটাটা) চাষাবাদ ও সংগ্রহোত্তর প্রযুক্তিসমূহ.pdf', '2020', 'thumbnails/1747725497_Screenshot 2025-05-20 131702.png', NULL, NULL, NULL, 1, NULL, NULL, '2024-06-20 17:18:17', 19, NULL, '2025-05-20 17:18:17', '2025-05-20 17:18:17'),
-(26, NULL, 1, 'PDF', 'বারি সীউইড-২ (উলভা ল্যাকটুকা) চাষাবাদ ও সংগ্রহোত্তর প্রযুক্তিসমূহ', 'bari-seeuid-2-ulva-lzaktuka-cashabad-oo-snggrhottr-przuktismuuh', NULL, 'pdf', 'contents/1747725612_বারি সীউইড-২ (উলভা ল্যাকটুকা) চাষাবাদ ও সংগ্রহোত্তর প্রযুক্তিসমূহ.pdf', '2022', 'thumbnails/1747725612_Screenshot 2025-05-20 131853.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:20:12', 19, NULL, '2025-05-20 17:20:12', '2025-05-20 17:20:12'),
-(27, NULL, 1, 'PDF', 'Bamboo Production and Utilization', 'bamboo-production-and-utilization', NULL, 'pdf', 'contents/1747725830_Bamboo Production and Utilization.pdf', '2012', 'thumbnails/1747725830_Screenshot 2025-05-20 132125.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:23:50', 19, NULL, '2025-05-20 17:23:50', '2025-05-20 17:23:50'),
-(28, NULL, 2, 'PDF', 'Bangladesh Journal Of Agriculature  Vol 17  Jun-Dec 1992', 'bangladesh-journal-of-agriculature-vol-17-jun-dec-1992', NULL, 'pdf', 'contents/1747726253_Bangladesh Journal Of Agriculature  Vol 17  Jun-Dec 1992.pdf', '1993', 'thumbnails/1747726253_Screenshot 2025-05-20 132800.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:30:53', 19, 19, '2025-05-20 17:30:53', '2025-05-20 17:34:49'),
-(29, NULL, 2, 'PDF', 'proceedings of the national workshop on sustainable land mangement through effective fertilizer use in relation to climate changer and land degradation', 'proceedings-of-the-national-workshop-on-sustainable-land-mangement-through-effective-fertilizer-use-in-relation-to-climate-changer-and-land-degradation', NULL, 'pdf', 'contents/1747726436_proceedings of the national workshop on sustainable land mangement through effective fertilizer use in relation to climate changer and land degradation.pdf', '1999', 'thumbnails/1747726436_Screenshot 2025-05-20 132838.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:33:56', 19, NULL, '2025-05-20 17:33:56', '2025-05-20 17:33:56'),
-(30, NULL, 2, 'PDF', 'Proceedings of the National Workshop  on  Sustainable Land Use through Soil and Crop Management in relation to Climate Change and  Land Degradation', 'proceedings-of-the-national-workshop-on-sustainable-land-use-through-soil-and-crop-management-in-relation-to-climate-change-and-land-degradation', NULL, 'pdf', 'contents/1747744853_Proceeding of the National Workshop on sustainable Land Use through Soil and Crop Management in relation to Climate Change and Land Degradation.pdf', '2010', 'thumbnails/1747744853_Screenshot 2025-05-20 183635.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 22:40:53', 19, NULL, '2025-05-20 22:40:53', '2025-05-20 22:40:53'),
-(31, NULL, 2, 'PDF', 'BANGLADESH JOURNAL OF AGRICULTURE', 'bangladesh-journal-of-agriculture-1747744973', 'V©L. 3 NO. 1 JUNE, 1978', 'pdf', 'contents/1747744973_Bangladesh Journal Of Agriculture Vol.3 No.1 June.1978 (1).pdf', '1978', 'thumbnails/1747744973_Screenshot 2025-05-20 183836.png', NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 22:42:53', 19, NULL, '2025-05-20 22:42:53', '2025-05-20 22:42:53');
+INSERT INTO `contents` (`id`, `sl`, `category_id`, `content_type`, `content_name`, `slug`, `description`, `extension`, `content`, `content_year`, `thumbnail`, `meta_title`, `meta_description`, `meta_keywords`, `can_download`, `status`, `approved_by`, `approved_at`, `published_at`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, NULL, 3, 'PDF', 'Annual Report 2011=12', 'annual-report-201112', NULL, 'pdf', 'contents/1747552531_Annual Report 2011-12.pdf', '2013', 'thumbnails/1747552531_Screenshot 2025-05-18 131225.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-01-18 18:15:31', 1, NULL, '2025-05-18 17:15:31', '2025-05-18 17:15:31'),
+(2, NULL, 3, 'PDF', 'Annual Report 2012-13', 'annual-report-2012-13', NULL, 'pdf', 'contents/1747553041_Annual Report 2012-13.pdf', '2007', 'thumbnails/1747553041_Screenshot 2025-05-18 132005.png', NULL, NULL, NULL, 0, 1, NULL, NULL, '2025-05-29 23:22:28', 1, 24, '2025-05-18 17:24:01', '2025-05-29 23:22:28'),
+(3, NULL, 3, 'PDF', 'Annual Report 2013-14', 'annual-report-2013-14', NULL, 'pdf', 'contents/1747553375_Annual Report 2013-14.pdf', '2015', 'thumbnails/1747553375_Screenshot 2025-05-18 132730.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-02-18 18:29:35', 1, NULL, '2025-05-18 17:29:35', '2025-05-18 17:29:35'),
+(4, NULL, 3, 'PDF', 'Annual Report 2014-15', 'annual-report-2014-15', NULL, 'pdf', 'contents/1747554110_Annual Report 2014-15.pdf', '2016', 'thumbnails/1747554110_Screenshot 2025-05-18 133454.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-02-18 18:41:50', 1, NULL, '2025-05-18 17:41:50', '2025-05-18 17:41:50'),
+(6, NULL, 1, 'PDF', 'CLIMATE SMART AGRICULTURE FOR ADAPTATION', 'climate-smart-agriculture-for-adaptation', NULL, 'pdf', 'contents/1747653505_CLIOMATE SMART AGRICULTURE FOR ADAPTATION.pdf', '2023', 'thumbnails/1747653505_Screenshot 2025-05-19 171608.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 21:18:25', 1, 1, '2025-05-19 21:18:25', '2025-05-19 21:24:47'),
+(7, NULL, 1, 'PDF', 'PROGRAM BASED RESEARCH GRANT (PBRG) Sub-project Completion Report on MICROBIAL CHARACTERIZATION OF BANGLADESH SOIL AND DEVELOPMENT OF CLIMATE SMART BIOFERTILIZERS FOR CROP PRODUCTION AND SOIL FERTILITY', 'program-based-research-grant-pbrg-sub-project-completion-report-on-microbial-characterization-of-bangladesh-soil-and-development-of-climate-smart-biofertilizers-for-crop-production-and-soil-fertility', NULL, 'pdf', 'contents/1747654446_MICROBIAL CHARACTERIZATION OF BANGLADESH SOIL AVD DEVELOPMENT OF CLIMATE SMART BIOFERTILIZERS  FOR CROP CROP PRODUCTIOON AND SOIL FETILITY.pdf', '2022', 'thumbnails/1747654446_Screenshot 2025-05-19 173058.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 21:34:06', 1, NULL, '2025-05-19 21:34:06', '2025-05-19 21:34:06'),
+(8, NULL, 2, 'PDF', 'BANGLADESH JOURNAL OF AGRICULTURE', 'bangladesh-journal-of-agriculture', NULL, 'pdf', 'contents/1747654706_Bangladesh Journal Of Agriculture Vol.3 No.1 June.1978.pdf', '1978', NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-03-19 21:39:44', 1, 1, '2025-05-19 21:38:26', '2025-05-19 21:39:44'),
+(9, NULL, 2, 'PDF', 'BANGLADESH JOURNAL OF AGRICULTURE', 'bangladesh-journal-of-agriculture-1747655032', 'VOL. 5 NO. 4 DECEMBER, 1980', 'pdf', 'contents/1747655032_Bangladesh Journal Of Agriculature  Vol 5  No 4 -DECEMBER 198Opdf.pdf', '1980', NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 21:43:52', 1, NULL, '2025-05-19 21:43:52', '2025-05-19 21:43:52'),
+(10, NULL, 2, 'PDF', 'BANGLADESH JOURNAL OF AGRICULTURE', 'bangladesh-journal-of-agriculture-1747655330', 'Vol 14 No 1 Jan - Mar 1989', 'pdf', 'contents/1747655330_Bangladesh Journal Of Agriculature  Vol 14 No 1 -Jun-Mar 1989.pdf', '1989', 'thumbnails/1747655330_Screenshot 2025-05-19 174702.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 21:48:50', 1, NULL, '2025-05-19 21:48:50', '2025-05-19 21:48:50'),
+(11, NULL, 4, 'Video', 'বাংলাদেশ কৃষি গবেষণা কাউন্সিল(Bangladesh Agricultural Research Council)_ পরিচয়, উদ্দেশ্য ও কার্যাবলী', 'banglades-krrishi-gbeshna-kaunsilbangladesh-agricultural-research-council-pricz-uddesz-oo-karzablee', NULL, 'mp4', 'contents/1747657794_বাংলাদেশ কৃষি গবেষণা কাউন্সিল(Bangladesh Agricultural Research Council)_ পরিচয়, উদ্দেশ্য ও কার্যাবলী.mp4', '2021', NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 22:29:55', 1, NULL, '2025-05-19 22:29:55', '2025-05-19 22:29:55'),
+(12, NULL, 1, 'PDF', 'MEDICINAL PLANTS OF BANGLADESH', 'medicinal-plants-of-bangladesh', NULL, 'pdf', 'contents/1747657997_MEDICINAL PLANTS OF BANGLADESH.pdf', '2014', 'thumbnails/1747657997_Screenshot 2025-05-19 182941.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 22:33:17', 1, NULL, '2025-05-19 22:33:17', '2025-05-19 22:33:17'),
+(13, NULL, 1, 'PDF', 'Seaweed Cultivation', 'seaweed-cultivation', NULL, 'pdf', 'contents/1747658825_Seaweed Cultivation.pdf', '2021', 'thumbnails/1747658825_Screenshot 2025-05-19 184527.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 22:47:05', 1, NULL, '2025-05-19 22:47:05', '2025-05-19 22:47:05'),
+(14, NULL, 1, 'PDF', 'GUIDE TO BANGLADESH AGRICULTURE', 'guide-to-bangladesh-agriculture', NULL, 'pdf', 'contents/1747659169_GUIDE TO BANGLADESH AGRICULTURE.pdf', '1982', 'thumbnails/1747659169_Screenshot 2025-05-19 184958.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-19 22:52:49', 1, NULL, '2025-05-19 22:52:49', '2025-05-19 22:52:49'),
+(16, NULL, 4, 'Video', 'Khamari App Tutorial (খামারি অ্যাপ টিউটোরিয়াল)', 'khamari-app-tutorial-khamari-ozap-tiutorizal', NULL, 'mp4', 'contents/1747718581_Khamari App Tutorial (খামারি অ্যাপ টিউটোরিয়াল).mp4', '2022', 'thumbnails/1747718581_Screenshot 2025-05-20 110959.png', NULL, NULL, NULL, 1, 1, NULL, NULL, '2022-05-20 15:23:01', 19, 19, '2025-05-20 15:23:01', '2025-06-01 20:42:17'),
+(17, NULL, 4, 'Video', 'Improvement of Rural Agricultural Technology Extension system in  Asia', 'improvement-of-rural-agricultural-technology-extension-system-in-asia', 'Documentary', 'mp4', 'contents/1747720753_AFACI-RATES Project TTMU BARC (2022-2025) (1) (1).mp4', '2025', 'thumbnails/1747720753_Screenshot 2025-05-20 112659.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 15:59:13', 19, NULL, '2025-05-20 15:59:13', '2025-05-20 15:59:13'),
+(18, NULL, 1, 'PDF', 'খাদ্য ও পুষ্টি নিরাপত্তা নাসভুক্ত প্রতিষ্ঠান কতৃক উদ্ভাবিত হস্তান্তরযোগ্য প্রযুক্তি', 'khadz-oo-pushti-niraptta-nasvukt-prtishthan-ktrrik-udvabit-hstantrzogz-przukti', NULL, 'pdf', 'contents/1747722556_খাদ্য ও পুষ্টি নিরাপত্তা নাসভুক্ত প্রতিষ্ঠান কতৃক উদ্ভাবিত হস্তান্তরযোগ্য প্রযুক্তি.pdf', '2015', 'thumbnails/1747722556_Screenshot 2025-05-20 122405.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-04-20 16:29:16', 19, NULL, '2025-05-20 16:29:16', '2025-05-20 16:29:16'),
+(19, NULL, 1, 'PDF', 'ফল বৃক্ষ রোপন ও পরিচর্যা স্বল্প প্রচলিত ফল  দ্বিতীয় খন্ড', 'fl-brriksh-ropn-oo-pricrza-swlp-prclit-fl-dwiteey-khnd', NULL, 'pdf', 'contents/1747723559_ফল বৃক্ষ রোপন ও পরিচর্যা স্বল্প প্রচলিত ফল  দ্বিতীয় খন্ড.pdf', '2003', 'thumbnails/1747723559_Screenshot 2025-05-20 122658.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-04-20 16:45:59', 19, NULL, '2025-05-20 16:45:59', '2025-05-20 16:45:59'),
+(20, NULL, 1, 'PDF', 'দেশের দক্ষিণ অঞ্চলের পতিত জমির ব্যবহার ও ফসল উৎপাদন পরিকল্পনা', 'deser-dkshin-oncler-ptit-jmir-bzbhar-oo-fsl-uttpadn-priklpna', NULL, 'pdf', 'contents/1747723845_দেশের দক্ষিণ অঞ্চলের পতিত জমির ব্যবহার ও ফসল উৎপাদন পরিকল্পনা.pdf', '2011', 'thumbnails/1747723845_Screenshot 2025-05-20 124709.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-04-20 16:50:45', 19, NULL, '2025-05-20 16:50:45', '2025-05-20 16:50:45'),
+(21, NULL, 1, 'PDF', 'কৃষি ক্ষেত্রে  প্রাকৃতিক দুর্যোগ ব্যবস্থাপনা', 'krrishi-kshetre-prakrritik-durzog-bzbsthapna', NULL, 'pdf', 'contents/1747724214_কৃষি ক্ষেত্রে  প্রাকৃতিক দুর্যোগ ব্যবস্থাপনা.pdf', '1993', 'thumbnails/1747724214_Screenshot 2025-05-20 125158.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-04-20 16:56:54', 19, NULL, '2025-05-20 16:56:54', '2025-05-20 16:56:54'),
+(22, NULL, 1, 'PDF', 'খাদ্য প্রক্রিয়া ও বিশ্লেষণ', 'khadz-prkriza-oo-bisleshn', NULL, 'pdf', 'contents/1747724625_খাদ্য প্রক্রিয়া ও বিশ্লেষণ.pdf', '1983', 'thumbnails/1747724625_Screenshot 2025-05-20 125806.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:03:46', 19, NULL, '2025-05-20 17:03:46', '2025-05-20 17:03:46'),
+(23, NULL, 1, 'PDF', 'বারি সোলার পাম্প ভিওিক সোলার হোম সিস্টেম  স্হাপন ব্যবহার ও রক্ষণাবেক্ষণ  প্রশিক্ষণ ম্যানুয়াল', 'bari-solar-pamp-viooik-solar-hom-sistem-shapn-bzbhar-oo-rkshnabekshn-prsikshn-mzanuyal', NULL, 'pdf', '0', '2020', 'thumbnails/1747724827_Screenshot 2025-05-20 130552.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:07:07', 19, NULL, '2025-05-20 17:07:07', '2025-05-20 17:07:07'),
+(24, NULL, 1, 'PDF', 'দারিদ্র্য বিমোচনে-একটি বাড়ি একটি খামার কৃষি প্রযুক্তি', 'daridrz-bimocne-ekti-bari-ekti-khamar-krrishi-przukti', NULL, 'pdf', 'contents/1747725339_দারিদ্র্য বিমোচনে-একটি বাড়ি একটি খামার কৃষি প্রযুক্তি.pdf', '2011', 'thumbnails/1747725339_Screenshot 2025-05-20 131002.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2023-12-20 18:15:40', 19, NULL, '2025-05-20 17:15:40', '2025-05-20 17:15:40'),
+(25, NULL, 1, 'PDF', 'বারি সীউইড-১ (গ্রাসিলারিয়া টেনুস্টিপিটাটা) চাষাবাদ ও সংগ্রহোত্তর প্রযুক্তিসমূহ', 'bari-seeuid-1-grasilariya-tenustipitata-cashabad-oo-snggrhottr-przuktismuuh', NULL, 'pdf', 'contents/1747725497_বারি সীউইড-১ (গ্রাসিলারিয়া টেনুস্টিপিটাটা) চাষাবাদ ও সংগ্রহোত্তর প্রযুক্তিসমূহ.pdf', '2020', 'thumbnails/1747725497_Screenshot 2025-05-20 131702.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2024-06-20 17:18:17', 19, NULL, '2025-05-20 17:18:17', '2025-05-20 17:18:17'),
+(26, NULL, 1, 'PDF', 'বারি সীউইড-২ (উলভা ল্যাকটুকা) চাষাবাদ ও সংগ্রহোত্তর প্রযুক্তিসমূহ', 'bari-seeuid-2-ulva-lzaktuka-cashabad-oo-snggrhottr-przuktismuuh', NULL, 'pdf', 'contents/1747725612_বারি সীউইড-২ (উলভা ল্যাকটুকা) চাষাবাদ ও সংগ্রহোত্তর প্রযুক্তিসমূহ.pdf', '2022', 'thumbnails/1747725612_Screenshot 2025-05-20 131853.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:20:12', 19, NULL, '2025-05-20 17:20:12', '2025-05-20 17:20:12'),
+(27, NULL, 1, 'PDF', 'Bamboo Production and Utilization', 'bamboo-production-and-utilization', NULL, 'pdf', 'contents/1747725830_Bamboo Production and Utilization.pdf', '2012', 'thumbnails/1747725830_Screenshot 2025-05-20 132125.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:23:50', 19, NULL, '2025-05-20 17:23:50', '2025-05-20 17:23:50'),
+(28, NULL, 2, 'PDF', 'Bangladesh Journal Of Agriculature  Vol 17  Jun-Dec 1992', 'bangladesh-journal-of-agriculature-vol-17-jun-dec-1992', NULL, 'pdf', 'contents/1747726253_Bangladesh Journal Of Agriculature  Vol 17  Jun-Dec 1992.pdf', '1993', 'thumbnails/1747726253_Screenshot 2025-05-20 132800.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:30:53', 19, 19, '2025-05-20 17:30:53', '2025-05-20 17:34:49'),
+(29, NULL, 2, 'PDF', 'proceedings of the national workshop on sustainable land mangement through effective fertilizer use in relation to climate changer and land degradation', 'proceedings-of-the-national-workshop-on-sustainable-land-mangement-through-effective-fertilizer-use-in-relation-to-climate-changer-and-land-degradation', NULL, 'pdf', 'contents/1747726436_proceedings of the national workshop on sustainable land mangement through effective fertilizer use in relation to climate changer and land degradation.pdf', '1999', 'thumbnails/1747726436_Screenshot 2025-05-20 132838.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:33:56', 19, NULL, '2025-05-20 17:33:56', '2025-05-20 17:33:56'),
+(30, NULL, 2, 'PDF', 'Proceedings of the National Workshop  on  Sustainable Land Use through Soil and Crop Management in relation to Climate Change and  Land Degradation', 'proceedings-of-the-national-workshop-on-sustainable-land-use-through-soil-and-crop-management-in-relation-to-climate-change-and-land-degradation', NULL, 'pdf', 'contents/1747744853_Proceeding of the National Workshop on sustainable Land Use through Soil and Crop Management in relation to Climate Change and Land Degradation.pdf', '2010', 'thumbnails/1747744853_Screenshot 2025-05-20 183635.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 22:40:53', 19, NULL, '2025-05-20 22:40:53', '2025-05-20 22:40:53'),
+(31, NULL, 2, 'PDF', 'BANGLADESH JOURNAL OF AGRICULTURE', 'bangladesh-journal-of-agriculture-1748774384', 'V©L. 3 NO. 1 JUNE, 1978', 'pdf', 'contents/1747744973_Bangladesh Journal Of Agriculture Vol.3 No.1 June.1978 (1).pdf', '1978', 'thumbnails/1747744973_Screenshot 2025-05-20 183836.png', NULL, NULL, NULL, 1, 1, NULL, NULL, '2025-05-20 22:42:53', 19, 19, '2025-05-20 22:42:53', '2025-06-01 20:39:44'),
+(32, NULL, 1, 'PDF', 'Test Content 1', 'test-content-1', 'Test Content 1', 'pdf', 'contents/1748510165_EOI-CMIS-Land.pdf', '2025', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 24, NULL, '2025-05-29 19:16:05', '2025-05-29 19:16:05');
 
 -- --------------------------------------------------------
 
@@ -484,14 +486,14 @@ CREATE TABLE `divisions` (
 --
 
 INSERT INTO `divisions` (`id`, `division_bbs_code`, `name_en`, `name_bn`, `land_area`, `river_area`, `forest_area`, `card_type`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, '10', 'BARISHAL DIVISION', 'বরিশাল বিভাগ', 0, 0, 0, 1, 1, NULL, NULL, '2024-10-28 08:49:59', '2024-10-28 08:49:59'),
-(2, '20', 'CHATTOGRAM DIVISION', 'চট্টগ্রাম বিভাগ', 0, 0, 0, 1, 1, NULL, NULL, '2024-10-28 08:49:59', '2024-10-28 08:49:59'),
-(3, '30', 'DHAKA  DIVISION', 'ঢাকা বিভাগ', 0, 0, 0, 1, 1, NULL, NULL, '2024-10-28 08:49:59', '2024-10-28 08:49:59'),
-(4, '40', 'KHULNA DIVISION', 'খুলনা বিভাগ', 0, 0, 0, 1, 1, NULL, NULL, '2024-10-28 08:49:59', '2024-10-28 08:49:59'),
-(5, '45', 'MYMENSINGH DIVISION', 'ময়মনসিংহ বিভাগ', 0, 0, 0, 1, 1, NULL, NULL, '2024-10-28 08:49:59', '2024-10-28 08:49:59'),
-(6, '50', 'RAJSHAHI DIVISION', 'রাজশাহী বিভাগ', 0, 0, 0, 1, 1, NULL, NULL, '2024-10-28 08:49:59', '2024-10-28 08:49:59'),
-(7, '55', 'RANGPUR DIVISION', 'রংপুর বিভাগ', 0, 0, 0, 1, 1, NULL, NULL, '2024-10-28 08:49:59', '2024-10-28 08:49:59'),
-(8, '60', 'SYLHET DIVISION', 'সিলেট বিভাগ', 0, 0, 0, 1, 1, NULL, NULL, '2024-10-28 08:49:59', '2024-10-28 08:49:59');
+(1, '10', 'BARISHAL DIVISION', 'বরিশাল বিভাগ', 0, 0, 0, 1, 1, 1, NULL, '2024-10-28 08:49:59', '2024-10-28 08:49:59'),
+(2, '20', 'CHATTOGRAM DIVISION', 'চট্টগ্রাম বিভাগ', 0, 0, 0, 1, 1, 1, NULL, '2024-10-28 08:49:59', '2024-10-28 08:49:59'),
+(3, '30', 'DHAKA  DIVISION', 'ঢাকা বিভাগ', 0, 0, 0, 1, 1, 1, NULL, '2024-10-28 08:49:59', '2024-10-28 08:49:59'),
+(4, '40', 'KHULNA DIVISION', 'খুলনা বিভাগ', 0, 0, 0, 1, 1, 1, NULL, '2024-10-28 08:49:59', '2024-10-28 08:49:59'),
+(5, '45', 'MYMENSINGH DIVISION', 'ময়মনসিংহ বিভাগ', 0, 0, 0, 1, 1, 1, NULL, '2024-10-28 08:49:59', '2024-10-28 08:49:59'),
+(6, '50', 'RAJSHAHI DIVISION', 'রাজশাহী বিভাগ', 0, 0, 0, 1, 1, 1, NULL, '2024-10-28 08:49:59', '2024-10-28 08:49:59'),
+(7, '55', 'RANGPUR DIVISION', 'রংপুর বিভাগ', 0, 0, 0, 1, 1, 1, NULL, '2024-10-28 08:49:59', '2024-10-28 08:49:59'),
+(8, '60', 'SYLHET DIVISION', 'সিলেট বিভাগ', 0, 0, 0, 1, 1, 1, NULL, '2024-10-28 08:49:59', '2024-10-28 08:49:59');
 
 -- --------------------------------------------------------
 
@@ -928,7 +930,9 @@ INSERT INTO `notifications` (`id`, `type`, `title`, `message`, `route_name`, `se
 (2, 4, 'New User Registration', 'A new user has registered.', 'http://localhost:8000/authorized-user/user/show/eyJpdiI6ImtqYlQvWTRTMHEwNUxQUXEvS1I1a2c9PSIsInZhbHVlIjoidjYyVXNDVFg2clI4MElmcFZIbFIyUT09IiwibWFjIjoiZGM0OTJiMmNjZmIwNjk2YzNkNzQ3ZThhZWMzNjliNWYwZGYzOTdlOTg3MDUwY2FlYzA0MDg4M2QzYWE5ZWQwYyIsInRhZyI6IiJ9', 4, 19, 1, 1, 1, '2025-04-16 11:59:20', '2025-04-10 12:08:18', '2025-04-16 05:59:20'),
 (3, 4, 'New User Registration', 'A new user has registered.', 'https://repository.barc.sebpobd.net/authorized-user/user/show/eyJpdiI6IjZUVmNtRFA1eXZXa3BvNFF5MlltdVE9PSIsInZhbHVlIjoiTU1RMlA3dVF4VXV0WUV0SEFRN3JOZz09IiwibWFjIjoiMzM2OGVkZmNkMjMwODkwZjA0MzQzYWQ1Mjk4NGU5MThiNThhZDBiZTRjMTQzOTE2OGQ1ZThiNmNhNmY3MzVmYiIsInRhZyI6IiJ9', 4, 20, 1, 1, 1, '2025-05-21 18:07:46', '2025-05-21 16:48:53', '2025-05-21 22:07:46'),
 (4, 4, 'New User Registration', 'A new user has registered.', 'https://repository.barc.sebpobd.net/authorized-user/user/show/eyJpdiI6InVxcGEvaWlyR1ZOd3kyNnhEQS9icGc9PSIsInZhbHVlIjoiSzBaelpvVlVCelBUbDAvR2ovdVNXUT09IiwibWFjIjoiZjRjMzk5MGIzOWM2OWJkYThlYzhhZDA5ZGNjYjc0Y2EzNTc5YjExNzZmMjcxZjVhOTM4N2VlYTZmNjY4ODVmYiIsInRhZyI6IiJ9', 4, 21, 1, 1, 1, '2025-05-21 18:07:41', '2025-05-21 16:59:52', '2025-05-21 22:07:41'),
-(5, 4, 'New User Registration', 'A new user has registered.', 'https://repository.barc.sebpobd.net/authorized-user/user/show/eyJpdiI6IlRnZEs0TnI2b05YRm1XSTJzYndBUnc9PSIsInZhbHVlIjoiZWQyMGhPUmNpUzFJQ1MvNzdwL2xZZz09IiwibWFjIjoiMWRlYjZmZTI0ZGEyNmJjYTNlYmViNmE0MGE4MTVjMmI0ZjM2ZDQwOTk4MTU3ODRkMTE4MTUwNGRiZjNlMWQ2MyIsInRhZyI6IiJ9', 4, 22, 1, 1, 1, '2025-05-22 11:48:59', '2025-05-21 22:15:42', '2025-05-22 15:48:59');
+(5, 4, 'New User Registration', 'A new user has registered.', 'https://repository.barc.sebpobd.net/authorized-user/user/show/eyJpdiI6IlRnZEs0TnI2b05YRm1XSTJzYndBUnc9PSIsInZhbHVlIjoiZWQyMGhPUmNpUzFJQ1MvNzdwL2xZZz09IiwibWFjIjoiMWRlYjZmZTI0ZGEyNmJjYTNlYmViNmE0MGE4MTVjMmI0ZjM2ZDQwOTk4MTU3ODRkMTE4MTUwNGRiZjNlMWQ2MyIsInRhZyI6IiJ9', 4, 22, 1, 1, 1, '2025-05-22 11:48:59', '2025-05-21 22:15:42', '2025-05-22 15:48:59'),
+(6, 4, 'New User Registration', 'A new user has registered.', 'https://repository.barc.sebpobd.net/authorized-user/user/show/eyJpdiI6IjlZOEdKNVNuYXJpT3g4NkJ0UVE3ZWc9PSIsInZhbHVlIjoiMUd3Yzc5a2xFckpub3ExcVZ4OHNQZz09IiwibWFjIjoiMDM1MzBhOTY1NDRjMTJhZjIyNmVjNjVkZjlkZThkZTE2MDE4MDIzMjQwMTg1ZTk0NmQ5M2MwYjRmZjcxMjI5ZiIsInRhZyI6IiJ9', 4, 23, 1, 1, 1, '2025-06-01 16:55:42', '2025-05-29 16:57:48', '2025-06-01 20:55:42'),
+(7, 4, 'New User Registration', 'A new user has registered.', 'https://repository.barc.sebpobd.net/authorized-user/user/show/eyJpdiI6IkNXNjFmcStRSm9GVkh0cmxuRDFDeFE9PSIsInZhbHVlIjoiaUVrNm9sT0ZpT0VqNDV0NUQ1djJYQT09IiwibWFjIjoiZjNiNmY5NjRkODdhOTg1Njc2MzllYjcyNTk2ZWMwOWQ2MDAwOWYwMWQ4ODQ0MDNmNTVmODU1N2YyZWQxOWI3NyIsInRhZyI6IiJ9', 4, 24, 1, 1, 1, '2025-06-01 16:55:42', '2025-05-29 17:19:03', '2025-06-01 20:55:42');
 
 -- --------------------------------------------------------
 
@@ -1130,11 +1134,6 @@ INSERT INTO `permissions` (`id`, `name_en`, `name_bn`, `status`, `created_by`, `
 (387, 'edit_post', 'edit_post', 1, 1, NULL, NULL),
 (388, 'delete_post', 'delete_post', 1, 1, NULL, NULL),
 (389, 'show_post', 'show_post', 1, 1, NULL, NULL),
-(410, 'user_appraisal', 'user_appraisal', 1, 1, NULL, NULL),
-(411, 'add_appraisal', 'add_appraisal', 1, 1, NULL, NULL),
-(412, 'edit_appraisal', 'edit_appraisal', 1, 1, NULL, NULL),
-(413, 'delete_appraisal', 'delete_appraisal', 1, 1, NULL, NULL),
-(427, 'view_appraisal', 'view_appraisal', 1, 1, NULL, NULL),
 (428, 'manage_educational_form', 'manage_educational_form', 1, 1, NULL, NULL),
 (434, 'add_board', 'add_board', 1, 1, NULL, NULL),
 (436, 'delete_board', 'delete_board', 1, 1, NULL, NULL),
@@ -1146,29 +1145,14 @@ INSERT INTO `permissions` (`id`, `name_en`, `name_bn`, `status`, `created_by`, `
 (518, 'view_educational_form', 'view_educational_form', 1, 1, NULL, NULL),
 (519, 'delete_educational_form', 'delete_educational_form', 1, 1, NULL, NULL),
 (522, 'add_personal_disciplinary', 'add_personal_disciplinary', 1, 1, NULL, NULL),
-(523, 'add_personal_appraisal', 'add_personal_appraisal', 1, 1, NULL, NULL),
 (527, 'access_all_user_list', 'access_all_user_list', 1, 1, NULL, NULL),
-(528, 'access_all_appraisal_list', 'access_all_appraisal_list', 1, 1, NULL, NULL),
-(534, 'access_all_leave_list', 'access_all_leave_list', 1, 1, NULL, NULL),
 (535, 'access_all_employee', 'access_all_employee', 1, 1, '2023-03-29 18:20:55', '2023-03-29 18:20:55'),
-(536, 'access_main_office_all_appraisal', 'access_main_office_all_appraisal', 1, 1, '2023-03-29 18:28:08', '2023-03-29 18:28:08'),
 (543, 'can_view_other_user_document', 'can_view_other_user_document', 1, 1, '2023-03-29 20:13:47', '2023-03-29 20:13:47'),
 (558, 'add_educational_info', 'add_educational_info', 1, 1, '2023-04-12 15:31:01', '2023-04-12 15:31:01'),
 (559, 'add_duration', 'add_duration', 1, 1, '2023-04-12 18:08:45', '2023-04-12 18:08:45'),
 (560, 'manage_duration', 'manage_duration', 1, 1, '2023-04-12 18:08:55', '2023-04-12 18:08:55'),
 (561, 'delete_office', 'delete_office', 1, 1, '2023-04-12 18:45:40', '2023-04-12 18:45:54'),
 (574, 'log_report', 'log_report', 1, 1, NULL, NULL),
-(582, 'project_management', 'project_management', 1, 1, NULL, NULL),
-(583, 'all_project_category', 'all_project_category', 1, 1, NULL, NULL),
-(584, 'all_project', 'all_project', 1, 1, NULL, NULL),
-(585, 'add_project_category', 'add_project_category', 1, 1, NULL, NULL),
-(586, 'view_project_category', 'view_project_category', 1, 1, NULL, NULL),
-(587, 'edit_project_category', 'edit_project_category', 1, 1, NULL, NULL),
-(588, 'delete_project_category', 'delete_project_category', 1, 1, NULL, NULL),
-(589, 'add_project', 'add_project', 1, 1, NULL, NULL),
-(590, 'edit_project', 'edit_project', 1, 1, NULL, NULL),
-(591, 'view_project', 'view_project', 1, 1, NULL, NULL),
-(592, 'delete_project', 'delete_project', 1, 1, NULL, NULL),
 (593, 'document_management', 'document_management', 1, 1, NULL, NULL),
 (594, 'all_document', 'all_document', 1, 1, NULL, NULL),
 (595, 'can_view_all_document', 'can_view_all_document', 1, 1, NULL, NULL),
@@ -1176,45 +1160,13 @@ INSERT INTO `permissions` (`id`, `name_en`, `name_bn`, `status`, `created_by`, `
 (597, 'edit_document', 'edit_document', 1, 1, NULL, NULL),
 (598, 'view_document', 'view_document', 1, 1, NULL, NULL),
 (599, 'delete_document', 'delete_document', 1, 1, NULL, NULL),
-(600, 'can_view_all_project', 'can_view_all_project', 1, 1, NULL, NULL),
-(601, 'all_project_value', 'all_project_value', 1, 1, NULL, NULL),
-(602, 'create_project_value', 'create_project_value', 1, 1, NULL, NULL),
-(603, 'show_project_value', 'show_project_value', 1, 1, NULL, NULL),
-(604, 'edit_project_value', 'edit_project_value', 1, 1, NULL, NULL),
-(605, 'delete_project_value', 'delete_project_value', 1, 1, NULL, NULL),
-(606, 'all_project_transaction', 'all_project_transaction', 1, 1, NULL, NULL),
-(607, 'create_project_transaction', 'create_project_transaction', 1, 1, NULL, NULL),
-(608, 'show_project_transaction', 'show_project_transaction', 1, 1, NULL, NULL),
-(609, 'edit_project_transaction', 'edit_project_transaction', 1, 1, NULL, NULL),
-(610, 'delete_project_transaction', 'delete_project_transaction', 1, 1, NULL, NULL),
-(611, 'access_project_transaction', 'access_project_transaction', 1, 1, NULL, NULL),
 (612, 'user_content_report', 'user_content_report', 1, 1, NULL, NULL),
 (613, 'organization_content_report', 'organization_content_report', 1, 1, NULL, NULL),
-(625, 'leave_management', 'leave_management', 1, 1, NULL, NULL),
-(626, 'create_leave_category', 'create_leave_category', 1, 1, NULL, NULL),
-(627, 'edit_leave_category', 'edit_leave_category', 1, 1, NULL, NULL),
-(628, 'show_leave_category', 'show_leave_category', 1, 1, NULL, NULL),
-(629, 'all_leave_category', 'all_leave_category', 1, 1, NULL, NULL),
-(630, 'delete_leave_category', 'delete_leave_category', 1, 1, NULL, NULL),
-(631, 'add_leave', 'add_leave', 1, 1, NULL, NULL),
-(632, 'edit_leave', 'edit_leave', 1, 1, NULL, NULL),
-(633, 'show_leave', 'show_leave', 1, 1, NULL, NULL),
-(634, 'all_leave', 'all_leave', 1, 1, NULL, NULL),
-(635, 'delete_leave', 'delete_leave', 1, 1, NULL, NULL),
-(636, 'leave_status_change', 'leave_status_change', 1, 1, NULL, NULL),
-(637, 'leave_for_others', 'leave_for_others', 1, 1, NULL, NULL),
-(638, 'leave_notification', 'leave_notification', 1, 1, NULL, NULL),
-(639, 'leave_mail', 'leave_mail', 1, 1, NULL, NULL),
 (640, 'employee_count', 'employee_count', 1, 1, NULL, NULL),
-(642, 'project_count', 'project_count', 1, 1, NULL, NULL),
 (643, 'document_count', 'document_count', 1, 1, NULL, NULL),
-(644, 'project_summary_graph', 'project_summary_graph', 1, 1, NULL, NULL),
-(645, 'active_dashboard_project_list', 'active_dashboard_project_list', 1, 1, NULL, NULL),
 (646, 'change_role', 'change_role', 1, 1, '2023-12-21 13:32:43', '2023-12-21 13:33:04'),
 (647, 'content_report', 'content_report', 1, 1, NULL, NULL),
 (649, 'hod_permission', 'hod_permission', 1, 1, NULL, NULL),
-(651, 'project_assign_mail', 'project_assign_mail', 1, 1, NULL, NULL),
-(652, 'project_assign_notification', 'project_assign_notification', 1, 1, NULL, NULL),
 (661, 'manage_subject', 'manage_subject', 1, 1, NULL, NULL),
 (662, 'add_subject', 'add_subject', 1, 1, NULL, NULL),
 (663, 'delete_subject', 'delete_subject', 1, 1, NULL, NULL),
@@ -1234,15 +1186,12 @@ INSERT INTO `permissions` (`id`, `name_en`, `name_bn`, `status`, `created_by`, `
 (678, 'delete_board', 'delete_board', 1, 1, NULL, NULL),
 (684, 'add_duration', 'add_duration', 1, 1, '2023-04-12 22:08:45', '2023-04-12 22:08:45'),
 (685, 'manage_duration', 'manage_duration', 1, 1, '2023-04-12 22:08:55', '2023-04-12 22:08:55'),
-(689, 'leave_summary', 'leave_summary', 1, 1, NULL, NULL),
 (690, 'user_category_management', 'user_category_management', 1, 1, NULL, NULL),
 (691, 'add_user_category', 'add_user_category', 1, 1, NULL, NULL),
 (692, 'edit_user_category', 'edit_user_category', 1, 1, NULL, NULL),
 (693, 'delete_user_category', 'delete_user_category', 1, 1, NULL, NULL),
 (694, 'organization_user_report', 'organization_user_report', 1, 1, NULL, NULL),
 (695, 'task_management', 'task_management', 1, 1, NULL, NULL),
-(696, 'eTicket_support', 'eTicket_support', 1, 1, NULL, NULL),
-(697, 'leave_summary_monthwise', 'leave_summary_monthwise', 1, 1, NULL, NULL),
 (703, 'all_legal_document', 'all_legal_document', 1, 1, NULL, NULL),
 (704, 'all_membership_document', 'all_membership_document', 1, 1, NULL, NULL),
 (705, 'all_financial_document', 'all_financial_document', 1, 1, NULL, NULL),
@@ -1250,24 +1199,6 @@ INSERT INTO `permissions` (`id`, `name_en`, `name_bn`, `status`, `created_by`, `
 (707, 'add_legal_document', 'add_legal_document', 1, NULL, NULL, NULL),
 (708, 'add_membership_document', 'add_membership_document', 1, 1, NULL, NULL),
 (721, 'admin_permission', 'admin_permission', 1, 1, '2024-02-13 17:45:13', '2024-02-13 17:45:13'),
-(723, 'all_eTicket_type', 'all_eTicket_type', 1, 1, NULL, NULL),
-(724, 'add_eTicket_type', 'add_eTicket_type', 1, 1, NULL, NULL),
-(725, 'edit_eTicket_type', 'edit_eTicket_type', 1, 1, NULL, NULL),
-(726, 'show_eTicket_type', 'show_eTicket_type', 1, 1, NULL, NULL),
-(727, 'delete_eTicket_type', 'delete_eTicket_type', 1, 1, NULL, NULL),
-(728, 'all_eTicket', 'all_eTicket', 1, 1, NULL, NULL),
-(729, 'add_eTicket', 'add_eTicket', 1, 1, NULL, NULL),
-(730, 'edit_eTicket', 'edit_eTicket', 1, 1, NULL, NULL),
-(731, 'show_eTicket', 'show_eTicket', 1, 1, NULL, NULL),
-(732, 'delete_eTicket', 'delete_eTicket', 1, 1, NULL, NULL),
-(733, 'e_ticket_mail', 'e_ticket_mail', 1, 1, NULL, NULL),
-(734, 'e_ticket_notification', 'e_ticket_notification', 1, 1, NULL, NULL),
-(735, 'e_ticket_support_mail', 'e_ticket_support_mail', 1, 1, NULL, NULL),
-(736, 'e_ticket_support_notification', 'e_ticket_support_notification', 1, 1, NULL, NULL),
-(737, 'pm_get_eticket_support', 'pm_get_eticket_support', 1, 1, NULL, NULL),
-(738, 'employee_get_eticket_support', 'employee_get_eticket_support', 1, 1, NULL, NULL),
-(739, 'eTicket_status_record', 'eTicket_status_record', 1, 1, NULL, NULL),
-(740, 'change_eTicket_status', 'change_eTicket_status', 1, 1, NULL, NULL),
 (741, 'user_list', 'user_list', 1, 1, NULL, NULL),
 (742, 'employee_list', 'employee_list', 1, 1, NULL, NULL),
 (743, 'delete_user', 'delete_user', 1, 1, NULL, NULL),
@@ -1293,7 +1224,9 @@ INSERT INTO `permissions` (`id`, `name_en`, `name_bn`, `status`, `created_by`, `
 (771, 'total_uploaded_contents', 'total_uploaded_contents', 1, 1, NULL, NULL),
 (772, 'category_bar_chart', 'category_bar_chart', 1, 1, NULL, NULL),
 (773, 'content_line_chart', 'content_line_chart', 1, 1, NULL, NULL),
-(774, 'organization_pie_chart', 'organization_pie_chart', 1, 1, NULL, NULL);
+(774, 'organization_pie_chart', 'organization_pie_chart', 1, 1, NULL, NULL),
+(775, 'manage_report', 'manage_report', 1, 1, '2025-05-26 23:05:34', '2025-05-26 23:05:34'),
+(776, 'can_publish', 'can_publish', 1, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1554,15 +1487,15 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `access_all`, `name_en`, `name_bn`, `display_name`, `sl`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, NULL, 'Super Admin', 'Super Admin', 'Super Admin', 1, 1, 1, 1, '2022-07-19 09:32:20', '2023-11-29 17:35:24'),
-(2, NULL, 'Admin', 'Admin', 'Admin', 2, 1, 1, 1, '2022-07-19 09:32:20', '2023-11-29 17:35:40'),
-(3, NULL, 'Employee', 'Employee', 'Employee', 3, 1, 1, NULL, '2023-01-24 11:39:02', '2023-01-24 11:39:02'),
-(4, NULL, 'User', 'User', 'User', 4, 1, 1, 1, '2023-01-24 11:39:02', '2023-11-29 16:06:46'),
-(5, NULL, 'Content Manager', 'Content Manager', 'Content Manager', 5, 2, 1, NULL, '2023-01-24 11:39:02', '2023-12-07 16:51:41'),
-(6, NULL, 'System Observer', 'System Observer', 'System Observer', 6, 2, 1, NULL, '2023-04-09 17:31:52', '2023-12-07 16:51:50'),
-(7, NULL, 'Project Manager', 'Project Manager', 'Project Manager', 7, 1, 1, 1, '2023-09-05 01:27:26', '2023-11-28 17:26:55'),
-(8, NULL, 'Director', 'Director', 'Director', 8, 2, 1, 1, '2023-11-28 17:23:56', '2023-12-28 13:12:17'),
-(9, NULL, 'Head of Department', 'Head of Department', 'Head of Department', 9, 2, 1, NULL, '2023-12-20 22:51:08', '2023-12-28 13:12:12');
+(1, NULL, 'Supreme Admin', 'Supreme Admin', 'Supreme Admin', 1, 1, 1, 1, '2022-07-19 09:32:20', '2025-06-15 06:49:18'),
+(2, NULL, 'Super Admin', 'Super Admin', 'Super Admin', 2, 1, 1, 1, '2022-07-19 09:32:20', '2025-06-15 06:49:26'),
+(3, NULL, 'Admin', 'Admin', 'Admin', 3, 1, 1, 1, '2023-01-24 11:39:02', '2025-06-15 06:49:35'),
+(4, NULL, 'User Employee', 'User Employee', 'User Employee', 4, 1, 1, 1, '2023-01-24 11:39:02', '2025-06-15 06:49:50'),
+(5, NULL, 'Content Manager', 'Content Manager', 'Content Manager', 7, 3, 1, NULL, '2023-01-24 11:39:02', '2023-12-07 16:51:41'),
+(6, NULL, 'System Observer', 'System Observer', 'System Observer', 6, 3, 1, NULL, '2023-04-09 17:31:52', '2023-12-07 16:51:50'),
+(7, NULL, 'User Viewer', 'User Viewer', 'User Viewer', 5, 1, 1, 1, '2023-09-05 01:27:26', '2025-06-15 06:50:18'),
+(8, NULL, 'Director', 'Director', 'Director', 8, 3, 1, 1, '2023-11-28 17:23:56', '2023-12-28 13:12:17'),
+(9, NULL, 'Head of Department', 'Head of Department', 'Head of Department', 9, 3, 1, NULL, '2023-12-20 22:51:08', '2023-12-28 13:12:12');
 
 -- --------------------------------------------------------
 
@@ -1686,11 +1619,6 @@ INSERT INTO `role_permissions` (`id`, `user_id`, `permission_id`, `role_id`, `cr
 (1626, NULL, 387, 1, 1, NULL, '2023-03-02 11:46:49', '2023-03-02 11:46:49'),
 (1627, NULL, 388, 1, 1, NULL, '2023-03-02 11:46:49', '2023-03-02 11:46:49'),
 (1628, NULL, 389, 1, 1, NULL, '2023-03-02 11:46:49', '2023-03-02 11:46:49'),
-(1649, NULL, 410, 1, 1, NULL, '2023-03-02 11:46:49', '2023-03-02 11:46:49'),
-(1650, NULL, 411, 1, 1, NULL, '2023-03-02 11:46:49', '2023-03-02 11:46:49'),
-(1651, NULL, 412, 1, 1, NULL, '2023-03-02 11:46:49', '2023-03-02 11:46:49'),
-(1652, NULL, 413, 1, 1, NULL, '2023-03-02 11:46:49', '2023-03-02 11:46:49'),
-(1658, NULL, 427, 1, 1, NULL, '2023-03-02 11:46:49', '2023-03-02 11:46:49'),
 (1659, NULL, 428, 1, 1, NULL, '2023-03-02 11:46:49', '2023-03-02 11:46:49'),
 (1660, NULL, 434, 1, 1, NULL, '2023-03-02 11:46:49', '2023-03-02 11:46:49'),
 (1661, NULL, 436, 1, 1, NULL, '2023-03-02 11:46:49', '2023-03-02 11:46:49'),
@@ -1785,20 +1713,12 @@ INSERT INTO `role_permissions` (`id`, `user_id`, `permission_id`, `role_id`, `cr
 (1830, NULL, 387, 2, 1, NULL, '2023-03-19 16:36:08', '2023-03-19 16:36:08'),
 (1831, NULL, 388, 2, 1, NULL, '2023-03-19 16:36:08', '2023-03-19 16:36:08'),
 (1832, NULL, 389, 2, 1, NULL, '2023-03-19 16:36:08', '2023-03-19 16:36:08'),
-(1853, NULL, 410, 2, 1, NULL, '2023-03-19 16:36:08', '2023-03-19 16:36:08'),
-(1854, NULL, 411, 2, 1, NULL, '2023-03-19 16:36:08', '2023-03-19 16:36:08'),
-(1855, NULL, 412, 2, 1, NULL, '2023-03-19 16:36:08', '2023-03-19 16:36:08'),
-(1856, NULL, 413, 2, 1, NULL, '2023-03-19 16:36:08', '2023-03-19 16:36:08'),
-(1862, NULL, 427, 2, 1, NULL, '2023-03-19 16:36:08', '2023-03-19 16:36:08'),
 (1863, NULL, 428, 2, 1, NULL, '2023-03-19 16:36:08', '2023-03-19 16:36:08'),
 (1864, NULL, 434, 2, 1, NULL, '2023-03-19 16:36:08', '2023-03-19 16:36:08'),
 (1865, NULL, 436, 2, 1, NULL, '2023-03-19 16:36:08', '2023-03-19 16:36:08'),
 (1868, NULL, 448, 2, 1, NULL, '2023-03-19 16:36:08', '2023-03-19 16:36:08'),
 (1869, NULL, 455, 2, 1, NULL, '2023-03-19 16:36:08', '2023-03-19 16:36:08'),
 (1870, NULL, 459, 2, 1, NULL, '2023-03-19 16:36:08', '2023-03-19 16:36:08'),
-(1880, NULL, 493, 2, 1, NULL, '2023-03-19 16:36:09', '2023-03-19 16:36:09'),
-(1881, NULL, 494, 2, 1, NULL, '2023-03-19 16:36:09', '2023-03-19 16:36:09'),
-(1885, NULL, 515, 2, 1, NULL, '2023-03-19 16:36:09', '2023-03-19 16:36:09'),
 (1886, NULL, 516, 2, 1, NULL, '2023-03-19 16:36:09', '2023-03-19 16:36:09'),
 (1887, NULL, 517, 2, 1, NULL, '2023-03-19 16:36:09', '2023-03-19 16:36:09'),
 (1888, NULL, 518, 2, 1, NULL, '2023-03-19 16:36:09', '2023-03-19 16:36:09'),
@@ -1809,57 +1729,23 @@ INSERT INTO `role_permissions` (`id`, `user_id`, `permission_id`, `role_id`, `cr
 (1946, NULL, 320, 5, 1, NULL, '2023-03-27 15:24:12', '2023-03-27 15:24:12'),
 (1947, NULL, 321, 5, 1, NULL, '2023-03-27 15:24:12', '2023-03-27 15:24:12'),
 (1972, NULL, 535, 2, 143, NULL, '2023-03-30 05:06:42', '2023-03-30 05:06:42'),
-(1973, NULL, 536, 2, 143, NULL, '2023-03-30 08:16:51', '2023-03-30 08:16:51'),
-(1974, NULL, 528, 2, 143, NULL, '2023-03-30 08:39:21', '2023-03-30 08:39:21'),
 (1978, NULL, 543, 2, 143, NULL, '2023-03-30 08:49:10', '2023-03-30 08:49:10'),
-(1980, NULL, 534, 2, 143, NULL, '2023-03-30 08:54:49', '2023-03-30 08:54:49'),
 (2035, NULL, 558, 1, 1, NULL, '2023-04-12 15:31:09', '2023-04-12 15:31:09'),
 (2038, NULL, 559, 1, 1, NULL, '2023-04-12 18:09:09', '2023-04-12 18:09:09'),
 (2039, NULL, 560, 1, 1, NULL, '2023-04-12 18:09:09', '2023-04-12 18:09:09'),
 (2040, NULL, 561, 1, 1, NULL, '2023-04-12 18:46:02', '2023-04-12 18:46:02'),
-(2060, NULL, 572, 2, 1, NULL, '2023-04-26 18:38:56', '2023-04-26 18:38:56'),
 (2061, NULL, 574, 2, 1, NULL, '2023-04-26 18:38:56', '2023-04-26 18:38:56'),
 (2069, NULL, 522, 1, 1, NULL, '2023-09-14 01:28:34', '2023-09-14 01:28:34'),
-(2070, NULL, 523, 1, 1, NULL, '2023-09-14 01:28:34', '2023-09-14 01:28:34'),
 (2074, NULL, 527, 1, 1, NULL, '2023-09-14 01:28:34', '2023-09-14 01:28:34'),
-(2075, NULL, 528, 1, 1, NULL, '2023-09-14 01:28:34', '2023-09-14 01:28:34'),
 (2082, NULL, 535, 1, 1, NULL, '2023-09-14 01:28:34', '2023-09-14 01:28:34'),
-(2083, NULL, 536, 1, 1, NULL, '2023-09-14 01:28:34', '2023-09-14 01:28:34'),
-(2111, NULL, 600, 1, 1, NULL, '2023-09-21 01:56:33', '2023-09-21 01:56:33'),
-(2112, NULL, 601, 1, 1, NULL, '2023-11-26 16:52:23', '2023-11-26 16:52:23'),
-(2113, NULL, 602, 1, 1, NULL, '2023-11-26 16:52:23', '2023-11-26 16:52:23'),
-(2114, NULL, 603, 1, 1, NULL, '2023-11-26 16:52:23', '2023-11-26 16:52:23'),
-(2115, NULL, 604, 1, 1, NULL, '2023-11-26 16:52:23', '2023-11-26 16:52:23'),
-(2116, NULL, 605, 1, 1, NULL, '2023-11-26 16:52:23', '2023-11-26 16:52:23'),
-(2117, NULL, 606, 1, 1, NULL, '2023-11-26 16:52:23', '2023-11-26 16:52:23'),
-(2118, NULL, 607, 1, 1, NULL, '2023-11-26 16:52:23', '2023-11-26 16:52:23'),
-(2119, NULL, 608, 1, 1, NULL, '2023-11-26 16:52:23', '2023-11-26 16:52:23'),
-(2120, NULL, 609, 1, 1, NULL, '2023-11-26 16:52:23', '2023-11-26 16:52:23'),
-(2121, NULL, 610, 1, 1, NULL, '2023-11-26 16:52:23', '2023-11-26 16:52:23'),
-(2122, NULL, 611, 1, 1, NULL, '2023-11-26 16:52:23', '2023-11-26 16:52:23'),
 (2153, NULL, 640, 1, 1, NULL, '2023-12-19 11:33:42', '2023-12-19 11:33:42'),
-(2155, NULL, 642, 1, 1, NULL, '2023-12-19 11:33:42', '2023-12-19 11:33:42'),
 (2156, NULL, 643, 1, 1, NULL, '2023-12-19 11:33:42', '2023-12-19 11:33:42'),
-(2157, NULL, 644, 1, 1, NULL, '2023-12-19 11:33:42', '2023-12-19 11:33:42'),
-(2158, NULL, 645, 1, 1, NULL, '2023-12-19 11:33:42', '2023-12-19 11:33:42'),
 (2186, NULL, 522, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2187, NULL, 523, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
 (2190, NULL, 527, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
 (2211, NULL, 558, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
 (2212, NULL, 559, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
 (2213, NULL, 560, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
 (2214, NULL, 561, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2228, NULL, 582, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2229, NULL, 583, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2230, NULL, 584, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2231, NULL, 585, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2232, NULL, 586, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2233, NULL, 587, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2234, NULL, 588, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2235, NULL, 589, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2236, NULL, 590, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2237, NULL, 591, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2238, NULL, 592, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
 (2239, NULL, 593, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
 (2240, NULL, 594, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
 (2241, NULL, 595, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
@@ -1867,33 +1753,10 @@ INSERT INTO `role_permissions` (`id`, `user_id`, `permission_id`, `role_id`, `cr
 (2243, NULL, 597, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
 (2244, NULL, 598, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
 (2245, NULL, 599, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2246, NULL, 600, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2247, NULL, 601, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2248, NULL, 602, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2249, NULL, 603, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2250, NULL, 604, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2251, NULL, 605, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2252, NULL, 606, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2253, NULL, 607, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2254, NULL, 608, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2255, NULL, 609, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2256, NULL, 610, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2257, NULL, 611, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
 (2258, NULL, 612, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
 (2259, NULL, 613, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2271, NULL, 625, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2277, NULL, 631, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2278, NULL, 632, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2279, NULL, 633, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2280, NULL, 634, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2283, NULL, 637, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2284, NULL, 638, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2285, NULL, 639, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
 (2286, NULL, 640, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2288, NULL, 642, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
 (2289, NULL, 643, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2290, NULL, 644, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
-(2291, NULL, 645, 2, 1, NULL, '2023-12-20 22:17:20', '2023-12-20 22:17:20'),
 (2314, NULL, 646, 1, 1, NULL, '2023-12-21 13:33:19', '2023-12-21 13:33:19'),
 (2319, NULL, 649, 1, 1, NULL, '2023-12-28 15:31:47', '2023-12-28 15:31:47'),
 (2331, NULL, 661, 1, 1, NULL, '2023-12-28 16:08:48', '2023-12-28 16:08:48'),
@@ -1915,13 +1778,11 @@ INSERT INTO `role_permissions` (`id`, `user_id`, `permission_id`, `role_id`, `cr
 (2348, NULL, 678, 1, 1, NULL, '2023-12-28 16:08:48', '2023-12-28 16:08:48'),
 (2354, NULL, 684, 1, 1, NULL, '2023-12-28 16:08:48', '2023-12-28 16:08:48'),
 (2355, NULL, 685, 1, 1, NULL, '2023-12-28 16:08:48', '2023-12-28 16:08:48'),
-(2367, NULL, 689, 2, 46, NULL, '2024-01-01 09:24:54', '2024-01-01 09:24:54'),
 (2368, NULL, 690, 1, 1, NULL, '2024-01-01 10:55:18', '2024-01-01 10:55:18'),
 (2369, NULL, 691, 1, 1, NULL, '2024-01-01 10:55:18', '2024-01-01 10:55:18'),
 (2370, NULL, 692, 1, 1, NULL, '2024-01-01 10:55:18', '2024-01-01 10:55:18'),
 (2371, NULL, 693, 1, 1, NULL, '2024-01-01 10:55:18', '2024-01-01 10:55:18'),
 (2373, NULL, 695, 1, 1, NULL, '2024-01-01 17:30:19', '2024-01-01 17:30:19'),
-(2375, NULL, 696, 2, 1, NULL, '2024-01-01 17:31:10', '2024-01-01 17:31:10'),
 (2376, NULL, 695, 2, 1, NULL, '2024-01-01 17:31:17', '2024-01-01 17:31:17'),
 (2394, NULL, 703, 2, 46, NULL, '2024-01-23 22:27:14', '2024-01-23 22:27:14'),
 (2395, NULL, 704, 2, 46, NULL, '2024-01-23 22:27:14', '2024-01-23 22:27:14'),
@@ -1929,17 +1790,8 @@ INSERT INTO `role_permissions` (`id`, `user_id`, `permission_id`, `role_id`, `cr
 (2397, NULL, 706, 2, 46, NULL, '2024-01-23 22:27:14', '2024-01-23 22:27:14'),
 (2398, NULL, 707, 2, 46, NULL, '2024-01-23 22:27:14', '2024-01-23 22:27:14'),
 (2399, NULL, 708, 2, 46, NULL, '2024-01-23 22:27:14', '2024-01-23 22:27:14'),
-(2417, NULL, 626, 2, 46, NULL, '2024-02-12 20:30:46', '2024-02-12 20:30:46'),
-(2418, NULL, 627, 2, 46, NULL, '2024-02-12 20:30:46', '2024-02-12 20:30:46'),
-(2419, NULL, 628, 2, 46, NULL, '2024-02-12 20:30:46', '2024-02-12 20:30:46'),
-(2420, NULL, 629, 2, 46, NULL, '2024-02-12 20:30:46', '2024-02-12 20:30:46'),
-(2421, NULL, 630, 2, 46, NULL, '2024-02-12 20:30:46', '2024-02-12 20:30:46'),
-(2422, NULL, 635, 2, 46, NULL, '2024-02-12 20:30:46', '2024-02-12 20:30:46'),
-(2423, NULL, 636, 2, 46, NULL, '2024-02-12 20:30:46', '2024-02-12 20:30:46'),
 (2424, NULL, 646, 2, 46, NULL, '2024-02-12 20:30:46', '2024-02-12 20:30:46'),
 (2425, NULL, 647, 2, 46, NULL, '2024-02-12 20:30:46', '2024-02-12 20:30:46'),
-(2427, NULL, 651, 2, 46, NULL, '2024-02-12 20:30:46', '2024-02-12 20:30:46'),
-(2428, NULL, 652, 2, 46, NULL, '2024-02-12 20:30:46', '2024-02-12 20:30:46'),
 (2437, NULL, 661, 2, 46, NULL, '2024-02-12 20:30:47', '2024-02-12 20:30:47'),
 (2438, NULL, 662, 2, 46, NULL, '2024-02-12 20:30:47', '2024-02-12 20:30:47'),
 (2439, NULL, 663, 2, 46, NULL, '2024-02-12 20:30:47', '2024-02-12 20:30:47'),
@@ -1964,7 +1816,6 @@ INSERT INTO `role_permissions` (`id`, `user_id`, `permission_id`, `role_id`, `cr
 (2465, NULL, 692, 2, 46, NULL, '2024-02-12 20:30:47', '2024-02-12 20:30:47'),
 (2466, NULL, 693, 2, 46, NULL, '2024-02-12 20:30:47', '2024-02-12 20:30:47'),
 (2467, NULL, 694, 2, 46, NULL, '2024-02-12 20:30:47', '2024-02-12 20:30:47'),
-(2468, NULL, 697, 2, 46, NULL, '2024-02-12 20:30:47', '2024-02-12 20:30:47'),
 (2481, NULL, 721, 1, 1, NULL, '2024-02-13 17:45:24', '2024-02-13 17:45:24'),
 (2482, NULL, 721, 2, 1, NULL, '2024-02-13 17:45:34', '2024-02-13 17:45:34'),
 (2498, NULL, 696, 7, 1, NULL, '2024-03-05 20:56:55', '2024-03-05 20:56:55'),
@@ -2015,7 +1866,62 @@ INSERT INTO `role_permissions` (`id`, `user_id`, `permission_id`, `role_id`, `cr
 (2556, NULL, 612, 1, 1, NULL, '2025-05-26 12:39:56', '2025-05-26 12:39:56'),
 (2557, NULL, 613, 1, 1, NULL, '2025-05-26 12:39:56', '2025-05-26 12:39:56'),
 (2558, NULL, 647, 1, 1, NULL, '2025-05-26 12:39:56', '2025-05-26 12:39:56'),
-(2559, NULL, 694, 1, 1, NULL, '2025-05-26 12:39:56', '2025-05-26 12:39:56');
+(2559, NULL, 694, 1, 1, NULL, '2025-05-26 12:39:56', '2025-05-26 12:39:56'),
+(2560, NULL, 775, 1, 1, NULL, '2025-05-26 23:05:43', '2025-05-26 23:05:43'),
+(2561, NULL, 647, 4, 1, NULL, '2025-05-29 22:42:16', '2025-05-29 22:42:16'),
+(2562, NULL, 775, 4, 1, NULL, '2025-05-29 22:42:17', '2025-05-29 22:42:17'),
+(2563, NULL, 61, 2, 1, NULL, '2025-06-01 21:16:56', '2025-06-01 21:16:56'),
+(2564, NULL, 62, 2, 1, NULL, '2025-06-01 21:16:56', '2025-06-01 21:16:56'),
+(2565, NULL, 63, 2, 1, NULL, '2025-06-01 21:16:56', '2025-06-01 21:16:56'),
+(2566, NULL, 64, 2, 1, NULL, '2025-06-01 21:16:56', '2025-06-01 21:16:56'),
+(2567, NULL, 66, 2, 1, NULL, '2025-06-01 21:16:56', '2025-06-01 21:16:56'),
+(2568, NULL, 67, 2, 1, NULL, '2025-06-01 21:16:56', '2025-06-01 21:16:56'),
+(2569, NULL, 68, 2, 1, NULL, '2025-06-01 21:16:56', '2025-06-01 21:16:56'),
+(2570, NULL, 69, 2, 1, NULL, '2025-06-01 21:16:56', '2025-06-01 21:16:56'),
+(2571, NULL, 70, 2, 1, NULL, '2025-06-01 21:16:56', '2025-06-01 21:16:56'),
+(2572, NULL, 741, 2, 1, NULL, '2025-06-01 21:16:56', '2025-06-01 21:16:56'),
+(2573, NULL, 742, 2, 1, NULL, '2025-06-01 21:16:56', '2025-06-01 21:16:56'),
+(2574, NULL, 743, 2, 1, NULL, '2025-06-01 21:16:56', '2025-06-01 21:16:56'),
+(2575, NULL, 744, 2, 1, NULL, '2025-06-01 21:16:56', '2025-06-01 21:16:56'),
+(2576, NULL, 745, 2, 1, NULL, '2025-06-01 21:16:56', '2025-06-01 21:16:56'),
+(2577, NULL, 746, 2, 1, NULL, '2025-06-01 21:16:56', '2025-06-01 21:16:56'),
+(2578, NULL, 755, 2, 1, NULL, '2025-06-01 21:16:56', '2025-06-01 21:16:56'),
+(2579, NULL, 756, 2, 1, NULL, '2025-06-01 21:16:57', '2025-06-01 21:16:57'),
+(2580, NULL, 757, 2, 1, NULL, '2025-06-01 21:16:57', '2025-06-01 21:16:57'),
+(2581, NULL, 758, 2, 1, NULL, '2025-06-01 21:16:57', '2025-06-01 21:16:57'),
+(2582, NULL, 759, 2, 1, NULL, '2025-06-01 21:16:57', '2025-06-01 21:16:57'),
+(2583, NULL, 760, 2, 1, NULL, '2025-06-01 21:16:57', '2025-06-01 21:16:57'),
+(2584, NULL, 763, 2, 1, NULL, '2025-06-01 21:16:57', '2025-06-01 21:16:57'),
+(2585, NULL, 764, 2, 1, NULL, '2025-06-01 21:16:57', '2025-06-01 21:16:57'),
+(2586, NULL, 765, 2, 1, NULL, '2025-06-01 21:16:57', '2025-06-01 21:16:57'),
+(2587, NULL, 766, 2, 1, NULL, '2025-06-01 21:16:57', '2025-06-01 21:16:57'),
+(2588, NULL, 767, 2, 1, NULL, '2025-06-01 21:16:57', '2025-06-01 21:16:57'),
+(2589, NULL, 768, 2, 1, NULL, '2025-06-01 21:16:57', '2025-06-01 21:16:57'),
+(2590, NULL, 769, 2, 1, NULL, '2025-06-01 21:16:57', '2025-06-01 21:16:57'),
+(2591, NULL, 770, 2, 1, NULL, '2025-06-01 21:16:57', '2025-06-01 21:16:57'),
+(2592, NULL, 772, 2, 1, NULL, '2025-06-01 21:16:57', '2025-06-01 21:16:57'),
+(2593, NULL, 773, 2, 1, NULL, '2025-06-01 21:16:57', '2025-06-01 21:16:57'),
+(2594, NULL, 774, 2, 1, NULL, '2025-06-01 21:16:57', '2025-06-01 21:16:57'),
+(2595, NULL, 775, 2, 1, NULL, '2025-06-01 21:16:57', '2025-06-01 21:16:57'),
+(2596, NULL, 761, 2, 25, NULL, '2025-06-01 22:18:21', '2025-06-01 22:18:21'),
+(2597, NULL, 762, 2, 25, NULL, '2025-06-01 22:18:21', '2025-06-01 22:18:21'),
+(2598, NULL, 776, 1, 1, NULL, '2025-06-15 12:00:44', '2025-06-15 12:00:44'),
+(2599, NULL, 776, 2, 1, NULL, '2025-06-15 12:00:52', '2025-06-15 12:00:52'),
+(2600, NULL, 649, 2, 1, NULL, '2025-06-16 04:29:54', '2025-06-16 04:29:54'),
+(2601, NULL, 543, 1, 1, NULL, '2025-06-16 04:30:57', '2025-06-16 04:30:57'),
+(2602, NULL, 593, 1, 1, NULL, '2025-06-16 04:30:57', '2025-06-16 04:30:57'),
+(2603, NULL, 594, 1, 1, NULL, '2025-06-16 04:30:57', '2025-06-16 04:30:57'),
+(2604, NULL, 595, 1, 1, NULL, '2025-06-16 04:30:57', '2025-06-16 04:30:57'),
+(2605, NULL, 596, 1, 1, NULL, '2025-06-16 04:30:57', '2025-06-16 04:30:57'),
+(2606, NULL, 597, 1, 1, NULL, '2025-06-16 04:30:57', '2025-06-16 04:30:57'),
+(2607, NULL, 598, 1, 1, NULL, '2025-06-16 04:30:57', '2025-06-16 04:30:57'),
+(2608, NULL, 599, 1, 1, NULL, '2025-06-16 04:30:57', '2025-06-16 04:30:57'),
+(2609, NULL, 703, 1, 1, NULL, '2025-06-16 04:30:57', '2025-06-16 04:30:57'),
+(2610, NULL, 704, 1, 1, NULL, '2025-06-16 04:30:57', '2025-06-16 04:30:57'),
+(2611, NULL, 705, 1, 1, NULL, '2025-06-16 04:30:57', '2025-06-16 04:30:57'),
+(2612, NULL, 706, 1, 1, NULL, '2025-06-16 04:30:57', '2025-06-16 04:30:57'),
+(2613, NULL, 707, 1, 1, NULL, '2025-06-16 04:30:57', '2025-06-16 04:30:57'),
+(2614, NULL, 708, 1, 1, NULL, '2025-06-16 04:30:57', '2025-06-16 04:30:57');
 
 -- --------------------------------------------------------
 
@@ -11344,7 +11250,10 @@ INSERT INTO `users` (`id`, `name_bn`, `name_en`, `email`, `mobile`, `user_type`,
 (19, NULL, 'Md. Mostafizur Rahman', 'mostafizur.rahman@sebpo.com', '01516754654', 4, 4, 2, NULL, '100953447460615822249', NULL, 1, NULL, '$2y$10$KokuO0xmCdTOXLbOQOcG8Ojm1Pynl3bq74oYp9YfroP2pS1J9D6ti', NULL, '2025-04-10 12:08:10', '2025-04-10 12:21:30'),
 (20, NULL, 'Mostafizur Rahman', 'mfr637@gmail.com', '01521105154', 4, 4, 4, NULL, NULL, NULL, 1, '2025-05-21 16:48:52', '$2y$10$QjGFbdJUATl2Mhpp.93quOmCdDUoRb87aCmKlvQhzejtHePBdtoIG', NULL, '2025-05-21 16:46:42', '2025-05-21 16:52:26'),
 (21, NULL, 'Abu Sayeem Siddique', 'sayeem.siddique@sebpo.com', '01608881651', 4, 4, 3, NULL, NULL, NULL, 1, '2025-05-21 16:59:51', '$2y$10$gRf9enGwliMIzK5xPsEMUuoeJalydogtG9mPABMCduek1qovF93pe', NULL, '2025-05-21 16:58:39', '2025-05-21 17:06:05'),
-(22, NULL, 'Ummul Hasnat Rafea', 'ummul.rafea@sebpo.com', '01758011597', 4, 4, 2, NULL, NULL, NULL, 1, '2025-05-21 22:15:42', '$2y$10$d3GrQTBLeDUtUcnyP9aSnO634ekzTZ1H01wLWjrHYBuHJVn2ViDqC', NULL, '2025-05-21 22:11:06', '2025-05-21 22:26:25');
+(22, NULL, 'Ummul Hasnat Rafea', 'ummul.rafea@sebpo.com', '01758011597', 4, 4, 2, NULL, NULL, NULL, 1, '2025-05-21 22:15:42', '$2y$10$d3GrQTBLeDUtUcnyP9aSnO634ekzTZ1H01wLWjrHYBuHJVn2ViDqC', NULL, '2025-05-21 22:11:06', '2025-05-21 22:26:25'),
+(23, NULL, 'Md. Ashraful Alam', 'ashraful@sebpo.com', NULL, 4, 4, NULL, NULL, '105855212939887581054', NULL, 5, NULL, '$2y$10$eaJzjsCQfwvBYhdIgiZ1J.OtDR2PAyGGLeq4bRVK3dZ1KQxK5CAcm', NULL, '2025-05-29 16:57:47', '2025-05-29 17:10:54'),
+(24, NULL, 'Md. Ashraful Alam', 'md.aashraful.alam@gmail.com', '01672548372', 4, 4, 4, NULL, NULL, NULL, 1, '2025-05-29 17:19:01', '$2y$10$x9vvN66T0Hf8f/w29ZT5yeBBKNCn7dFUvBxne2iyeOJ.Kg3qzB8wW', NULL, '2025-05-29 17:14:20', '2025-05-29 18:20:01'),
+(25, NULL, 'BARC Admin', 'webber.rayhan@gmail.com', '01552191400', 3, 2, 4, NULL, NULL, NULL, 1, NULL, '$2y$10$HU9RBblnDbwjfVkgAwzjsOKnM5jBdwXvSUB/E1QHorKoj/k.sXINq', NULL, '2025-06-01 21:15:22', '2025-06-01 21:15:22');
 
 -- --------------------------------------------------------
 
@@ -11383,7 +11292,8 @@ INSERT INTO `user_addresses` (`id`, `user_id`, `present_division_id`, `present_d
 (4, NULL, 3, 13, 130, NULL, '3500', 3, 13, 130, NULL, '3500', NULL, NULL, 1, '2025-04-10 06:35:40', '2025-04-10 06:35:40'),
 (5, NULL, 3, 13, 130, 'CM', '3500', 3, 13, 130, 'CM', '3500', 'Road 1, 13/A', 'Road 1, 13/A', 1, '2025-04-10 08:58:14', '2025-04-10 08:58:14'),
 (6, NULL, 3, 13, 130, 'CM', '3500', 3, 13, 130, 'CM', '3500', 'Road 1, 13/A', 'Road 1, 13/A', 1, '2025-04-10 09:23:01', '2025-04-10 09:23:01'),
-(8, 19, 3, 13, 130, 'Savar', '3500', 3, 13, 130, 'Savar', '3500', 'Road #13, Block A', 'Road #13, Block A', 1, '2025-04-17 11:35:51', '2025-04-17 11:35:51');
+(8, 19, 3, 13, 130, 'Savar', '3500', 3, 13, 130, 'Savar', '3500', 'Road #13, Block A', 'Road #13, Block A', 1, '2025-04-17 11:35:51', '2025-04-17 11:35:51'),
+(9, 25, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2025-06-01 21:15:22', '2025-06-01 21:15:22');
 
 -- --------------------------------------------------------
 
@@ -11446,6 +11356,19 @@ CREATE TABLE `user_content_activities` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `user_content_activities`
+--
+
+INSERT INTO `user_content_activities` (`id`, `user_id`, `category_id`, `content_id`, `activity_type`, `created_by`, `created_at`, `updated_at`) VALUES
+(1, 24, 2, 31, 1, 24, '2025-05-29 18:49:16', '2025-05-29 18:49:16'),
+(2, 24, 2, 30, 2, 24, '2025-05-29 18:49:31', '2025-05-29 18:49:31'),
+(4, 19, 2, 31, 1, 19, '2025-06-01 20:40:34', '2025-06-01 20:40:34'),
+(5, 19, 2, 30, 2, 19, '2025-06-01 20:40:54', '2025-06-01 20:40:54'),
+(6, 19, 2, 29, 1, 19, '2025-06-03 15:48:57', '2025-06-03 15:48:57'),
+(8, 1, 1, 13, 1, 1, '2025-06-15 09:34:38', '2025-06-15 09:34:38'),
+(9, 1, 1, 12, 2, 1, '2025-06-15 09:34:40', '2025-06-15 09:34:40');
+
 -- --------------------------------------------------------
 
 --
@@ -11493,7 +11416,9 @@ INSERT INTO `user_infos` (`id`, `user_id`, `department_id`, `designation_id`, `o
 (17, 19, 1, NULL, NULL, 'Software Engineer', NULL, 'userImage2025_04_10_121630_26508796.png', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'signature2025_04_10_121630_65643590.jpeg', NULL, NULL, 1, '2025-04-10 06:16:30', '2025-04-10 06:16:30'),
 (21, 20, NULL, 11, NULL, NULL, NULL, 'userImages/eVIoijpLrgRi1BcNNG5d7xS5NusJFElZdHcePXSz.jpg', 30, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-21 16:46:42', '2025-05-21 16:46:42'),
 (22, 21, NULL, 2, NULL, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-21 16:58:39', '2025-05-21 16:58:39'),
-(23, 22, NULL, 1, NULL, NULL, NULL, NULL, 9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-21 22:11:06', '2025-05-21 22:11:06');
+(23, 22, NULL, 1, NULL, NULL, NULL, NULL, 9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-21 22:11:06', '2025-05-21 22:11:06'),
+(24, 24, NULL, 11, NULL, NULL, NULL, NULL, 30, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-29 17:14:20', '2025-05-29 17:14:20'),
+(25, 25, NULL, 9, NULL, NULL, NULL, NULL, 30, NULL, 'Male', NULL, NULL, NULL, NULL, 'Islam', 0, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2025-06-01 21:15:22', '2025-06-01 21:15:22');
 
 --
 -- Indexes for dumped tables
@@ -11859,7 +11784,7 @@ ALTER TABLE `city_corporations`
 -- AUTO_INCREMENT for table `contents`
 --
 ALTER TABLE `contents`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -11979,7 +11904,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `offices`
@@ -11991,7 +11916,7 @@ ALTER TABLE `offices`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=775;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=777;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -12051,7 +11976,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `role_permissions`
 --
 ALTER TABLE `role_permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2560;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2615;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -12087,13 +12012,13 @@ ALTER TABLE `upazilas`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `user_addresses`
 --
 ALTER TABLE `user_addresses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user_categories`
@@ -12111,13 +12036,13 @@ ALTER TABLE `user_company_docs`
 -- AUTO_INCREMENT for table `user_content_activities`
 --
 ALTER TABLE `user_content_activities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user_infos`
 --
 ALTER TABLE `user_infos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

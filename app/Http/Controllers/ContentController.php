@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Crypt;
@@ -12,9 +14,15 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 /* included models */
+use App\Models\User;
+use App\Models\Setting;
 use App\Models\Content;
 use App\Models\Category;
+use App\Models\Notification;
 use App\Models\UserContentActivity;
+
+/* included mails */
+use App\Mail\ContentSubmitMail;
 
 class ContentController extends Controller
 {
@@ -357,6 +365,8 @@ class ContentController extends Controller
         try {
             $user = Auth::user();
 
+            DB::beginTransaction();
+
             if (Gate::allows('create_content', $user)) {
                 $validator = Validator::make($request->all(), [
                     'content_name'  => 'required',
@@ -431,17 +441,77 @@ class ContentController extends Controller
 
                 $content->save();
 
+                $setting = Setting::first();
+                $admins = User::whereIn('role_id', [1,2])->where('status', 1)->get();
+                $officeId = optional($content->createdBy->userInfo)->office_id ?? '';
+
+                if (!$officeId) {
+                    $orgAdmins = collect([]);
+                } else {
+                    $orgAdmins = User::whereHas('userInfo', function($userInfoQuery) use ($officeId) {
+                        $userInfoQuery->where('office_id', $officeId);
+                    })->where('role_id', 3)->where('status', 1)->get();
+                }
+
+                if ($content->status == 0) {
+                    if (count($admins)) {
+                        foreach ($admins as $admin) {
+                            Mail::to($admin->email)->send(new ContentSubmitMail($admin, $setting, $content));
+
+                            $notification = new Notification;
+
+                            $notification->type             = 5;
+                            $notification->title            = 'New Content Submitted';
+                            $notification->message          = 'A new content has been submitted.';
+                            $notification->route_name       = route('admin.content.show', Crypt::encryptString($content->id));
+                            $notification->sender_role_id   = $content->createdBy->role_id ?? '';
+                            $notification->sender_user_id   = $content->created_by;
+                            $notification->receiver_role_id = $admin->role_id;
+                            $notification->receiver_user_id = $admin->id;
+                            $notification->read_status      = 0;
+
+                            $notification->save();
+                        }
+                    }
+
+                    if (count($orgAdmins)) {
+                        foreach ($orgAdmins as $admin) {
+                            Mail::to($admin->email)->send(new ContentSubmitMail($admin, $setting, $content));
+
+                            $notification = new Notification;
+
+                            $notification->type             = 5;
+                            $notification->title            = 'New Content Submitted';
+                            $notification->message          = 'A new content has been submitted.';
+                            $notification->route_name       = route('admin.content.show', Crypt::encryptString($content->id));
+                            $notification->sender_role_id   = $content->createdBy->role_id ?? '';
+                            $notification->sender_user_id   = $content->created_by;
+                            $notification->receiver_role_id = $admin->role_id;
+                            $notification->receiver_user_id = $admin->id;
+                            $notification->read_status      = 0;
+
+                            $notification->save();
+                        }
+                    }
+                }
+
+                DB::commit();
+
                 return response()->json([
                     'success' => true,
                     'message' => 'New Content Created Successfully!',
                 ]);
             } else {
+                DB::rollBack();
+
                 return response()->json([
                     'success' => false,
                     'message' => "You don't have permission!",
                 ], 403);
             }
         } catch (\Exception $e) {
+            DB::rollBack();
+
             \Log::error($e->getMessage());
 
             return response()->json([
@@ -501,6 +571,8 @@ class ContentController extends Controller
             $content = Content::where('id', $id)->firstOrFail();
 
             $user = Auth::user();
+
+            DB::beginTransaction();
 
             if (Gate::allows('edit_content', $user)) {
                 $validator = Validator::make($request->all(), [
@@ -576,17 +648,71 @@ class ContentController extends Controller
 
                 $content->save();
 
+                $setting = Setting::first();
+                $admins = User::whereIn('role_id', [1,2])->where('status', 1)->get();
+                $orgAdmins = User::whereHas('userInfo', function($query3) {
+                                        $query3->where('office_id', ($content->createdBy->userInfo->office_id ?? ''));
+                                    })->where('role_id', 3)->where('status', 1)->get();
+
+                if ($content->status == 0) {
+                    if (count($admins)) {
+                        foreach ($admins as $admin) {
+                            Mail::to($admin->email)->send(new ContentSubmitMail($admin, $setting, $content));
+
+                            $notification = new Notification;
+
+                            $notification->type             = 5;
+                            $notification->title            = 'New Content Submitted';
+                            $notification->message          = 'A new content has been submitted.';
+                            $notification->route_name       = route('admin.content.show', Crypt::encryptString($content->id));
+                            $notification->sender_role_id   = $content->createdBy->role_id ?? '';
+                            $notification->sender_user_id   = $content->created_by;
+                            $notification->receiver_role_id = $admin->role_id;
+                            $notification->receiver_user_id = $admin->id;
+                            $notification->read_status      = 0;
+
+                            $notification->save();
+                        }
+                    }
+
+                    if (count($orgAdmins)) {
+                        foreach ($orgAdmins as $admin) {
+                            Mail::to($admin->email)->send(new ContentSubmitMail($admin, $setting, $content));
+
+                            $notification = new Notification;
+
+                            $notification->type             = 5;
+                            $notification->title            = 'New Content Submitted';
+                            $notification->message          = 'A new content has been submitted.';
+                            $notification->route_name       = route('admin.content.show', Crypt::encryptString($content->id));
+                            $notification->sender_role_id   = $content->createdBy->role_id ?? '';
+                            $notification->sender_user_id   = $content->created_by;
+                            $notification->receiver_role_id = $admin->role_id;
+                            $notification->receiver_user_id = $admin->id;
+                            $notification->read_status      = 0;
+
+                            $notification->save();
+                        }
+                    }
+                }
+
+                DB::commit();
+
                 return response()->json([
                     'success' => true,
                     'message' => 'Content Details Updated Successfully!',
                 ]);
             } else {
+                DB::rollBack();
+
                 return response()->json([
                     'success' => false,
                     'message' => "You don't have permission!",
                 ], 403);
             }
         } catch (\Exception $e) {
+            DB::rollBack();
+            
             \Log::error($e->getMessage());
             
             return response()->json([
@@ -625,6 +751,51 @@ class ContentController extends Controller
                     return response()->json([
                         'success' => false,
                         'message' => 'Content Not Found!',
+                    ]);
+                }
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => "You don't have permission!",
+                ], 403);
+            }
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An unexpected error occurred. Please try again.',
+            ], 500);
+        }
+    }
+
+    /**
+     * Publsih content
+     */
+    public function publish($id)
+    {
+        try {
+            $user = Auth::user();
+
+            if (Gate::allows('can_publish', $user)) {
+                $id = Crypt::decryptString($id);
+                $content = Content::where('id', $id)->firstOrFail();
+                
+                if ($content->status == 0) {
+                    $content->status        = 1;
+
+                    $content->updated_by    = $user->id;
+
+                    $content->save();
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Content Published Successfully!',
+                    ]);
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Action Not Allowed at this Stage!',
                     ]);
                 }
             } else {

@@ -317,6 +317,27 @@
             });
         }
 
+        function publishContent(id) {
+            $.ajax({
+                url: "{{ route('admin.content.publish', ':id') }}".replace(':id', id),
+                type: "GET",
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'success',
+                            showCancelButton: false,
+                        });
+                        
+                        setTimeout(() => window.location.reload(), 1000);
+                    }
+                },
+                error: function(xhr) {
+                    toastr.error(xhr.responseJSON?.message || 'An error occurred.', 'Error');
+                }
+            });
+        }
+
         function archiveContent(id) {
             $.ajax({
                 url: "{{ route('admin.content.archive', ':id') }}".replace(':id', id),
