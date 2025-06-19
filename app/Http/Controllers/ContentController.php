@@ -23,6 +23,7 @@ use App\Models\UserContentActivity;
 
 /* included mails */
 use App\Mail\ContentSubmitMail;
+use App\Mail\ContentPublishMail;
 
 class ContentController extends Controller
 {
@@ -85,7 +86,8 @@ class ContentController extends Controller
 
             $perPage = $request->per_page ?? 12;
 
-            $contents = $query->where('status', 1)
+            if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 3) {
+                $contents = $query->where('status', '!=', 2)
                             ->with([
                                 'category',
                                 'createdBy',
@@ -93,9 +95,20 @@ class ContentController extends Controller
                             ])
                             ->latest()
                             ->paginate($perPage);
+            } else {
+                $contents = $query->where('status', 1)
+                            ->with([
+                                'category',
+                                'createdBy',
+                                'userActivities' => fn($q) => $q->where('user_id', Auth::id())
+                            ])
+                            ->latest()
+                            ->paginate($perPage);
+            }
 
             if ($request->ajax()) {
                 $html = view('backend.admin.content.content', compact('contents'))->render();
+
                 return response()->json([
                     'success' => true,
                     'html' => $html,
@@ -368,13 +381,23 @@ class ContentController extends Controller
             DB::beginTransaction();
 
             if (Gate::allows('create_content', $user)) {
-                $validator = Validator::make($request->all(), [
-                    'content_name'  => 'required',
-                    'content'       => 'required|file|max:307200',
-                    'content_type'  => 'required',
-                    'category_id'   => 'required|exists:categories,id',
-                    'content_year'  => 'required|digits:4',
-                ]);
+                if ($request->content_type == 'Link') {
+                    $validator = Validator::make($request->all(), [
+                        'content_name'  => 'required',
+                        'content'       => 'required',
+                        'content_type'  => 'required',
+                        'category_id'   => 'required|exists:categories,id',
+                        'content_year'  => 'required|digits:4',
+                    ]);
+                } else {
+                    $validator = Validator::make($request->all(), [
+                        'content_name'  => 'required',
+                        'content'       => 'required|file|max:307200',
+                        'content_type'  => 'required',
+                        'category_id'   => 'required|exists:categories,id',
+                        'content_year'  => 'required|digits:4',
+                    ]);
+                }
 
                 if ($validator->fails()) {
                     return response()->json([
@@ -433,74 +456,101 @@ class ContentController extends Controller
                 $content->created_by        = $user->id;
                 $content->published_at      = $request->status == 1 ? now() : null;
 
-                // if ($request->status == 1) {
-                //     $content->approved_by = $user->id;
-
-                //     $content->approved_at = now();
-                // }
-
                 $content->save();
 
-                $setting = Setting::first();
-                $admins = User::whereIn('role_id', [1,2])->where('status', 1)->get();
-                $officeId = optional($content->createdBy->userInfo)->office_id ?? '';
+                if ($request->status == 0) {
+                    $setting = Setting::first();
+                    $admins = User::whereIn('role_id', [1,2])->where('status', 1)->get();
+                    $officeId = optional($content->createdBy->userInfo)->office_id ?? '';
 
-                if (!$officeId) {
-                    $orgAdmins = collect([]);
+                    if (!$officeId) {
+                        $orgAdmins = collect([]);
+                    } else {
+                        $orgAdmins = User::whereHas('userInfo', function($userInfoQuery) use ($officeId) {
+                            $userInfoQuery->where('office_id', $officeId);
+                        })->where('role_id', 3)->where('status', 1)->get();
+                    }
+
+                    if ($content->status == 0) {
+                        if (count($admins)) {
+                            foreach ($admins as $admin) {
+                                Mail::to($admin->email)->send(new ContentSubmitMail($admin, $setting, $content));
+
+                                $notification = new Notification;
+
+                                $notification->type             = 5;
+                                $notification->title            = 'New Content Submitted';
+                                $notification->message          = 'A new content has been submitted.';
+                                $notification->route_name       = route('admin.content.show', Crypt::encryptString($content->id));
+                                $notification->sender_role_id   = $content->createdBy->role_id ?? '';
+                                $notification->sender_user_id   = $content->created_by;
+                                $notification->receiver_role_id = $admin->role_id;
+                                $notification->receiver_user_id = $admin->id;
+                                $notification->read_status      = 0;
+
+                                $notification->save();
+                            }
+                        }
+
+                        if (count($orgAdmins)) {
+                            foreach ($orgAdmins as $admin) {
+                                Mail::to($admin->email)->send(new ContentSubmitMail($admin, $setting, $content));
+
+                                $notification = new Notification;
+
+                                $notification->type             = 5;
+                                $notification->title            = 'New Content Submitted';
+                                $notification->message          = 'A new content has been submitted.';
+                                $notification->route_name       = route('admin.content.show', Crypt::encryptString($content->id));
+                                $notification->sender_role_id   = $content->createdBy->role_id ?? '';
+                                $notification->sender_user_id   = $content->created_by;
+                                $notification->receiver_role_id = $admin->role_id;
+                                $notification->receiver_user_id = $admin->id;
+                                $notification->read_status      = 0;
+
+                                $notification->save();
+                            }
+                        }
+                    }
+
+                    DB::commit();
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Content Submitted Successfully!',
+                    ]);
                 } else {
-                    $orgAdmins = User::whereHas('userInfo', function($userInfoQuery) use ($officeId) {
-                        $userInfoQuery->where('office_id', $officeId);
-                    })->where('role_id', 3)->where('status', 1)->get();
-                }
+                    $content->approved_by = $user->id;
 
-                if ($content->status == 0) {
-                    if (count($admins)) {
-                        foreach ($admins as $admin) {
-                            Mail::to($admin->email)->send(new ContentSubmitMail($admin, $setting, $content));
+                    $content->approved_at = now();
 
-                            $notification = new Notification;
+                    $content->save();
+                    
+                    if ($content->createdBy->email ?? '') {
+                        Mail::to($content->createdBy->email)->send(new ContentPublishMail($setting, $content));
 
-                            $notification->type             = 5;
-                            $notification->title            = 'New Content Submitted';
-                            $notification->message          = 'A new content has been submitted.';
-                            $notification->route_name       = route('admin.content.show', Crypt::encryptString($content->id));
-                            $notification->sender_role_id   = $content->createdBy->role_id ?? '';
-                            $notification->sender_user_id   = $content->created_by;
-                            $notification->receiver_role_id = $admin->role_id;
-                            $notification->receiver_user_id = $admin->id;
-                            $notification->read_status      = 0;
+                        $notification = new Notification;
 
-                            $notification->save();
-                        }
+                        $notification->type             = 6;
+                        $notification->title            = 'Content Approved';
+                        $notification->message          = 'Your content has been approved.';
+                        $notification->route_name       = route('admin.content.show', Crypt::encryptString($user->id));
+                        $notification->sender_role_id   = $content->updatedBy->role_id ?? '';
+                        $notification->sender_user_id   = $content->updated_by;
+                        $notification->receiver_role_id = $content->createdBy->role_id ?? '';
+                        $notification->receiver_user_id = $content->created_by;
+                        $notification->read_status      = 0;
+
+                        $notification->save();
                     }
 
-                    if (count($orgAdmins)) {
-                        foreach ($orgAdmins as $admin) {
-                            Mail::to($admin->email)->send(new ContentSubmitMail($admin, $setting, $content));
+                    DB::commit();
 
-                            $notification = new Notification;
-
-                            $notification->type             = 5;
-                            $notification->title            = 'New Content Submitted';
-                            $notification->message          = 'A new content has been submitted.';
-                            $notification->route_name       = route('admin.content.show', Crypt::encryptString($content->id));
-                            $notification->sender_role_id   = $content->createdBy->role_id ?? '';
-                            $notification->sender_user_id   = $content->created_by;
-                            $notification->receiver_role_id = $admin->role_id;
-                            $notification->receiver_user_id = $admin->id;
-                            $notification->read_status      = 0;
-
-                            $notification->save();
-                        }
-                    }
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Content Published Successfully!',
+                    ]);
                 }
-
-                DB::commit();
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'New Content Created Successfully!',
-                ]);
             } else {
                 DB::rollBack();
 
@@ -575,13 +625,23 @@ class ContentController extends Controller
             DB::beginTransaction();
 
             if (Gate::allows('edit_content', $user)) {
-                $validator = Validator::make($request->all(), [
-                    'content_name'  => 'required',
-                    'content'       => 'file|max:307200',
-                    'content_type'  => 'required',
-                    'category_id'   => 'required|exists:categories,id',
-                    'content_year'  => 'required|digits:4',
-                ]);
+                if ($request->content_type == 'Link') {
+                    $validator = Validator::make($request->all(), [
+                        'content_name'  => 'required',
+                        'content'       => 'required',
+                        'content_type'  => 'required',
+                        'category_id'   => 'required|exists:categories,id',
+                        'content_year'  => 'required|digits:4',
+                    ]);
+                } else {
+                    $validator = Validator::make($request->all(), [
+                        'content_name'  => 'required',
+                        'content'       => 'file|max:307200',
+                        'content_type'  => 'required',
+                        'category_id'   => 'required|exists:categories,id',
+                        'content_year'  => 'required|digits:4',
+                    ]);
+                }
 
                 if ($validator->fails()) {
                     return response()->json([
@@ -648,60 +708,99 @@ class ContentController extends Controller
 
                 $content->save();
 
-                $setting = Setting::first();
-                $admins = User::whereIn('role_id', [1,2])->where('status', 1)->get();
-                $orgAdmins = User::whereHas('userInfo', function($query3) {
-                                        $query3->where('office_id', ($content->createdBy->userInfo->office_id ?? ''));
-                                    })->where('role_id', 3)->where('status', 1)->get();
+                if ($request->status == 0) {
+                    $setting = Setting::first();
+                    $admins = User::whereIn('role_id', [1,2])->where('status', 1)->get();
+                    $officeId = optional($content->createdBy->userInfo)->office_id ?? '';
 
-                if ($content->status == 0) {
-                    if (count($admins)) {
-                        foreach ($admins as $admin) {
-                            Mail::to($admin->email)->send(new ContentSubmitMail($admin, $setting, $content));
+                    if (!$officeId) {
+                        $orgAdmins = collect([]);
+                    } else {
+                        $orgAdmins = User::whereHas('userInfo', function($userInfoQuery) use ($officeId) {
+                            $userInfoQuery->where('office_id', $officeId);
+                        })->where('role_id', 3)->where('status', 1)->get();
+                    }
 
-                            $notification = new Notification;
+                    if ($content->status == 0) {
+                        if (count($admins)) {
+                            foreach ($admins as $admin) {
+                                Mail::to($admin->email)->send(new ContentSubmitMail($admin, $setting, $content));
 
-                            $notification->type             = 5;
-                            $notification->title            = 'New Content Submitted';
-                            $notification->message          = 'A new content has been submitted.';
-                            $notification->route_name       = route('admin.content.show', Crypt::encryptString($content->id));
-                            $notification->sender_role_id   = $content->createdBy->role_id ?? '';
-                            $notification->sender_user_id   = $content->created_by;
-                            $notification->receiver_role_id = $admin->role_id;
-                            $notification->receiver_user_id = $admin->id;
-                            $notification->read_status      = 0;
+                                $notification = new Notification;
 
-                            $notification->save();
+                                $notification->type             = 5;
+                                $notification->title            = 'New Content Submitted';
+                                $notification->message          = 'A new content has been submitted.';
+                                $notification->route_name       = route('admin.content.show', Crypt::encryptString($content->id));
+                                $notification->sender_role_id   = $content->createdBy->role_id ?? '';
+                                $notification->sender_user_id   = $content->created_by;
+                                $notification->receiver_role_id = $admin->role_id;
+                                $notification->receiver_user_id = $admin->id;
+                                $notification->read_status      = 0;
+
+                                $notification->save();
+                            }
+                        }
+
+                        if (count($orgAdmins)) {
+                            foreach ($orgAdmins as $admin) {
+                                Mail::to($admin->email)->send(new ContentSubmitMail($admin, $setting, $content));
+
+                                $notification = new Notification;
+
+                                $notification->type             = 5;
+                                $notification->title            = 'New Content Submitted';
+                                $notification->message          = 'A new content has been submitted.';
+                                $notification->route_name       = route('admin.content.show', Crypt::encryptString($content->id));
+                                $notification->sender_role_id   = $content->createdBy->role_id ?? '';
+                                $notification->sender_user_id   = $content->created_by;
+                                $notification->receiver_role_id = $admin->role_id;
+                                $notification->receiver_user_id = $admin->id;
+                                $notification->read_status      = 0;
+
+                                $notification->save();
+                            }
                         }
                     }
 
-                    if (count($orgAdmins)) {
-                        foreach ($orgAdmins as $admin) {
-                            Mail::to($admin->email)->send(new ContentSubmitMail($admin, $setting, $content));
+                    DB::commit();
 
-                            $notification = new Notification;
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Content Submitted Successfully!',
+                    ]);
+                } else {
+                    $content->approved_by = $user->id;
 
-                            $notification->type             = 5;
-                            $notification->title            = 'New Content Submitted';
-                            $notification->message          = 'A new content has been submitted.';
-                            $notification->route_name       = route('admin.content.show', Crypt::encryptString($content->id));
-                            $notification->sender_role_id   = $content->createdBy->role_id ?? '';
-                            $notification->sender_user_id   = $content->created_by;
-                            $notification->receiver_role_id = $admin->role_id;
-                            $notification->receiver_user_id = $admin->id;
-                            $notification->read_status      = 0;
+                    $content->approved_at = now();
 
-                            $notification->save();
-                        }
+                    $content->save();
+                    
+                    if ($content->createdBy->email ?? '') {
+                        Mail::to($content->createdBy->email)->send(new ContentPublishMail($setting, $content));
+
+                        $notification = new Notification;
+
+                        $notification->type             = 6;
+                        $notification->title            = 'Content Approved';
+                        $notification->message          = 'Your content has been approved.';
+                        $notification->route_name       = route('admin.content.show', Crypt::encryptString($user->id));
+                        $notification->sender_role_id   = $content->updatedBy->role_id ?? '';
+                        $notification->sender_user_id   = $content->updated_by;
+                        $notification->receiver_role_id = $content->createdBy->role_id ?? '';
+                        $notification->receiver_user_id = $content->created_by;
+                        $notification->read_status      = 0;
+
+                        $notification->save();
                     }
+
+                    DB::commit();
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Content Published Successfully!',
+                    ]);
                 }
-
-                DB::commit();
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Content Details Updated Successfully!',
-                ]);
             } else {
                 DB::rollBack();
 
@@ -787,6 +886,26 @@ class ContentController extends Controller
                     $content->updated_by    = $user->id;
 
                     $content->save();
+
+                    $setting = Setting::first();
+
+                    if ($content->createdBy->email ?? '') {
+                        Mail::to($content->createdBy->email)->send(new ContentPublishMail($setting, $content));
+
+                        $notification = new Notification;
+
+                        $notification->type             = 6;
+                        $notification->title            = 'Content Approved';
+                        $notification->message          = 'Your content has been approved.';
+                        $notification->route_name       = route('admin.content.show', Crypt::encryptString($user->id));
+                        $notification->sender_role_id   = $content->updatedBy->role_id ?? '';
+                        $notification->sender_user_id   = $content->updated_by;
+                        $notification->receiver_role_id = $content->createdBy->role_id ?? '';
+                        $notification->receiver_user_id = $content->created_by;
+                        $notification->read_status      = 0;
+
+                        $notification->save();
+                    }
 
                     return response()->json([
                         'success' => true,

@@ -100,7 +100,7 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <div class="switchery-demo">
+                                        <div class="switchery-demo" style="display: block;">
                                             <input type="checkbox" name="can_download" class="js-switch" value="1" checked> Can Download?
                                         </div>
                                     </div>
@@ -133,11 +133,14 @@
         $(document).ready(function() {
             $('#thumbnail').on('change', function(event) {
                 const file = event.target.files[0];
+
                 if (file) {
                     const reader = new FileReader();
+
                     reader.onload = function(e) {
                         $('#thumbnail-image').attr('src', e.target.result).show();
                     };
+
                     reader.readAsDataURL(file);
                 } else {
                     $('#thumbnail-image').hide();
@@ -155,11 +158,15 @@
                     contentContainer.find('#content').remove();
                     contentContainer.append('<input type="text" class="form-control content-input" id="content" name="content" placeholder="Enter URL" required>');
                     contentContainer.find('#content').val('{{ old('content') }}');
+
+                    $('.switchery-demo').hide();
                 } else {
                     contentLabel.html('Content File: <span class="text-danger">*</span>');
                     contentContainer.find('#content').remove();
                     contentContainer.append('<input type="file" class="form-control content-input" id="content" name="content" required>');
                     contentContainer.find('#content').val('');
+
+                    $('.switchery-demo').show();
                 }
             });
 

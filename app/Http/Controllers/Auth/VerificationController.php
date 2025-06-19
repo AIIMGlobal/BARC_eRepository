@@ -84,12 +84,35 @@ class VerificationController extends Controller
 
                     $setting = Setting::first();
                     $admins = User::whereIn('role_id', [1, 2])->where('status', 1)->get();
+                    $orgAdmins = User::whereHas('userInfo', function($query3) use($user) {
+                                        $query3->where('office_id', ($user->userInfo->office_id ?? ''));
+                                    })->where('role_id', 3)->where('status', 1)->get();
 
                     if ($user) {
                         Mail::to($user->email)->send(new UserRegistrationToUserMail($setting, $user));
 
                         if (count($admins)) {
                             foreach ($admins as $admin) {
+                                Mail::to($admin->email)->send(new UserRegistrationToAdminMail($setting, $user, $admin));
+
+                                $notification = new Notification;
+
+                                $notification->type             = 4;
+                                $notification->title            = 'New User Registration';
+                                $notification->message          = 'A new user has registered.';
+                                $notification->route_name       = route('admin.user.show', Crypt::encryptString($user->id));
+                                $notification->sender_role_id   = 4;
+                                $notification->sender_user_id   = $user->id;
+                                $notification->receiver_role_id = $admin->role_id;
+                                $notification->receiver_user_id = $admin->id;
+                                $notification->read_status      = 0;
+
+                                $notification->save();
+                            }
+                        }
+
+                        if (count($orgAdmins)) {
+                            foreach ($orgAdmins as $admin) {
                                 Mail::to($admin->email)->send(new UserRegistrationToAdminMail($setting, $user, $admin));
 
                                 $notification = new Notification;

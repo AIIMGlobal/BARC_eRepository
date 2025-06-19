@@ -117,7 +117,7 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <div class="switchery-demo">
+                                        <div class="switchery-demo" style="{{ $content->content_type == 'Link' ? 'display: none;' : 'display: block;' }}">
                                             <input type="checkbox" name="can_download" class="js-switch" value="1" {{ $content->can_download == 1 ? 'checked' : '' }}> Can Download?
                                         </div>
                                     </div>
@@ -152,11 +152,14 @@
         $(document).ready(function() {
             $('#thumbnail').on('change', function(event) {
                 const file = event.target.files[0];
+
                 if (file) {
                     const reader = new FileReader();
+
                     reader.onload = function(e) {
                         $('#thumbnail-image').attr('src', e.target.result);
                     };
+
                     reader.readAsDataURL(file);
                 } else {
                     $('#thumbnail-image').attr('src', '{{ $content->thumbnail ? asset('storage/' . $content->thumbnail) : asset('images/dummy-thumbnail.jpg') }}');
@@ -174,11 +177,15 @@
                     contentContainer.find('#content').remove();
                     contentContainer.append('<input type="text" class="form-control content-input" id="content" name="content" placeholder="Enter URL" required>');
                     contentContainer.find('#content').val('{{ old('content') }}');
+
+                    $('.switchery-demo').hide();
                 } else {
                     contentLabel.html('Content File: <span class="text-danger">*</span>');
                     contentContainer.find('#content').remove();
                     contentContainer.append('<input type="file" class="form-control content-input" id="content" name="content" required>');
                     contentContainer.find('#content').val('');
+
+                    $('.switchery-demo').show();
                 }
             });
 
