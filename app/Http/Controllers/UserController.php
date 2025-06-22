@@ -35,9 +35,11 @@ use App\Models\AcademicRecord;
 use App\Models\UserCompanyDoc;
 use App\Models\UserCategory;
 use App\Models\Setting;
+use App\Models\Notification;
 
 /* included mails */
 use App\Mail\UserAccountApproveToUserMail;
+use App\Mail\UserCreateMail;
 
 class UserController extends Controller
 {
@@ -340,6 +342,26 @@ class UserController extends Controller
                     }
                 }
 
+                $setting = Setting::first();
+
+                if ($request->email) {
+                    Mail::to($request->email)->send(new UserCreateMail($setting, $newUser));
+
+                    $notification = new Notification;
+
+                    $notification->type             = 7;
+                    $notification->title            = 'Account Create';
+                    $notification->message          = 'Your account has been created.';
+                    $notification->route_name       = route('admin.user.show', Crypt::encryptString($newUser->id));
+                    $notification->sender_role_id   = $userInfo->createdBy->role_id ?? '';
+                    $notification->sender_user_id   = $userInfo->created_by;
+                    $notification->receiver_role_id = $newUser->role_id ?? '';
+                    $notification->receiver_user_id = $newUser->id;
+                    $notification->read_status      = 0;
+
+                    $notification->save();
+                }
+
                 DB::commit();
 
                 return response()->json([
@@ -444,7 +466,10 @@ class UserController extends Controller
             DB::beginTransaction();
 
             $currentUser = Auth::user();
+            $setting = Setting::first();
             $newUser = User::where('id', $request->user_id)->first();
+            $userInfo = UserInfo::where('id', $request->user_info_id)->first();
+            $userAddress = UserAddress::where('user_id', $request->user_id)->first();
 
             if (Gate::allows('edit_user', $currentUser)) {
                 $this->validate($request, [
@@ -470,9 +495,25 @@ class UserController extends Controller
                 $newUser->role_id           = $request->role_id;
                 $newUser->user_category_id  = $request->user_category_id;
 
-                $newUser->save();
+                if ($request->email != $newUser->email) {
+                    Mail::to($request->email)->send(new UserCreateMail($setting, $newUser));
 
-                $userAddress = UserAddress::where('user_id', $request->user_id)->first();
+                    $notification = new Notification;
+
+                    $notification->type             = 7;
+                    $notification->title            = 'Account Create';
+                    $notification->message          = 'Your account has been created.';
+                    $notification->route_name       = route('admin.user.show', Crypt::encryptString($newUser->id));
+                    $notification->sender_role_id   = $userInfo->createdBy->role_id ?? '';
+                    $notification->sender_user_id   = $userInfo->created_by;
+                    $notification->receiver_role_id = $newUser->role_id ?? '';
+                    $notification->receiver_user_id = $newUser->id;
+                    $notification->read_status      = 0;
+
+                    $notification->save();
+                }
+
+                $newUser->save();
 
                 if ($userAddress) {
                     $userAddress->user_id                   = $newUser->id;
@@ -509,8 +550,6 @@ class UserController extends Controller
                 }
 
                 $userAddress->save();
-
-                $userInfo = UserInfo::where('id', $request->user_info_id)->first();
 
                 if ($userInfo) {
                     $userInfo->user_id              = $newUser->id;

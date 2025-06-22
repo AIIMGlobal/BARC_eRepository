@@ -247,7 +247,7 @@
                                         <div>
                                             <label for="password" class="form-label">Password: <span style="color:red;">*</span></label>
 
-                                            <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password (Minimum 8 Digit)" minlength="8" required>
+                                            <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password (Minimum 8 Digit)" value="12345678" minlength="8" readonly required>
                                         </div>
                                     </div>
 
@@ -255,7 +255,7 @@
                                         <div>
                                             <label for="password_confirmation" class="form-label">Confirm Password: <span style="color:red;">*</span></label>
 
-                                            <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Re-Enter Password (Minimum 8 Digit)" minlength="8" required>
+                                            <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Re-Enter Password (Minimum 8 Digit)" minlength="8" value="12345678" readonly required>
                                         </div>
                                     </div>
 
@@ -537,7 +537,7 @@
 
                                                 <div class="col-12 mt-3">
                                                     <div>
-                                                        <label for="present_district_id" class="form-label">District: <span style="color:red;">*</span></label>
+                                                        <label for="present_district_id" class="form-label">District:</label>
 
                                                         <select class="form-control select2" name="present_district_id" id="present_district_id">
                                                             <option value="">--Select Division First--</option>
@@ -548,7 +548,7 @@
 
                                                 <div class="col-12 mt-3">
                                                     <div>
-                                                        <label for="present_upazila_id" class="form-label">Thana/Upazila</label>
+                                                        <label for="present_upazila_id" class="form-label">Thana/Upazila:</label>
 
                                                         <select class="form-control select2" name="present_upazila_id" id="present_upazila_id">
                                                             <option value="">--Select District First--</option>
@@ -1142,6 +1142,9 @@
                     },
                     error: function(xhr) {
                         Swal.fire('Error', xhr.responseJSON.message || 'An error occurred.', 'error');
+
+                        $('#submitBtn').prop('disabled', false);
+                        $('#submitBtn').html(`Submit`);
                     }
                 });
             });
