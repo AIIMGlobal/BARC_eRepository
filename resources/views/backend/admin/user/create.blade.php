@@ -53,7 +53,7 @@
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input user_type" type="radio" name="user_type" id="user_type3" value="3">
 
-                                            <label class="form-check-label" for="user_type3">Employee</label>
+                                            <label class="form-check-label" for="user_type3">Admin</label>
                                         </div>
                                     </div>
 
@@ -93,13 +93,23 @@
                                         <div>
                                             <label for="role_id" class="form-label">Role: <span style="color:red;">*</span></label>
 
-                                            <select class="form-control" name="role_id" id="role_id" required>
-                                                <option value="">--Select Role--</option>
+                                            @if (Auth::user()->role_id == 3)
+                                                <select class="form-control" name="role_id" id="role_id" required>
+                                                    <option value="">--Select Role--</option>
 
-                                                @foreach ($roles as $role)
-                                                    <option value="{{ $role->id }}">{{ $role->name_en }}</option>
-                                                @endforeach
-                                            </select>
+                                                    <option value="3">Admin</option>
+                                                    <option value="4">User Employee</option>
+                                                    <option value="5">User Viewer</option>
+                                                </select>
+                                            @else
+                                                <select class="form-control" name="role_id" id="role_id" required>
+                                                    <option value="">--Select Role--</option>
+
+                                                    @foreach ($roles as $role)
+                                                        <option value="{{ $role->id }}">{{ $role->name_en }}</option>
+                                                    @endforeach
+                                                </select>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -107,13 +117,19 @@
                                         <div>
                                             <label for="office_id" class="form-label">Organization: <span style="color:red;">*</span></label>
 
-                                            <select class="form-control select2" name="office_id" id="office_id" required>
-                                                <option value="">--Select Organization--</option>
+                                            @if (Auth::user()->role_id == 3)
+                                                <input type="hidden" name="office_id" id="office_id" value="{{ Auth::user()->userInfo->office_id ?? '' }}">
 
-                                                @foreach ($offices as $office)
-                                                    <option value="{{ $office->id }}">{{ $office->name }}</option>
-                                                @endforeach
-                                            </select>
+                                                <input type="text" class="form-control" name="organization_name" id="organization_name" value="{{ Auth::user()->userInfo->office->name ?? '' }}" readonly>
+                                            @else
+                                                <select class="form-control select2" name="office_id" id="office_id" required>
+                                                    <option value="">--Select Organization--</option>
+
+                                                    @foreach ($offices as $office)
+                                                        <option value="{{ $office->id }}">{{ $office->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            @endif
                                         </div>
                                     </div>
                                     

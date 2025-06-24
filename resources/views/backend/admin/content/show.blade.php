@@ -302,6 +302,34 @@
                                                         @endif
                                                     </p>
                                                 </div>
+
+                                                <div class="offset-md-8 col-md-4 mt-4">
+                                                    @if (Auth::id() == $content->created_by || Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 3)
+                                                        @if ($content->status == 0 && (Auth::user()->role_id == 1 || Auth::user()->role_id == 2))
+                                                            @can('can_publish')
+                                                                <button class="btn btn-success" type="button" onclick="publishContent('{{ Crypt::encryptString($content->id) }}')">Publish</button>
+                                                            @endcan
+                                                        @elseif ($content->status == 0 && Auth::user()->role_id == 3)
+                                                            @if (($content->createdBy->userInfo->office_id ?? '') == (Auth::user()->userInfo->office_id ?? ''))
+                                                                @can('can_publish')
+                                                                    <button class="btn btn-success" type="button" onclick="publishContent('{{ Crypt::encryptString($content->id) }}')">Publish</button>
+                                                                @endcan
+                                                            @endif
+                                                        @endif
+
+                                                        @can('archive_content')
+                                                            @if ($content->status == 3)
+                                                                <button class="btn btn-primary" type="button" onclick="archiveContent('{{ Crypt::encryptString($content->id) }}')">Unarchive</button>
+                                                            @else
+                                                                <button class="btn btn-primary" type="button" onclick="archiveContent('{{ Crypt::encryptString($content->id) }}')">Archive</button>
+                                                            @endif
+                                                        @endcan
+
+                                                        @can('delete_content')
+                                                            <button class="btn btn-danger" type="button" onclick="deleteContent('{{ Crypt::encryptString($content->id) }}')">Delete</button>
+                                                        @endcan
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -468,5 +496,103 @@
                 });
             }
         });
+    </script>
+
+    <script>
+        function deleteContent(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('admin.content.destroy', ':id') }}".replace(':id', id),
+                        type: "GET",
+                        success: function(response) {
+                            if (response.success) {
+                                Swal.fire({
+                                    title: response.message,
+                                    icon: 'success',
+                                    showCancelButton: false,
+                                });
+
+                                setTimeout(() => window.location.href = '{{ route('admin.content.index') }}', 1000);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        function publishContent(id) {
+            let submitBtn = $(document.activeElement);
+            let btnText = submitBtn.text();
+
+            submitBtn.prop('disabled', true);
+            submitBtn.html(`<span class="spinner-border spinner-border-sm" aria-hidden="true"></span> ${btnText}ing...`);
+
+            $.ajax({
+                url: "{{ route('admin.content.publish', ':id') }}".replace(':id', id),
+                type: "GET",
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'success',
+                            showCancelButton: false,
+                        });
+
+                        setTimeout(() => window.location.reload(), 1000);
+                    }
+
+                    submitBtn.prop('disabled', false);
+                    submitBtn.html(btnText);
+                },
+                error: function(xhr) {
+                    toastr.error(xhr.responseJSON?.message || 'An error occurred.', 'Error');
+
+                    submitBtn.prop('disabled', false);
+                    submitBtn.html(btnText);
+                }
+            });
+        }
+
+        function archiveContent(id) {
+            let submitBtn = $(document.activeElement);
+            let btnText = submitBtn.text();
+
+            submitBtn.prop('disabled', true);
+            submitBtn.html(`<span class="spinner-border spinner-border-sm" aria-hidden="true"></span> ${btnText}ing...`);
+
+            $.ajax({
+                url: "{{ route('admin.content.archive', ':id') }}".replace(':id', id),
+                type: "GET",
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'success',
+                            showCancelButton: false,
+                        });
+
+                        setTimeout(() => window.location.reload(), 1000);
+                    }
+
+                    submitBtn.prop('disabled', false);
+                    submitBtn.html(btnText);
+                },
+                error: function(xhr) {
+                    toastr.error(xhr.responseJSON?.message || 'An error occurred.', 'Error');
+
+                    submitBtn.prop('disabled', false);
+                    submitBtn.html(btnText);
+                }
+            });
+        }
     </script>
 @endpush

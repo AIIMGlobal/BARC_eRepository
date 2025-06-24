@@ -77,7 +77,7 @@
                             <table class="table table-bordered table-striped align-middle mb-0">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">{{__('pages.No')}}</th>
+                                        <th class="text-center">#</th>
                                         <th>{{__('pages.Designation')}}</th>
                                         {{-- <th>{{__('pages.Created By')}}</th> --}}
                                         {{-- <th>{{__('pages.Created At')}}</th> --}}

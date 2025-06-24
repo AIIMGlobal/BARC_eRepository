@@ -69,11 +69,15 @@ class UserController extends Controller
             if ($request->filled('status')) {
                 $query->where('status', $request->status);
             }
+
+            if ($request->filled('sort_by')) {
+                $query->orderBy('name_en', $request->sort_by);
+            }
             
             if (Auth::user()->role_id == 3) {
                 $users = $query->whereHas('userInfo', function($query3) {
                             $query3->where('office_id', (Auth::user()->userInfo->office_id ?? ''));
-                        })->where('role_id', '!=', 1)->where('status', '!=', 5)->latest()->get();
+                        })->whereNotIn('role_id', [1,2])->where('status', '!=', 5)->latest()->get();
             } else {
                 $users = $query->where('role_id', '!=', 1)->where('status', '!=', 5)->latest()->get();
             }

@@ -207,9 +207,9 @@
                                                         @if ($employee->user_type == 4)
                                                             <p>User</p>
                                                         @elseif ($employee->user_type == 3)
-                                                            <p>Employee</p>
-                                                        @elseif ($employee->user_type == 2)
                                                             <p>Admin</p>
+                                                        @elseif ($employee->user_type == 2)
+                                                            <p>Super Admin</p>
                                                         @endif
                                                     </div>
 

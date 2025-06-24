@@ -25,73 +25,139 @@ class IndexController extends Controller
 {
     public function index(Request $request)
     {
-        $categorys = Category::where('status', 1)
-            ->withCount(['contents' => function ($query) {
-                $query->where('status', 1);
-            }])
-            ->orderByDesc('contents_count')
-            ->get();
-
         $currentYear = date('Y');
+        $officeId = Auth::check() && Auth::user()->role_id == 3 && Auth::user()->userInfo ? Auth::user()->userInfo->office_id : null;
+        
+        $categorys = Category::where('status', 1)
+                            ->withCount(['contents' => function ($query) {
+                                $query->where('status', 1);
+                            }])
+                            ->orderByDesc('contents_count')
+                            ->get();
 
-        if (Auth::check() && Auth::user()->user_type == 4) {
+        if (Auth::check() && Auth::user()->role_id == 3 && $officeId) {
             $contents = Content::where('status', 1)
-                                ->where('created_by', Auth::id())
-                                ->get()
-                                ->groupBy(function ($content) {
-                                    $date = Carbon::parse($content->published_at);
-                                    return $date->format('Y-m');
-                                })
-                                ->mapWithKeys(function ($group, $yearMonth) {
-                                    $date = Carbon::createFromFormat('Y-m', $yearMonth);
-                                    $label = $date->format('F (Y)');
-                                    return [$label => $group->count()];
-                                })
-                                ->sortKeysUsing(function ($a, $b) {
-                                    $dateA = Carbon::createFromFormat('F (Y)', $a);
-                                    $dateB = Carbon::createFromFormat('F (Y)', $b);
-                                    return $dateA <=> $dateB;
-                                })
-                                ->toArray();
+                            ->whereIn('created_by', function ($query) use ($officeId) {
+                                $query->select('users.id')
+                                        ->from('users')
+                                        ->join('user_infos', 'user_infos.user_id', 'users.id')
+                                        ->where('users.user_type', 4)
+                                        ->where('user_infos.office_id', $officeId);
+                            })
+                            ->get()
+                            ->groupBy(function ($content) {
+                                $date = Carbon::parse($content->published_at);
+                                return $date->format('Y-m');
+                            })
+                            ->mapWithKeys(function ($group, $yearMonth) {
+                                $date = Carbon::createFromFormat('Y-m', $yearMonth);
+                                $label = $date->format('F (Y)');
+                                return [$label => $group->count()];
+                            })
+                            ->sortKeysUsing(function ($a, $b) {
+                                $dateA = Carbon::createFromFormat('F (Y)', $a);
+                                $dateB = Carbon::createFromFormat('F (Y)', $b);
+                                return $dateA <=> $dateB;
+                            })
+                            ->toArray();
+        } elseif (Auth::check() && Auth::user()->user_type == 4) {
+            $contents = Content::where('status', 1)
+                            ->where('created_by', Auth::id())
+                            ->get()
+                            ->groupBy(function ($content) {
+                                $date = Carbon::parse($content->published_at);
+                                return $date->format('Y-m');
+                            })
+                            ->mapWithKeys(function ($group, $yearMonth) {
+                                $date = Carbon::createFromFormat('Y-m', $yearMonth);
+                                $label = $date->format('F (Y)');
+                                return [$label => $group->count()];
+                            })
+                            ->sortKeysUsing(function ($a, $b) {
+                                $dateA = Carbon::createFromFormat('F (Y)', $a);
+                                $dateB = Carbon::createFromFormat('F (Y)', $b);
+                                return $dateA <=> $dateB;
+                            })
+                            ->toArray();
         } else {
             $contents = Content::where('status', 1)
-                                ->whereYear('published_at', $currentYear)
-                                ->get()
-                                ->groupBy(function ($content) {
-                                    $date = Carbon::parse($content->published_at);
-                                    return $date->format('Y-m');
-                                })
-                                ->mapWithKeys(function ($group, $yearMonth) {
-                                    $date = Carbon::createFromFormat('Y-m', $yearMonth);
-                                    $label = $date->format('F (Y)');
-                                    return [$label => $group->count()];
-                                })
-                                ->sortKeysUsing(function ($a, $b) {
-                                    $dateA = Carbon::createFromFormat('F (Y)', $a);
-                                    $dateB = Carbon::createFromFormat('F (Y)', $b);
-                                    return $dateA <=> $dateB;
-                                })
-                                ->toArray();
+                            ->whereYear('published_at', $currentYear)
+                            ->get()
+                            ->groupBy(function ($content) {
+                                $date = Carbon::parse($content->published_at);
+                                return $date->format('Y-m');
+                            })
+                            ->mapWithKeys(function ($group, $yearMonth) {
+                                $date = Carbon::createFromFormat('Y-m', $yearMonth);
+                                $label = $date->format('F (Y)');
+                                return [$label => $group->count()];
+                            })
+                            ->sortKeysUsing(function ($a, $b) {
+                                $dateA = Carbon::createFromFormat('F (Y)', $a);
+                                $dateB = Carbon::createFromFormat('F (Y)', $b);
+                                return $dateA <=> $dateB;
+                            })
+                            ->toArray();
         }
 
-        $contentCount = Content::where('status', 1)->count();
+        $contentCount = Content::where('status', 1)
+                            ->when($officeId, function ($query) use ($officeId) {
+                                return $query->whereIn('created_by', function ($subQuery) use ($officeId) {
+                                    $subQuery->select('users.id')
+                                                ->from('users')
+                                                ->join('user_infos', 'user_infos.user_id', 'users.id')
+                                                ->where('users.user_type', 4)
+                                                ->where('user_infos.office_id', $officeId);
+                                });
+                            })
+                            ->count();
 
-        $uploadedCount = Content::where('status', 1)->where('created_by', Auth::id())->count();
-        $favCount = UserContentActivity::where('activity_type', 1)->where('user_id', Auth::id())->count();
-        $savedCount = UserContentActivity::where('activity_type', 2)->where('user_id', Auth::id())->count();
-        $employeesCount = User::where('user_type', 3)->where('status', 1)->count();
-        $usersCount = User::where('user_type', 4)->where('status', 1)->count();
+        $uploadedCount = Content::where('status', 1)
+                                ->where('created_by', Auth::id())
+                                ->count();
+
+        $favCount = UserContentActivity::where('activity_type', 1)
+                                    ->where('user_id', Auth::id())
+                                    ->count();
+
+        $savedCount = UserContentActivity::where('activity_type', 2)
+                                        ->where('user_id', Auth::id())
+                                        ->count();
+
+        $employeesCount = User::where('user_type', 3)
+                            ->where('status', 1)
+                            ->when($officeId, function ($query) use ($officeId) {
+                                return $query->whereHas('userInfo', function ($q) use ($officeId) {
+                                    $q->where('office_id', $officeId);
+                                });
+                            })
+                            ->count();
+
+        $usersCount = User::where('user_type', 4)
+                        ->where('status', 1)
+                        ->when($officeId, function ($query) use ($officeId) {
+                            return $query->whereHas('userInfo', function ($q) use ($officeId) {
+                                $q->where('office_id', $officeId);
+                            });
+                        })
+                        ->count();
 
         $approvedUsers = User::with('userInfo')
-            ->where('user_type', 4)
-            ->where('status', 1)
-            ->get();
+                            ->where('user_type', 4)
+                            ->where('status', 1)
+                            ->when($officeId, function ($query) use ($officeId) {
+                                return $query->whereHas('userInfo', function ($q) use ($officeId) {
+                                    $q->where('office_id', $officeId);
+                                });
+                            })
+                            ->get();
 
         $totalApprovedUsers = $approvedUsers->count();
 
         $officeCounts = $approvedUsers->groupBy('userInfo.office_id')->map->count();
 
         $officeIds = $approvedUsers->pluck('userInfo.office_id')->unique()->filter();
+
         $offices = Office::whereIn('id', $officeIds)->pluck('name', 'id')->toArray();
 
         $chartData = [

@@ -168,7 +168,7 @@
         @endcan
 
         @can('content_line_chart')
-            @if (Auth::user()->user_type != 4)
+            @if (in_array(Auth::user()->role_id, [1, 2, 3]))
                 @push('css')
                     <style>
                         .pieChart-container {

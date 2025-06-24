@@ -60,7 +60,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3 col-sm-6 col-12 pt-1">
+                                    <div class="col-md-2 col-sm-6 col-12 pt-1">
                                         <div class="search-box">
                                             <div>
                                                 <select class="form-control select2" name="user_type" id="user_type">
@@ -73,19 +73,21 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3 col-sm-6 col-12 pt-1">
-                                        <div class="search-box">
-                                            <div>
-                                                <select class="form-control select2" name="office_id" id="office_id">
-                                                    <option value="">--Search by Organization--</option>
+                                    @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+                                        <div class="col-md-3 col-sm-6 col-12 pt-1">
+                                            <div class="search-box">
+                                                <div>
+                                                    <select class="form-control select2" name="office_id" id="office_id">
+                                                        <option value="">--Search by Organization--</option>
 
-                                                    @foreach ($offices as $office)
-                                                        <option value="{{ $office->id }}">{{ $office->name }}</option>
-                                                    @endforeach
-                                                </select>
+                                                        @foreach ($offices as $office)
+                                                            <option value="{{ $office->id }}">{{ $office->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endif
 
                                     <div class="col-md-2 col-sm-6 col-12 pt-1">
                                         <div class="search-box">
@@ -98,6 +100,19 @@
                                                     <option value="2">Declined</option>
                                                     <option value="3">Archived</option>
                                                     <option value="4">Pending Email Verification</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2 col-sm-6 col-12 pt-1">
+                                        <div class="search-box">
+                                            <div>
+                                                <select class="form-control select2" name="sort_by" id="sort_by">
+                                                    <option value="">--Sort--</option>
+
+                                                    <option value="asc">Ascending</option>
+                                                    <option value="desc">Descending</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -158,7 +173,7 @@
 
 @push('script')
     <script>
-        $('#searchText, #user_id, #user_type, #office_id, #userStatus').on('change keyup', function () {
+        $('#searchText, #user_id, #user_type, #office_id, #userStatus, #sort_by').on('change keyup', function () {
             fetchFilteredData();
         });
 
@@ -168,6 +183,7 @@
             $('#user_type').val('').trigger('change');
             $('#office_id').val('').trigger('change');
             $('#userStatus').val('').trigger('change');
+            $('#sort_by').val('').trigger('change');
 
             fetchFilteredData();
         });
@@ -178,6 +194,7 @@
             const user_type = $('#user_type').val();
             const office_id = $('#office_id').val();
             const userStatus = $('#userStatus').val();
+            const sort_by = $('#sort_by').val();
 
             $.ajax({
                 url: "{{ route('admin.user.index') }}",
@@ -188,6 +205,7 @@
                     user_type: user_type,
                     office_id: office_id,
                     status: userStatus,
+                    sort_by: sort_by,
                 },
                 beforeSend: function () {
                     $('#datatable tbody').html('<tr><td colspan="10" class="text-center">Loading...</td></tr>');

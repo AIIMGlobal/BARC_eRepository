@@ -171,7 +171,7 @@
                         </li>
                     @endcan
 
-                    @can('content_list')
+                    @can('my_content_list')
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="{{ route('admin.content.indexMyContent') }}">
                                 <i class="ri-building-line"></i> <span data-key="t-dashboards">My Contents</span>
@@ -209,19 +209,19 @@
                                         </li>
                                     @endcan
 
-                                    @can('content_list')
+                                    @can('my_content_list')
                                         <li class="nav-item">
                                             <a href="{{ route('admin.content.indexMyContent') }}" class="nav-link" data-key="t-crm">My Contents</a>
                                         </li>
                                     @endcan
 
-                                    @can('total_favourite_content')
+                                    @can('content_list')
                                         <li class="nav-item">
                                             <a href="{{ route('admin.content.indexFavorite') }}" class="nav-link" data-key="t-crm">Favorite Contents</a>
                                         </li>
                                     @endcan
 
-                                    @can('total_saved_content')
+                                    @can('content_list')
                                         <li class="nav-item">
                                             <a href="{{ route('admin.content.indexSaved') }}" class="nav-link" data-key="t-crm">Watch Later</a>
                                         </li>
@@ -332,13 +332,13 @@
                                     </li>
                                 @endcan
 
-                                @can('log_report')
+                                {{-- @can('log_report')
                                     <li class="nav-item">
                                         <a class="nav-link menu-link" href="{{ route('admin.report.logReport') }}">
                                             <span data-key="t-manage_report">Log Report</span>
                                         </a>
                                     </li>
-                                @endcan
+                                @endcan --}}
                             </ul>
                         </div>
                     </li>

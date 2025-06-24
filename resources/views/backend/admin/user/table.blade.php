@@ -19,9 +19,9 @@
 
             <td>
                 @if ($user->user_type == 2)
-                    Admin
+                    Super Admin
                 @elseif ($user->user_type == 3)
-                    Employee
+                    Admin
                 @elseif ($user->user_type == 4)
                     User
                 @endif

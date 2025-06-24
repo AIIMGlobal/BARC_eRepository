@@ -66,6 +66,16 @@
                                         </select>
                                     </div>
 
+                                    <div class="col-md-2 col-sm-6">
+                                        <select name="status" id="statusId" class="form-control select2">
+                                            <option value="">--Search by Status--</option>
+                                            
+                                            <option value="0">Unpublished</option>
+                                            <option value="1">Published</option>
+                                            <option value="3">Archived</option>
+                                        </select>
+                                    </div>
+
                                     <div class="col-md-3 col-sm-6">
                                         <div class="d-flex gap-2">
                                             <input type="text" name="from_date" id="from_date" class="form-control flatpickr" placeholder="From Date">
@@ -120,6 +130,10 @@
             timeOut: 3000
         };
 
+        let currentCategoryId = null;
+        let fetchTimer;
+        let isFetching = false;
+
         $(document).ready(function() {
             $('.flatpickr').flatpickr({
                 dateFormat: 'Y-m-d',
@@ -136,41 +150,39 @@
             });
 
             $('#filterForm').on('change', 'select, input', function() {
-                debounceFetchFilteredData(1);
+                debounceFetchFilteredData(1, false);
             });
 
             let typingTimer;
-
             $('#content_name').on('keyup', function() {
                 clearTimeout(typingTimer);
-                typingTimer = setTimeout(() => debounceFetchFilteredData(1), 500);
+                
+                typingTimer = setTimeout(() => debounceFetchFilteredData(1, false), 500);
             });
 
             $('#resetButton').on('click', function() {
                 $('#filterForm')[0].reset();
                 $('#content_name').val('');
                 $('#content_type').val('').trigger('change');
+                $('#statusId').val('').trigger('change');
                 $('#from_date').val('');
                 $('#to_date').val('');
                 $('#per_page').val('12').trigger('change');
                 $('.category-item').removeClass('selected active');
-
                 currentCategoryId = null;
-                
-                $('#loadMore').data('page', 1);
-                
                 $('#filterForm').find('input[name="category_id"]').remove();
-                
+                $('#loadMore').data('page', 1).show();
+
                 debounceFetchFilteredData(1, false);
             });
 
             $('#loadMore').on('click', function() {
                 let page = $(this).data('page') || 1;
-
+                
                 page++;
-
+                
                 debounceFetchFilteredData(page, true);
-
+                
                 $(this).data('page', page);
             });
 
@@ -182,9 +194,8 @@
                 const categoryName = $(this).data('category-name');
 
                 $('.category-item').removeClass('selected active');
-                $(this).addClass('selected active');
 
-                // console.log('Fetching data for category:', categoryId, categoryName);
+                $(this).addClass('selected active');
 
                 currentCategoryId = categoryId;
 
@@ -192,15 +203,21 @@
             });
         });
 
-        let currentCategoryId = null;
-        let fetchTimer;
-
-        function debounceFetchFilteredData(page, append, categoryId) {
+        function debounceFetchFilteredData(page, append, categoryId = null) {
             clearTimeout(fetchTimer);
-            fetchTimer = setTimeout(() => fetchFilteredData(page, append, categoryId), 100);
+
+            fetchTimer = setTimeout(() => {
+                if (!isFetching) {
+                    fetchFilteredData(page, append, categoryId);
+                }
+            }, 100);
         }
 
         function fetchFilteredData(page = 1, append = false, categoryId = null) {
+            if (isFetching) return;
+
+            isFetching = true;
+
             let formData = $('#filterForm').serializeArray();
             let data = { page: page };
 
@@ -212,11 +229,10 @@
 
             if (categoryId !== null) {
                 data.category_id = categoryId;
-            } else if (currentCategoryId !== null && !data.category_id) {
+                currentCategoryId = categoryId;
+            } else if (currentCategoryId !== null && page === 1) {
                 data.category_id = currentCategoryId;
             }
-
-            // console.log('AJAX request data:', data);
 
             $.ajax({
                 url: "{{ route('admin.content.indexMyContent') }}",
@@ -229,24 +245,23 @@
                         } else {
                             $('#contentContainer').html(response.html);
                         }
-                        
-                        if (!response.hasMore) {
-                            $('#loadMore').hide();
-                        } else {
-                            $('#loadMore').show();
-                        }
+                        $('#loadMore').toggle(response.hasMore);
                     } else {
                         toastr.error(response.message || 'Failed to fetch content.', 'Error');
                     }
                 },
                 error: function(xhr) {
                     toastr.error(xhr.responseJSON?.message || 'An error occurred.', 'Error');
+                },
+                complete: function() {
+                    isFetching = false;
                 }
             });
         }
 
         function toggleFavorite(element) {
             let id = $(element).data('id');
+
             $.ajax({
                 url: "{{ route('admin.content.toggleFavorite', ':id') }}".replace(':id', id),
                 type: "POST",
@@ -266,6 +281,7 @@
 
         function toggleSave(element) {
             let id = $(element).data('id');
+
             $.ajax({
                 url: "{{ route('admin.content.toggleSave', ':id') }}".replace(':id', id),
                 type: "POST",
@@ -296,7 +312,8 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         url: "{{ route('admin.content.destroy', ':id') }}".replace(':id', id),
-                        type: "GET",
+                        type: "POST",
+                        data: { _token: "{{ csrf_token() }}" },
                         success: function(response) {
                             if (response.success) {
                                 Swal.fire({
@@ -304,13 +321,31 @@
                                     icon: 'success',
                                     showCancelButton: false,
                                 });
+
                                 setTimeout(() => window.location.reload(), 1000);
                             }
-                        },
-                        error: function(xhr) {
-                            toastr.error(xhr.responseJSON?.message || 'An error occurred.', 'Error');
                         }
                     });
+                }
+            });
+        }
+
+        function publishContent(id) {
+            $.ajax({
+                url: "{{ route('admin.content.publish', ':id') }}".replace(':id', id),
+                type: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'success',
+                            showCancelButton: false,
+                        });
+
+                        setTimeout(() => window.location.reload(), 1000);
+                    }
+                },
+                error: function(xhr) {
+                    toastr.error(xhr.responseJSON?.message || 'An error occurred.', 'Error');
                 }
             });
         }
@@ -318,7 +353,8 @@
         function archiveContent(id) {
             $.ajax({
                 url: "{{ route('admin.content.archive', ':id') }}".replace(':id', id),
-                type: "GET",
+                type: "POST",
+                data: { _token: "{{ csrf_token() }}" },
                 success: function(response) {
                     if (response.success) {
                         Swal.fire({
@@ -326,6 +362,7 @@
                             icon: 'success',
                             showCancelButton: false,
                         });
+
                         setTimeout(() => window.location.reload(), 1000);
                     }
                 },
