@@ -170,9 +170,20 @@
                                 @csrf
 
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         <div class="form-group">
                                             <input type="text" id="name_en" class="form-control" name="name_en" placeholder="Enter Full Name" required="required">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <select name="role_id" id="role_id" class="form-control select2" required>
+                                                <option value="">--Select User Type--</option>
+
+                                                <option value="4">Employee</option>
+                                                <option value="5">Public</option>
+                                            </select>
                                         </div>
                                     </div>
 
