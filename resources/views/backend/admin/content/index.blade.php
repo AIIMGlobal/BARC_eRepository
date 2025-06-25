@@ -313,8 +313,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         url: "{{ route('admin.content.destroy', ':id') }}".replace(':id', id),
-                        type: "POST",
-                        data: { _token: "{{ csrf_token() }}" },
+                        type: "GET",
                         success: function(response) {
                             if (response.success) {
                                 Swal.fire({
@@ -334,7 +333,8 @@
         function publishContent(id) {
             $.ajax({
                 url: "{{ route('admin.content.publish', ':id') }}".replace(':id', id),
-                type: function(response) {
+                type: "GET",
+                success: function(response) {
                     if (response.success) {
                         Swal.fire({
                             title: response.message,
@@ -354,8 +354,7 @@
         function archiveContent(id) {
             $.ajax({
                 url: "{{ route('admin.content.archive', ':id') }}".replace(':id', id),
-                type: "POST",
-                data: { _token: "{{ csrf_token() }}" },
+                type: "GET",
                 success: function(response) {
                     if (response.success) {
                         Swal.fire({
