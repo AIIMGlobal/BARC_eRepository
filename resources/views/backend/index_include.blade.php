@@ -143,7 +143,7 @@
                             </div>
                
                             <div class="custom-text">
-                                <p class="title">Total Saved Contents</p>
+                                <p class="title">Total Watch Later Contents</p>
                                
                                 <h2 class="count">
                                     <span class="counter-value" data-target="{{ $savedCount ?? 0 }}">{{ $savedCount ?? 0 }}</span>

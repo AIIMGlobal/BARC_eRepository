@@ -102,17 +102,29 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name_en'           => 'required|string|max:255',
-            'user_category_id'  => 'required|exists:user_categories,id',
-            'office_id'         => 'required|exists:offices,id',
-            'designation_id'    => 'required|string|max:255',
-            'other_designation' => 'required_if:designation_id,1000|string|max:255|nullable',
-            'email'             => 'required|email|unique:users,email',
-            'mobile'            => 'required|string|max:14|unique:users,mobile',
-            'password'          => 'required|min:6|confirmed',
-            'image'             => 'image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
+        if ($request->role_id == 5) {
+            $validator = Validator::make($request->all(), [
+                'name_en'           => 'required|string|max:255',
+                'role_id'           => 'required|exists:roles,id',
+                'email'             => 'required|email|unique:users,email',
+                'mobile'            => 'required|string|max:14|unique:users,mobile',
+                'password'          => 'required|min:6|confirmed',
+                'image'             => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            ]);
+        } else {
+                $validator = Validator::make($request->all(), [
+                'name_en'           => 'required|string|max:255',
+                'user_category_id'  => 'required|exists:user_categories,id',
+                'role_id'           => 'required|exists:roles,id',
+                'office_id'         => 'required|exists:offices,id',
+                'designation_id'    => 'required|string|max:255',
+                'other_designation' => 'required_if:designation_id,1000|string|max:255|nullable',
+                'email'             => 'required|email|unique:users,email',
+                'mobile'            => 'required|string|max:14|unique:users,mobile',
+                'password'          => 'required|min:6|confirmed',
+                'image'             => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            ]);
+        }
 
         if ($validator->fails()) {
             return response()->json([

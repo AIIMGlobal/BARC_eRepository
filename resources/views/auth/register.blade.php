@@ -82,7 +82,7 @@
                 animation: borderMoveVertical 3s linear infinite;
             }
 
-            @keyframes borderMove {
+            /* @keyframes borderMove {
                 0% { width: 0; left: 50%; }
                 50% { width: 50%; left: 50%; }
                 66% { width: 50%; left: 50%; }
@@ -108,7 +108,7 @@
                 50% { height: 50%; bottom: 50%; }
                 66% { height: 50%; bottom: 50%; }
                 100% { height: 0; bottom: 100%; }
-            }
+            } */
 
             .select2-selection__rendered {
                 line-height: 50px !important;
@@ -182,7 +182,7 @@
                                                 <option value="">--Select User Type--</option>
 
                                                 <option value="4">Employee</option>
-                                                <option value="5">Public</option>
+                                                <option value="5">Others</option>
                                             </select>
                                         </div>
                                     </div>
