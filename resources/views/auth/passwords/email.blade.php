@@ -146,10 +146,10 @@
                 </div>
 
                 <div class="fxt-form-content">
-                    <div class="border border-top"></div>
+                    {{-- <div class="border border-top"></div>
                     <div class="border border-bottom"></div>
                     <div class="border border-left"></div>
-                    <div class="border border-right"></div>
+                    <div class="border border-right"></div> --}}
 
                     <div class="fxt-main-form">
                         <div class="fxt-inner-wrap">

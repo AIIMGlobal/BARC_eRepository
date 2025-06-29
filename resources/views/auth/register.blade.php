@@ -153,10 +153,10 @@
                 </div>
 
                 <div class="fxt-form-content">
-                    <div class="border border-top"></div>
+                    {{-- <div class="border border-top"></div>
                     <div class="border border-bottom"></div>
                     <div class="border border-left"></div>
-                    <div class="border border-right"></div>
+                    <div class="border border-right"></div> --}}
 
                     <div class="fxt-page-switcher">
                         <h2 class="fxt-page-title mr-3">Register</h2>
