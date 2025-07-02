@@ -236,9 +236,15 @@ xmlns:o="urn:schemas-microsoft-com:office:office">
                                                                     <p style="font-size: 14px; line-height: 140%;">&nbsp;
                                                                     </p>
 
-                                                                    <p style="font-size: 14px; line-height: 140%;">
-                                                                        <span style="font-size: 14px; line-height: 25.2px; color: #000;">You have successfully registered in BARC Repository Software. Please Wait for Approval.</span>
-                                                                    </p>
+                                                                    @if ($user->role_id == 5)
+                                                                        <p style="font-size: 14px; line-height: 140%;">
+                                                                            <span style="font-size: 14px; line-height: 25.2px; color: #000;">You have successfully registered in BARC Repository Software. Please Login.</span>
+                                                                        </p>
+                                                                    @else
+                                                                        <p style="font-size: 14px; line-height: 140%;">
+                                                                            <span style="font-size: 14px; line-height: 25.2px; color: #000;">You have successfully registered in BARC Repository Software. Please Wait for Approval.</span>
+                                                                        </p>
+                                                                    @endif
                                                                 </div>
                                                             </td>
                                                         </tr>

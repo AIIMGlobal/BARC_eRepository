@@ -16,26 +16,33 @@ class UpazilaController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        if(Gate::allows('manage_upazila', $user)){
+
+        if (Gate::allows('manage_upazila', $user)) {
+            $regions = Division::where('status', 1)->orderBy('name_en', 'asc')->get();
+            $districts = District::where('status', 1)->orderBy('name_en', 'asc')->get();
+
             $query = Upazila::orderBy('name_en','ASC');
+
             if (isset($request->division) and $request->division != '') {
                 $query->whereHas('districtInfo',function($new_query) use ($request){
                     $new_query->where('division_id',$request->division);
                 });
             }
 
+            if (isset($request->district_id) && $request->district_id != '') {
+                $query->where('district_id', $request->district_id);
+            }
+
             if (isset($request->name_en) and $request->name_en != '') {
                 $query->where('name_en','like','%'.$request->name_en.'%');
             }
-            $upazilas = $query->with('districtInfo.divisionInfo')->paginate(20);
-            $regions = Division::where('status',1)->latest()->get();
-            $districts = District::where('status',1)->with('divisionInfo')->latest()->get();
 
-            return view('backend.admin.upazila.index', compact("upazilas","regions","districts"));
-        }else{
+            $upazilas = $query->with('districtInfo.divisionInfo')->paginate(20);
+
+            return view('backend.admin.upazila.index', compact("upazilas", "regions", "districts"));
+        } else {
             return abort(403, "You don't have permission..!");
         }
-
     }
 
     public function create()

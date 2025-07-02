@@ -171,9 +171,10 @@ class RegisterController extends Controller
             $user->email             = $request->email;
             $user->mobile            = $request->mobile;
             $user->user_type         = 4;
-            $user->role_id           = 4;
+            $user->role_id           = $request->role_id;
             $user->password          = Hash::make($request->password);
             $user->status            = 4;
+            
             $user->save();
 
             $userInfo = new UserInfo;

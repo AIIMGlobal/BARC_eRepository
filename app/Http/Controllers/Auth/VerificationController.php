@@ -91,49 +91,59 @@ class VerificationController extends Controller
                     if ($user) {
                         Mail::to($user->email)->send(new UserRegistrationToUserMail($setting, $user));
 
-                        if (count($admins)) {
-                            foreach ($admins as $admin) {
-                                Mail::to($admin->email)->send(new UserRegistrationToAdminMail($setting, $user, $admin));
+                        if ($user->role_id == 5) {
+                            $user->status = 1;
 
-                                $notification = new Notification;
+                            $user->save();
 
-                                $notification->type             = 4;
-                                $notification->title            = 'New User Registration';
-                                $notification->message          = 'A new user has registered.';
-                                $notification->route_name       = route('admin.user.show', Crypt::encryptString($user->id));
-                                $notification->sender_role_id   = 4;
-                                $notification->sender_user_id   = $user->id;
-                                $notification->receiver_role_id = $admin->role_id;
-                                $notification->receiver_user_id = $admin->id;
-                                $notification->read_status      = 0;
+                            DB::commit();
 
-                                $notification->save();
+                            return redirect()->route('login')->with('success', 'Email verification completed. Please Login.');
+                        } else {
+                            if (count($admins)) {
+                                foreach ($admins as $admin) {
+                                    Mail::to($admin->email)->send(new UserRegistrationToAdminMail($setting, $user, $admin));
+
+                                    $notification = new Notification;
+
+                                    $notification->type             = 4;
+                                    $notification->title            = 'New User Registration';
+                                    $notification->message          = 'A new user has registered.';
+                                    $notification->route_name       = route('admin.user.show', Crypt::encryptString($user->id));
+                                    $notification->sender_role_id   = 4;
+                                    $notification->sender_user_id   = $user->id;
+                                    $notification->receiver_role_id = $admin->role_id;
+                                    $notification->receiver_user_id = $admin->id;
+                                    $notification->read_status      = 0;
+
+                                    $notification->save();
+                                }
                             }
-                        }
 
-                        if (count($orgAdmins)) {
-                            foreach ($orgAdmins as $admin) {
-                                Mail::to($admin->email)->send(new UserRegistrationToAdminMail($setting, $user, $admin));
+                            if (count($orgAdmins)) {
+                                foreach ($orgAdmins as $admin) {
+                                    Mail::to($admin->email)->send(new UserRegistrationToAdminMail($setting, $user, $admin));
 
-                                $notification = new Notification;
+                                    $notification = new Notification;
 
-                                $notification->type             = 4;
-                                $notification->title            = 'New User Registration';
-                                $notification->message          = 'A new user has registered.';
-                                $notification->route_name       = route('admin.user.show', Crypt::encryptString($user->id));
-                                $notification->sender_role_id   = 4;
-                                $notification->sender_user_id   = $user->id;
-                                $notification->receiver_role_id = $admin->role_id;
-                                $notification->receiver_user_id = $admin->id;
-                                $notification->read_status      = 0;
+                                    $notification->type             = 4;
+                                    $notification->title            = 'New User Registration';
+                                    $notification->message          = 'A new user has registered.';
+                                    $notification->route_name       = route('admin.user.show', Crypt::encryptString($user->id));
+                                    $notification->sender_role_id   = 4;
+                                    $notification->sender_user_id   = $user->id;
+                                    $notification->receiver_role_id = $admin->role_id;
+                                    $notification->receiver_user_id = $admin->id;
+                                    $notification->read_status      = 0;
 
-                                $notification->save();
+                                    $notification->save();
+                                }
                             }
+
+                            DB::commit();
+
+                            return redirect()->route('login')->with('success', 'Email verification completed. You have successfully registered in BARC Repository Software! Please wait for account approval.');
                         }
-
-                        DB::commit();
-
-                        return redirect()->route('login')->with('success', 'Email verification completed. You have successfully registered in BARC Repository Software! Please wait for account approval.');
                     }
                 } else {
                     DB::commit();

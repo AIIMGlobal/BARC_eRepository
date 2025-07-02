@@ -44,7 +44,7 @@
                         <div class="card-body border border-dashed border-end-0 border-start-0">
                             <form>
                                 <div class="row g-3">
-                                    <div class="col-md-4 col-sm-6">
+                                    <div class="col-md-3 col-sm-6">
                                         <div class="search-box">
                                             <select name="office_id" id="office_id" class="form-control select2">
                                                 <option value="">--Search by Organization--</option>
@@ -55,6 +55,61 @@
                                                     @endforeach
                                                 @endif
                                             </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="search-box">
+                                            <select name="division_id" id="present_division_id" class="form-control select2">
+                                                <option value="">--Search by Division--</option>
+
+                                                @if (count($divisions) > 0)
+                                                    @foreach ($divisions as $division)
+                                                        <option value="{{ $division->id }}">{{ $division->name_en }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="search-box">
+                                            <select name="district_id" id="present_district_id" class="form-control select2">
+                                                <option value="">--Search by District--</option>
+
+                                                @if (count($districts) > 0)
+                                                    @foreach ($districts as $district)
+                                                        <option value="{{ $district->id }}">{{ $district->name_en }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="search-box">
+                                            <select name="upazila_id" id="present_upazila_id" class="form-control select2">
+                                                <option value="">--Search by Upazila--</option>
+
+                                                @if (count($upazilas) > 0)
+                                                    @foreach ($upazilas as $upazila)
+                                                        <option value="{{ $upazila->id }}">{{ $upazila->name_en }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2 col-sm-6 col-12 pt-1">
+                                        <div class="search-box">
+                                            <div>
+                                                <select class="form-control select2" name="sort_by" id="sort_by">
+                                                    <option value="">--Sort--</option>
+
+                                                    <option value="asc">Ascending</option>
+                                                    <option value="desc">Descending</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -110,25 +165,39 @@
 @endsection
 
 @push('script')
+    @include('backend.admin.partials.addressDynamic')
+
     <script>
-        $('#office_id').on('change keyup', function () {
+        $('#office_id, #present_division_id, #present_district_id, #present_upazila_id, #sort_by').on('change keyup', function () {
             fetchFilteredData();
         });
 
         $('#resetButton').on('click', function () {
             $('#office_id').val('').trigger('change');
+            $('#present_division_id').val('').trigger('change');
+            $('#present_district_id').val('').trigger('change');
+            $('#present_upazila_id').val('').trigger('change');
+            $('#sort_by').val('').trigger('change');
 
             fetchFilteredData();
         });
 
         function fetchFilteredData() {
             const office_id = $('#office_id').val();
+            const present_division_id = $('#present_division_id').val();
+            const present_district_id = $('#present_district_id').val();
+            const present_upazila_id = $('#present_upazila_id').val();
+            const sort_by = $('#sort_by').val();
 
             $.ajax({
                 url: "{{ route('admin.office.index') }}",
                 type: "GET",
                 data: {
                     office_id: office_id,
+                    division_id: present_division_id,
+                    district_id: present_district_id,
+                    upazila_id: present_upazila_id,
+                    sort_by: sort_by,
                 },
                 beforeSend: function () {
                     $('#datatable tbody').html('<tr><td colspan="7" class="text-center">Loading...</td></tr>');

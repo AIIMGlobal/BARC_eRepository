@@ -79,7 +79,7 @@
                 animation: borderMoveVertical 3s linear infinite;
             }
 
-            /* @keyframes borderMove {
+            @keyframes borderMove {
                 0% { width: 0; left: 50%; }
                 50% { width: 50%; left: 50%; }
                 66% { width: 50%; left: 50%; }
@@ -105,7 +105,7 @@
                 50% { height: 50%; bottom: 50%; }
                 66% { height: 50%; bottom: 50%; }
                 100% { height: 0; bottom: 100%; }
-            } */
+            }
         </style>
     </head>
 
@@ -139,10 +139,10 @@
                 </div>
 
                 <div class="fxt-form-content">
-                    {{-- <div class="border border-top"></div>
+                    <div class="border border-top"></div>
                     <div class="border border-bottom"></div>
                     <div class="border border-left"></div>
-                    <div class="border border-right"></div> --}}
+                    <div class="border border-right"></div>
 
                     <div class="fxt-page-switcher">
                         <h2 class="fxt-page-title mr-3">Verification</h2>

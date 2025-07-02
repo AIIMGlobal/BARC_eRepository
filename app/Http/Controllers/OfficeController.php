@@ -35,7 +35,23 @@ class OfficeController extends Controller
                 $query->where('id', $request->office_id);
             }
 
-            $offices = $query->where('status', '!=', 2)->orderBy('name', 'asc')->get();
+            if (isset($request->division_id) && $request->division_id != '') {
+                $query->where('division_id', $request->division_id);
+            }
+
+            if (isset($request->district_id) && $request->district_id != '') {
+                $query->where('district_id', $request->district_id);
+            }
+
+            if (isset($request->upazila_id) && $request->upazila_id != '') {
+                $query->where('upazila_id', $request->upazila_id);
+            }
+
+            if ($request->filled('sort_by')) {
+                $query->orderBy('name_en', $request->sort_by);
+            }
+
+            $offices = $query->where('status', '!=', 2)->latest()->get();
             
             if ($request->ajax()) {
                 $html = view('backend.admin.office.table', compact('offices'))->render();

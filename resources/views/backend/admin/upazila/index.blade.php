@@ -44,11 +44,23 @@
                                 <div class="row g-3">
                                     <div class="col-md-2 col-sm-2">
                                         <div>
-                                            <select class="form-control select2" name="division" id="idStatus">
+                                            <select class="form-control select2" name="division" id="present_division_id">
                                                 <option value="">Search by Division</option>
 
                                                 @foreach ($regions as $region)
                                                     <option @if(isset($_GET['division']) && $_GET['division'] == $region->id) selected @endif value="{{ $region->id }}">{{ $region->name_en }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2 col-sm-2">
+                                        <div>
+                                            <select class="form-control select2" name="district_id" id="present_district_id">
+                                                <option value="">Search by District</option>
+
+                                                @foreach ($districts as $district)
+                                                    <option @if(isset($_GET['district_id']) && $_GET['district_id'] == $district->id) selected @endif value="{{ $district->id }}">{{ $district->name_en }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -173,3 +185,7 @@
         <!-- container-fluid -->
     </div>
 @endsection
+
+@push('script')
+    @include('backend.admin.partials.addressDynamic')
+@endpush

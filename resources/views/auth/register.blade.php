@@ -26,7 +26,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
         <!-- Google Web Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
 
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
@@ -45,7 +45,6 @@
                 position: absolute;
                 height: 5px;
                 width: 50%;
-                /* background: linear-gradient(90deg, #FF4500, #FFA500); */
                 background: linear-gradient(315deg, #03a9f4, #ff0058);
                 box-shadow: 0 0 10px rgba(30, 144, 255, 0.8);
                 animation: borderMove 3s linear infinite;
@@ -82,7 +81,7 @@
                 animation: borderMoveVertical 3s linear infinite;
             }
 
-            /* @keyframes borderMove {
+            @keyframes borderMove {
                 0% { width: 0; left: 50%; }
                 50% { width: 50%; left: 50%; }
                 66% { width: 50%; left: 50%; }
@@ -108,7 +107,7 @@
                 50% { height: 50%; bottom: 50%; }
                 66% { height: 50%; bottom: 50%; }
                 100% { height: 0; bottom: 100%; }
-            } */
+            }
 
             .select2-selection__rendered {
                 line-height: 50px !important;
@@ -153,10 +152,10 @@
                 </div>
 
                 <div class="fxt-form-content">
-                    {{-- <div class="border border-top"></div>
+                    <div class="border border-top"></div>
                     <div class="border border-bottom"></div>
                     <div class="border border-left"></div>
-                    <div class="border border-right"></div> --}}
+                    <div class="border border-right"></div>
 
                     <div class="fxt-page-switcher">
                         <h2 class="fxt-page-title mr-3">Register</h2>
@@ -180,7 +179,6 @@
                                         <div class="form-group">
                                             <select name="role_id" id="role_id" class="form-control select2" required>
                                                 <option value="">--Select User Type--</option>
-
                                                 <option value="4">Employee</option>
                                                 <option value="5">Others</option>
                                             </select>
@@ -191,7 +189,6 @@
                                         <div class="form-group">
                                             <select name="user_category_id" id="user_category_id" class="form-control select2" required>
                                                 <option value="">--Select User Service Type--</option>
-
                                                 @foreach ($categorys as $category)
                                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                 @endforeach
@@ -203,7 +200,6 @@
                                         <div class="form-group">
                                             <select name="office_id" id="office_id" class="form-control select2" required>
                                                 <option value="">--Select Organization--</option>
-
                                                 @foreach ($orgs as $org)
                                                     <option value="{{ $org->id }}">{{ $org->name }}</option>
                                                 @endforeach
@@ -215,11 +211,9 @@
                                         <div class="form-group">
                                             <select name="designation_id" id="designation_id" class="form-control select2" required>
                                                 <option value="">--Select Designation--</option>
-
                                                 @foreach ($designations as $designation)
                                                     <option value="{{ $designation->id }}">{{ $designation->name }}</option>
                                                 @endforeach
-
                                                 <option value="1000">Other</option>
                                             </select>
                                         </div>
@@ -298,10 +292,33 @@
             $(document).ready(function () {
                 $('.select2').select2();
 
+                function toggleRequiredFields() {
+                    const roleId = $('#role_id').val();
+                    const officeSelect = $('#office_id');
+                    const designationSelect = $('#designation_id');
+                    const otherDesignationInput = $('#other_designation');
+
+                    if (roleId === '4') { // Employee
+                        officeSelect.prop('required', true);
+                        designationSelect.prop('required', true);
+                        if (designationSelect.val() === '1000') {
+                            otherDesignationInput.prop('required', true);
+                        }
+                    } else if (roleId === '5') { // Others
+                        officeSelect.removeAttr('required');
+                        designationSelect.removeAttr('required');
+                        otherDesignationInput.removeAttr('required');
+                    }
+                }
+
+                $('#role_id').on('change', function() {
+                    toggleRequiredFields();
+                });
+
                 $('#designation_id').on('change', function() {
-                    if ($(this).val() === '1000') {
+                    if ($(this).val() === '1000' && $('#role_id').val() === '4') {
                         $('#other_designation_group').show();
-                        $('#other_designation').attr('required', true);
+                        $('#other_designation').prop('required', true);
                     } else {
                         $('#other_designation_group').hide();
                         $('#other_designation').removeAttr('required').val('');
@@ -321,7 +338,7 @@
                         url: "{{ route('register.store') }}",
                         method: "POST",
                         data: formData,
-                        processData: false,
+                        processData: false, // Corrected from processFilters
                         contentType: false,
                         success: function (response) {
                             if (response.success) {
@@ -343,7 +360,6 @@
                         error: function (xhr) {
                             if (xhr.status === 422) {
                                 let errors = xhr.responseJSON.message;
-
                                 Swal.fire({
                                     icon: "error",
                                     title: "Validation Error",
@@ -359,6 +375,9 @@
                         }
                     });
                 });
+
+                // Initial check on page load
+                toggleRequiredFields();
             });
         </script>
     </body>

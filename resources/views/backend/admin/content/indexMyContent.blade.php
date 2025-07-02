@@ -66,15 +66,17 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-md-2 col-sm-6">
-                                        <select name="status" id="statusId" class="form-control select2">
-                                            <option value="">--Search by Status--</option>
-                                            
-                                            <option value="0">Unpublished</option>
-                                            <option value="1">Published</option>
-                                            <option value="3">Archived</option>
-                                        </select>
-                                    </div>
+                                    @if (Auth::user()->role_id != 5)
+                                        <div class="col-md-2 col-sm-6">
+                                            <select name="status" id="statusId" class="form-control select2">
+                                                <option value="">--Search by Status--</option>
+                                                
+                                                <option value="0">Unpublished</option>
+                                                <option value="1">Published</option>
+                                                <option value="3">Archived</option>
+                                            </select>
+                                        </div>
+                                    @endif
 
                                     <div class="col-md-3 col-sm-6">
                                         <div class="d-flex gap-2">
