@@ -150,7 +150,7 @@
         .dropdown-menu {
             border-radius: 6px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            background: linear-gradient(90deg, #0F2027, #203A43, #2C5364) !important;
+            background: #609513 !important;
             padding: 0;
         }
         .dropdown-item {

@@ -16,7 +16,7 @@
         @can('user_count')
             <div class="col-md-3 col-sm-12">
                 <a href="{{ route('admin.user.index') }}" class="text-decoration-none">
-                    <div class="custom-card">
+                    <div class="custom-card bg-primary">
                         <div class="custom-icon">
                             <i class="bx bx-user"></i>
                         </div>
@@ -36,7 +36,7 @@
         @can('employee_count')
             <div class="col-md-3 col-sm-12">
                 <a href="{{ route('admin.user.index') }}" class="text-decoration-none">
-                    <div class="custom-card">
+                    <div class="custom-card bg-success">
                         <div class="custom-icon">
                             <i class="bx bx-id-card"></i>
                         </div>
@@ -56,7 +56,7 @@
         @can('total_categories')
             <div class="col-md-3 col-sm-12">
                 <a href="{{ route('admin.category.index') }}" class="text-decoration-none">
-                    <div class="custom-card">
+                    <div class="custom-card bg-info">
                         <div class="custom-icon">
                             <i class="bx bx-briefcase"></i>
                         </div>
@@ -76,7 +76,7 @@
         @can('document_count')
             <div class="col-md-3 col-sm-12">
                 <a href="{{ route('admin.content.index') }}" class="text-decoration-none">
-                    <div class="custom-card">
+                    <div class="custom-card bg-danger">
                         <div class="custom-icon">
                             <i class="bx bx-file"></i>
                         </div>
@@ -97,7 +97,7 @@
             @can('total_uploaded_contents')
                 <div class="col-md-3 col-sm-12">
                     <a href="{{ route('admin.content.indexMyContent') }}" class="text-decoration-none">
-                        <div class="custom-card">
+                        <div class="custom-card bg-primary">
                             <div class="custom-icon">
                                 <i class="bx bx-file"></i>
                             </div>
@@ -117,7 +117,7 @@
             @can('total_favourite_content')
                 <div class="col-md-3 col-sm-12">
                     <a href="{{ route('admin.content.indexFavorite') }}" class="text-decoration-none">
-                        <div class="custom-card">
+                        <div class="custom-card bg-success">
                             <div class="custom-icon">
                                 <i class="bx bx-file"></i>
                             </div>
@@ -138,7 +138,7 @@
                 <div class="col-md-3 col-sm-12">
                     <a href="{{ route('admin.content.indexSaved') }}" class="text-decoration-none">
                         <div class="custom-card">
-                            <div class="custom-icon">
+                            <div class="custom-icon bg-info">
                                 <i class="bx bx-file"></i>
                             </div>
                

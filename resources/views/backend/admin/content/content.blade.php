@@ -156,7 +156,7 @@
             margin: 20px auto;
             padding: 10px 30px;
             color: #fff;
-            background: linear-gradient(90deg, #0F2027, #203A43, #2C5364);
+            background: #609513;
             border-radius: 6px;
             border: none;
             font-weight: 500;

@@ -83,7 +83,7 @@
             .app-menu {
                 z-index: 1;
                 /* background: linear-gradient(45deg, #3959d7cf,#d77439e5) !important; */
-                background: linear-gradient(90deg, #0F2027, #203A43, #2C5364) !important;
+                background: #609513 !important;
                 overflow: hidden;
             }
             .app-menu.navbar-menu::after {
@@ -100,7 +100,7 @@
             }
 
             #page-topbar {
-                background: linear-gradient(90deg, #0F2027, #203A43, #2C5364) !important;
+                background: #609513 !important;
                 /* background: url({{asset('assets/images/backgound_image.png')}}); */
                 margin: 8px;
                 border-radius: 10px;
@@ -176,7 +176,7 @@
             .dropdown-menu {
                 border-radius: 6px;
                 box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-                background: linear-gradient(90deg, #0F2027, #203A43, #2C5364) !important;
+                background: #609513 !important;
                 padding: 0;
             }
             .dropdown-item {
@@ -232,7 +232,7 @@
             }
 
             .custom-card {
-                background: linear-gradient(90deg, #0F2027, #203A43, #2C5364);
+                /* background: #609513; */
                 border-radius: 5px;
                 box-shadow: 0 5px 15px rgba(44, 83, 100, 0.5);
                 transition: all 0.3s ease-in-out;
@@ -311,7 +311,7 @@
             }
             .profile-wid-bg::before {
                 /* background: linear-gradient(45deg, #d48154, #6176d8) !important; */
-                background: linear-gradient(90deg, #0F2027, #203A43, #2C5364) !important;
+                background: #609513 !important;
             }
             .logo-sm img {
                 width: 100% !important;
@@ -320,7 +320,7 @@
 
             /* footer css */
             .footer {
-                background: linear-gradient(90deg, #0F2027, #203A43, #2C5364) !important;
+                background: #609513 !important;
                 margin: 10px 10px 10px 52px;
                 border-radius: 9px;
                 color: white !important;
@@ -348,7 +348,7 @@
             /* button css */
             .btn-primary {
                 color: #fff;
-                background: linear-gradient(90deg, #0F2027, #203A43, #2C5364);
+                background: #609513;
                 border: none;
                 position: relative;
                 overflow: hidden;
@@ -765,7 +765,6 @@
             }
 
             @media only screen and (max-width: 480px) and (-webkit-min-device-pixel-ratio: 1.5), (max-width: 480px) and (min-resolution: 144dpi) {
-            
                 body {
                     font-size: 14px;
                     line-height: 1.5;
