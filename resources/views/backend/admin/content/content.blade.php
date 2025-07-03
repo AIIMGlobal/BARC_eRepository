@@ -254,12 +254,12 @@
                         <p>Type: {{ $content->content_type ?? 'Unknown' }}</p>
 
                         @if ($content->status == 1)
-                            <p>Publish At: {{ date('d M, Y h:i A', strtotime($content->published_at)) }}</p>
+                            <p>Publish on: {{ date('d M, Y h:i A', strtotime($content->published_at)) }}</p>
                         @else
-                            <p>Submitted At: {{ date('d M, Y h:i A', strtotime($content->created_at)) }}</p>
+                            <p>Submitted on: {{ date('d M, Y h:i A', strtotime($content->created_at)) }}</p>
 
                             @if ($content->updated_by)
-                                <p>Updated At: {{ date('d M, Y h:i A', strtotime($content->updated_at)) }}</p>
+                                <p>Updated on: {{ date('d M, Y h:i A', strtotime($content->updated_at)) }}</p>
                             @endif
                         @endif
 

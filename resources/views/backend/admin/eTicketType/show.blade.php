@@ -92,7 +92,7 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-12 mt-4">
                                     <div>
-                                        <label for="created_at" class="form-label">Created At: </label>
+                                        <label for="created_at" class="form-label">Created on: </label>
 
                                         <input type="text" class="form-control" id="created_at" name="created_at" value="{{ $type->created_at ?? '' }}" disabled>
                                     </div>
@@ -103,7 +103,7 @@
                                 <div class="row">
                                     <div class="col-md-6 col-sm-12 mt-4">
                                         <div>
-                                            <label for="updated_at" class="form-label">Updated At: </label>
+                                            <label for="updated_at" class="form-label">Updated on: </label>
 
                                             <input type="text" class="form-control" id="updated_at" name="updated_at" value="{{ $type->updated_at ?? '' }}" disabled>
                                         </div>

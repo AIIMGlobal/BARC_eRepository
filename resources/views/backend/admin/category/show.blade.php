@@ -95,7 +95,7 @@
 
                                 <div class="col-md-6 col-sm-12">
                                     <div>
-                                        <label for="created_at" class="form-label">Created At: </label>
+                                        <label for="created_at" class="form-label">Created on: </label>
 
                                         <input type="text" class="form-control" id="created_at" name="created_at" value="{{ date('d M, Y', strtotime($category->created_at)) }} at {{ date('h:i a', strtotime($category->created_at)) }}" disabled>
                                     </div>
@@ -104,7 +104,7 @@
                                 @if ($category->updated_by)
                                     <div class="col-md-6 col-sm-12">
                                         <div>
-                                            <label for="updated_at" class="form-label">Updated At: </label>
+                                            <label for="updated_at" class="form-label">Updated on: </label>
 
                                             <input type="text" class="form-control" id="updated_at" name="updated_at" value="{{ date('d M, Y', strtotime($category->updated_at)) }} at {{ date('h:i a', strtotime($category->updated_at)) }}" disabled>
                                         </div>
