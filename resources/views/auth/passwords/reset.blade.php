@@ -152,7 +152,7 @@
                     <div class="border border-right"></div> --}}
 
                     <div class="fxt-page-switcher">
-                        <h2 class="fxt-page-title mr-3">Login</h2>
+                        <h2 class="fxt-page-title mr-3">Reset Password</h2>
 
                         {{-- <ul class="fxt-switcher-wrap">
                             <li><a href="login-31.html" class="fxt-switcher-btn active">Login</a></li>

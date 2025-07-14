@@ -17,8 +17,8 @@ class RolePermissionController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if(Gate::allows('assign_permission_list', $user)){
 
+        if(Gate::allows('assign_permission_list', $user)){
             if(Session::has('selected_role_id')){
                 $selected_role_id = Session::get('selected_role_id');
                 $selected_role = Role::where('id', $selected_role_id)->first();
@@ -36,10 +36,13 @@ class RolePermissionController extends Controller
             $rolePermissions = RolePermission::with('permissionName')->where('role_id', $selected_role_id)->get();
 
             $assignedIds = array();
+
             foreach($rolePermissions as $rp){
                 array_push($assignedIds, $rp->permission_id);
             }
+
             $unassignedPermissions = Permission::whereNotIn('id', $assignedIds)->get();
+            
             return view('backend.admin.rolePermission.index', compact('roles', 'rolePermissions', 'unassignedPermissions', 'selected_role', 'selected_role_id'));
         }else{
             return abort(403, "You don't have permission..!");

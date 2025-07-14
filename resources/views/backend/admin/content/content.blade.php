@@ -156,7 +156,7 @@
             margin: 20px auto;
             padding: 10px 30px;
             color: #fff;
-            background: #609513;
+            background: #3DB043;
             border-radius: 6px;
             border: none;
             font-weight: 500;

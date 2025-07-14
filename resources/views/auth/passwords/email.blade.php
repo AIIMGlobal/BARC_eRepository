@@ -176,7 +176,7 @@
                                 </div>
                             </form>
 
-                            <div class="fxt-switcher-description">Return to<a href="{{ url('/') }}" class="fxt-switcher-text ms-1">Log in</a></div>
+                            <div class="fxt-switcher-description">Return to<a href="{{ url('/') }}" class="fxt-switcher-text ms-1">Login</a></div>
                         </div>
                     </div>
                 </div>

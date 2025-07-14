@@ -262,36 +262,6 @@
                     </li>
                 @endcan
 
-                @can('manage_location')
-                    <li class="nav-item first-dropdown">
-                        <a class="nav-link menu-link" href="#location_management" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="location_management">
-                            <i class="ri-map-pin-line"></i> <span data-key="t-location_management">Location Management</span>
-                        </a>
-
-                        <div class="collapse menu-dropdown" id="location_management">
-                            <ul class="nav nav-sm flex-column">
-                                @can('manage_region')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.region.index') }}" class="nav-link" data-key="t-crm">{{__('menu.Division List')}} (Location)</a>
-                                    </li>
-                                @endcan
-
-                                @can('manage_district')
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.district.index') }}" class="nav-link" data-key="t-crm">{{__('menu.District List')}}</a>
-                                    </li>
-                                @endcan
-
-                                @can('manage_upazila')
-                                    <li class="nav-item">
-                                        <a href="{{route('admin.upazila.index')}}" class="nav-link" data-key="t-crm">{{__('menu.Upazila List')}}</a>
-                                    </li>
-                                @endcan
-                            </ul>
-                        </div>
-                    </li>
-                @endcan
-
                 @can('manage_report')
                     <li class="nav-item first-dropdown">
                         <a class="nav-link menu-link" href="#manage_report" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="manage_report">
@@ -357,6 +327,36 @@
                                         <a class="nav-link menu-link" href="{{ route('admin.setting.index') }}">
                                             <span data-key="t-dashboards">Website Settings</span>
                                         </a>
+                                    </li>
+                                @endcan
+
+                                @can('manage_location')
+                                    <li class="nav-item first-dropdown">
+                                        <a class="nav-link menu-link" href="#location_management" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="location_management">
+                                            <span data-key="t-location_management">Location Settings</span>
+                                        </a>
+
+                                        <div class="collapse menu-dropdown" id="location_management">
+                                            <ul class="nav nav-sm flex-column">
+                                                @can('manage_region')
+                                                    <li class="nav-item">
+                                                        <a href="{{ route('admin.region.index') }}" class="nav-link" data-key="t-crm">{{__('menu.Division List')}} (Location)</a>
+                                                    </li>
+                                                @endcan
+
+                                                @can('manage_district')
+                                                    <li class="nav-item">
+                                                        <a href="{{ route('admin.district.index') }}" class="nav-link" data-key="t-crm">{{__('menu.District List')}}</a>
+                                                    </li>
+                                                @endcan
+
+                                                @can('manage_upazila')
+                                                    <li class="nav-item">
+                                                        <a href="{{route('admin.upazila.index')}}" class="nav-link" data-key="t-crm">{{__('menu.Upazila List')}}</a>
+                                                    </li>
+                                                @endcan
+                                            </ul>
+                                        </div>
                                     </li>
                                 @endcan
 

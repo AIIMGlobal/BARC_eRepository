@@ -14294,7 +14294,7 @@ ul {
 .fxt-template-layout31 .fxt-shape {
   height: 100%;
   width: calc((100vw + 220px)/4);
-  background-color: #013221;
+  background-color: #228B22;
   content: "";
   left: 0;
   top: 0;
@@ -14371,7 +14371,7 @@ ul {
 .fxt-template-layout31 .fxt-heading-content:before {
   height: 100%;
   width: 100%;
-  background-color: #00563E;
+  background-color: #3DB043;
   content: "";
   left: 0;
   top: 0;
@@ -14526,7 +14526,7 @@ ul {
 }
 .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-wrap li:first-child .fxt-switcher-btn:hover,
 .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-wrap li:first-child .fxt-switcher-btn.active {
-  border-color: #013221;
+  border-color: #228B22;
 }
 .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-wrap li:last-child .fxt-switcher-btn {
   border-right: 1px solid;
@@ -14534,7 +14534,7 @@ ul {
 }
 .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-wrap li:last-child .fxt-switcher-btn:hover,
 .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-wrap li:last-child .fxt-switcher-btn.active {
-  border-color: #013221;
+  border-color: #228B22;
 }
 .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-btn {
   padding: 9px 27px;
@@ -14549,12 +14549,12 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-btn:hover {
-  color: #013221;
+  color: #228B22;
 }
 .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-btn.active {
-  background-color: #013221;
+  background-color: #228B22;
   color: #ffffff;
-  border-color: #013221;
+  border-color: #228B22;
 }
 @media only screen and (max-width: 1199px) {
   .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-btn {
@@ -14696,10 +14696,10 @@ ul {
   box-shadow: none;
   outline: none;
   border: 1px solid;
-  border-color: #0D6C37;
+  border-color: #228B22;
   color: #fff;
   border-radius: 3px;
-  background-color: #0D6C37;
+  background-color: #228B22;
   padding: 10px 36px;
   width: 100%;
   -webkit-transition: all 0.3s ease-in-out;
@@ -14757,7 +14757,7 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout31 .fxt-form-content .fxt-switcher-text.ms-1 {
-  color: #0D6C37;
+  color: #228B22;
 }
 .fxt-template-layout31 .fxt-form-content .fxt-switcher-text:hover {
   color: #06339e;
@@ -14824,8 +14824,8 @@ ul {
   text-align: center;
 }
 .fxt-template-layout31 .fxt-form-content .fxt-checkbox-box input[type="checkbox"]:checked + label::before {
-  background-color: #013221;
-  border-color: #013221;
+  background-color: #228B22;
+  border-color: #228B22;
 }
 .fxt-template-layout31 .fxt-form-content .fxt-otp-row {
   display: -webkit-box;

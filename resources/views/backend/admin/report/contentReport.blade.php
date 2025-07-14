@@ -76,7 +76,7 @@
                                 <div class="col-md-12">
                                     <form id="filterForm">
                                         <div class="row g-3">
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <label for="category_id" class="form-label">Category</label>
 
                                                 <select name="category_id" id="category_id" class="form-select select2">
@@ -88,7 +88,7 @@
                                                 </select>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <label for="content_type" class="form-label">Content Type</label>
                                                 
                                                 <select name="content_type" id="content_type" class="form-select select2">
@@ -100,12 +100,12 @@
                                                 </select>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <label for="from_date" class="form-label">From Date</label>
                                                 <input type="date" name="from_date" id="from_date" class="form-control">
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <label for="to_date" class="form-label">To Date</label>
                                                 <input type="date" name="to_date" id="to_date" class="form-control">
                                             </div>
@@ -152,8 +152,9 @@
                                                         <th class="actionBtn text-center">Action</th>
                                                     </tr>
                                                 </thead>
+
                                                 <tbody id="reportTableBody">
-                                                    <!-- Data will be populated via AJAX -->
+                                                    
                                                 </tbody>
                                             </table>
                                         </div>

@@ -83,7 +83,7 @@
             .app-menu {
                 z-index: 1;
                 /* background: linear-gradient(45deg, #3959d7cf,#d77439e5) !important; */
-                background: #609513 !important;
+                background: #3DB043 !important;
                 overflow: hidden;
             }
             .app-menu.navbar-menu::after {
@@ -100,9 +100,9 @@
             }
 
             #page-topbar {
-                background: #609513 !important;
+                background: #3DB043 !important;
                 /* background: url({{asset('assets/images/backgound_image.png')}}); */
-                margin: 8px;
+                margin: 0 8px 8px 8px;
                 border-radius: 10px;
                 /* background: url('{{asset("frontend/img/background_animation.gif")}}'); */
                 /* background: url('{{asset("frontend/img/gffiphy.gif")}}');
@@ -127,6 +127,9 @@
             }
 
             /* sidebar css */
+            #notificationItemsTabContent .simplebar-content-wrapper, .simplebar-wrapper, .simplebar-height-auto-observer-wrapper, .simplebar-height-auto-observer, .simplebar-mask {
+                overflow: scroll !important;
+            }
             .simplebar-content-wrapper, .simplebar-wrapper, .simplebar-height-auto-observer-wrapper, .simplebar-height-auto-observer, .simplebar-mask {
                 overflow: visible !important;
             }
@@ -176,7 +179,7 @@
             .dropdown-menu {
                 border-radius: 6px;
                 box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-                background: #609513 !important;
+                background: #3DB043 !important;
                 padding: 0;
             }
             .dropdown-item {
@@ -232,7 +235,7 @@
             }
 
             .custom-card {
-                /* background: #609513; */
+                /* background: #3DB043; */
                 border-radius: 5px;
                 box-shadow: 0 5px 15px rgba(44, 83, 100, 0.5);
                 transition: all 0.3s ease-in-out;
@@ -311,7 +314,7 @@
             }
             .profile-wid-bg::before {
                 /* background: linear-gradient(45deg, #d48154, #6176d8) !important; */
-                background: #609513 !important;
+                background: #3DB043 !important;
             }
             .logo-sm img {
                 width: 100% !important;
@@ -320,7 +323,7 @@
 
             /* footer css */
             .footer {
-                background: #609513 !important;
+                background: #3DB043 !important;
                 margin: 10px 10px 10px 52px;
                 border-radius: 9px;
                 color: white !important;
@@ -348,7 +351,7 @@
             /* button css */
             .btn-primary {
                 color: #fff;
-                background: #609513;
+                background: #3DB043;
                 border: none;
                 position: relative;
                 overflow: hidden;
@@ -474,6 +477,14 @@
 
             .btn-success:hover::after {
                 left: 0;
+            }
+
+            .text-muted {
+                color: #d3d3d3 !important;
+            }
+
+            .navbar-menu .navbar-nav .nav-sm .nav-sm .nav-link:before {
+                left: 15px;
             }
 
             /* loader css */

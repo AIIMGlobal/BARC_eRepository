@@ -2924,7 +2924,7 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    background: #609513;
+    background: #3DB043;
     color: #fff;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -3928,7 +3928,7 @@ code {
     display: block;
     width: 25%;
     height: 25%;
-    background: #609513;
+    background: #3DB043;
     border-radius: 100%;
     -webkit-animation: chase-dot-before 2s infinite ease-in-out both;
     animation: chase-dot-before 2s infinite ease-in-out both
@@ -5316,7 +5316,7 @@ strong {
 }
 
 .alert-solid.alert-primary {
-    background: #609513;
+    background: #3DB043;
     border-color: #12252C;
     color: #fff
 }
@@ -5334,7 +5334,7 @@ strong {
 }
 
 .rounded-label.alert-primary .label-icon {
-    background: #609513;
+    background: #3DB043;
     color: #fff
 }
 
@@ -5352,7 +5352,7 @@ strong {
 }
 
 .alert-additional.alert-primary .alert-content {
-    background: #609513;
+    background: #3DB043;
     color: #fff
 }
 
@@ -6265,7 +6265,7 @@ button {
 }
 
 .btn-primary.btn-animation {
-    background: #609513;
+    background: #3DB043;
     border-color: #405189
 }
 
@@ -7339,7 +7339,7 @@ button {
     height: 100%;
     -webkit-transition: width .4s cubic-bezier(.51, .18, 0, .88) .1s;
     transition: width .4s cubic-bezier(.51, .18, 0, .88) .1s;
-    background: #609513;
+    background: #3DB043;
     z-index: -1
 }
 
@@ -7404,7 +7404,7 @@ button {
 }
 
 .nav-custom {
-    background: #609513;
+    background: #3DB043;
     border-radius: .25rem
 }
 
@@ -7712,7 +7712,7 @@ button {
 
 .progress-nav .nav .nav-link.active,
 .progress-nav .nav .nav-link.done {
-    background: #609513;
+    background: #3DB043;
     color: #fff
 }
 
@@ -7897,7 +7897,7 @@ button {
 .nav-customs.nav .nav-link.active,
 .nav-customs.nav .nav-link.active:after,
 .nav-customs.nav .nav-link.active:before {
-    background: #609513;
+    background: #3DB043;
     color: #fff
 }
 
@@ -8367,7 +8367,7 @@ button {
     position: absolute;
     top: -25px;
     right: -9px;
-    background: #609513;
+    background: #3DB043;
     color: #fff;
     display: inline-block;
     line-height: 18px;
@@ -8738,7 +8738,7 @@ button {
 }
 
 .form-check-primary .form-check-input:checked {
-    background: #609513;
+    background: #3DB043;
     border-color: #405189
 }
 
@@ -9039,7 +9039,7 @@ button {
 }
 
 .form-switch-primary .form-check-input:checked {
-    background: #609513;
+    background: #3DB043;
     border-color: #405189
 }
 
@@ -9262,7 +9262,7 @@ button {
 }
 
 .list-group-fill-primary {
-    background: #609513;
+    background: #3DB043;
     border-color: #12252C;
     color: #fff
 }
@@ -10883,7 +10883,7 @@ div.code-toolbar>.toolbar button:hover {
 }
 
 .input-step.step-primary button {
-    background: #609513;
+    background: #3DB043;
     color: #fff
 }
 
@@ -11315,7 +11315,7 @@ th.gridjs-th-sort:hover {
 }
 
 .gridjs-pagination .gridjs-pages button.gridjs-currentPage {
-    background: #609513;
+    background: #3DB043;
     color: #fff;
     border-color: #12252C;
     font-weight: 500
@@ -11418,7 +11418,7 @@ button.gridjs-sort-desc {
 }
 
 .gridjs-tr-selected .gridjs-td .gridjs-checkbox[type=checkbox] {
-    background: #609513;
+    background: #3DB043;
     border-color: #12252C;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e")
 }
@@ -11479,7 +11479,7 @@ button.gridjs-sort-desc {
 
 .listjs-pagination li.active .page {
     color: #fff;
-    background: #609513;
+    background: #3DB043;
     border-color: #405189
 }
 
@@ -11835,7 +11835,7 @@ button.gridjs-sort-desc {
 
 .jvm-tooltip {
     border-radius: 3px;
-    background: #609513;
+    background: #3DB043;
     font-family: var(--vz-font-sans-serif);
     -webkit-box-shadow: 0 5px 10px rgba(30, 32, 37, .12);
     box-shadow: 0 5px 10px rgba(30, 32, 37, .12);
@@ -11927,7 +11927,7 @@ button.gridjs-sort-desc {
 }
 
 .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
-    background: #609513;
+    background: #3DB043;
     color: #fff
 }
 
@@ -12009,7 +12009,7 @@ button.gridjs-sort-desc {
 .fc-state-active,
 .fc-state-disabled,
 .fc-state-down {
-    background: #609513;
+    background: #3DB043;
     color: #fff;
     text-shadow: none
 }
@@ -12475,7 +12475,7 @@ table.dataTable>tbody>tr.child span.dtr-title {
 
 table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control::before,
 table.dataTable.dtr-inline.collapsed>tbody>tr>th.dtr-control::before {
-    background: #609513;
+    background: #3DB043;
     border-color: var(--vz-card-bg)
 }
 
@@ -12631,7 +12631,7 @@ div.dtr-modal div.dtr-modal-close:hover {
 }
 
 .select2-container--default .select2-results__option[aria-selected=true]:hover {
-    background: #609513;
+    background: #3DB043;
     color: #fff
 }
 
@@ -12661,7 +12661,7 @@ div.dtr-modal div.dtr-modal-close:hover {
 }
 
 .select2-container .select2-selection--multiple .select2-selection__choice {
-    background: #609513;
+    background: #3DB043;
     border: none;
     color: #fff;
     border-radius: 3px;
@@ -13004,7 +13004,7 @@ div.dtr-modal div.dtr-modal-close:hover {
     margin-right: 3.75px;
     margin-bottom: 3.75px;
     margin-top: 2px;
-    background: #609513;
+    background: #3DB043;
     border: 1px solid #405189;
     word-break: break-all;
     -webkit-box-sizing: border-box;
@@ -13019,7 +13019,7 @@ div.dtr-modal div.dtr-modal-close:hover {
 }
 
 .choices__list--multiple .choices__item.is-highlighted {
-    background: #609513;
+    background: #3DB043;
     border: 1px solid #405189
 }
 
@@ -13407,7 +13407,7 @@ div.dtr-modal div.dtr-modal-close:hover {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    /* background: #609513; */
+    /* background: #3DB043; */
     border-radius: 5px 5px 0 0
 }
 
@@ -13695,7 +13695,7 @@ div.dtr-modal div.dtr-modal-close:hover {
 }
 
 .flatpickr-weekdays {
-    background: #609513;
+    background: #3DB043;
     text-align: center;
     overflow: hidden;
     width: 100%;
