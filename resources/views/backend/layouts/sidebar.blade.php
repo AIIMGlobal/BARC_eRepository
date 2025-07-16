@@ -302,13 +302,13 @@
                                     </li>
                                 @endcan
 
-                                {{-- @can('log_report')
+                                @can('activity_log_list')
                                     <li class="nav-item">
                                         <a class="nav-link menu-link" href="{{ route('admin.report.logReport') }}">
-                                            <span data-key="t-manage_report">Log Report</span>
+                                            <span data-key="t-manage_report">Activity Log</span>
                                         </a>
                                     </li>
-                                @endcan --}}
+                                @endcan
                             </ul>
                         </div>
                     </li>

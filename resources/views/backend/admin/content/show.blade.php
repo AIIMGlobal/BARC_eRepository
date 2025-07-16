@@ -265,18 +265,18 @@
 
                                                 @if ($content->status == 1)
                                                     <div class="col-12">
-                                                        <span class="detail-label">Published At</span>
+                                                        <span class="detail-label">Published On</span>
                                                         <p class="detail-value">{{ $content->published_at ? date('d M, Y', strtotime($content->published_at)) : 'Not Published' }}</p>
                                                     </div>
                                                 @else
                                                     <div class="col-12">
-                                                        <span class="detail-label">Submitted At</span>
+                                                        <span class="detail-label">Submitted On</span>
                                                         <p class="detail-value">{{ $content->created_at ? date('d M, Y', strtotime($content->created_at)) : 'Not Published' }}</p>
                                                     </div>
 
                                                     @if ($content->updated_by)
                                                         <div class="col-12">
-                                                            <span class="detail-label">Updated At</span>
+                                                            <span class="detail-label">Updated On</span>
                                                             <p class="detail-value">{{ $content->updated_at ? date('d M, Y', strtotime($content->updated_at)) : 'Not Published' }}</p>
                                                         </div>
                                                     @endif

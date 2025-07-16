@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Validator;
 /* included models */
 use App\Models\User;
 use App\Models\Setting;
+use App\Models\ActivityLog;
 use App\Models\Notification;
 
 /* included mails */
@@ -81,6 +82,16 @@ class LoginController extends Controller
             $user = Auth::user();
             
             if ($user->status == 1) {
+                $activity = new ActivityLog;
+
+                $activity->type         = 'login';
+                $activity->user_id      = Auth::id();
+                $activity->description  = 'Login By ' . Auth::user()->name_en;
+                $activity->ip_address   = request()->ip();
+                $activity->user_agent   = request()->userAgent();
+                
+                $activity->save();
+
                 return response()->json([
                     'success' => true,
                     'message' => 'Login successful!',

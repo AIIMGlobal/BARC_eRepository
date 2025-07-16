@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 16, 2025 at 05:52 AM
+-- Generation Time: Jun 24, 2025 at 08:45 AM
 -- Server version: 10.6.22-MariaDB-cll-lve-log
--- PHP Version: 8.3.22
+-- PHP Version: 8.3.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -303,6 +303,7 @@ INSERT INTO `contents` (`id`, `sl`, `category_id`, `content_type`, `content_name
 (29, NULL, 2, 'PDF', 'proceedings of the national workshop on sustainable land mangement through effective fertilizer use in relation to climate changer and land degradation', 'proceedings-of-the-national-workshop-on-sustainable-land-mangement-through-effective-fertilizer-use-in-relation-to-climate-changer-and-land-degradation', NULL, 'pdf', 'contents/1747726436_proceedings of the national workshop on sustainable land mangement through effective fertilizer use in relation to climate changer and land degradation.pdf', '1999', 'thumbnails/1747726436_Screenshot 2025-05-20 132838.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:33:56', 19, NULL, '2025-05-20 17:33:56', '2025-05-20 17:33:56'),
 (30, NULL, 2, 'PDF', 'Proceedings of the National Workshop  on  Sustainable Land Use through Soil and Crop Management in relation to Climate Change and  Land Degradation', 'proceedings-of-the-national-workshop-on-sustainable-land-use-through-soil-and-crop-management-in-relation-to-climate-change-and-land-degradation', NULL, 'pdf', 'contents/1747744853_Proceeding of the National Workshop on sustainable Land Use through Soil and Crop Management in relation to Climate Change and Land Degradation.pdf', '2010', 'thumbnails/1747744853_Screenshot 2025-05-20 183635.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 22:40:53', 19, NULL, '2025-05-20 22:40:53', '2025-05-20 22:40:53'),
 (31, NULL, 2, 'PDF', 'BANGLADESH JOURNAL OF AGRICULTURE', 'bangladesh-journal-of-agriculture-1748774384', 'V©L. 3 NO. 1 JUNE, 1978', 'pdf', 'contents/1747744973_Bangladesh Journal Of Agriculture Vol.3 No.1 June.1978 (1).pdf', '1978', 'thumbnails/1747744973_Screenshot 2025-05-20 183836.png', NULL, NULL, NULL, 1, 1, NULL, NULL, '2025-05-20 22:42:53', 19, 19, '2025-05-20 22:42:53', '2025-06-01 20:39:44'),
+(32, NULL, 1, 'PDF', 'Test Content 1', 'test-content-1', 'Test Content 1', 'pdf', 'contents/1748510165_EOI-CMIS-Land.pdf', '2025', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 24, NULL, '2025-05-29 19:16:05', '2025-05-29 19:16:05'),
 (34, NULL, 1, 'PDF', 'Ambiente Bentônico', 'ambiente-bentonico', NULL, 'pdf', 'contents/1750225267_Ambiente Bentônico.pdf', '2017', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 19, NULL, '2025-06-18 15:41:09', '2025-06-18 15:41:09'),
 (35, NULL, 1, 'PDF', 'Ambiente Pelágico', 'ambiente-pelagico', NULL, 'pdf', 'contents/1750227039_Ambiente Pelágico.pdf', '2013', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 19, NULL, '2025-06-18 16:10:39', '2025-06-18 16:10:39'),
 (36, NULL, 1, 'PDF', 'Application of Nano_Microencapsulated Ingredients in Food Products', 'application-of-nano-microencapsulated-ingredients-in-food-products', NULL, 'pdf', 'contents/1750227305_Application of Nano_Microencapsulated Ingredients in Food Products.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 20, NULL, '2025-06-18 16:15:05', '2025-06-18 16:15:05'),
@@ -311,16 +312,14 @@ INSERT INTO `contents` (`id`, `sl`, `category_id`, `content_type`, `content_name
 (39, NULL, 1, 'PDF', 'Aquacultural Facilities and Equipment', 'aquacultural-facilities-and-equipment', NULL, 'pdf', 'contents/1750227536_Aquacultural Facilities and Equipment.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 19, NULL, '2025-06-18 16:18:56', '2025-06-18 16:18:56'),
 (40, NULL, 1, 'PDF', 'Aquaculture Health Management', 'aquaculture-health-management', NULL, 'pdf', 'contents/1750227594_Aquaculture Health Management.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 20, NULL, '2025-06-18 16:19:54', '2025-06-18 16:19:54'),
 (41, NULL, 1, 'PDF', 'Aquaculture Toxicology', 'aquaculture-toxicology', NULL, 'pdf', 'contents/1750229261_Aquaculture Toxicology.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 19, NULL, '2025-06-18 16:47:41', '2025-06-18 16:47:41'),
-(42, NULL, 1, 'PDF', 'Aromatic Herbs in Food', 'aromatic-herbs-in-food', NULL, 'pdf', 'contents/1750229524_Aromatic Herbs in Food.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, 19, 25, '2025-06-18 16:52:04', '2025-06-25 18:51:31'),
-(44, NULL, 1, 'PDF', 'Atlas de Sensibilidade Ambiental Ao Óleo', 'atlas-de-sensibilidade-ambiental-ao-oleo', NULL, 'pdf', 'contents/1750245924_Atlas de Sensibilidade Ambiental Ao Óleo.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, 19, 25, '2025-06-18 21:25:26', '2025-06-25 18:51:26'),
-(45, NULL, 1, 'PDF', 'Atmospheric Nitrogen Deposition to Global Forests', 'atmospheric-nitrogen-deposition-to-global-forests', NULL, 'pdf', 'contents/1750566788_Atmospheric Nitrogen Deposition to Global Forests.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, 19, 25, '2025-06-22 14:33:08', '2025-06-25 18:51:20'),
-(46, NULL, 1, 'PDF', 'Aquaculture Pathophysiology', 'aquaculture-pathophysiology', NULL, 'pdf', 'contents/1750566953_Aquaculture Pathophysiology.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, 20, 25, '2025-06-22 14:35:55', '2025-06-25 18:50:30'),
-(47, NULL, 1, 'PDF', 'Big Data Analysis of Nanoscience Bibliometrics, Patent, and Funding Data (2000-2019)', 'big-data-analysis-of-nanoscience-bibliometrics-patent-and-funding-data-2000-2019', NULL, 'pdf', 'contents/1750567265_Big Data Analysis of Nanoscience Bibliometrics, Patent, and Funding Data (2000-2019).pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, 19, 25, '2025-06-22 14:41:05', '2025-06-25 18:50:22'),
-(48, NULL, 1, 'PDF', 'Bioactive Food Components Activity in Mechanistic Approach', 'bioactive-food-components-activity-in-mechanistic-approach', NULL, 'pdf', 'contents/1750567419_Bioactive Food Components Activity in Mechanistic Approach.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, 20, 25, '2025-06-22 14:43:39', '2025-06-25 18:50:07'),
-(49, NULL, 1, 'PDF', 'Biofuels, Bioenergy and Food Security', 'biofuels-bioenergy-and-food-security', NULL, 'pdf', 'contents/1750567537_Biofuels, Bioenergy and Food Security.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, 19, 25, '2025-06-22 14:45:37', '2025-06-25 18:49:58'),
-(50, NULL, 4, 'PDF', 'Biotechnological Utilization of Mangrove Resources', 'biotechnological-utilization-of-mangrove-resources', NULL, 'pdf', 'contents/1750567601_Biotechnological Utilization of Mangrove Resources.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, 20, 25, '2025-06-22 14:46:41', '2025-06-25 18:49:45'),
-(53, NULL, 1, 'PDF', 'Chitin and Chitosan', 'chitin-and-chitosan', NULL, 'pdf', 'contents/1751455765_Chitin and Chitosan.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 20, NULL, '2025-07-02 21:29:25', '2025-07-02 21:29:25'),
-(54, NULL, 1, 'PDF', 'Climate Change and Crop Stress', 'climate-change-and-crop-stress', NULL, 'pdf', 'contents/1751457352_Climate Change and Crop Stress.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 20, NULL, '2025-07-02 21:55:52', '2025-07-02 21:55:52');
+(42, NULL, 1, 'PDF', 'Aromatic Herbs in Food', 'aromatic-herbs-in-food', NULL, 'pdf', 'contents/1750229524_Aromatic Herbs in Food.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 19, NULL, '2025-06-18 16:52:04', '2025-06-18 16:52:04'),
+(44, NULL, 1, 'PDF', 'Atlas de Sensibilidade Ambiental Ao Óleo', 'atlas-de-sensibilidade-ambiental-ao-oleo', NULL, 'pdf', 'contents/1750245924_Atlas de Sensibilidade Ambiental Ao Óleo.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 19, NULL, '2025-06-18 21:25:26', '2025-06-18 21:25:26'),
+(45, NULL, 1, 'PDF', 'Atmospheric Nitrogen Deposition to Global Forests', 'atmospheric-nitrogen-deposition-to-global-forests', NULL, 'pdf', 'contents/1750566788_Atmospheric Nitrogen Deposition to Global Forests.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 19, NULL, '2025-06-22 14:33:08', '2025-06-22 14:33:08'),
+(46, NULL, 1, 'PDF', 'Aquaculture Pathophysiology', 'aquaculture-pathophysiology', NULL, 'pdf', 'contents/1750566953_Aquaculture Pathophysiology.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 20, NULL, '2025-06-22 14:35:55', '2025-06-22 14:35:55'),
+(47, NULL, 1, 'PDF', 'Big Data Analysis of Nanoscience Bibliometrics, Patent, and Funding Data (2000-2019)', 'big-data-analysis-of-nanoscience-bibliometrics-patent-and-funding-data-2000-2019', NULL, 'pdf', 'contents/1750567265_Big Data Analysis of Nanoscience Bibliometrics, Patent, and Funding Data (2000-2019).pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 19, NULL, '2025-06-22 14:41:05', '2025-06-22 14:41:05'),
+(48, NULL, 1, 'PDF', 'Bioactive Food Components Activity in Mechanistic Approach', 'bioactive-food-components-activity-in-mechanistic-approach', NULL, 'pdf', 'contents/1750567419_Bioactive Food Components Activity in Mechanistic Approach.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 20, NULL, '2025-06-22 14:43:39', '2025-06-22 14:43:39'),
+(49, NULL, 1, 'PDF', 'Biofuels, Bioenergy and Food Security', 'biofuels-bioenergy-and-food-security', NULL, 'pdf', 'contents/1750567537_Biofuels, Bioenergy and Food Security.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 19, NULL, '2025-06-22 14:45:37', '2025-06-22 14:45:37'),
+(50, NULL, 4, 'PDF', 'Biotechnological Utilization of Mangrove Resources', 'biotechnological-utilization-of-mangrove-resources', NULL, 'pdf', 'contents/1750567601_Biotechnological Utilization of Mangrove Resources.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 20, NULL, '2025-06-22 14:46:41', '2025-06-22 14:46:41');
 
 -- --------------------------------------------------------
 
@@ -342,8 +341,8 @@ CREATE TABLE `departments` (
 --
 
 INSERT INTO `departments` (`id`, `name`, `status`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 'Research', 1, 1, '2023-12-07 11:21:12', '2025-06-24 10:19:05'),
-(2, 'Admin', 1, 1, '2023-12-12 16:14:31', '2025-06-24 10:18:54');
+(1, 'Business Development', 1, 1, '2023-12-07 11:21:12', '2023-12-07 11:21:12'),
+(2, 'Business Development (Software Development)', 1, 1, '2023-12-12 16:14:31', '2023-12-12 16:14:31');
 
 -- --------------------------------------------------------
 
@@ -950,40 +949,18 @@ INSERT INTO `notifications` (`id`, `type`, `title`, `message`, `route_name`, `se
 (5, 4, 'New User Registration', 'A new user has registered.', 'https://repository.barc.sebpobd.net/authorized-user/user/show/eyJpdiI6IlRnZEs0TnI2b05YRm1XSTJzYndBUnc9PSIsInZhbHVlIjoiZWQyMGhPUmNpUzFJQ1MvNzdwL2xZZz09IiwibWFjIjoiMWRlYjZmZTI0ZGEyNmJjYTNlYmViNmE0MGE4MTVjMmI0ZjM2ZDQwOTk4MTU3ODRkMTE4MTUwNGRiZjNlMWQ2MyIsInRhZyI6IiJ9', 4, 22, 1, 1, 1, '2025-05-22 11:48:59', '2025-05-21 22:15:42', '2025-05-22 15:48:59'),
 (6, 4, 'New User Registration', 'A new user has registered.', 'https://repository.barc.sebpobd.net/authorized-user/user/show/eyJpdiI6IjlZOEdKNVNuYXJpT3g4NkJ0UVE3ZWc9PSIsInZhbHVlIjoiMUd3Yzc5a2xFckpub3ExcVZ4OHNQZz09IiwibWFjIjoiMDM1MzBhOTY1NDRjMTJhZjIyNmVjNjVkZjlkZThkZTE2MDE4MDIzMjQwMTg1ZTk0NmQ5M2MwYjRmZjcxMjI5ZiIsInRhZyI6IiJ9', 4, 23, 1, 1, 1, '2025-06-01 16:55:42', '2025-05-29 16:57:48', '2025-06-01 20:55:42'),
 (7, 4, 'New User Registration', 'A new user has registered.', 'https://repository.barc.sebpobd.net/authorized-user/user/show/eyJpdiI6IkNXNjFmcStRSm9GVkh0cmxuRDFDeFE9PSIsInZhbHVlIjoiaUVrNm9sT0ZpT0VqNDV0NUQ1djJYQT09IiwibWFjIjoiZjNiNmY5NjRkODdhOTg1Njc2MzllYjcyNTk2ZWMwOWQ2MDAwOWYwMWQ4ODQ0MDNmNTVmODU1N2YyZWQxOWI3NyIsInRhZyI6IiJ9', 4, 24, 1, 1, 1, '2025-06-01 16:55:42', '2025-05-29 17:19:03', '2025-06-01 20:55:42'),
-(8, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6Ink0cUpNR1B2WEQwYjJ5bHg5M0dQR1E9PSIsInZhbHVlIjoiOFN0Ym1vc29TdGRTNVlYbE1SUmg0UT09IiwibWFjIjoiMzc4YmM1MjM2ZTg1MDNhZWU4NDY2MTZiNjQ4YjViZWJlMjViMzFjNThjZmI5YmVkZGViNmIzYzFhYzM0YmI0MiIsInRhZyI6IiJ9', 4, 19, 1, 1, 1, '2025-06-25 15:46:35', '2025-06-22 14:33:08', '2025-06-25 19:46:35'),
-(9, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6IlprQXhnY0E2blVsYUpqbUlROUZQeEE9PSIsInZhbHVlIjoiUjQ1WjQyWmQ4T0xGNFVzdmwwNU50dz09IiwibWFjIjoiMDYwMDJjNTFkMDlhYzA4M2NlZWZhODgzZDNmNGFjZThmZWNmMWVmN2Y2MmZjZWZhM2VmMDU5N2YyMWI1YzI0ZSIsInRhZyI6IiJ9', 4, 19, 2, 25, 1, '2025-06-25 15:46:35', '2025-06-22 14:33:08', '2025-06-25 19:46:35'),
-(10, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6ImNNM1EyN25YSFlWakFCdXoyQ1hBbmc9PSIsInZhbHVlIjoiMFR4RGtYOWpoaWEzajFNQXhpWmI5QT09IiwibWFjIjoiM2VjMzY2N2U3YTIyZGViMGE2YTMzMzkwZGZjZTA4NDU1NGU0ODcxZGI4ZDk2ZTJkMWVlODcyOWViYWVkMmU0YyIsInRhZyI6IiJ9', 4, 20, 1, 1, 1, '2025-06-25 15:46:35', '2025-06-22 14:35:55', '2025-06-25 19:46:35'),
-(11, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6ImpxWGdmbWJpb01iZGlxZXRSaDBYZUE9PSIsInZhbHVlIjoieUlxaENPTDVmUk5RUEg3eHpZRnJpdz09IiwibWFjIjoiMmZiNzc5OTMxZmYxZjM4ZGMxOWU0NWViNmMzNTQ3ZmYwYzJiNDJiMGIzZDdhOWJhYWZmZDliOTk4NTRiOThlNCIsInRhZyI6IiJ9', 4, 20, 2, 25, 1, '2025-06-25 15:46:35', '2025-06-22 14:35:55', '2025-06-25 19:46:35'),
-(12, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6Iks4UUNxZk5sZTl1MXRmUWhpR1QyS2c9PSIsInZhbHVlIjoiZWxOczJ5TFdrOU5nTHZ5bW5Od2RpUT09IiwibWFjIjoiMGNmMDk1MzVlY2U2MzgwNDhiYjQ0MmVhYmEwZWMwY2Q0ZjA3ZWI0MDIyMjBhNTBjNWE0ZmQyMDZhMmZkZmU3NCIsInRhZyI6IiJ9', 4, 19, 1, 1, 1, '2025-06-25 15:46:35', '2025-06-22 14:41:05', '2025-06-25 19:46:35'),
-(13, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6IlVCWjNCNHhvYit0dkQ1V3U1KzdJQ2c9PSIsInZhbHVlIjoianVNUVRua3hEaHlrYlF5bWc4SVlDZz09IiwibWFjIjoiZWYzZTgyZmY3MDhkZTdhNDYyYjhhZTE4ZGU4MmViZDE1MjliYWUwYzlmZjZlNzRmNzdhOTJhMmNkNDJmYWY2ZiIsInRhZyI6IiJ9', 4, 19, 2, 25, 1, '2025-06-25 15:46:35', '2025-06-22 14:41:05', '2025-06-25 19:46:35'),
-(14, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6IjQ5QWhmdjNhT2IxWVFQdjF3OUV5UHc9PSIsInZhbHVlIjoiRmdZUzZZZXdxQ0NSenJrMkFWNFBkdz09IiwibWFjIjoiM2U5YmJmNDNiOTg3Y2IyYmUyOTI2YjViMDRiODU4NmYyZDEzYWFhNTRmYzBkMzk5NGM3NThhZjM5MzA5NTFmNyIsInRhZyI6IiJ9', 4, 20, 1, 1, 1, '2025-06-25 15:46:35', '2025-06-22 14:43:39', '2025-06-25 19:46:35'),
-(15, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6InNaR3pTVDFVRGpYdVZpYzhxRWY2Tmc9PSIsInZhbHVlIjoiRUhmd1Fvd1I0VW9hUEdBYkJJeXhVZz09IiwibWFjIjoiMDE5MTQ4MTU0ZWEwNGIwODcwMmMwOTdlNDA3MzYyN2I5N2Q2YWVmNzNiZWEyOTFmMjFkNzE0MmVhYjM4MjU4NiIsInRhZyI6IiJ9', 4, 20, 2, 25, 1, '2025-06-25 15:46:35', '2025-06-22 14:43:39', '2025-06-25 19:46:35'),
-(16, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6InRiK29hNkVKY0FTQU4vR1ZqY1Q1Zmc9PSIsInZhbHVlIjoiVE9nYVdwMlh4NmgxNURWS21JbVBLUT09IiwibWFjIjoiNzFiOTZlZmVjMjc4NzhhNDBkYWFhNjJlNzdmOWQ2NjA5MGRmNzM0NGVjNTk3ODMxYTMxNDJhMjQ0Nzc5NWY4ZSIsInRhZyI6IiJ9', 4, 19, 1, 1, 1, '2025-06-25 15:46:35', '2025-06-22 14:45:37', '2025-06-25 19:46:35'),
-(17, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6IittczFxQjNmdzFCOEpqTWNtVTE1WUE9PSIsInZhbHVlIjoiTTNVY1ZtY3FtNHd3WG1wRDdpOFdwQT09IiwibWFjIjoiNzYxYTM3OTIwZGY3NjU2Y2QzMGE1MzNmZjMwNjcyNmZmNTc0NDQ3ZTQyZWJlODc2ZmQ2MTYwYzA2Njk1ZGE4YiIsInRhZyI6IiJ9', 4, 19, 2, 25, 1, '2025-06-25 15:46:35', '2025-06-22 14:45:37', '2025-06-25 19:46:35'),
-(18, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6Ii9iZ1BZSGhYTXJjNEFLWWxWR3JGZUE9PSIsInZhbHVlIjoiRm8vdmZPNWRPdTFlenUrc1BQZ2lwQT09IiwibWFjIjoiNjM1MDU1MmQ4ZjBhOWFhMTUyMzRhNmM1ZTIzNzRlNjRiYWRmZDYyYzliMjc1MjEyMTViMjI2ODBhOWI2YWU5NSIsInRhZyI6IiJ9', 4, 20, 1, 1, 1, '2025-06-25 15:46:35', '2025-06-22 14:46:41', '2025-06-25 19:46:35'),
-(19, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6Inc1NWdncmJlU2F3MWpEMlU5aHd3OUE9PSIsInZhbHVlIjoicDRoblNnamlhVHlrRFNtdnJqaG5oZz09IiwibWFjIjoiMWE5MTYwMjQyMDM0ODJjMmFhN2MyYTMwNTMxM2RlMmNmNzIzMGZiZGNmNGI2NDE1N2QwZmIyMDI2MDJlNjY5ZiIsInRhZyI6IiJ9', 4, 20, 2, 25, 1, '2025-06-25 15:46:35', '2025-06-22 14:46:41', '2025-06-25 19:46:35'),
-(20, 5, 'New Content Submitted', 'A new content has been submitted.', 'http://localhost:8000/authorized-user/content/show/eyJpdiI6InlYWlNESzFUZGtlc1VxU2RkS2cyU2c9PSIsInZhbHVlIjoiU1cvdTZhUVJ1cXRldkVvMEhWbEhjdz09IiwibWFjIjoiNjNjZDViZGM3NGNlNDAyM2UxMTY5MzEwNTFhMjE4ZGI3YjhhNWM0Mzg1NjBhYzBhNDllZjhhYmMwMjM4YjRhZCIsInRhZyI6IiJ9', 4, 7, 1, 1, 1, '2025-06-25 15:46:35', '2025-06-24 12:02:11', '2025-06-25 19:46:35'),
-(21, 5, 'New Content Submitted', 'A new content has been submitted.', 'http://localhost:8000/authorized-user/content/show/eyJpdiI6IjRST25yNjlyUVBGS0xVUkNRVnFWZXc9PSIsInZhbHVlIjoiUmpSaFNRdXdQNWxqU2xWU29ESU92UT09IiwibWFjIjoiYzQ2NDdkZjQyMjgzZTcxMTFhYTRmNDZmNjBlZGRhMDVjOGUzNjAwNTQ3ZGEzYzFjM2ZjNzU2ZWI3ZjZmMTBmNSIsInRhZyI6IiJ9', 4, 7, 2, 25, 1, '2025-06-24 18:03:34', '2025-06-24 12:02:13', '2025-06-24 12:03:34'),
-(22, 6, 'Content Approved', 'Your content has been approved.', 'http://localhost:8000/authorized-user/content/show/eyJpdiI6IkMwZndaeUMxcndMNmhUNWg1ZkU1b0E9PSIsInZhbHVlIjoiYWlidW8vZVMxbXk5SXF1WlRzaUZFUT09IiwibWFjIjoiZDk2NTA5ZmI5ODc5YjBhMTM3MmIyYmI2NTI0ODI1MDFjNzcyYjUzNDQ0ZmIyM2UwOWU4OTcyYmY4ZDhiMDFlNiIsInRhZyI6IiJ9', 3, 24, 4, 7, 1, '2025-06-25 15:46:35', '2025-06-24 12:22:28', '2025-06-25 19:46:35'),
-(23, 5, 'New Content Submitted', 'A new content has been submitted.', 'http://localhost:8000/authorized-user/content/show/eyJpdiI6IlAxVjR5cmZWa05mQ1c3bVlDV3I5c0E9PSIsInZhbHVlIjoiK3FOSVcwNkVoV29BSUE0WEFmV01MUT09IiwibWFjIjoiMDg3MDI5NmY2YjUwYzJiMTBmYjlhYjA5NzYyZjljYzU4ODA4ZmJiMjc1ZGJkZjk0NTNiZGRmODBjN2QxMjVkZCIsInRhZyI6IiJ9', 4, 7, 1, 1, 1, '2025-06-25 15:46:35', '2025-06-24 12:30:56', '2025-06-25 19:46:35'),
-(24, 5, 'New Content Submitted', 'A new content has been submitted.', 'http://localhost:8000/authorized-user/content/show/eyJpdiI6InY1b3k5Y0I2SGpZVW4vMW0yM0QzdGc9PSIsInZhbHVlIjoidTVIeit0bEVsa25EMGRiWHZiekF5UT09IiwibWFjIjoiODczZjdkMGMzNmM3MDE0NmFiOTZiOTRjOGViNmQxOTI4NThkMTNmMWMxYjQzZTllMzhhNjY1NjUwZGY1MmY3ZCIsInRhZyI6IiJ9', 4, 7, 2, 25, 1, '2025-06-24 18:31:46', '2025-06-24 12:30:57', '2025-06-24 12:31:46'),
-(25, 5, 'New Content Submitted', 'A new content has been submitted.', 'http://localhost:8000/authorized-user/content/show/eyJpdiI6ImtxY0I0MDJ1YmwybTViL0hkdGdYZ0E9PSIsInZhbHVlIjoiY0ZJQW45Y3hsdkFVL1RLVWwvQ3UxZz09IiwibWFjIjoiNDVmYmY5NzYzYjA0N2Y4YTNhYzEyNWQ3NWNjN2FhNzNlYTUxNDYyZTQ4NjdiYTNmZWY2YjQwZjMzNGM1NTlkOSIsInRhZyI6IiJ9', 4, 7, 3, 24, 1, '2025-06-25 15:46:35', '2025-06-24 12:30:59', '2025-06-25 19:46:35'),
-(26, 6, 'Content Approved', 'Your content has been approved.', 'http://localhost:8000/authorized-user/content/show/eyJpdiI6Ilg5ZlpDNk1YcWxMaWdQQ09XbUdnMlE9PSIsInZhbHVlIjoicSthdFJicEdXTDM3a1pRVWxHeGs4UT09IiwibWFjIjoiZThiMWFmNDlhZDhiMGJmN2FjNWVlZDgyZWRhMjJjYzNjMmYyMGI0ZjE4ZDVhMDJiYjM3MGQ1NjQ2MmQ4ZmQzZCIsInRhZyI6IiJ9', 2, 25, 4, 7, 1, '2025-06-25 15:46:35', '2025-06-24 12:35:21', '2025-06-25 19:46:35'),
-(27, 6, 'Content Approved', 'Your content has been approved.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6IjNhRkxwdm8xNlFxc05hOE1XUFgwS2c9PSIsInZhbHVlIjoiTWNjdjdxSHdBbXFWaVdsZmgyM0lDdz09IiwibWFjIjoiZWNjZjc5NmI1OGY5NjVhMTJiOGMzZmYyM2NlYzRlZDRkYTZmMmM4Zjc1NTZkZWQ2OTU3N2MwMTQ0ZGU5Y2VlYiIsInRhZyI6IiJ9', 2, 25, 4, 20, 1, '2025-06-25 15:46:35', '2025-06-25 18:49:45', '2025-06-25 19:46:35'),
-(28, 6, 'Content Approved', 'Your content has been approved.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6ImpLRUwvMTRrOTJ4NEFsYmk0NkhQYVE9PSIsInZhbHVlIjoiSTl1RnhQZ0U5MklqZi9Gd3dET2Iydz09IiwibWFjIjoiNjk3ZTdjOTdmNmI0MzlhY2MyNmFlNzA4MTVmMzUyMjQwYjUwZTQ5ZjM1ZjI1MzBhZjUyYzYxNTZmMzNjZWJlZiIsInRhZyI6IiJ9', 2, 25, 4, 19, 1, '2025-06-25 15:46:35', '2025-06-25 18:49:58', '2025-06-25 19:46:35'),
-(29, 6, 'Content Approved', 'Your content has been approved.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6IkZHTWRxcGNrT3l3MVdLKzVDVjVZdlE9PSIsInZhbHVlIjoiZVlGN0pmUHRjLzkyR1VKV2xDaXRsUT09IiwibWFjIjoiZDVlMmE0OTlhMDk2YTNlMzkzZmMwYzc1NmEzYWRhNTYxZjg0MDYwYTg3NWRlMDI4MGQ3ZTljZTc2Nzc5OWYwZiIsInRhZyI6IiJ9', 2, 25, 4, 20, 1, '2025-06-25 15:46:35', '2025-06-25 18:50:07', '2025-06-25 19:46:35'),
-(30, 6, 'Content Approved', 'Your content has been approved.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6IjdhZ0xVbnB3bDJPaUJMNjNaS29ySmc9PSIsInZhbHVlIjoicmxBZ0pWY2ZPNVdtTU1vQzFacEhFQT09IiwibWFjIjoiOThlOWMyNDkxNzUyNjU0YTA0MmU4OWU0MGIyYzM4OTE1NGFlY2M5YzEzNjAwODc0NjRmM2Y5OThmMjdhZGY5MCIsInRhZyI6IiJ9', 2, 25, 4, 19, 1, '2025-06-25 15:46:35', '2025-06-25 18:50:22', '2025-06-25 19:46:35'),
-(31, 6, 'Content Approved', 'Your content has been approved.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6Im43YmJGMCtJL3NCK2wyMEdZdEhwb2c9PSIsInZhbHVlIjoiL202UVdESFZuV2crMkVueVZxSHpaZz09IiwibWFjIjoiYWY1M2RmNmRiMWM0ZmU1ZDFjY2ZjZmEzNjIzYmJkNDU1OTAzZmYzZjE0NmExZjlhYjk2MDAxMGY0Y2I5M2E0MiIsInRhZyI6IiJ9', 2, 25, 4, 20, 1, '2025-06-25 15:46:35', '2025-06-25 18:50:30', '2025-06-25 19:46:35'),
-(32, 6, 'Content Approved', 'Your content has been approved.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6InFtb0VDb0MrM0UxblR0cDFhdC95VEE9PSIsInZhbHVlIjoiVGN3ZEJ6eHFNQTZOR1B6K3RLcmkzZz09IiwibWFjIjoiMjMzMWM0MzliMGI3Yjg3ZTA2NDczODU0MGMwNDU5YTIwNjI2ZmUxZGIyYjQ0YmNlOTViODc5ZDY2YzEzMWNlMSIsInRhZyI6IiJ9', 2, 25, 4, 19, 1, '2025-06-25 15:46:35', '2025-06-25 18:51:20', '2025-06-25 19:46:35'),
-(33, 6, 'Content Approved', 'Your content has been approved.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6Ik5KcmZqaVRDQkZiajdBNDB2SHNQekE9PSIsInZhbHVlIjoieVVzT01teDNqNXhaMVhkcDVnMGRXQT09IiwibWFjIjoiOGI3YThiZGMzZmQwMDRmOWVhYWIyM2VmOTUyYzM5NjA4NTBhMTczNzM1YjkwZjIxOGRiZjYwNGU0ZTMzMzAwZCIsInRhZyI6IiJ9', 2, 25, 4, 19, 1, '2025-06-25 15:46:35', '2025-06-25 18:51:26', '2025-06-25 19:46:35'),
-(34, 6, 'Content Approved', 'Your content has been approved.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6IkNqYXVKUnBwcUpKbHd0c25XdzhNQ2c9PSIsInZhbHVlIjoiUDlrTWt6eFJ5bUpoMDFISDlFQjlpQT09IiwibWFjIjoiZjg1Yzc2ZDlmOWJiY2QwM2ZmMzgwNjk3ODFmZGIwM2E5NWQxMDRiMmE0Y2JmNTBiNDM4MThlYmJhOThiZTYxNSIsInRhZyI6IiJ9', 2, 25, 4, 19, 1, '2025-06-25 15:46:35', '2025-06-25 18:51:31', '2025-06-25 19:46:35'),
-(35, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6Im05aVhCb1FhMmNvT3B1T0NyNlFEZXc9PSIsInZhbHVlIjoiVzFtSlpHN3pGd1FJMi9oSVNOUWxIUT09IiwibWFjIjoiNzgyYTVhNjAxYjA4MjNlMGZmMTg0MGYwZjRmZjE0OTYzNjkyMDA5MWZjMzBkMDkzMGQwN2UyMDEwYzJlMjJkMyIsInRhZyI6IiJ9', 4, 20, 1, 1, 0, NULL, '2025-07-02 21:29:25', '2025-07-02 21:29:25'),
-(36, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6Ik12QVJ1SmJtZWtlTUI2YXNkVXJqdVE9PSIsInZhbHVlIjoib3k4NUVsTXZaWTYxV0JJdHpleTEvdz09IiwibWFjIjoiN2UxNTM2MjAyYjMxMWVjZTYyNGZkOWNkZTJkNWQ3NDM1OGFlMzY4NmY0ZWM5OWViMDcwYTNjM2U3ZTlkZjgyOSIsInRhZyI6IiJ9', 4, 20, 2, 25, 0, NULL, '2025-07-02 21:29:25', '2025-07-02 21:29:25'),
-(37, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6IlErcDhvTHZ1ZHdaTjZYWHo4T3F0QXc9PSIsInZhbHVlIjoiSHh3N29QZmZsYkhaWmxLZFJtZVk5QT09IiwibWFjIjoiNjY3YzZiZGY5ZjkzYmFlN2RhYjMzMzZmNDZiM2UxMjY2OTZkMDlhNzJhODVhYjgyYTE3ZWZkYjViZTEzYTljOSIsInRhZyI6IiJ9', 4, 20, 3, 24, 0, NULL, '2025-07-02 21:29:25', '2025-07-02 21:29:25'),
-(38, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6IkNQa1QybnVMc28zM20zQlh4OG9aUXc9PSIsInZhbHVlIjoiYXlNY3BxWDlDWVM2MGhMQ1ZEazdwUT09IiwibWFjIjoiZDdjNWRhNTg5ZjFiZjJhOTE0NDcyYTJhOWM3Njg3OGViNGQ2NjhlNzM1YTRmMDI3YzU0ZDA2NTllNzhlYWEwYSIsInRhZyI6IiJ9', 4, 20, 1, 1, 0, NULL, '2025-07-02 21:55:52', '2025-07-02 21:55:52'),
-(39, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6IkhpWDBmSUV6emdhWlVJekxxajgybWc9PSIsInZhbHVlIjoiZy9RTUVFbUZnVE1JTGNSWGwzNis0UT09IiwibWFjIjoiYmVkNjExYzkwZGZlN2M4NDM4YzFjMmMwYzYwOGZkYTFlYTAwZjhmZDc0ZjI3NGQwZjIwY2E0ZjEyZTdlODk1NCIsInRhZyI6IiJ9', 4, 20, 2, 25, 0, NULL, '2025-07-02 21:55:52', '2025-07-02 21:55:52'),
-(40, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6IkJ0QThxNVVUZ1ZLL3lDMjAxSWhrclE9PSIsInZhbHVlIjoiVjdQZ1MwZUhXMkF4dnpBNkJvam1wUT09IiwibWFjIjoiNWZhYWIxY2IzMTc1ZGUzMzMxYzBjYTI1MTE1MDg1NTA4MjY0NzY5NDE4YTYxY2NkOWNiZDRmZjg0ZjQ0ZjRkYyIsInRhZyI6IiJ9', 4, 20, 3, 24, 0, NULL, '2025-07-02 21:55:52', '2025-07-02 21:55:52'),
-(41, 7, 'Account Create', 'Your account has been created.', 'https://repository.barc.sebpobd.net/authorized-user/user/show/eyJpdiI6IksxRG96TnVOYUV4RDdMMGl1d0dUV2c9PSIsInZhbHVlIjoibkdxcVlTU21OVVZKRzJkbThidHpNZz09IiwibWFjIjoiMDM3ZGYyODhlZTVmMGFmMWU0MWRhZjVmY2UwYTk5MWU2MzgyZjUzY2QxNmMzOTRhODc1ZTA5MjczM2JlZjk3NiIsInRhZyI6IiJ9', 1, 1, 3, 26, 0, NULL, '2025-07-13 15:51:13', '2025-07-13 15:51:13');
+(8, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6Ink0cUpNR1B2WEQwYjJ5bHg5M0dQR1E9PSIsInZhbHVlIjoiOFN0Ym1vc29TdGRTNVlYbE1SUmg0UT09IiwibWFjIjoiMzc4YmM1MjM2ZTg1MDNhZWU4NDY2MTZiNjQ4YjViZWJlMjViMzFjNThjZmI5YmVkZGViNmIzYzFhYzM0YmI0MiIsInRhZyI6IiJ9', 4, 19, 1, 1, 0, NULL, '2025-06-22 14:33:08', '2025-06-22 14:33:08'),
+(9, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6IlprQXhnY0E2blVsYUpqbUlROUZQeEE9PSIsInZhbHVlIjoiUjQ1WjQyWmQ4T0xGNFVzdmwwNU50dz09IiwibWFjIjoiMDYwMDJjNTFkMDlhYzA4M2NlZWZhODgzZDNmNGFjZThmZWNmMWVmN2Y2MmZjZWZhM2VmMDU5N2YyMWI1YzI0ZSIsInRhZyI6IiJ9', 4, 19, 2, 25, 0, NULL, '2025-06-22 14:33:08', '2025-06-22 14:33:08'),
+(10, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6ImNNM1EyN25YSFlWakFCdXoyQ1hBbmc9PSIsInZhbHVlIjoiMFR4RGtYOWpoaWEzajFNQXhpWmI5QT09IiwibWFjIjoiM2VjMzY2N2U3YTIyZGViMGE2YTMzMzkwZGZjZTA4NDU1NGU0ODcxZGI4ZDk2ZTJkMWVlODcyOWViYWVkMmU0YyIsInRhZyI6IiJ9', 4, 20, 1, 1, 0, NULL, '2025-06-22 14:35:55', '2025-06-22 14:35:55'),
+(11, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6ImpxWGdmbWJpb01iZGlxZXRSaDBYZUE9PSIsInZhbHVlIjoieUlxaENPTDVmUk5RUEg3eHpZRnJpdz09IiwibWFjIjoiMmZiNzc5OTMxZmYxZjM4ZGMxOWU0NWViNmMzNTQ3ZmYwYzJiNDJiMGIzZDdhOWJhYWZmZDliOTk4NTRiOThlNCIsInRhZyI6IiJ9', 4, 20, 2, 25, 0, NULL, '2025-06-22 14:35:55', '2025-06-22 14:35:55'),
+(12, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6Iks4UUNxZk5sZTl1MXRmUWhpR1QyS2c9PSIsInZhbHVlIjoiZWxOczJ5TFdrOU5nTHZ5bW5Od2RpUT09IiwibWFjIjoiMGNmMDk1MzVlY2U2MzgwNDhiYjQ0MmVhYmEwZWMwY2Q0ZjA3ZWI0MDIyMjBhNTBjNWE0ZmQyMDZhMmZkZmU3NCIsInRhZyI6IiJ9', 4, 19, 1, 1, 0, NULL, '2025-06-22 14:41:05', '2025-06-22 14:41:05'),
+(13, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6IlVCWjNCNHhvYit0dkQ1V3U1KzdJQ2c9PSIsInZhbHVlIjoianVNUVRua3hEaHlrYlF5bWc4SVlDZz09IiwibWFjIjoiZWYzZTgyZmY3MDhkZTdhNDYyYjhhZTE4ZGU4MmViZDE1MjliYWUwYzlmZjZlNzRmNzdhOTJhMmNkNDJmYWY2ZiIsInRhZyI6IiJ9', 4, 19, 2, 25, 0, NULL, '2025-06-22 14:41:05', '2025-06-22 14:41:05'),
+(14, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6IjQ5QWhmdjNhT2IxWVFQdjF3OUV5UHc9PSIsInZhbHVlIjoiRmdZUzZZZXdxQ0NSenJrMkFWNFBkdz09IiwibWFjIjoiM2U5YmJmNDNiOTg3Y2IyYmUyOTI2YjViMDRiODU4NmYyZDEzYWFhNTRmYzBkMzk5NGM3NThhZjM5MzA5NTFmNyIsInRhZyI6IiJ9', 4, 20, 1, 1, 0, NULL, '2025-06-22 14:43:39', '2025-06-22 14:43:39'),
+(15, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6InNaR3pTVDFVRGpYdVZpYzhxRWY2Tmc9PSIsInZhbHVlIjoiRUhmd1Fvd1I0VW9hUEdBYkJJeXhVZz09IiwibWFjIjoiMDE5MTQ4MTU0ZWEwNGIwODcwMmMwOTdlNDA3MzYyN2I5N2Q2YWVmNzNiZWEyOTFmMjFkNzE0MmVhYjM4MjU4NiIsInRhZyI6IiJ9', 4, 20, 2, 25, 0, NULL, '2025-06-22 14:43:39', '2025-06-22 14:43:39'),
+(16, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6InRiK29hNkVKY0FTQU4vR1ZqY1Q1Zmc9PSIsInZhbHVlIjoiVE9nYVdwMlh4NmgxNURWS21JbVBLUT09IiwibWFjIjoiNzFiOTZlZmVjMjc4NzhhNDBkYWFhNjJlNzdmOWQ2NjA5MGRmNzM0NGVjNTk3ODMxYTMxNDJhMjQ0Nzc5NWY4ZSIsInRhZyI6IiJ9', 4, 19, 1, 1, 0, NULL, '2025-06-22 14:45:37', '2025-06-22 14:45:37'),
+(17, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6IittczFxQjNmdzFCOEpqTWNtVTE1WUE9PSIsInZhbHVlIjoiTTNVY1ZtY3FtNHd3WG1wRDdpOFdwQT09IiwibWFjIjoiNzYxYTM3OTIwZGY3NjU2Y2QzMGE1MzNmZjMwNjcyNmZmNTc0NDQ3ZTQyZWJlODc2ZmQ2MTYwYzA2Njk1ZGE4YiIsInRhZyI6IiJ9', 4, 19, 2, 25, 0, NULL, '2025-06-22 14:45:37', '2025-06-22 14:45:37'),
+(18, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6Ii9iZ1BZSGhYTXJjNEFLWWxWR3JGZUE9PSIsInZhbHVlIjoiRm8vdmZPNWRPdTFlenUrc1BQZ2lwQT09IiwibWFjIjoiNjM1MDU1MmQ4ZjBhOWFhMTUyMzRhNmM1ZTIzNzRlNjRiYWRmZDYyYzliMjc1MjEyMTViMjI2ODBhOWI2YWU5NSIsInRhZyI6IiJ9', 4, 20, 1, 1, 0, NULL, '2025-06-22 14:46:41', '2025-06-22 14:46:41'),
+(19, 5, 'New Content Submitted', 'A new content has been submitted.', 'https://repository.barc.sebpobd.net/authorized-user/content/show/eyJpdiI6Inc1NWdncmJlU2F3MWpEMlU5aHd3OUE9PSIsInZhbHVlIjoicDRoblNnamlhVHlrRFNtdnJqaG5oZz09IiwibWFjIjoiMWE5MTYwMjQyMDM0ODJjMmFhN2MyYTMwNTMxM2RlMmNmNzIzMGZiZGNmNGI2NDE1N2QwZmIyMDI2MDJlNjY5ZiIsInRhZyI6IiJ9', 4, 20, 2, 25, 0, NULL, '2025-06-22 14:46:41', '2025-06-22 14:46:41');
 
 -- --------------------------------------------------------
 
@@ -1277,8 +1254,7 @@ INSERT INTO `permissions` (`id`, `name_en`, `name_bn`, `status`, `created_by`, `
 (773, 'content_line_chart', 'content_line_chart', 1, 1, NULL, NULL),
 (774, 'organization_pie_chart', 'organization_pie_chart', 1, 1, NULL, NULL),
 (775, 'manage_report', 'manage_report', 1, 1, '2025-05-26 23:05:34', '2025-05-26 23:05:34'),
-(776, 'can_publish', 'can_publish', 1, 1, NULL, NULL),
-(777, 'my_content_list', 'my_content_list', 1, 1, NULL, NULL);
+(776, 'can_publish', 'can_publish', 1, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1543,9 +1519,9 @@ INSERT INTO `roles` (`id`, `access_all`, `name_en`, `name_bn`, `display_name`, `
 (2, NULL, 'Super Admin', 'Super Admin', 'Super Admin', 2, 1, 1, 1, '2022-07-19 09:32:20', '2025-06-15 06:49:26'),
 (3, NULL, 'Admin', 'Admin', 'Admin', 3, 1, 1, 1, '2023-01-24 11:39:02', '2025-06-15 06:49:35'),
 (4, NULL, 'User Employee', 'User Employee', 'User Employee', 4, 1, 1, 1, '2023-01-24 11:39:02', '2025-06-15 06:49:50'),
-(5, NULL, 'User Viewer', 'User Viewer', 'User Viewer', 5, 1, 1, 1, '2023-09-05 01:27:26', '2025-06-15 06:50:18'),
+(5, NULL, 'Content Manager', 'Content Manager', 'Content Manager', 7, 3, 1, NULL, '2023-01-24 11:39:02', '2023-12-07 16:51:41'),
 (6, NULL, 'System Observer', 'System Observer', 'System Observer', 6, 3, 1, NULL, '2023-04-09 17:31:52', '2023-12-07 16:51:50'),
-(7, NULL, 'Content Manager', 'Content Manager', 'Content Manager', 7, 3, 1, NULL, '2023-01-24 11:39:02', '2023-12-07 16:51:41'),
+(7, NULL, 'User Viewer', 'User Viewer', 'User Viewer', 5, 1, 1, 1, '2023-09-05 01:27:26', '2025-06-15 06:50:18'),
 (8, NULL, 'Director', 'Director', 'Director', 8, 3, 1, 1, '2023-11-28 17:23:56', '2023-12-28 13:12:17'),
 (9, NULL, 'Head of Department', 'Head of Department', 'Head of Department', 9, 3, 1, NULL, '2023-12-20 22:51:08', '2023-12-28 13:12:12');
 
@@ -1574,6 +1550,13 @@ INSERT INTO `role_permissions` (`id`, `user_id`, `permission_id`, `role_id`, `cr
 (918, NULL, 68, 1, 1, NULL, '2022-08-29 16:18:30', '2022-08-29 16:18:30'),
 (919, NULL, 69, 1, 1, NULL, '2022-08-29 16:18:30', '2022-08-29 16:18:30'),
 (920, NULL, 70, 1, 1, NULL, '2022-08-29 16:18:30', '2022-08-29 16:18:30'),
+(1291, NULL, 307, 5, 1, NULL, '2023-02-08 13:07:42', '2023-02-08 13:07:42'),
+(1292, NULL, 327, 5, 1, NULL, '2023-02-08 13:07:42', '2023-02-08 13:07:42'),
+(1293, NULL, 328, 5, 1, NULL, '2023-02-08 13:07:42', '2023-02-08 13:07:42'),
+(1294, NULL, 329, 5, 1, NULL, '2023-02-08 13:07:42', '2023-02-08 13:07:42'),
+(1295, NULL, 330, 5, 1, NULL, '2023-02-08 13:07:42', '2023-02-08 13:07:42'),
+(1296, NULL, 331, 5, 1, NULL, '2023-02-08 13:07:42', '2023-02-08 13:07:42'),
+(1297, NULL, 332, 5, 1, NULL, '2023-02-08 13:07:42', '2023-02-08 13:07:42'),
 (1486, NULL, 4, 1, 1, NULL, '2023-03-02 11:46:49', '2023-03-02 11:46:49'),
 (1487, NULL, 11, 1, 1, NULL, '2023-03-02 11:46:49', '2023-03-02 11:46:49'),
 (1488, NULL, 48, 1, 1, NULL, '2023-03-02 11:46:49', '2023-03-02 11:46:49'),
@@ -1768,6 +1751,11 @@ INSERT INTO `role_permissions` (`id`, `user_id`, `permission_id`, `role_id`, `cr
 (1887, NULL, 517, 2, 1, NULL, '2023-03-19 16:36:09', '2023-03-19 16:36:09'),
 (1888, NULL, 518, 2, 1, NULL, '2023-03-19 16:36:09', '2023-03-19 16:36:09'),
 (1889, NULL, 519, 2, 1, NULL, '2023-03-19 16:36:09', '2023-03-19 16:36:09'),
+(1943, NULL, 317, 5, 1, NULL, '2023-03-27 15:24:12', '2023-03-27 15:24:12'),
+(1944, NULL, 318, 5, 1, NULL, '2023-03-27 15:24:12', '2023-03-27 15:24:12'),
+(1945, NULL, 319, 5, 1, NULL, '2023-03-27 15:24:12', '2023-03-27 15:24:12'),
+(1946, NULL, 320, 5, 1, NULL, '2023-03-27 15:24:12', '2023-03-27 15:24:12'),
+(1947, NULL, 321, 5, 1, NULL, '2023-03-27 15:24:12', '2023-03-27 15:24:12'),
 (1972, NULL, 535, 2, 143, NULL, '2023-03-30 05:06:42', '2023-03-30 05:06:42'),
 (1978, NULL, 543, 2, 143, NULL, '2023-03-30 08:49:10', '2023-03-30 08:49:10'),
 (2035, NULL, 558, 1, 1, NULL, '2023-04-12 15:31:09', '2023-04-12 15:31:09'),
@@ -1956,6 +1944,7 @@ INSERT INTO `role_permissions` (`id`, `user_id`, `permission_id`, `role_id`, `cr
 (2615, NULL, 4, 3, 1, NULL, '2025-06-19 22:00:38', '2025-06-19 22:00:38'),
 (2616, NULL, 52, 3, 1, NULL, '2025-06-19 22:00:38', '2025-06-19 22:00:38'),
 (2617, NULL, 57, 3, 1, NULL, '2025-06-19 22:00:38', '2025-06-19 22:00:38'),
+(2618, NULL, 58, 3, 1, NULL, '2025-06-19 22:00:38', '2025-06-19 22:00:38'),
 (2619, NULL, 59, 3, 1, NULL, '2025-06-19 22:00:38', '2025-06-19 22:00:38'),
 (2620, NULL, 763, 3, 1, NULL, '2025-06-19 22:00:38', '2025-06-19 22:00:38'),
 (2621, NULL, 764, 3, 1, NULL, '2025-06-19 22:00:38', '2025-06-19 22:00:38'),
@@ -1969,21 +1958,7 @@ INSERT INTO `role_permissions` (`id`, `user_id`, `permission_id`, `role_id`, `cr
 (2629, NULL, 762, 7, 1, NULL, '2025-06-23 19:00:51', '2025-06-23 19:00:51'),
 (2630, NULL, 763, 7, 1, NULL, '2025-06-23 19:00:51', '2025-06-23 19:00:51'),
 (2631, NULL, 764, 7, 1, NULL, '2025-06-23 19:00:51', '2025-06-23 19:00:51'),
-(2632, NULL, 766, 7, 1, NULL, '2025-06-23 19:00:51', '2025-06-23 19:00:51'),
-(2633, NULL, 777, 2, 25, NULL, '2025-06-24 10:15:00', '2025-06-24 10:15:00'),
-(2634, NULL, 746, 3, 25, NULL, '2025-06-24 10:25:53', '2025-06-24 10:25:53'),
-(2635, NULL, 771, 3, 25, NULL, '2025-06-24 10:25:53', '2025-06-24 10:25:53'),
-(2636, NULL, 772, 3, 25, NULL, '2025-06-24 10:25:53', '2025-06-24 10:25:53'),
-(2637, NULL, 773, 3, 25, NULL, '2025-06-24 10:25:53', '2025-06-24 10:25:53'),
-(2638, NULL, 774, 3, 25, NULL, '2025-06-24 10:25:53', '2025-06-24 10:25:53'),
-(2639, NULL, 741, 3, 25, NULL, '2025-06-24 10:58:13', '2025-06-24 10:58:13'),
-(2640, NULL, 58, 3, 25, NULL, '2025-06-24 11:03:53', '2025-06-24 11:03:53'),
-(2641, NULL, 777, 4, 25, NULL, '2025-06-24 12:25:52', '2025-06-24 12:25:52'),
-(2642, NULL, 761, 5, 25, NULL, '2025-06-24 12:26:50', '2025-06-24 12:26:50'),
-(2643, NULL, 762, 5, 25, NULL, '2025-06-24 12:26:50', '2025-06-24 12:26:50'),
-(2644, NULL, 763, 5, 25, NULL, '2025-06-24 12:26:50', '2025-06-24 12:26:50'),
-(2645, NULL, 764, 5, 25, NULL, '2025-06-24 12:26:50', '2025-06-24 12:26:50'),
-(2646, NULL, 766, 5, 25, NULL, '2025-06-24 12:26:50', '2025-06-24 12:26:50');
+(2632, NULL, 766, 7, 1, NULL, '2025-06-23 19:00:51', '2025-06-23 19:00:51');
 
 -- --------------------------------------------------------
 
@@ -2017,7 +1992,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `title`, `sub_title`, `logo`, `soft_logo`, `social_link`, `address`, `phone`, `mobile`, `email`, `alt_phone`, `alt_mobile`, `alt_email`, `copyright`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'BARC Repository', 'BARC', 'c7rHl96fc2KIMmPtf6GpcABf8lFTFoSWIKmf0gcC.png', 'WuC7ti4AsvrvYDeDKEZRuwxEiGBIIJViZ1Kasg2e.png', NULL, NULL, NULL, '01536256985', 'demo@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, '2022-08-29 10:16:43', '2025-07-13 15:40:44');
+(1, 'BARC Repository Software', 'BARC', 'c7rHl96fc2KIMmPtf6GpcABf8lFTFoSWIKmf0gcC.png', 'WuC7ti4AsvrvYDeDKEZRuwxEiGBIIJViZ1Kasg2e.png', NULL, NULL, NULL, '01536256985', 'demo@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, '2022-08-29 10:16:43', '2025-03-13 06:37:57');
 
 -- --------------------------------------------------------
 
@@ -11312,11 +11287,10 @@ INSERT INTO `users` (`id`, `name_bn`, `name_en`, `email`, `mobile`, `user_type`,
 (19, NULL, 'Md. Mostafizur Rahman', 'mostafizur.rahman@sebpo.com', '01516754654', 4, 4, 2, NULL, '100953447460615822249', NULL, 1, NULL, '$2y$10$KokuO0xmCdTOXLbOQOcG8Ojm1Pynl3bq74oYp9YfroP2pS1J9D6ti', NULL, '2025-04-10 12:08:10', '2025-04-10 12:21:30'),
 (20, NULL, 'Mostafizur Rahman', 'mfr637@gmail.com', '01521105154', 4, 4, 4, NULL, NULL, NULL, 1, '2025-05-21 16:48:52', '$2y$10$QjGFbdJUATl2Mhpp.93quOmCdDUoRb87aCmKlvQhzejtHePBdtoIG', NULL, '2025-05-21 16:46:42', '2025-05-21 16:52:26'),
 (21, NULL, 'Abu Sayeem Siddique', 'sayeem.siddique@sebpo.com', '01608881651', 4, 4, 3, NULL, NULL, NULL, 1, '2025-05-21 16:59:51', '$2y$10$gRf9enGwliMIzK5xPsEMUuoeJalydogtG9mPABMCduek1qovF93pe', NULL, '2025-05-21 16:58:39', '2025-05-21 17:06:05'),
-(22, NULL, 'Ummul Hasnat Rafea', 'ummul.rafea@sebpo.com', '01758011597', 4, 5, 2, NULL, NULL, NULL, 1, '2025-05-21 22:15:42', '$2y$10$d3GrQTBLeDUtUcnyP9aSnO634ekzTZ1H01wLWjrHYBuHJVn2ViDqC', NULL, '2025-05-21 22:11:06', '2025-06-23 18:59:37'),
+(22, NULL, 'Ummul Hasnat Rafea', 'ummul.rafea@sebpo.com', '01758011597', 4, 7, 2, NULL, NULL, NULL, 1, '2025-05-21 22:15:42', '$2y$10$d3GrQTBLeDUtUcnyP9aSnO634ekzTZ1H01wLWjrHYBuHJVn2ViDqC', NULL, '2025-05-21 22:11:06', '2025-06-23 18:59:37'),
 (23, NULL, 'Md. Ashraful Alam', 'ashraful@sebpo.com', NULL, 4, 4, NULL, NULL, '105855212939887581054', NULL, 5, NULL, '$2y$10$eaJzjsCQfwvBYhdIgiZ1J.OtDR2PAyGGLeq4bRVK3dZ1KQxK5CAcm', NULL, '2025-05-29 16:57:47', '2025-05-29 17:10:54'),
 (24, NULL, 'Md. Ashraful Alam', 'md.aashraful.alam@gmail.com', '01672548372', 4, 3, 4, NULL, NULL, NULL, 1, '2025-05-29 17:19:01', '$2y$10$x9vvN66T0Hf8f/w29ZT5yeBBKNCn7dFUvBxne2iyeOJ.Kg3qzB8wW', NULL, '2025-05-29 17:14:20', '2025-06-23 18:55:20'),
-(25, NULL, 'BARC Admin', 'webber.rayhan@gmail.com', '01552191400', 3, 2, 4, NULL, NULL, NULL, 1, NULL, '$2y$10$HU9RBblnDbwjfVkgAwzjsOKnM5jBdwXvSUB/E1QHorKoj/k.sXINq', NULL, '2025-06-01 21:15:22', '2025-06-01 21:15:22'),
-(26, NULL, 'Admin Test', 'rayhan.zaman4321@mail.com', '0123345675774', 3, 3, 3, NULL, NULL, NULL, 1, NULL, '$2y$10$MzpUBxYwT6Q78dKYO6ureOMDD.GjFbsfyBJ0Oug5w5m9voTSQ3K16', NULL, '2025-07-13 15:51:13', '2025-07-13 15:51:13');
+(25, NULL, 'BARC Admin', 'webber.rayhan@gmail.com', '01552191400', 3, 2, 4, NULL, NULL, NULL, 1, NULL, '$2y$10$HU9RBblnDbwjfVkgAwzjsOKnM5jBdwXvSUB/E1QHorKoj/k.sXINq', NULL, '2025-06-01 21:15:22', '2025-06-01 21:15:22');
 
 -- --------------------------------------------------------
 
@@ -11359,8 +11333,7 @@ INSERT INTO `user_addresses` (`id`, `user_id`, `present_division_id`, `present_d
 (9, 25, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2025-06-01 21:15:22', '2025-06-01 21:15:22'),
 (10, 24, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2025-06-23 18:55:20', '2025-06-23 18:55:20'),
 (11, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2025-06-23 18:57:59', '2025-06-23 18:57:59'),
-(12, 22, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2025-06-23 18:59:37', '2025-06-23 18:59:37'),
-(13, 26, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2025-07-13 15:51:13', '2025-07-13 15:51:13');
+(12, 22, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2025-06-23 18:59:37', '2025-06-23 18:59:37');
 
 -- --------------------------------------------------------
 
@@ -11436,8 +11409,7 @@ INSERT INTO `user_content_activities` (`id`, `user_id`, `category_id`, `content_
 (8, 1, 1, 13, 1, 1, '2025-06-15 09:34:38', '2025-06-15 09:34:38'),
 (9, 1, 1, 12, 2, 1, '2025-06-15 09:34:40', '2025-06-15 09:34:40'),
 (10, 19, 4, 17, 1, 19, '2025-06-19 20:10:52', '2025-06-19 20:10:52'),
-(11, 19, 4, 16, 2, 19, '2025-06-19 20:11:00', '2025-06-19 20:11:00'),
-(12, 22, 2, 31, 2, 22, '2025-06-25 20:14:06', '2025-06-25 20:14:06');
+(11, 19, 4, 16, 2, 19, '2025-06-19 20:11:00', '2025-06-19 20:11:00');
 
 -- --------------------------------------------------------
 
@@ -11481,15 +11453,14 @@ CREATE TABLE `user_infos` (
 
 INSERT INTO `user_infos` (`id`, `user_id`, `department_id`, `designation_id`, `organization`, `designation`, `address`, `image`, `office_id`, `employee_id`, `gender`, `dob`, `nid_no`, `passport_no`, `driving_license_no`, `religion`, `availablity`, `visitor_organization`, `visitor_designation`, `birth_certificate_no`, `marital_status`, `signature`, `start`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 1, NULL, NULL, NULL, 'userImage2025_03_13_051150_10417729.png', 3, NULL, 'Male', '2023-11-30', NULL, NULL, NULL, 'Islam', 1, NULL, NULL, NULL, NULL, 'signature2023_11_30_111448_48171751.jpg', NULL, 1, 1, '2023-11-30 16:06:56', '2025-04-17 10:01:27'),
-(6, 7, 2, 11, 'SEBPO', NULL, NULL, 'userImages/1kPgwNi5z5gTr89GfO2tN5wVM2bQvV2p8jYxbFbF.jpg', 30, NULL, 'Male', NULL, NULL, NULL, NULL, 'Islam', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-03-12 08:40:50', '2025-06-23 18:57:59'),
+(6, 7, 2, 11, 'SEBPO', NULL, NULL, 'userImages/1kPgwNi5z5gTr89GfO2tN5wVM2bQvV2p8jYxbFbF.jpg', 3, NULL, 'Male', NULL, NULL, NULL, NULL, 'Islam', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-03-12 08:40:50', '2025-06-23 18:57:59'),
 (16, 17, 1, 2, 'SEBPO', 'Ass. Manager', NULL, 'userImage2025_04_06_021258_54702425.jpg', 3, NULL, 'Male', '2025-04-14', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 'signature2025_04_06_021258_88147852.jpeg', NULL, 1, NULL, '2025-04-06 08:12:58', '2025-04-06 08:12:58'),
 (17, 19, 1, NULL, NULL, 'Software Engineer', NULL, 'userImage2025_04_10_121630_26508796.png', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'signature2025_04_10_121630_65643590.jpeg', NULL, NULL, 1, '2025-04-10 06:16:30', '2025-04-10 06:16:30'),
 (21, 20, NULL, 11, NULL, NULL, NULL, 'userImages/eVIoijpLrgRi1BcNNG5d7xS5NusJFElZdHcePXSz.jpg', 30, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-21 16:46:42', '2025-05-21 16:46:42'),
 (22, 21, NULL, 2, NULL, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-21 16:58:39', '2025-05-21 16:58:39'),
 (23, 22, NULL, 1, NULL, NULL, NULL, NULL, 9, NULL, 'Female', NULL, NULL, NULL, NULL, 'Islam', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-05-21 22:11:06', '2025-06-23 18:59:37'),
 (24, 24, NULL, 11, NULL, NULL, NULL, NULL, 30, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 25, '2025-05-29 17:14:20', '2025-06-23 18:55:20'),
-(25, 25, NULL, 9, NULL, NULL, NULL, NULL, 30, NULL, 'Male', NULL, NULL, NULL, NULL, 'Islam', 0, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2025-06-01 21:15:22', '2025-06-01 21:15:22'),
-(26, 26, NULL, 3, NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2025-07-13 15:51:13', '2025-07-13 15:51:13');
+(25, 25, NULL, 9, NULL, NULL, NULL, NULL, 30, NULL, 'Male', NULL, NULL, NULL, NULL, 'Islam', 0, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2025-06-01 21:15:22', '2025-06-01 21:15:22');
 
 --
 -- Indexes for dumped tables
@@ -11855,7 +11826,7 @@ ALTER TABLE `city_corporations`
 -- AUTO_INCREMENT for table `contents`
 --
 ALTER TABLE `contents`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -11975,7 +11946,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `offices`
@@ -11987,7 +11958,7 @@ ALTER TABLE `offices`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=778;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=777;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -12041,13 +12012,13 @@ ALTER TABLE `project_values`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=578;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `role_permissions`
 --
 ALTER TABLE `role_permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2647;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2633;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -12083,13 +12054,13 @@ ALTER TABLE `upazilas`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `user_addresses`
 --
 ALTER TABLE `user_addresses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `user_categories`
@@ -12107,13 +12078,13 @@ ALTER TABLE `user_company_docs`
 -- AUTO_INCREMENT for table `user_content_activities`
 --
 ALTER TABLE `user_content_activities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `user_infos`
 --
 ALTER TABLE `user_infos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -39,6 +39,7 @@ use App\Http\Controllers\{
     ETicketController,
     CategoryController,
     ContentController,
+    ActivityLogController,
 };
 
 use App\Http\Controllers\Auth\LoginController;
@@ -101,6 +102,7 @@ Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'
 // ****************************************** Back-end Links *****************************************
 Route::group(['middleware' => ['AuthGates','set.locale'], 'prefix' => '/authorized-user', 'as' => 'admin.'], function() {
     Route::get('/', [IndexController::class, 'index'])->name('home');
+    Route::get('/content-data', [IndexController::class, 'contentData'])->name('index.contentData');
     Route::get('/change-language', [IndexController::class, 'language_change'])->name('language_change');
 
     // get dynamic address AJAX
@@ -342,6 +344,6 @@ Route::group(['middleware' => ['AuthGates','set.locale'], 'prefix' => '/authoriz
         Route::get('/user-content-report', [ReportController::class, 'contentUserReport'])->name('contentUserReport');
         Route::get('/organization-user-report', [ReportController::class, 'orgUserReport'])->name('orgUserReport');
         Route::get('/organization-content-report', [ReportController::class, 'orgContentReport'])->name('orgContentReport');
-        Route::get('/log-report', [ReportController::class, 'logReport'])->name('logReport');
+        Route::get('/log-report', [ActivityLogController::class, 'index'])->name('logReport');
     });
 });

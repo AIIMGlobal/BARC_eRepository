@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
@@ -15,9 +16,10 @@ use Illuminate\Support\Facades\Validator;
 
 /* included models */
 use App\Models\User;
-use App\Models\Setting;
 use App\Models\Content;
+use App\Models\Setting;
 use App\Models\Category;
+use App\Models\ActivityLog;
 use App\Models\Notification;
 use App\Models\UserContentActivity;
 
@@ -536,6 +538,17 @@ class ContentController extends Controller
                         }
                     }
 
+                    $activity = new ActivityLog;
+
+                    $activity->type         = 'content_submit';
+                    $activity->user_id      = Auth::id();
+                    $activity->content_id   = $content->id;
+                    $activity->description  = 'Content Submitted By ' . Auth::user()->name_en;
+                    $activity->ip_address   = request()->ip();
+                    $activity->user_agent   = request()->userAgent();
+                    
+                    $activity->save();
+
                     DB::commit();
 
                     return response()->json([
@@ -566,6 +579,17 @@ class ContentController extends Controller
 
                         $notification->save();
                     }
+
+                    $activity = new ActivityLog;
+
+                    $activity->type         = 'content_publish';
+                    $activity->user_id      = Auth::id();
+                    $activity->content_id   = $content->id;
+                    $activity->description  = 'Content Published By ' . Auth::user()->name_en;
+                    $activity->ip_address   = request()->ip();
+                    $activity->user_agent   = request()->userAgent();
+                    
+                    $activity->save();
 
                     DB::commit();
 
@@ -745,6 +769,17 @@ class ContentController extends Controller
                     }
 
                     if ($content->status == 0) {
+                        $activity = new ActivityLog;
+
+                        $activity->type         = 'content_edit';
+                        $activity->user_id      = Auth::id();
+                        $activity->content_id   = $content->id;
+                        $activity->description  = 'Content Updated and Submitted By ' . Auth::user()->name_en;
+                        $activity->ip_address   = request()->ip();
+                        $activity->user_agent   = request()->userAgent();
+                        
+                        $activity->save();
+
                         if (count($admins)) {
                             foreach ($admins as $admin) {
                                 Mail::to($admin->email)->send(new ContentSubmitMail($admin, $setting, $content));
@@ -798,6 +833,17 @@ class ContentController extends Controller
                     $content->approved_at = now();
 
                     $content->save();
+
+                    $activity = new ActivityLog;
+
+                    $activity->type         = 'content_publish';
+                    $activity->user_id      = Auth::id();
+                    $activity->content_id   = $content->id;
+                    $activity->description  = 'Content Updated and Published By ' . Auth::user()->name_en;
+                    $activity->ip_address   = request()->ip();
+                    $activity->user_agent   = request()->userAgent();
+                    
+                    $activity->save();
                     
                     if ($content->createdBy->email ?? '') {
                         Mail::to($content->createdBy->email)->send(new ContentPublishMail($setting, $content));
@@ -865,6 +911,17 @@ class ContentController extends Controller
                     
                     $content->delete();
 
+                    $activity = new ActivityLog;
+
+                    $activity->type         = 'content_delete';
+                    $activity->user_id      = Auth::id();
+                    $activity->content_id   = $content->id;
+                    $activity->description  = 'Content Deleted By ' . Auth::user()->name_en;
+                    $activity->ip_address   = request()->ip();
+                    $activity->user_agent   = request()->userAgent();
+                    
+                    $activity->save();
+
                     return response()->json([
                         'success' => true,
                         'message' => 'Content Deleted Successfully!',
@@ -909,6 +966,17 @@ class ContentController extends Controller
                     $content->updated_by    = $user->id;
 
                     $content->save();
+
+                    $activity = new ActivityLog;
+
+                    $activity->type         = 'content_publish';
+                    $activity->user_id      = Auth::id();
+                    $activity->content_id   = $content->id;
+                    $activity->description  = 'Content Published By ' . Auth::user()->name_en;
+                    $activity->ip_address   = request()->ip();
+                    $activity->user_agent   = request()->userAgent();
+                    
+                    $activity->save();
 
                     $setting = Setting::first();
 
@@ -975,6 +1043,17 @@ class ContentController extends Controller
 
                     $content->save();
 
+                    $activity = new ActivityLog;
+
+                    $activity->type         = 'content_unarchive';
+                    $activity->user_id      = Auth::id();
+                    $activity->content_id   = $content->id;
+                    $activity->description  = 'Content Unarchived By ' . Auth::user()->name_en;
+                    $activity->ip_address   = request()->ip();
+                    $activity->user_agent   = request()->userAgent();
+                    
+                    $activity->save();
+
                     return response()->json([
                         'success' => true,
                         'message' => 'Content Unarchived Successfully!',
@@ -985,6 +1064,17 @@ class ContentController extends Controller
                     $content->updated_by    = $user->id;
 
                     $content->save();
+
+                    $activity = new ActivityLog;
+
+                    $activity->type         = 'content_archive';
+                    $activity->user_id      = Auth::id();
+                    $activity->content_id   = $content->id;
+                    $activity->description  = 'Content Archived By ' . Auth::user()->name_en;
+                    $activity->ip_address   = request()->ip();
+                    $activity->user_agent   = request()->userAgent();
+                    
+                    $activity->save();
 
                     return response()->json([
                         'success' => true,
