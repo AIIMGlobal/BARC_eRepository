@@ -47,6 +47,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 
+use App\Http\Controllers\Auth\FrontendController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -98,6 +100,9 @@ Route::post('/resend-mail/{id}', [VerificationController::class, 'resendMail'])-
 Route::get('/forgot-password', [ForgotPasswordController::class, 'forgotPasswordPage'])->name('forgotPasswordPage'); 
 Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword'])->name('forgotPassword'); 
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('resetPassword'); 
+
+Route::get('/about-us', [FrontendController::class, 'about'])->name('about'); 
+Route::get('/contact-us', [FrontendController::class, 'contact'])->name('contact'); 
 
 // ****************************************** Back-end Links *****************************************
 Route::group(['middleware' => ['AuthGates','set.locale'], 'prefix' => '/authorized-user', 'as' => 'admin.'], function() {
