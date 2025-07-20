@@ -70,6 +70,11 @@
 
                     <div class="fxt-page-switcher">
                         <h2 class="fxt-page-title mr-3">Verification</h2>
+
+                        <ul class="fxt-switcher-wrap">
+                            <li><a href="{{ route('about') }}" class="fxt-switcher-btn active">About</a></li>
+                            <li><a href="{{ route('contact') }}" class="fxt-switcher-btn">Contact</a></li>
+                        </ul>
                     </div>
 
                     <div class="fxt-main-form">

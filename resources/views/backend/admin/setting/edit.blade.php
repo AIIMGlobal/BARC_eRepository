@@ -68,13 +68,41 @@
 
                                             <div class="col-md-6">
                                                 <div>
-                                                    <label for="mobile" class="form-label">Mobile: <span style="color:red;">*</span></label>
+                                                    <label for="mobile" class="form-label">Phone: <span style="color:red;">*</span></label>
 
                                                     <input type="text" class="form-control" name="mobile" placeholder="Enter Mobile" value="{{ $setting->mobile ?? '' }}" required>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
+                                                <div>
+                                                    <label for="address" class="form-label">Address: <span style="color:red;">*</span></label>
+
+                                                    <textarea class="form-control" name="address" placeholder="Enter Address" rows="3" cols="1" required>{{ $setting->address ?? '' }}</textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <label for="social_link" class="form-label">Location in Map: </label>
+
+                                                    <textarea class="form-control" name="social_link" placeholder="Enter Embedded Code of Map" rows="3" cols="1">{{ $setting->social_link ?? '' }}</textarea>
+                                                </div>
+                                            </div>
+
+                                            @if (Auth::user()->role_id == 1)
+                                                <div class="col-md-6">
+                                                    <div>
+                                                        <label for="copyright" class="form-label">Copyright Text: </label>
+
+                                                        <textarea class="form-control" name="copyright" placeholder="Enter Copyright Text" rows="1" cols="1">{{ $setting->copyright ?? '' }}</textarea>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 mt-3">
                                                 <div>
                                                     <label for="soft_logo" class="form-label">Software Logo: </label>
 

@@ -40,14 +40,13 @@ use App\Http\Controllers\{
     CategoryController,
     ContentController,
     ActivityLogController,
+    FrontendController
 };
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-
-use App\Http\Controllers\Auth\FrontendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,7 +100,7 @@ Route::get('/forgot-password', [ForgotPasswordController::class, 'forgotPassword
 Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword'])->name('forgotPassword'); 
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('resetPassword'); 
 
-Route::get('/about-us', [FrontendController::class, 'about'])->name('about'); 
+Route::get('/about-brac-repository', [FrontendController::class, 'about'])->name('about'); 
 Route::get('/contact-us', [FrontendController::class, 'contact'])->name('contact'); 
 
 // ****************************************** Back-end Links *****************************************
