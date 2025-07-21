@@ -120,7 +120,6 @@
         </script>
 
         <script>
-            // select, remove all assigned permissions
             $("#selectAllAssigned").click(function(){
                 $(".assignedPermissions").prop('checked', true);
             });
@@ -128,7 +127,6 @@
                 $(".assignedPermissions").prop('checked', false);
             });
 
-            // select, remove all unassigned permissions
             $("#selectAllUnassigned").click(function(){
                 $(".unassignedPermissions").prop('checked', true);
             });

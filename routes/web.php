@@ -99,6 +99,7 @@ Route::post('/resend-mail/{id}', [VerificationController::class, 'resendMail'])-
 Route::get('/forgot-password', [ForgotPasswordController::class, 'forgotPasswordPage'])->name('forgotPasswordPage'); 
 Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword'])->name('forgotPassword'); 
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('resetPassword'); 
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/about-brac-repository', [FrontendController::class, 'about'])->name('about'); 
 Route::get('/contact-us', [FrontendController::class, 'contact'])->name('contact'); 

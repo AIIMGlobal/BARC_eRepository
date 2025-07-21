@@ -191,4 +191,24 @@ class LoginController extends Controller
             return redirect()->route('login')->withErrors('Something went wrong');
         }
     }
+
+    public function logout(Request $request)
+    {
+        $activity = new ActivityLog;
+
+        $activity->type         = 'logout';
+        $activity->user_id      = Auth::id();
+        $activity->description  = 'Logged out by ' . Auth::user()->name_en;
+        $activity->ip_address   = $request->ip();
+        $activity->user_agent   = $request->userAgent();
+
+        $activity->save();
+
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+         return redirect()->route('login');
+    }
 }
