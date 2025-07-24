@@ -107,10 +107,10 @@
                                 </div>
 
                                 <div class="d-flex gap-2 justify-content-end mt-4">
-                                    <button type="submit" class="btn btn-success" id="saveBtn" data-status="0">Submit</button>
+                                    <button type="submit" class="btn btn-info" id="saveBtn" data-status="0">Submit</button>
 
                                     @can('can_publish')
-                                        <button type="submit" class="btn btn-primary" id="publishBtn" data-status="1">Publish</button>
+                                        <button type="submit" class="btn btn-success" id="publishBtn" data-status="1">Publish</button>
                                     @endcan
                                 </div>
                             </form>

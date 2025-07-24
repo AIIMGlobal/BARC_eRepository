@@ -319,9 +319,9 @@
 
                                                         @can('archive_content')
                                                             @if ($content->status == 3)
-                                                                <button class="btn btn-primary" type="button" onclick="archiveContent('{{ Crypt::encryptString($content->id) }}')">Unarchive</button>
+                                                                <button class="btn btn-info" type="button" onclick="archiveContent('{{ Crypt::encryptString($content->id) }}')">Unarchive</button>
                                                             @else
-                                                                <button class="btn btn-primary" type="button" onclick="archiveContent('{{ Crypt::encryptString($content->id) }}')">Archive</button>
+                                                                <button class="btn btn-info" type="button" onclick="archiveContent('{{ Crypt::encryptString($content->id) }}')">Archive</button>
                                                             @endif
                                                         @endcan
 

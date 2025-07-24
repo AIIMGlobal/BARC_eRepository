@@ -954,6 +954,8 @@ class ContentController extends Controller
     public function publish($id)
     {
         try {
+            DB::beginTransaction();
+
             $user = Auth::user();
 
             if (Gate::allows('can_publish', $user)) {
@@ -962,7 +964,9 @@ class ContentController extends Controller
                 
                 if ($content->status == 0) {
                     $content->status        = 1;
-
+                    $content->approved_by   = $user->id;
+                    $content->approved_at   = now();
+                    $content->published_at  = now();
                     $content->updated_by    = $user->id;
 
                     $content->save();
@@ -998,23 +1002,31 @@ class ContentController extends Controller
                         $notification->save();
                     }
 
+                    DB::commit();
+
                     return response()->json([
                         'success' => true,
                         'message' => 'Content Published Successfully!',
                     ]);
                 } else {
+                    DB::rollBack();
+
                     return response()->json([
                         'success' => false,
                         'message' => 'Action Not Allowed at this Stage!',
                     ]);
                 }
             } else {
+                DB::rollBack();
+
                 return response()->json([
                     'success' => false,
                     'message' => "You don't have permission!",
                 ], 403);
             }
         } catch (\Exception $e) {
+            DB::rollBack();
+
             \Log::error($e->getMessage());
 
             return response()->json([

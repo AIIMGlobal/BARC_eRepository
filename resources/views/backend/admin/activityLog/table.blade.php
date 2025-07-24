@@ -8,7 +8,7 @@
             <td class="text-center">{{ $i }}</td>
             <td>{{ $activityTypes[$log->type] ?? $log->type }}</td>
             <td>{{ $log->user->name_en ?? 'Unknown' }}</td>
-            <td>{{ $log->content_name ?? '-' }}</td>
+            <td>{{ $log->content->content_name ?? '-' }}</td>
             <td>{{ $log->description ?? '-' }}</td>
             <td>{{ $log->ip_address ?? '-' }}</td>
             <td>{{ $log->created_at->format('d M, Y H:i a') }}</td>
