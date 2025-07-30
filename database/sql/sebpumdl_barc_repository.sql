@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 21, 2025 at 07:35 AM
+-- Generation Time: Jul 30, 2025 at 12:27 AM
 -- Server version: 10.6.22-MariaDB-cll-lve-log
 -- PHP Version: 8.3.23
 
@@ -97,6 +97,47 @@ CREATE TABLE `academic_records` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `activity_logs`
+--
+
+CREATE TABLE `activity_logs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `content_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `ip_address` varchar(255) DEFAULT NULL,
+  `user_agent` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `activity_logs`
+--
+
+INSERT INTO `activity_logs` (`id`, `type`, `user_id`, `content_id`, `description`, `ip_address`, `user_agent`, `created_at`, `updated_at`) VALUES
+(1, 'login', 22, NULL, 'Login By Ummul Hasnat Rafea', '116.68.207.41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', '2025-07-21 22:43:39', '2025-07-21 22:43:39'),
+(2, 'logout', 22, NULL, 'Logged out by Ummul Hasnat Rafea', '116.68.207.41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', '2025-07-21 22:43:55', '2025-07-21 22:43:55'),
+(3, 'login', 7, NULL, 'Login By Rayhan Zaman', '116.68.207.41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', '2025-07-21 22:44:11', '2025-07-21 22:44:11'),
+(4, 'logout', 7, NULL, 'Logged out by Rayhan Zaman', '116.68.207.41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', '2025-07-21 22:44:20', '2025-07-21 22:44:20'),
+(5, 'login', 19, NULL, 'Login By Md. Mostafizur Rahman', '116.68.207.41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', '2025-07-21 22:44:41', '2025-07-21 22:44:41'),
+(6, 'logout', 19, NULL, 'Logged out by Md. Mostafizur Rahman', '116.68.207.41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', '2025-07-21 22:46:02', '2025-07-21 22:46:02'),
+(7, 'login', 24, NULL, 'Login By Md. Ashraful Alam', '116.68.207.41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', '2025-07-21 22:46:22', '2025-07-21 22:46:22'),
+(8, 'login', 1, NULL, 'Login By Super Admin', '116.68.207.41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', '2025-07-23 14:36:27', '2025-07-23 14:36:27'),
+(9, 'login', 25, NULL, 'Login By BARC Admin', '116.68.207.41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', '2025-07-24 16:18:59', '2025-07-24 16:18:59'),
+(10, 'logout', 25, NULL, 'Logged out by BARC Admin', '116.68.207.41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', '2025-07-24 16:21:13', '2025-07-24 16:21:13'),
+(11, 'login', 19, NULL, 'Login By Md. Mostafizur Rahman', '116.68.207.41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', '2025-07-24 16:21:30', '2025-07-24 16:21:30'),
+(12, 'logout', 19, NULL, 'Logged out by Md. Mostafizur Rahman', '116.68.207.41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', '2025-07-24 16:23:05', '2025-07-24 16:23:05'),
+(13, 'login', 25, NULL, 'Login By BARC Admin', '116.68.207.41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', '2025-07-24 16:24:08', '2025-07-24 16:24:08'),
+(14, 'login', 25, NULL, 'Login By BARC Admin', '116.68.207.41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', '2025-07-24 21:33:16', '2025-07-24 21:33:16'),
+(15, 'login', 25, NULL, 'Login By BARC Admin', '116.68.207.41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', '2025-07-27 14:39:26', '2025-07-27 14:39:26'),
+(16, 'login', 25, NULL, 'Login By BARC Admin', '116.68.207.41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', '2025-07-28 14:31:52', '2025-07-28 14:31:52'),
+(17, 'login', 25, NULL, 'Login By BARC Admin', '116.68.207.41', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', '2025-07-30 14:26:40', '2025-07-30 14:26:40');
 
 -- --------------------------------------------------------
 
@@ -261,7 +302,7 @@ CREATE TABLE `contents` (
   `can_download` tinyint(4) DEFAULT NULL COMMENT '1=Yes, 0=No',
   `status` tinyint(4) DEFAULT NULL COMMENT '0:unpublished, 1:published, 2:delete, 3:archived',
   `approved_by` int(11) DEFAULT NULL,
-  `approved_at` int(11) DEFAULT NULL,
+  `approved_at` varchar(255) DEFAULT NULL,
   `published_at` timestamp NULL DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
@@ -303,24 +344,24 @@ INSERT INTO `contents` (`id`, `sl`, `category_id`, `content_type`, `content_name
 (29, NULL, 2, 'PDF', 'proceedings of the national workshop on sustainable land mangement through effective fertilizer use in relation to climate changer and land degradation', 'proceedings-of-the-national-workshop-on-sustainable-land-mangement-through-effective-fertilizer-use-in-relation-to-climate-changer-and-land-degradation', NULL, 'pdf', 'contents/1747726436_proceedings of the national workshop on sustainable land mangement through effective fertilizer use in relation to climate changer and land degradation.pdf', '1999', 'thumbnails/1747726436_Screenshot 2025-05-20 132838.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 17:33:56', 19, NULL, '2025-05-20 17:33:56', '2025-05-20 17:33:56'),
 (30, NULL, 2, 'PDF', 'Proceedings of the National Workshop  on  Sustainable Land Use through Soil and Crop Management in relation to Climate Change and  Land Degradation', 'proceedings-of-the-national-workshop-on-sustainable-land-use-through-soil-and-crop-management-in-relation-to-climate-change-and-land-degradation', NULL, 'pdf', 'contents/1747744853_Proceeding of the National Workshop on sustainable Land Use through Soil and Crop Management in relation to Climate Change and Land Degradation.pdf', '2010', 'thumbnails/1747744853_Screenshot 2025-05-20 183635.png', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2025-05-20 22:40:53', 19, NULL, '2025-05-20 22:40:53', '2025-05-20 22:40:53'),
 (31, NULL, 2, 'PDF', 'BANGLADESH JOURNAL OF AGRICULTURE', 'bangladesh-journal-of-agriculture-1748774384', 'V©L. 3 NO. 1 JUNE, 1978', 'pdf', 'contents/1747744973_Bangladesh Journal Of Agriculture Vol.3 No.1 June.1978 (1).pdf', '1978', 'thumbnails/1747744973_Screenshot 2025-05-20 183836.png', NULL, NULL, NULL, 1, 1, NULL, NULL, '2025-05-20 22:42:53', 19, 19, '2025-05-20 22:42:53', '2025-06-01 20:39:44'),
-(34, NULL, 1, 'PDF', 'Ambiente Bentônico', 'ambiente-bentonico', NULL, 'pdf', 'contents/1750225267_Ambiente Bentônico.pdf', '2017', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 19, NULL, '2025-06-18 15:41:09', '2025-06-18 15:41:09'),
-(35, NULL, 1, 'PDF', 'Ambiente Pelágico', 'ambiente-pelagico', NULL, 'pdf', 'contents/1750227039_Ambiente Pelágico.pdf', '2013', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 19, NULL, '2025-06-18 16:10:39', '2025-06-18 16:10:39'),
-(36, NULL, 1, 'PDF', 'Application of Nano_Microencapsulated Ingredients in Food Products', 'application-of-nano-microencapsulated-ingredients-in-food-products', NULL, 'pdf', 'contents/1750227305_Application of Nano_Microencapsulated Ingredients in Food Products.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 20, NULL, '2025-06-18 16:15:05', '2025-06-18 16:15:05'),
-(37, NULL, 1, 'PDF', 'Applications of Genetic and Genomic Research in Cereals', 'applications-of-genetic-and-genomic-research-in-cereals', NULL, 'pdf', 'contents/1750227369_Applications of Genetic and Genomic Research in Cereals.pdf', '2023', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 19, NULL, '2025-06-18 16:16:09', '2025-06-18 16:16:09'),
-(38, NULL, 1, 'PDF', 'Approaches to the Purification, Analysis and Characterization of Antibody-Based Therapeutics', 'approaches-to-the-purification-analysis-and-characterization-of-antibody-based-therapeutics', NULL, 'pdf', 'contents/1750227408_Approaches to the Purification, Analysis and Characterization of Antibody-Based Therapeutics.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 20, NULL, '2025-06-18 16:16:48', '2025-06-18 16:16:48'),
-(39, NULL, 1, 'PDF', 'Aquacultural Facilities and Equipment', 'aquacultural-facilities-and-equipment', NULL, 'pdf', 'contents/1750227536_Aquacultural Facilities and Equipment.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 19, NULL, '2025-06-18 16:18:56', '2025-06-18 16:18:56'),
-(40, NULL, 1, 'PDF', 'Aquaculture Health Management', 'aquaculture-health-management', NULL, 'pdf', 'contents/1750227594_Aquaculture Health Management.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 20, NULL, '2025-06-18 16:19:54', '2025-06-18 16:19:54'),
-(41, NULL, 1, 'PDF', 'Aquaculture Toxicology', 'aquaculture-toxicology', NULL, 'pdf', 'contents/1750229261_Aquaculture Toxicology.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 19, NULL, '2025-06-18 16:47:41', '2025-06-18 16:47:41'),
-(42, NULL, 1, 'PDF', 'Aromatic Herbs in Food', 'aromatic-herbs-in-food', NULL, 'pdf', 'contents/1750229524_Aromatic Herbs in Food.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, 19, 25, '2025-06-18 16:52:04', '2025-06-25 18:51:31'),
-(44, NULL, 1, 'PDF', 'Atlas de Sensibilidade Ambiental Ao Óleo', 'atlas-de-sensibilidade-ambiental-ao-oleo', NULL, 'pdf', 'contents/1750245924_Atlas de Sensibilidade Ambiental Ao Óleo.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, 19, 25, '2025-06-18 21:25:26', '2025-06-25 18:51:26'),
-(45, NULL, 1, 'PDF', 'Atmospheric Nitrogen Deposition to Global Forests', 'atmospheric-nitrogen-deposition-to-global-forests', NULL, 'pdf', 'contents/1750566788_Atmospheric Nitrogen Deposition to Global Forests.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, 19, 25, '2025-06-22 14:33:08', '2025-06-25 18:51:20'),
-(46, NULL, 1, 'PDF', 'Aquaculture Pathophysiology', 'aquaculture-pathophysiology', NULL, 'pdf', 'contents/1750566953_Aquaculture Pathophysiology.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, 20, 25, '2025-06-22 14:35:55', '2025-06-25 18:50:30'),
-(47, NULL, 1, 'PDF', 'Big Data Analysis of Nanoscience Bibliometrics, Patent, and Funding Data (2000-2019)', 'big-data-analysis-of-nanoscience-bibliometrics-patent-and-funding-data-2000-2019', NULL, 'pdf', 'contents/1750567265_Big Data Analysis of Nanoscience Bibliometrics, Patent, and Funding Data (2000-2019).pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, 19, 25, '2025-06-22 14:41:05', '2025-06-25 18:50:22'),
-(48, NULL, 1, 'PDF', 'Bioactive Food Components Activity in Mechanistic Approach', 'bioactive-food-components-activity-in-mechanistic-approach', NULL, 'pdf', 'contents/1750567419_Bioactive Food Components Activity in Mechanistic Approach.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, 20, 25, '2025-06-22 14:43:39', '2025-06-25 18:50:07'),
-(49, NULL, 1, 'PDF', 'Biofuels, Bioenergy and Food Security', 'biofuels-bioenergy-and-food-security', NULL, 'pdf', 'contents/1750567537_Biofuels, Bioenergy and Food Security.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, 19, 25, '2025-06-22 14:45:37', '2025-06-25 18:49:58'),
-(50, NULL, 4, 'PDF', 'Biotechnological Utilization of Mangrove Resources', 'biotechnological-utilization-of-mangrove-resources', NULL, 'pdf', 'contents/1750567601_Biotechnological Utilization of Mangrove Resources.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, 20, 25, '2025-06-22 14:46:41', '2025-06-25 18:49:45'),
-(53, NULL, 1, 'PDF', 'Chitin and Chitosan', 'chitin-and-chitosan', NULL, 'pdf', 'contents/1751455765_Chitin and Chitosan.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 20, NULL, '2025-07-02 21:29:25', '2025-07-02 21:29:25'),
-(54, NULL, 1, 'PDF', 'Climate Change and Crop Stress', 'climate-change-and-crop-stress', NULL, 'pdf', 'contents/1751457352_Climate Change and Crop Stress.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 20, NULL, '2025-07-02 21:55:52', '2025-07-02 21:55:52');
+(34, NULL, 1, 'PDF', 'Ambiente Bentônico', 'ambiente-bentonico', NULL, 'pdf', 'contents/1750225267_Ambiente Bentônico.pdf', '2017', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, '2025-06-18 15:41:09', 19, NULL, '2025-06-18 15:41:09', '2025-06-18 15:41:09'),
+(35, NULL, 1, 'PDF', 'Ambiente Pelágico', 'ambiente-pelagico', NULL, 'pdf', 'contents/1750227039_Ambiente Pelágico.pdf', '2013', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, '2025-06-18 15:41:09', 19, NULL, '2025-06-18 16:10:39', '2025-06-18 16:10:39'),
+(36, NULL, 1, 'PDF', 'Application of Nano_Microencapsulated Ingredients in Food Products', 'application-of-nano-microencapsulated-ingredients-in-food-products', NULL, 'pdf', 'contents/1750227305_Application of Nano_Microencapsulated Ingredients in Food Products.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, '2025-06-18 15:41:09', 20, NULL, '2025-06-18 16:15:05', '2025-06-18 16:15:05'),
+(37, NULL, 1, 'PDF', 'Applications of Genetic and Genomic Research in Cereals', 'applications-of-genetic-and-genomic-research-in-cereals', NULL, 'pdf', 'contents/1750227369_Applications of Genetic and Genomic Research in Cereals.pdf', '2023', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, '2025-06-18 15:41:09', 19, NULL, '2025-06-18 16:16:09', '2025-06-18 16:16:09'),
+(38, NULL, 1, 'PDF', 'Approaches to the Purification, Analysis and Characterization of Antibody-Based Therapeutics', 'approaches-to-the-purification-analysis-and-characterization-of-antibody-based-therapeutics', NULL, 'pdf', 'contents/1750227408_Approaches to the Purification, Analysis and Characterization of Antibody-Based Therapeutics.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, '2025-06-18 15:41:09', 20, NULL, '2025-06-18 16:16:48', '2025-06-18 16:16:48'),
+(39, NULL, 1, 'PDF', 'Aquacultural Facilities and Equipment', 'aquacultural-facilities-and-equipment', NULL, 'pdf', 'contents/1750227536_Aquacultural Facilities and Equipment.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, '2025-06-18 15:41:09', 19, NULL, '2025-06-18 16:18:56', '2025-06-18 16:18:56'),
+(40, NULL, 1, 'PDF', 'Aquaculture Health Management', 'aquaculture-health-management', NULL, 'pdf', 'contents/1750227594_Aquaculture Health Management.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, '2025-06-18 15:41:09', 20, NULL, '2025-06-18 16:19:54', '2025-06-18 16:19:54'),
+(41, NULL, 1, 'PDF', 'Aquaculture Toxicology', 'aquaculture-toxicology', NULL, 'pdf', 'contents/1750229261_Aquaculture Toxicology.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, '2025-06-18 15:41:09', 19, NULL, '2025-06-18 16:47:41', '2025-06-18 16:47:41'),
+(42, NULL, 1, 'PDF', 'Aromatic Herbs in Food', 'aromatic-herbs-in-food', NULL, 'pdf', 'contents/1750229524_Aromatic Herbs in Food.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, '2025-06-18 15:41:09', 19, 25, '2025-06-18 16:52:04', '2025-06-25 18:51:31'),
+(44, NULL, 1, 'PDF', 'Atlas de Sensibilidade Ambiental Ao Óleo', 'atlas-de-sensibilidade-ambiental-ao-oleo', NULL, 'pdf', 'contents/1750245924_Atlas de Sensibilidade Ambiental Ao Óleo.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, '2025-06-18 15:41:09', 19, 25, '2025-06-18 21:25:26', '2025-06-25 18:51:26'),
+(45, NULL, 1, 'PDF', 'Atmospheric Nitrogen Deposition to Global Forests', 'atmospheric-nitrogen-deposition-to-global-forests', NULL, 'pdf', 'contents/1750566788_Atmospheric Nitrogen Deposition to Global Forests.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, '2025-06-25 18:51:20', 19, 25, '2025-06-25 18:51:20', '2025-06-25 18:51:20'),
+(46, NULL, 1, 'PDF', 'Aquaculture Pathophysiology', 'aquaculture-pathophysiology', NULL, 'pdf', 'contents/1750566953_Aquaculture Pathophysiology.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, '2025-06-22 14:35:55', 20, 25, '2025-06-22 14:35:55', '2025-06-25 18:50:30'),
+(47, NULL, 1, 'PDF', 'Big Data Analysis of Nanoscience Bibliometrics, Patent, and Funding Data (2000-2019)', 'big-data-analysis-of-nanoscience-bibliometrics-patent-and-funding-data-2000-2019', NULL, 'pdf', 'contents/1750567265_Big Data Analysis of Nanoscience Bibliometrics, Patent, and Funding Data (2000-2019).pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, '2025-06-22 14:35:55', 19, 25, '2025-06-22 14:41:05', '2025-06-25 18:50:22'),
+(48, NULL, 1, 'PDF', 'Bioactive Food Components Activity in Mechanistic Approach', 'bioactive-food-components-activity-in-mechanistic-approach', NULL, 'pdf', 'contents/1750567419_Bioactive Food Components Activity in Mechanistic Approach.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, '2025-06-22 14:35:55', 20, 25, '2025-06-22 14:43:39', '2025-06-25 18:50:07'),
+(49, NULL, 1, 'PDF', 'Biofuels, Bioenergy and Food Security', 'biofuels-bioenergy-and-food-security', NULL, 'pdf', 'contents/1750567537_Biofuels, Bioenergy and Food Security.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, '2025-06-22 14:35:55', 19, 25, '2025-06-22 14:45:37', '2025-06-25 18:49:58'),
+(50, NULL, 4, 'PDF', 'Biotechnological Utilization of Mangrove Resources', 'biotechnological-utilization-of-mangrove-resources', NULL, 'pdf', 'contents/1750567601_Biotechnological Utilization of Mangrove Resources.pdf', '2025', NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, '2025-06-22 14:35:55', 20, 25, '2025-06-22 14:46:41', '2025-06-25 18:49:45'),
+(53, NULL, 1, 'PDF', 'Chitin and Chitosan', 'chitin-and-chitosan', NULL, 'pdf', 'contents/1751455765_Chitin and Chitosan.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, '2025-07-02 21:29:25', 20, NULL, '2025-07-02 21:29:25', '2025-07-02 21:29:25'),
+(54, NULL, 1, 'PDF', 'Climate Change and Crop Stress', 'climate-change-and-crop-stress', NULL, 'pdf', 'contents/1751457352_Climate Change and Crop Stress.pdf', '2025', NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, '2025-07-02 21:29:25', 20, NULL, '2025-07-02 21:55:52', '2025-07-02 21:55:52');
 
 -- --------------------------------------------------------
 
@@ -914,7 +955,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (46, '2025_03_11_161021_add_google_id_to_users_table', 11),
 (47, '2025_04_16_120211_create_categories_table', 11),
 (48, '2025_04_28_143558_create_contents_table', 12),
-(49, '2025_05_13_182109_create_user_content_activities_table', 13);
+(49, '2025_05_13_182109_create_user_content_activities_table', 13),
+(51, '2025_07_16_171128_create_activity_logs_table', 14);
 
 -- --------------------------------------------------------
 
@@ -1278,7 +1320,8 @@ INSERT INTO `permissions` (`id`, `name_en`, `name_bn`, `status`, `created_by`, `
 (774, 'organization_pie_chart', 'organization_pie_chart', 1, 1, NULL, NULL),
 (775, 'manage_report', 'manage_report', 1, 1, '2025-05-26 23:05:34', '2025-05-26 23:05:34'),
 (776, 'can_publish', 'can_publish', 1, 1, NULL, NULL),
-(777, 'my_content_list', 'my_content_list', 1, 1, NULL, NULL);
+(777, 'my_content_list', 'my_content_list', 1, 1, NULL, NULL),
+(778, 'activity_log_list', 'activity_log_list', 1, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1983,7 +2026,8 @@ INSERT INTO `role_permissions` (`id`, `user_id`, `permission_id`, `role_id`, `cr
 (2643, NULL, 762, 5, 25, NULL, '2025-06-24 12:26:50', '2025-06-24 12:26:50'),
 (2644, NULL, 763, 5, 25, NULL, '2025-06-24 12:26:50', '2025-06-24 12:26:50'),
 (2645, NULL, 764, 5, 25, NULL, '2025-06-24 12:26:50', '2025-06-24 12:26:50'),
-(2646, NULL, 766, 5, 25, NULL, '2025-06-24 12:26:50', '2025-06-24 12:26:50');
+(2646, NULL, 766, 5, 25, NULL, '2025-06-24 12:26:50', '2025-06-24 12:26:50'),
+(2647, NULL, 778, 2, 25, NULL, '2025-07-16 11:59:48', '2025-07-16 11:59:48');
 
 -- --------------------------------------------------------
 
@@ -1997,7 +2041,7 @@ CREATE TABLE `settings` (
   `sub_title` text DEFAULT NULL,
   `logo` varchar(251) DEFAULT NULL,
   `soft_logo` varchar(255) DEFAULT NULL,
-  `social_link` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`social_link`)),
+  `social_link` longtext DEFAULT NULL,
   `address` longtext DEFAULT NULL,
   `phone` text DEFAULT NULL,
   `mobile` text DEFAULT NULL,
@@ -2017,7 +2061,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `title`, `sub_title`, `logo`, `soft_logo`, `social_link`, `address`, `phone`, `mobile`, `email`, `alt_phone`, `alt_mobile`, `alt_email`, `copyright`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'BARC Repository', 'BARC', 'c7rHl96fc2KIMmPtf6GpcABf8lFTFoSWIKmf0gcC.png', 'WuC7ti4AsvrvYDeDKEZRuwxEiGBIIJViZ1Kasg2e.png', NULL, NULL, NULL, '01536256985', 'demo@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, '2022-08-29 10:16:43', '2025-07-13 15:40:44');
+(1, 'BARC Repository', 'BARC', 'c7rHl96fc2KIMmPtf6GpcABf8lFTFoSWIKmf0gcC.png', 'WuC7ti4AsvrvYDeDKEZRuwxEiGBIIJViZ1Kasg2e.png', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m19!1m8!1m3!1d7303.313425562231!2d90.3888465!3d23.7596181!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x3755b8a6ff6052df%3A0x5242c6bd772e28c7!2sBangladesh%20Agricultural%20Research%20Council%20(BARC)%20Q95Q%2BRGX%20Khamarbari%20Rd%20Dhaka%201215!3m2!1d23.759618099999997!2d90.3888465!5e0!3m2!1sen!2sbd!4v1753005002253!5m2!1sen!2sbd\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>', 'Bangladesh Agricultural Research Council, Farmgate, Dhaka - 1215, Bangladesh', NULL, '+8802-41025252', 'info@barc.gov.bd', NULL, NULL, NULL, 'Design and Developed by <a href=\"https://sebpo.com/\" style=\"text-decoration: none; color: #fff; font-weight: bold;\">ServicEngine Ltd.</a>', NULL, NULL, '2022-08-29 10:16:43', '2025-07-20 09:54:53');
 
 -- --------------------------------------------------------
 
@@ -11508,6 +11552,12 @@ ALTER TABLE `academic_records`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `activity_logs`
+--
+ALTER TABLE `activity_logs`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `appraisals`
 --
 ALTER TABLE `appraisals`
@@ -11828,6 +11878,12 @@ ALTER TABLE `academic_records`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `activity_logs`
+--
+ALTER TABLE `activity_logs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
 -- AUTO_INCREMENT for table `appraisals`
 --
 ALTER TABLE `appraisals`
@@ -11969,7 +12025,7 @@ ALTER TABLE `leave_categories`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -11987,7 +12043,7 @@ ALTER TABLE `offices`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=778;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=779;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -12047,7 +12103,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `role_permissions`
 --
 ALTER TABLE `role_permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2647;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2648;
 
 --
 -- AUTO_INCREMENT for table `settings`
