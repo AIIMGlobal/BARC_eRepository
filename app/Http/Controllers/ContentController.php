@@ -469,7 +469,7 @@ class ContentController extends Controller
                 $content->content_name      = $request->content_name;
                 $content->slug              = $slug;
                 $content->description       = $request->description;
-                $content->extension         = $extension ?? '';
+                $content->extension         = $extension ?? NULL;
                 $content->content           = $contentPath;
                 $content->content_year      = $request->content_year;
                 $content->thumbnail         = $thumbnail;
@@ -483,10 +483,11 @@ class ContentController extends Controller
 
                 $content->save();
 
+                $setting = Setting::first();
+                $admins = User::whereIn('role_id', [1,2])->where('status', 1)->get();
+
                 if ($request->status == 0) {
-                    $setting = Setting::first();
-                    $admins = User::whereIn('role_id', [1,2])->where('status', 1)->get();
-                    $officeId = optional($content->createdBy->userInfo)->office_id ?? '';
+                    $officeId = optional($content->createdBy->userInfo)->office_id ?? NULL;
 
                     if (!$officeId) {
                         $orgAdmins = collect([]);
@@ -507,7 +508,7 @@ class ContentController extends Controller
                                 $notification->title            = 'New Content Submitted';
                                 $notification->message          = 'A new content has been submitted.';
                                 $notification->route_name       = route('admin.content.show', Crypt::encryptString($content->id));
-                                $notification->sender_role_id   = $content->createdBy->role_id ?? '';
+                                $notification->sender_role_id   = $content->createdBy->role_id ?? NULL;
                                 $notification->sender_user_id   = $content->created_by;
                                 $notification->receiver_role_id = $admin->role_id;
                                 $notification->receiver_user_id = $admin->id;
@@ -527,7 +528,7 @@ class ContentController extends Controller
                                 $notification->title            = 'New Content Submitted';
                                 $notification->message          = 'A new content has been submitted.';
                                 $notification->route_name       = route('admin.content.show', Crypt::encryptString($content->id));
-                                $notification->sender_role_id   = $content->createdBy->role_id ?? '';
+                                $notification->sender_role_id   = $content->createdBy->role_id ?? NULL;
                                 $notification->sender_user_id   = $content->created_by;
                                 $notification->receiver_role_id = $admin->role_id;
                                 $notification->receiver_user_id = $admin->id;
@@ -562,7 +563,7 @@ class ContentController extends Controller
 
                     $content->save();
                     
-                    if ($content->createdBy->email ?? '') {
+                    if ($content->createdBy->email ?? NULL) {
                         Mail::to($content->createdBy->email)->send(new ContentPublishMail($setting, $content));
 
                         $notification = new Notification;
@@ -571,9 +572,9 @@ class ContentController extends Controller
                         $notification->title            = 'Content Approved';
                         $notification->message          = 'Your content has been approved.';
                         $notification->route_name       = route('admin.content.show', Crypt::encryptString($user->id));
-                        $notification->sender_role_id   = $content->updatedBy->role_id ?? '';
+                        $notification->sender_role_id   = $content->updatedBy->role_id ?? NULL;
                         $notification->sender_user_id   = $content->updated_by;
-                        $notification->receiver_role_id = $content->createdBy->role_id ?? '';
+                        $notification->receiver_role_id = $content->createdBy->role_id ?? NULL;
                         $notification->receiver_user_id = $content->created_by;
                         $notification->read_status      = 0;
 
@@ -755,10 +756,11 @@ class ContentController extends Controller
 
                 $content->save();
 
+                $setting = Setting::first();
+                $admins = User::whereIn('role_id', [1,2])->where('status', 1)->get();
+
                 if ($request->status == 0) {
-                    $setting = Setting::first();
-                    $admins = User::whereIn('role_id', [1,2])->where('status', 1)->get();
-                    $officeId = optional($content->createdBy->userInfo)->office_id ?? '';
+                    $officeId = optional($content->createdBy->userInfo)->office_id ?? NULL;
 
                     if (!$officeId) {
                         $orgAdmins = collect([]);
@@ -790,7 +792,7 @@ class ContentController extends Controller
                                 $notification->title            = 'New Content Submitted';
                                 $notification->message          = 'A new content has been submitted.';
                                 $notification->route_name       = route('admin.content.show', Crypt::encryptString($content->id));
-                                $notification->sender_role_id   = $content->createdBy->role_id ?? '';
+                                $notification->sender_role_id   = $content->createdBy->role_id ?? NULL;
                                 $notification->sender_user_id   = $content->created_by;
                                 $notification->receiver_role_id = $admin->role_id;
                                 $notification->receiver_user_id = $admin->id;
@@ -810,7 +812,7 @@ class ContentController extends Controller
                                 $notification->title            = 'New Content Submitted';
                                 $notification->message          = 'A new content has been submitted.';
                                 $notification->route_name       = route('admin.content.show', Crypt::encryptString($content->id));
-                                $notification->sender_role_id   = $content->createdBy->role_id ?? '';
+                                $notification->sender_role_id   = $content->createdBy->role_id ?? NULL;
                                 $notification->sender_user_id   = $content->created_by;
                                 $notification->receiver_role_id = $admin->role_id;
                                 $notification->receiver_user_id = $admin->id;
@@ -845,7 +847,7 @@ class ContentController extends Controller
                     
                     $activity->save();
                     
-                    if ($content->createdBy->email ?? '') {
+                    if ($content->createdBy->email ?? NULL) {
                         Mail::to($content->createdBy->email)->send(new ContentPublishMail($setting, $content));
 
                         $notification = new Notification;
@@ -854,9 +856,9 @@ class ContentController extends Controller
                         $notification->title            = 'Content Approved';
                         $notification->message          = 'Your content has been approved.';
                         $notification->route_name       = route('admin.content.show', Crypt::encryptString($user->id));
-                        $notification->sender_role_id   = $content->updatedBy->role_id ?? '';
+                        $notification->sender_role_id   = $content->updatedBy->role_id ?? NULL;
                         $notification->sender_user_id   = $content->updated_by;
-                        $notification->receiver_role_id = $content->createdBy->role_id ?? '';
+                        $notification->receiver_role_id = $content->createdBy->role_id ?? NULL;
                         $notification->receiver_user_id = $content->created_by;
                         $notification->read_status      = 0;
 
@@ -984,7 +986,7 @@ class ContentController extends Controller
 
                     $setting = Setting::first();
 
-                    if ($content->createdBy->email ?? '') {
+                    if ($content->createdBy->email ?? NULL) {
                         Mail::to($content->createdBy->email)->send(new ContentPublishMail($setting, $content));
 
                         $notification = new Notification;
@@ -993,9 +995,9 @@ class ContentController extends Controller
                         $notification->title            = 'Content Approved';
                         $notification->message          = 'Your content has been approved.';
                         $notification->route_name       = route('admin.content.show', Crypt::encryptString($user->id));
-                        $notification->sender_role_id   = $content->updatedBy->role_id ?? '';
+                        $notification->sender_role_id   = $content->updatedBy->role_id ?? NULL;
                         $notification->sender_user_id   = $content->updated_by;
-                        $notification->receiver_role_id = $content->createdBy->role_id ?? '';
+                        $notification->receiver_role_id = $content->createdBy->role_id ?? NULL;
                         $notification->receiver_user_id = $content->created_by;
                         $notification->read_status      = 0;
 
