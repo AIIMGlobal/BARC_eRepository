@@ -1263,4 +1263,58 @@ class ContentController extends Controller
     //         ], 500);
     //     }
     // }
+
+    public function serveVideo(Request $request, $filename)
+    {
+        // Prepend 'contents/' to match storage path
+        $path = storage_path('app/public/contents/' . $filename);
+        dd($filename);
+
+        if (!file_exists($path)) {
+            abort(404, 'File not found');
+        }
+
+        $size = filesize($path);
+        $start = 0;
+        $end = $size - 1;
+        $length = $size;
+
+        $headers = [
+            'Content-Type' => mime_content_type($path),
+            'Accept-Ranges' => 'bytes',
+            'Cache-Control' => 'no-cache',
+        ];
+
+        if ($request->server('HTTP_RANGE')) {
+            [$unit, $range] = explode('=', $request->server('HTTP_RANGE'), 2);
+            if ($unit === 'bytes') {
+                [$start, $end] = explode('-', $range, 2);
+                $start = (int)$start;
+                $end = $end ? (int)$end : $size - 1;
+                $length = $end - $start + 1;
+
+                $headers['Content-Range'] = "bytes $start-$end/$size";
+                $headers['Content-Length'] = $length;
+
+                // Stream the file for better performance
+                $stream = fopen($path, 'rb');
+                fseek($stream, $start);
+                $buffer = 1024 * 8;
+                $data = '';
+
+                while (!feof($stream) && ($pos = ftell($stream)) <= $end) {
+                    if ($pos + $buffer > $end) {
+                        $buffer = $end - $pos + 1;
+                    }
+                    $data .= fread($stream, $buffer);
+                }
+                fclose($stream);
+
+                return response($data, 206, $headers);
+            }
+        }
+
+        $headers['Content-Length'] = $size;
+        return response()->file($path, $headers);
+    }
 }

@@ -341,6 +341,8 @@ Route::group(['middleware' => ['AuthGates','set.locale'], 'prefix' => '/authoriz
         Route::post('/bulk-action', [ContentController::class, 'bulkAction'])->name('bulkAction');
         Route::post('/toggle-favorite/{id}', [ContentController::class, 'toggleFavorite'])->name('toggleFavorite');
         Route::post('/toggle-save/{id}', [ContentController::class, 'toggleSave'])->name('toggleSave');
+
+        Route::get('/storage/contents/{filename}', [ContentController::class, 'serveVideo'])->name('serveVideo');
     });
 
     /* Report Management */
