@@ -28,6 +28,31 @@
                 width: 200px;
                 margin-right: 10px;
             }
+
+            @media only screen and (max-width: 480px) and (-webkit-min-device-pixel-ratio: 1.5), (max-width: 480px) and (min-resolution: 144dpi) {
+                .card-header.bg-success.text-white.d-flex.justify-content-between.align-items-center {
+                    display: block !important;
+                }
+                .search-input {
+                    width: 100%;
+                }
+                button#selectAllAssigned {
+                    width: 100%;
+                }
+                button#removeAllAssigned {
+                    width: 100%;
+                }
+
+                .card-header.bg-danger.text-white.d-flex.justify-content-between.align-items-center {
+                    display: block !important;
+                }
+                button#selectAllUnassigned {
+                    width: 100%;
+                }
+                button#removeAllUnassigned {
+                    width: 100%;
+                }
+            }
         </style>
     @endpush
 

@@ -1,4 +1,4 @@
-<div class="container-fluid py-4">
+<div class="py-4">
     <div class="row">
         <!-- Assigned Permissions Section -->
         <div class="col-12 col-lg-6 mb-4">
@@ -79,7 +79,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                
+
                                 @php $i++; @endphp
                             @endforeach
                         </div>
