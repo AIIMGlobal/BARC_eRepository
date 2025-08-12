@@ -72,11 +72,6 @@
                 </div>
 
                 <div class="fxt-form-content">
-                    {{-- <div class="border border-top"></div>
-                    <div class="border border-bottom"></div>
-                    <div class="border border-left"></div>
-                    <div class="border border-right"></div> --}}
-
                     <div class="fxt-page-switcher">
                         <h2 class="fxt-page-title mr-3">Login</h2>
 
@@ -131,6 +126,8 @@
                             <div class="fxt-switcher-description">Don't have an account?<a href="{{ route('register') }}" class="fxt-switcher-text ms-1">Register</a></div>
                         </div>
                     </div>
+                    
+                    @include('auth.partials.footerText')
                 </div>
             </div>
         </section>
@@ -198,8 +195,6 @@
                             }
                         },
                         error: function (xhr) {
-                            // toastr.error("An error occurred: "+xhr.responseJSON.message);
-                            
                             Swal.fire({
                                 icon: "error",
                                 title: "Error!",
@@ -213,7 +208,6 @@
                     });
                 });
             });
-
         </script>
     </body>
 </html>

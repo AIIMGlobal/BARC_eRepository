@@ -47,6 +47,10 @@
         animation: borderMoveVertical 3s linear infinite;
     }
 
+    #footerText {
+        text-align: right;
+    }
+
     @keyframes borderMove {
         0% { width: 0; left: 50%; }
         50% { width: 50%; left: 50%; }
@@ -79,6 +83,10 @@
     @media only screen and (max-width: 480px) and (-webkit-min-device-pixel-ratio: 1.5), (max-width: 480px) and (min-resolution: 144dpi) {
         a.fxt-logo img {
             max-width: 100% !important;
+        }
+
+        #footerText {
+            text-align: center;
         }
     }
 </style>

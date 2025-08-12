@@ -249,6 +249,8 @@
                             <div class="fxt-switcher-description">Already have an account?<a href="{{ url('/') }}" class="fxt-switcher-text ms-1">Login</a></div>
                         </div>
                     </div>
+
+                    @include('auth.partials.footerText')
                 </div>
             </div>
         </section>

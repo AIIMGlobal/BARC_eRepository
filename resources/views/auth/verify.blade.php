@@ -92,6 +92,8 @@
                             <div class="fxt-switcher-description mt-5">Didn't receive an email? Please check your spam folder or <a href="javascript:void(0);" data-id="{{ Crypt::encryptString($user->id) }}" class="fxt-switcher-text ms-1" id="resendEmail">Resend Email</a></div>
                         </div>
                     </div>
+
+                    @include('auth.partials.footerText')
                 </div>
             </div>
         </section>
