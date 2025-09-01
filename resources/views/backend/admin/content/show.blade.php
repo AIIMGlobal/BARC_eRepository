@@ -87,10 +87,6 @@
             padding: 10px;
         }
 
-        .details-card:hover {
-            /* transform: translateY(-5px); */
-        }
-
         .detail-label {
             color: #4b5563;
             font-weight: 600;
@@ -245,11 +241,18 @@
             margin: 0 5px;
             cursor: pointer;
             color: #fff;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .icon:hover {
+            transform: scale(1.1);
+            color: #3498db;
         }
 
         .volume_range {
             width: 80px;
             margin-left: 5px;
+            accent-color: #3498db;
         }
 
         .timer {
@@ -261,15 +264,24 @@
             position: absolute;
             bottom: 60px;
             right: 10px;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             color: #fff;
-            padding: 10px;
-            border-radius: 5px;
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             display: none;
+            min-width: 150px;
+            z-index: 1000;
         }
 
         .settings.active, .captions.active {
             display: block;
+            animation: slideIn 0.2s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .settings ul, .captions ul {
@@ -279,20 +291,44 @@
         }
 
         .settings li, .captions li {
-            padding: 8px 12px;
+            padding: 10px 14px;
             cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+            transition: background 0.2s ease;
         }
 
         .settings li:hover, .captions li:hover {
-            background: #555;
+            background: #3498db;
         }
 
         .settings li.active, .captions li.active {
-            background: #3498db;
+            background: #2563eb;
+            font-weight: 600;
+        }
+
+        .settings > div {
+            display: none;
+        }
+
+        .settings > div.active {
+            display: block;
         }
 
         .download-btn {
             display: {{ $content->can_download == 1 ? 'inline-block' : 'none' }};
+        }
+
+        .speed-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .speed-icon {
+            font-size: 0.8rem;
         }
     </style>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Symbols+Outlined" rel="stylesheet">
@@ -335,13 +371,12 @@
                                         <div class="relative w-full bg-black rounded-lg overflow-hidden media-container" style="min-height: 400px;">
                                             @if ($content->content)
                                                 @php
-                                                    $extension = strtolower($content->extension);
-                                                    $contentType = strtolower($content->content_type);
+                                                    $extension = strtolower($content->extension ?? '');
+                                                    $contentType = strtolower($content->content_type ?? '');
                                                     $videoTypes = ['mp4', 'webm', 'ogg'];
                                                     $audioTypes = ['mp3', 'wav', 'ogg'];
                                                     $imageTypes = ['jpg', 'jpeg', 'png', 'gif'];
                                                     $assetPath = asset('storage/' . $content->content);
-                                                    // Assuming resolutions are stored in $content->resolutions as an array of [resolution => path]
                                                     $resolutions = $content->resolutions ?? [
                                                         '240p' => $assetPath . '?res=240p',
                                                         '480p' => $assetPath . '?res=480p',
@@ -357,18 +392,25 @@
                                                                 @foreach ($resolutions as $res => $path)
                                                                     <source src="{{ $path }}" size="{{ $res }}" type="video/{{ $extension }}">
                                                                 @endforeach
+
                                                                 <p class="media-fallback">Your browser does not support this video format. @if ($content->can_download == 1)<a href="{{ $assetPath }}" style="color: #129faf;" class="underline" download>Download the video</a>.@else Please contact the administrator.@endif</p>
                                                             </video>
+
                                                             <div class="loader"></div>
+                                                            
                                                             <p class="caption_text"></p>
+
                                                             <div class="progressAreaTime">0:00</div>
+
                                                             <div class="controls active">
                                                                 <div class="progress-area">
                                                                     <canvas class="bufferedBar"></canvas>
+
                                                                     <div class="progress-bar">
                                                                         <span></span>
                                                                     </div>
                                                                 </div>
+
                                                                 <div class="controls-list">
                                                                     <div class="controls-left">
                                                                         <span class="icon">
@@ -389,72 +431,87 @@
                                                                             <span class="duration">0:00</span>
                                                                         </div>
                                                                     </div>
+
                                                                     <div class="controls-right">
                                                                         @if ($content->can_download == 1)
                                                                             <span class="icon download-btn">
                                                                                 <a href="{{ $assetPath }}" download><i class="material-icons">download</i></a>
                                                                             </span>
                                                                         @endif
+
                                                                         <span class="icon">
                                                                             <i class="material-icons auto-play"></i>
                                                                         </span>
+
                                                                         <span class="icon" style="display: none;">
                                                                             <i class="material-icons captionsBtn">closed_caption</i>
                                                                         </span>
-                                                                        <span class="icon" style="display: none;">
+
+                                                                        <span class="icon">
                                                                             <i class="material-icons settingsBtn">settings</i>
                                                                         </span>
+
                                                                         <span class="icon">
                                                                             <i class="material-icons picture_in_picutre">picture_in_picture_alt</i>
                                                                         </span>
+
                                                                         <span class="icon">
                                                                             <i class="material-icons fullscreen">fullscreen</i>
                                                                         </span>
                                                                     </div>
                                                                 </div>
                                                             </div>
+
                                                             <div class="settings">
-                                                                <div data-label="settingHome">
+                                                                <div data-label="settingHome" class="active">
                                                                     <ul>
                                                                         <li data-label="speed">
-                                                                            <span>Speed</span>
-                                                                            <span class="material-symbols-outlined icon">arrow_forward_ios</span>
+                                                                            <span class="speed-label">Playback Speed (1x)</span>
+                                                                            <span class="material-symbols-outlined icon speed-icon">speed</span>
                                                                         </li>
-                                                                        <li data-label="quality">
+
+                                                                        {{-- <li data-label="quality">
                                                                             <span>Quality</span>
                                                                             <span class="material-symbols-outlined icon">arrow_forward_ios</span>
-                                                                        </li>
+                                                                        </li> --}}
                                                                     </ul>
                                                                 </div>
-                                                                <div class="playback" data-label="speed" hidden>
+
+                                                                <div data-label="speed">
                                                                     <span>
                                                                         <i class="material-symbols-outlined icon back_arrow" data-label="settingHome">arrow_back</i>
                                                                         <span>Playback Speed</span>
                                                                     </span>
                                                                     <ul>
-                                                                        <li data-speed="0.25">0.25</li>
-                                                                        <li data-speed="0.5">0.5</li>
-                                                                        <li data-speed="0.75">0.75</li>
-                                                                        <li data-speed="1" class="active">Normal</li>
-                                                                        <li data-speed="1.25">1.25</li>
-                                                                        <li data-speed="1.5">1.5</li>
-                                                                        <li data-speed="1.75">1.75</li>
-                                                                        <li data-speed="2">2</li>
+                                                                        <li data-speed="0.25">0.25x</li>
+                                                                        <li data-speed="0.5">0.5x</li>
+                                                                        <li data-speed="0.75">0.75x</li>
+                                                                        <li data-speed="1" class="active">1x (Normal)</li>
+                                                                        <li data-speed="1.25">1.25x</li>
+                                                                        <li data-speed="1.5">1.5x</li>
+                                                                        <li data-speed="1.75">1.75x</li>
+                                                                        <li data-speed="2">2x</li>
+                                                                        <li data-speed="2.5">2.5x</li>
+                                                                        <li data-speed="3">3x</li>
                                                                     </ul>
                                                                 </div>
-                                                                <div data-label="quality" hidden>
+
+                                                                <div data-label="quality">
                                                                     <span>
                                                                         <i class="material-symbols-outlined icon back_arrow" data-label="settingHome">arrow_back</i>
                                                                         <span>Playback Quality</span>
                                                                     </span>
+
                                                                     <ul>
                                                                         <li data-quality="auto" class="active">auto</li>
+                                                                        
                                                                         @foreach ($resolutions as $res => $path)
                                                                             <li data-quality="{{ $res }}">{{ $res }}</li>
                                                                         @endforeach
                                                                     </ul>
                                                                 </div>
                                                             </div>
+
                                                             <div class="captions">
                                                                 <div class="caption">
                                                                     <span>Select Subtitle</span>
@@ -501,7 +558,7 @@
 
                                 <div class="row mt-2">
                                     <div class="col-lg-12">
-                                        <h3 class="text-3xl font-bold text-gray-900 dark:mt-2 mb-4" style="padding: 10px">{{ $content->content_name }}</h3>
+                                        <h3 class="text-3xl font-bold text-gray-900 dark:mt-2 mb-4" style="padding: 10px">{{ $content->content_name ?? 'No Title' }}</h3>
                                         <div class="details-card p-6 mb-6">
                                             <h4 class="text-xl font-semibold text-gray-900 dark:mb-4">Description</h4>
                                             <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-0">{{ $content->description ?: 'No description available.' }}</p>
@@ -518,11 +575,11 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <span class="detail-label">Content Type</span>
-                                                    <p class="detail-value">{{ $content->content_type }}</p>
+                                                    <p class="detail-value">{{ $content->content_type ?? 'N/A' }}</p>
                                                 </div>
                                                 <div class="col-12">
                                                     <span class="detail-label">Year</span>
-                                                    <p class="detail-value">{{ $content->content_year }}</p>
+                                                    <p class="detail-value">{{ $content->content_year ?? 'N/A' }}</p>
                                                 </div>
                                                 <div class="col-12">
                                                     <span class="detail-label">Created By</span>
@@ -609,590 +666,658 @@
 
 @push('script')
     <script>
-        $('[href*="{{ $menu_expand }}"]').closest('.menu-dropdown').addClass('show');
-        $('[href*="{{ $menu_expand }}"]').closest('.menu-dropdown').parent().find('.nav-link').attr('aria-expanded', 'true');
-        $('[href*="{{ $menu_expand }}"]').closest('.first-dropdown').find('.menu-link').attr('aria-expanded', 'true');
-        $('[href*="{{ $menu_expand }}"]').closest('.first-dropdown').find('.menu-dropdown:first').addClass('show');
+        // Ensure jQuery is loaded
+        try {
+            if (typeof $ === 'undefined') {
+                console.error('jQuery is not loaded.');
+                alert('Error: jQuery is required for menu functionality. Please ensure it is included.');
+            } else {
+                $('[href*="{{ $menu_expand ?? '' }}"]').closest('.menu-dropdown').addClass('show');
+                $('[href*="{{ $menu_expand ?? '' }}"]').closest('.menu-dropdown').parent().find('.nav-link').attr('aria-expanded', 'true');
+                $('[href*="{{ $menu_expand ?? '' }}"]').closest('.first-dropdown').find('.menu-link').attr('aria-expanded', 'true');
+                $('[href*="{{ $menu_expand ?? '' }}"]').closest('.first-dropdown').find('.menu-dropdown:first').addClass('show');
+            }
+        } catch (e) {
+            console.error('Error in jQuery menu expansion:', e);
+        }
 
         document.addEventListener('DOMContentLoaded', function () {
-            const video_players = document.querySelectorAll(".video_player");
-            video_players.forEach(video_player => {
-                const mainVideo = video_player.querySelector(".main-video"),
-                    progressAreaTime = video_player.querySelector(".progressAreaTime"),
-                    controls = video_player.querySelector(".controls"),
-                    progressArea = video_player.querySelector(".progress-area"),
-                    bufferedBar = video_player.querySelector(".bufferedBar"),
-                    progress_Bar = video_player.querySelector(".progress-bar"),
-                    fast_rewind = video_player.querySelector(".fast-rewind"),
-                    play_pause = video_player.querySelector(".play_pause"),
-                    fast_forward = video_player.querySelector(".fast-forward"),
-                    volume = video_player.querySelector(".volume"),
-                    volume_range = video_player.querySelector(".volume_range"),
-                    current = video_player.querySelector(".current"),
-                    totalDuration = video_player.querySelector(".duration"),
-                    auto_play = video_player.querySelector(".auto-play"),
-                    settingsBtn = video_player.querySelector(".settingsBtn"),
-                    captionsBtn = video_player.querySelector(".captionsBtn"),
-                    picture_in_picutre = video_player.querySelector(".picture_in_picutre"),
-                    fullscreen = video_player.querySelector(".fullscreen"),
-                    settings = video_player.querySelector(".settings"),
-                    settingHome = video_player.querySelectorAll(".settings [data-label='settingHome'] > ul > li"),
-                    captions = video_player.querySelector(".captions"),
-                    caption_labels = video_player.querySelector(".captions ul"),
-                    tracks = mainVideo.querySelectorAll("track"),
-                    loader = video_player.querySelector(".loader");
-
-                let isPlaying = false;
-                let currentSource = mainVideo.querySelector("source[size]").getAttribute('src');
-
-                // Force preload metadata
-                mainVideo.preload = "metadata";
-
-                // Update duration display
-                function updateDuration() {
-                    if (!isNaN(mainVideo.duration) && isFinite(mainVideo.duration)) {
-                        let videoDuration = mainVideo.duration;
-                        let totalMin = Math.floor(videoDuration / 60);
-                        let totalSec = Math.floor(videoDuration % 60);
-                        totalSec = totalSec < 10 ? "0" + totalSec : totalSec;
-                        totalDuration.innerHTML = `${totalMin}:${totalSec}`;
-                    } else {
-                        totalDuration.innerHTML = "0:00";
-                    }
+            try {
+                const video_players = document.querySelectorAll(".video_player");
+                if (!video_players.length) {
+                    console.warn('No video players found on the page.');
+                    return;
                 }
 
-                // Handle metadata loading with fallback
-                mainVideo.addEventListener("loadedmetadata", () => {
-                    console.log('Metadata loaded, duration:', mainVideo.duration);
-                    updateDuration();
-                    loader.style.display = "none";
-                    const fallback = video_player.querySelector('.media-fallback');
-                    if (fallback) fallback.style.display = 'none';
-                });
+                video_players.forEach(video_player => {
+                    const mainVideo = video_player.querySelector(".main-video"),
+                        progressAreaTime = video_player.querySelector(".progressAreaTime"),
+                        controls = video_player.querySelector(".controls"),
+                        progressArea = video_player.querySelector(".progress-area"),
+                        bufferedBar = video_player.querySelector(".bufferedBar"),
+                        progress_Bar = video_player.querySelector(".progress-bar"),
+                        fast_rewind = video_player.querySelector(".fast-rewind"),
+                        play_pause = video_player.querySelector(".play_pause"),
+                        fast_forward = video_player.querySelector(".fast-forward"),
+                        volume = video_player.querySelector(".volume"),
+                        volume_range = video_player.querySelector(".volume_range"),
+                        current = video_player.querySelector(".current"),
+                        totalDuration = video_player.querySelector(".duration"),
+                        auto_play = video_player.querySelector(".auto-play"),
+                        settingsBtn = video_player.querySelector(".settingsBtn"),
+                        captionsBtn = video_player.querySelector(".captionsBtn"),
+                        picture_in_picutre = video_player.querySelector(".picture_in_picutre"),
+                        fullscreen = video_player.querySelector(".fullscreen"),
+                        settings = video_player.querySelector(".settings"),
+                        settingHome = video_player.querySelectorAll(".settings [data-label='settingHome'] > ul > li"),
+                        captions = video_player.querySelector(".captions"),
+                        caption_labels = video_player.querySelector(".captions ul"),
+                        tracks = mainVideo ? mainVideo.querySelectorAll("track") : [],
+                        loader = video_player.querySelector(".loader");
 
-                // Fallback for duration if metadata fails
-                mainVideo.addEventListener("loadeddata", () => {
-                    if (isNaN(mainVideo.duration) || !isFinite(mainVideo.duration)) {
-                        console.warn('Invalid duration, retrying metadata load');
-                        mainVideo.load();
+                    if (!mainVideo) {
+                        console.error('Main video element not found.');
+                        return;
                     }
-                });
 
-                if (tracks.length != 0) {
-                    caption_labels.insertAdjacentHTML(
-                        "afterbegin",
-                        `<li data-track="OFF" class="active">OFF</li>`
-                    );
-                    for (let i = 0; i < tracks.length; i++) {
-                        let trackLi = `<li data-track="${tracks[i].label}">${tracks[i].label}</li>`;
-                        caption_labels.insertAdjacentHTML("beforeend", trackLi);
-                    }
-                }
-                const caption = captions.querySelectorAll("ul li");
+                    let isPlaying = false;
+                    let currentSource = mainVideo.querySelector("source[size]")?.getAttribute('src') || '';
 
-                function playVideo() {
-                    play_pause.innerHTML = "pause";
-                    play_pause.title = "pause";
-                    video_player.classList.add("paused");
-                    isPlaying = true;
-                    mainVideo.play().catch(e => {
-                        console.error('Play error:', e);
-                        toastr.error("Failed to play video.");
-                    });
-                }
+                    // Force preload metadata
+                    mainVideo.preload = "metadata";
 
-                function pauseVideo() {
-                    play_pause.innerHTML = "play_arrow";
-                    play_pause.title = "play";
-                    video_player.classList.remove("paused");
-                    isPlaying = false;
-                    mainVideo.pause();
-                }
-
-                play_pause.addEventListener("click", () => {
-                    const isVideoPaused = video_player.classList.contains("paused");
-                    isVideoPaused ? pauseVideo() : playVideo();
-                });
-
-                mainVideo.addEventListener("play", playVideo);
-                mainVideo.addEventListener("pause", pauseVideo);
-
-                // Handle forward/backward seek
-                fast_rewind.addEventListener("click", () => {
-                    let newTime = Math.max(mainVideo.currentTime - 10, 0);
-                    console.log('Rewind to:', newTime);
-                    mainVideo.currentTime = newTime;
-                    updateProgress();
-                });
-
-                fast_forward.addEventListener("click", () => {
-                    let newTime = Math.min(mainVideo.currentTime + 10, mainVideo.duration || Infinity);
-                    console.log('Forward to:', newTime);
-                    mainVideo.currentTime = newTime;
-                    updateProgress();
-                });
-
-                function updateProgress() {
-                    let currentVideoTime = mainVideo.currentTime;
-                    let currentMin = Math.floor(currentVideoTime / 60);
-                    let currentSec = Math.floor(currentVideoTime % 60);
-                    currentSec = currentSec < 10 ? "0" + currentSec : currentSec;
-                    current.innerHTML = `${currentMin}:${currentSec}`;
-
-                    let videoDuration = mainVideo.duration || 0;
-                    let progressWidth = videoDuration ? (currentVideoTime / videoDuration) * 100 : 0;
-                    progress_Bar.style.width = `${progressWidth}%`;
-                }
-
-                mainVideo.addEventListener("timeupdate", updateProgress);
-
-                progressArea.addEventListener("pointerdown", (e) => {
-                    progressArea.setPointerCapture(e.pointerId);
-                    setTimelinePosition(e);
-                    progressArea.addEventListener("pointermove", setTimelinePosition);
-                    progressArea.addEventListener("pointerup", () => {
-                        progressArea.removeEventListener("pointermove", setTimelinePosition);
-                    }, { once: true });
-                });
-
-                function setTimelinePosition(e) {
-                    let videoDuration = mainVideo.duration || 0;
-                    let progressWidthval = progressArea.clientWidth;
-                    let ClickOffsetX = e.offsetX;
-                    let newTime = (ClickOffsetX / progressWidthval) * videoDuration;
-                    mainVideo.currentTime = newTime;
-                    updateProgress();
-                }
-
-                function drawProgress(canvas, buffered, duration) {
-                    let context = canvas.getContext('2d', { antialias: false });
-                    context.fillStyle = "#ffffffe6";
-                    let height = canvas.height;
-                    let width = canvas.width;
-                    if (!height || !width) return;
-                    context.clearRect(0, 0, width, height);
-                    for (let i = 0; i < buffered.length; i++) {
-                        let leadingEdge = buffered.start(i) / duration * width;
-                        let trailingEdge = buffered.end(i) / duration * width;
-                        context.fillRect(leadingEdge, 0, trailingEdge - leadingEdge, height);
-                    }
-                }
-
-                mainVideo.addEventListener('progress', () => {
-                    drawProgress(bufferedBar, mainVideo.buffered, mainVideo.duration || 0);
-                });
-
-                mainVideo.addEventListener('waiting', () => {
-                    loader.style.display = "block";
-                });
-
-                mainVideo.addEventListener('canplay', () => {
-                    loader.style.display = "none";
-                    updateDuration();
-                });
-
-                function changeVolume() {
-                    mainVideo.volume = volume_range.value / 100;
-                    if (volume_range.value == 0) {
-                        volume.innerHTML = "volume_off";
-                    } else if (volume_range.value < 40) {
-                        volume.innerHTML = "volume_down";
-                    } else {
-                        volume.innerHTML = "volume_up";
-                    }
-                }
-
-                function muteVolume() {
-                    if (volume_range.value == 0) {
-                        volume_range.value = 80;
-                        mainVideo.volume = 0.8;
-                        volume.innerHTML = "volume_up";
-                    } else {
-                        volume_range.value = 0;
-                        mainVideo.volume = 0;
-                        volume.innerHTML = "volume_off";
-                    }
-                }
-
-                volume_range.addEventListener("change", changeVolume);
-                volume.addEventListener("click", muteVolume);
-
-                progressArea.addEventListener("mousemove", (e) => {
-                    let progressWidthval = progressArea.clientWidth;
-                    let x = e.offsetX;
-                    let videoDuration = mainVideo.duration || 0;
-                    let progressTime = Math.floor((x / progressWidthval) * videoDuration);
-                    let currentMin = Math.floor(progressTime / 60);
-                    let currentSec = Math.floor(progressTime % 60);
-                    currentSec = currentSec < 10 ? "0" + currentSec : currentSec;
-                    progressAreaTime.style.setProperty("--x", `${x}px`);
-                    progressAreaTime.style.display = "block";
-                    if (x >= progressWidthval - 80) {
-                        x = progressWidthval - 80;
-                    } else if (x <= 75) {
-                        x = 75;
-                    }
-                    progressAreaTime.innerHTML = `${currentMin}:${currentSec}`;
-                });
-
-                progressArea.addEventListener("mouseleave", () => {
-                    progressAreaTime.style.display = "none";
-                });
-
-                auto_play.addEventListener("click", () => {
-                    auto_play.classList.toggle("active");
-                    auto_play.title = auto_play.classList.contains("active") ? "Autoplay is on" : "Autoplay is off";
-                });
-
-                mainVideo.addEventListener("ended", () => {
-                    if (auto_play.classList.contains("active")) {
-                        playVideo();
-                    } else {
-                        play_pause.innerHTML = "replay";
-                        play_pause.title = "Replay";
-                    }
-                });
-
-                picture_in_picutre.addEventListener("click", () => {
-                    mainVideo.requestPictureInPicture().catch(e => {
-                        console.error('PiP error:', e);
-                        toastr.error("Picture-in-Picture is not supported or disabled.");
-                    });
-                });
-
-                fullscreen.addEventListener("click", () => {
-                    if (!video_player.classList.contains("openFullScreen")) {
-                        video_player.classList.add("openFullScreen");
-                        fullscreen.innerHTML = "fullscreen_exit";
-                        video_player.requestFullscreen();
-                    } else {
-                        video_player.classList.remove("openFullScreen");
-                        fullscreen.innerHTML = "fullscreen";
-                        document.exitFullscreen();
-                    }
-                });
-
-                settingsBtn.addEventListener("click", () => {
-                    settings.classList.toggle("active");
-                    settingsBtn.classList.toggle("active");
-                    if (captionsBtn.classList.contains("active") || captions.classList.contains("active")) {
-                        captions.classList.remove("active");
-                        captionsBtn.classList.remove("active");
-                    }
-                });
-
-                captionsBtn.addEventListener("click", () => {
-                    captions.classList.toggle("active");
-                    captionsBtn.classList.toggle("active");
-                    if (settingsBtn.classList.contains("active") || settings.classList.contains("active")) {
-                        settings.classList.remove("active");
-                        settingsBtn.classList.remove("active");
-                    }
-                });
-
-                playback.forEach((event) => {
-                    event.addEventListener("click", () => {
-                        removeActiveClasses(playback);
-                        event.classList.add("active");
-                        let speed = parseFloat(event.getAttribute("data-speed"));
-                        mainVideo.playbackRate = speed;
-                    });
-                });
-
-                caption.forEach((event) => {
-                    event.addEventListener("click", () => {
-                        removeActiveClasses(caption);
-                        event.classList.add("active");
-                        changeCaption(event);
-                        caption_text.innerHTML = "";
-                    });
-                });
-
-                let track = mainVideo.textTracks;
-
-                function changeCaption(lable) {
-                    let trackLable = lable.getAttribute("data-track");
-                    for (let i = 0; i < track.length; i++) {
-                        track[i].mode = "disabled";
-                        if (track[i].label == trackLable) {
-                            track[i].mode = "showing";
+                    // Update duration display
+                    function updateDuration() {
+                        if (!isNaN(mainVideo.duration) && isFinite(mainVideo.duration)) {
+                            let videoDuration = mainVideo.duration;
+                            let totalMin = Math.floor(videoDuration / 60);
+                            let totalSec = Math.floor(videoDuration % 60);
+                            totalSec = totalSec < 10 ? "0" + totalSec : totalSec;
+                            totalDuration.innerHTML = `${totalMin}:${totalSec}`;
+                        } else {
+                            totalDuration.innerHTML = "0:00";
                         }
                     }
-                }
 
-                const settingDivs = video_player.querySelectorAll('.settings > div');
-                const settingBack = video_player.querySelectorAll('.settings > div .back_arrow');
-                const quality_ul = video_player.querySelector(".settings > [data-label='quality'] ul");
-                const qualities = mainVideo.querySelectorAll("source[size]");
-                const quality_li = quality_ul.querySelectorAll("li");
+                    // Handle metadata loading with fallback
+                    mainVideo.addEventListener("loadedmetadata", () => {
+                        console.log('Metadata loaded, duration:', mainVideo.duration);
+                        updateDuration();
+                        loader.style.display = "none";
+                        const fallback = video_player.querySelector('.media-fallback');
+                        if (fallback) fallback.style.display = 'none';
+                    });
 
-                quality_li.forEach((event) => {
-                    event.addEventListener('click', (e) => {
-                        let quality = event.getAttribute('data-quality');
-                        removeActiveClasses(quality_li);
-                        event.classList.add("active");
-                        qualities.forEach(source => {
-                            if (source.getAttribute('size') === quality && source.getAttribute('src') !== currentSource) {
-                                let video_current_duration = mainVideo.currentTime;
-                                let wasPlaying = isPlaying;
-                                let currentPlaybackRate = mainVideo.playbackRate;
-                                currentSource = source.getAttribute('src');
-                                mainVideo.src = currentSource;
-                                mainVideo.currentTime = video_current_duration;
-                                mainVideo.playbackRate = currentPlaybackRate;
-                                mainVideo.load();
-                                mainVideo.addEventListener('loadedmetadata', () => {
-                                    updateDuration();
-                                    if (wasPlaying) playVideo();
-                                }, { once: true });
+                    // Fallback for duration if metadata fails
+                    mainVideo.addEventListener("loadeddata", () => {
+                        if (isNaN(mainVideo.duration) || !isFinite(mainVideo.duration)) {
+                            console.warn('Invalid duration, retrying metadata load');
+                            mainVideo.load();
+                        }
+                    });
+
+                    if (tracks.length) {
+                        caption_labels.insertAdjacentHTML(
+                            "afterbegin",
+                            `<li data-track="OFF" class="active">OFF</li>`
+                        );
+                        for (let i = 0; i < tracks.length; i++) {
+                            let trackLi = `<li data-track="${tracks[i].label}">${tracks[i].label}</li>`;
+                            caption_labels.insertAdjacentHTML("beforeend", trackLi);
+                        }
+                    }
+                    const caption = captions.querySelectorAll("ul li");
+
+                    function playVideo() {
+                        play_pause.innerHTML = "pause";
+                        play_pause.title = "pause";
+                        video_player.classList.add("paused");
+                        isPlaying = true;
+                        mainVideo.play().catch(e => {
+                            console.error('Play error:', e);
+                            if (typeof toastr !== 'undefined') {
+                                toastr.error("Failed to play video.");
+                            }
+                        });
+                    }
+
+                    function pauseVideo() {
+                        play_pause.innerHTML = "play_arrow";
+                        play_pause.title = "play";
+                        video_player.classList.remove("paused");
+                        isPlaying = false;
+                        mainVideo.pause();
+                    }
+
+                    play_pause.addEventListener("click", () => {
+                        const isVideoPaused = video_player.classList.contains("paused");
+                        isVideoPaused ? pauseVideo() : playVideo();
+                    });
+
+                    mainVideo.addEventListener("play", playVideo);
+                    mainVideo.addEventListener("pause", pauseVideo);
+
+                    fast_rewind.addEventListener("click", () => {
+                        let newTime = Math.max(mainVideo.currentTime - 10, 0);
+                        mainVideo.currentTime = newTime;
+                        updateProgress();
+                    });
+
+                    fast_forward.addEventListener("click", () => {
+                        let newTime = Math.min(mainVideo.currentTime + 10, mainVideo.duration || Infinity);
+                        mainVideo.currentTime = newTime;
+                        updateProgress();
+                    });
+
+                    function updateProgress() {
+                        let currentVideoTime = mainVideo.currentTime;
+                        let currentMin = Math.floor(currentVideoTime / 60);
+                        let currentSec = Math.floor(currentVideoTime % 60);
+                        currentSec = currentSec < 10 ? "0" + currentSec : currentSec;
+                        current.innerHTML = `${currentMin}:${currentSec}`;
+
+                        let videoDuration = mainVideo.duration || 0;
+                        let progressWidth = videoDuration ? (currentVideoTime / videoDuration) * 100 : 0;
+                        progress_Bar.style.width = `${progressWidth}%`;
+                    }
+
+                    mainVideo.addEventListener("timeupdate", updateProgress);
+
+                    progressArea.addEventListener("pointerdown", (e) => {
+                        progressArea.setPointerCapture(e.pointerId);
+                        setTimelinePosition(e);
+                        progressArea.addEventListener("pointermove", setTimelinePosition);
+                        progressArea.addEventListener("pointerup", () => {
+                            progressArea.removeEventListener("pointermove", setTimelinePosition);
+                        }, { once: true });
+                    });
+
+                    function setTimelinePosition(e) {
+                        let videoDuration = mainVideo.duration || 0;
+                        let progressWidthval = progressArea.clientWidth;
+                        let ClickOffsetX = e.offsetX;
+                        let newTime = (ClickOffsetX / progressWidthval) * videoDuration;
+                        mainVideo.currentTime = newTime;
+                        updateProgress();
+                    }
+
+                    function drawProgress(canvas, buffered, duration) {
+                        let context = canvas.getContext('2d', { antialias: false });
+                        context.fillStyle = "#ffffffe6";
+                        let height = canvas.height;
+                        let width = canvas.width;
+                        if (!height || !width) return;
+                        context.clearRect(0, 0, width, height);
+                        for (let i = 0; i < buffered.length; i++) {
+                            let leadingEdge = buffered.start(i) / duration * width;
+                            let trailingEdge = buffered.end(i) / duration * width;
+                            context.fillRect(leadingEdge, 0, trailingEdge - leadingEdge, height);
+                        }
+                    }
+
+                    mainVideo.addEventListener('progress', () => {
+                        drawProgress(bufferedBar, mainVideo.buffered, mainVideo.duration || 0);
+                    });
+
+                    mainVideo.addEventListener('waiting', () => {
+                        loader.style.display = "block";
+                    });
+
+                    mainVideo.addEventListener('canplay', () => {
+                        loader.style.display = "none";
+                        updateDuration();
+                    });
+
+                    function changeVolume() {
+                        mainVideo.volume = volume_range.value / 100;
+                        if (volume_range.value == 0) {
+                            volume.innerHTML = "volume_off";
+                        } else if (volume_range.value < 40) {
+                            volume.innerHTML = "volume_down";
+                        } else {
+                            volume.innerHTML = "volume_up";
+                        }
+                    }
+
+                    function muteVolume() {
+                        if (volume_range.value == 0) {
+                            volume_range.value = 80;
+                            mainVideo.volume = 0.8;
+                            volume.innerHTML = "volume_up";
+                        } else {
+                            volume_range.value = 0;
+                            mainVideo.volume = 0;
+                            volume.innerHTML = "volume_off";
+                        }
+                    }
+
+                    volume_range.addEventListener("change", changeVolume);
+                    volume.addEventListener("click", muteVolume);
+
+                    progressArea.addEventListener("mousemove", (e) => {
+                        let progressWidthval = progressArea.clientWidth;
+                        let x = e.offsetX;
+                        let videoDuration = mainVideo.duration || 0;
+                        let progressTime = Math.floor((x / progressWidthval) * videoDuration);
+                        let currentMin = Math.floor(progressTime / 60);
+                        let currentSec = Math.floor(progressTime % 60);
+                        currentSec = currentSec < 10 ? "0" + currentSec : currentSec;
+                        progressAreaTime.style.setProperty("--x", `${x}px`);
+                        progressAreaTime.style.display = "block";
+                        if (x >= progressWidthval - 80) {
+                            x = progressWidthval - 80;
+                        } else if (x <= 75) {
+                            x = 75;
+                        }
+                        progressAreaTime.innerHTML = `${currentMin}:${currentSec}`;
+                    });
+
+                    progressArea.addEventListener("mouseleave", () => {
+                        progressAreaTime.style.display = "none";
+                    });
+
+                    auto_play.addEventListener("click", () => {
+                        auto_play.classList.toggle("active");
+                        auto_play.title = auto_play.classList.contains("active") ? "Autoplay is on" : "Autoplay is off";
+                    });
+
+                    mainVideo.addEventListener("ended", () => {
+                        if (auto_play.classList.contains("active")) {
+                            playVideo();
+                        } else {
+                            play_pause.innerHTML = "replay";
+                            play_pause.title = "Replay";
+                        }
+                    });
+
+                    picture_in_picutre.addEventListener("click", () => {
+                        mainVideo.requestPictureInPicture().catch(e => {
+                            console.error('PiP error:', e);
+                            if (typeof toastr !== 'undefined') {
+                                toastr.error("Picture-in-Picture is not supported or disabled.");
                             }
                         });
                     });
-                });
 
-                settingBack.forEach((event) => {
-                    event.addEventListener('click', (e) => {
-                        let setting_label = e.target.getAttribute('data-label');
-                        for (let i = 0; i < settingDivs.length; i++) {
-                            if (settingDivs[i].getAttribute('data-label') == setting_label) {
-                                settingDivs[i].removeAttribute('hidden');
-                            } else {
-                                settingDivs[i].setAttribute('hidden', "");
-                            }
-                        }
-                    });
-                });
-
-                settingHome.forEach((event) => {
-                    event.addEventListener('click', (e) => {
-                        let setting_label = e.target.getAttribute('data-label');
-                        for (let i = 0; i < settingDivs.length; i++) {
-                            if (settingDivs[i].getAttribute('data-label') == setting_label) {
-                                settingDivs[i].removeAttribute('hidden');
-                            } else {
-                                settingDivs[i].setAttribute('hidden', "");
-                            }
-                        }
-                    });
-                });
-
-                function removeActiveClasses(e) {
-                    e.forEach((event) => {
-                        event.classList.remove("active");
-                    });
-                }
-
-                let caption_text = video_player.querySelector(".caption_text");
-                for (let i = 0; i < track.length; i++) {
-                    track[i].addEventListener("cuechange", () => {
-                        if (track[i].mode === "showing") {
-                            if (track[i].activeCues[0]) {
-                                let span = `<span><mark>${track[i].activeCues[0].text}</mark></span>`;
-                                caption_text.innerHTML = span;
-                            } else {
-                                caption_text.innerHTML = "";
-                            }
-                        }
-                    });
-                }
-
-                @if ($content->can_download == 0)
-                    mainVideo.addEventListener("contextmenu", (e) => {
-                        e.preventDefault();
-                    });
-                @endif
-
-                mainVideo.addEventListener("error", (e) => {
-                    console.error('Video error:', e);
-                    const fallback = video_player.querySelector('.media-fallback');
-                    if (fallback) fallback.style.display = 'block';
-                    toastr.error("Failed to load video. Please check the file format or source path.");
-                });
-
-                let timer;
-                const hideControls = () => {
-                    if (mainVideo.paused) return;
-                    timer = setTimeout(() => {
-                        if (settingsBtn.classList.contains("active") || captionsBtn.classList.contains("active")) {
-                            controls.classList.add("active");
+                    fullscreen.addEventListener("click", () => {
+                        if (!video_player.classList.contains("openFullScreen")) {
+                            video_player.classList.add("openFullScreen");
+                            fullscreen.innerHTML = "fullscreen_exit";
+                            video_player.requestFullscreen();
                         } else {
-                            controls.classList.remove("active");
-                            if (tracks.length != 0) {
-                                caption_text.classList.add("active");
+                            video_player.classList.remove("openFullScreen");
+                            fullscreen.innerHTML = "fullscreen";
+                            document.exitFullscreen();
+                        }
+                    });
+
+                    settingsBtn.addEventListener("click", () => {
+                        settings.classList.toggle("active");
+                        settingsBtn.classList.toggle("active");
+                        if (captionsBtn.classList.contains("active") || captions.classList.contains("active")) {
+                            captions.classList.remove("active");
+                            captionsBtn.classList.remove("active");
+                        }
+                    });
+
+                    captionsBtn.addEventListener("click", () => {
+                        captions.classList.toggle("active");
+                        captionsBtn.classList.toggle("active");
+                        if (settingsBtn.classList.contains("active") || settings.classList.contains("active")) {
+                            settings.classList.remove("active");
+                            settingsBtn.classList.remove("active");
+                        }
+                    });
+
+                    const playback = video_player.querySelectorAll(".settings [data-label='speed'] li");
+                    playback.forEach((event) => {
+                        event.addEventListener("click", () => {
+                            removeActiveClasses(playback);
+                            event.classList.add("active");
+                            let speed = parseFloat(event.getAttribute("data-speed"));
+                            mainVideo.playbackRate = speed;
+                            const speedLabel = video_player.querySelector(".settings [data-label='settingHome'] li[data-label='speed'] .speed-label");
+                            if (speedLabel) {
+                                speedLabel.textContent = `Playback Speed (${event.textContent})`;
+                            }
+                        });
+                    });
+
+                    caption.forEach((event) => {
+                        event.addEventListener("click", () => {
+                            removeActiveClasses(caption);
+                            event.classList.add("active");
+                            changeCaption(event);
+                        });
+                    });
+
+                    function changeCaption(lable) {
+                        let trackLable = lable.getAttribute("data-track");
+                        for (let i = 0; i < tracks.length; i++) {
+                            tracks[i].mode = "disabled";
+                            if (tracks[i].label == trackLable) {
+                                tracks[i].mode = "showing";
                             }
                         }
-                    }, 3000);
-                };
-                hideControls();
-
-                video_player.addEventListener("mousemove", () => {
-                    controls.classList.add("active");
-                    if (tracks.length != 0) {
-                        caption_text.classList.remove("active");
                     }
-                    clearTimeout(timer);
+
+                    const settingDivs = video_player.querySelectorAll('.settings > div');
+                    const settingBack = video_player.querySelectorAll('.settings > div .back_arrow');
+                    const quality_ul = video_player.querySelector(".settings > [data-label='quality'] ul");
+                    const qualities = mainVideo.querySelectorAll("source[size]");
+                    const quality_li = quality_ul.querySelectorAll("li");
+
+                    quality_li.forEach((event) => {
+                        event.addEventListener('click', (e) => {
+                            let quality = event.getAttribute('data-quality');
+                            removeActiveClasses(quality_li);
+                            event.classList.add("active");
+                            qualities.forEach(source => {
+                                if (source.getAttribute('size') === quality && source.getAttribute('src') !== currentSource) {
+                                    let video_current_duration = mainVideo.currentTime;
+                                    let wasPlaying = isPlaying;
+                                    let currentPlaybackRate = mainVideo.playbackRate;
+                                    currentSource = source.getAttribute('src');
+                                    mainVideo.src = currentSource;
+                                    mainVideo.currentTime = video_current_duration;
+                                    mainVideo.playbackRate = currentPlaybackRate;
+                                    mainVideo.load();
+                                    mainVideo.addEventListener('loadedmetadata', () => {
+                                        updateDuration();
+                                        if (wasPlaying) playVideo();
+                                    }, { once: true });
+                                }
+                            });
+                        });
+                    });
+
+                    settingBack.forEach((event) => {
+                        event.addEventListener('click', (e) => {
+                            let setting_label = e.target.getAttribute('data-label');
+                            console.log('Back clicked, returning to:', setting_label);
+                            settingDivs.forEach(div => {
+                                div.classList.toggle('active', div.getAttribute('data-label') === setting_label);
+                            });
+                        });
+                    });
+
+                    settingHome.forEach((event) => {
+                        event.addEventListener('click', (e) => {
+                            let setting_label = event.getAttribute('data-label');
+                            console.log('Menu item clicked:', setting_label);
+                            settingDivs.forEach(div => {
+                                div.classList.toggle('active', div.getAttribute('data-label') === setting_label);
+                            });
+                        });
+                    });
+
+                    function removeActiveClasses(elements) {
+                        elements.forEach((element) => {
+                            element.classList.remove("active");
+                        });
+                    }
+
+                    const caption_text = video_player.querySelector(".caption_text");
+                    for (let i = 0; i < tracks.length; i++) {
+                        tracks[i].addEventListener("cuechange", () => {
+                            if (tracks[i].mode === "showing") {
+                                if (tracks[i].activeCues[0]) {
+                                    let span = `<span><mark>${tracks[i].activeCues[0].text}</mark></span>`;
+                                    caption_text.innerHTML = span;
+                                } else {
+                                    caption_text.innerHTML = "";
+                                }
+                            }
+                        });
+                    }
+
+                    @if ($content->can_download == 0)
+                        mainVideo.addEventListener("contextmenu", (e) => {
+                            e.preventDefault();
+                        });
+                    @endif
+
+                    mainVideo.addEventListener("error", (e) => {
+                        console.error('Video error:', e);
+                        const fallback = video_player.querySelector('.media-fallback');
+                        if (fallback) fallback.style.display = 'block';
+                        if (typeof toastr !== 'undefined') {
+                            toastr.error("Failed to load video. Please check the file format or source path.");
+                        }
+                    });
+
+                    let timer;
+                    const hideControls = () => {
+                        if (mainVideo.paused) return;
+                        timer = setTimeout(() => {
+                            if (settingsBtn.classList.contains("active") || captionsBtn.classList.contains("active")) {
+                                controls.classList.add("active");
+                            } else {
+                                controls.classList.remove("active");
+                                if (tracks.length) {
+                                    caption_text.classList.add("active");
+                                }
+                            }
+                        }, 3000);
+                    };
                     hideControls();
+
+                    video_player.addEventListener("mousemove", () => {
+                        controls.classList.add("active");
+                        if (tracks.length) {
+                            caption_text.classList.remove("active");
+                        }
+                        clearTimeout(timer);
+                        hideControls();
+                    });
+
+                    if (!tracks.length) {
+                        if (caption_labels) caption_labels.remove();
+                        if (captions) captions.remove();
+                        if (captionsBtn) captionsBtn.parentNode.remove();
+                    }
                 });
-
-                if (tracks.length == 0) {
-                    caption_labels.remove();
-                    captions.remove();
-                    captionsBtn.parentNode.remove();
-                }
-            });
-
-            const audio = document.querySelector('audio');
-            const pdfIframe = document.querySelector('.pdf-container iframe');
-            const linkImg = document.querySelector('.link-container img');
-            const image = document.querySelector('.image-container img');
-
-            if (audio) {
-                audio.addEventListener('error', function (e) {
-                    console.error('Audio error:', e);
-                    const fallback = audio.parentElement.querySelector('.media-fallback');
-                    if (fallback) fallback.style.display = 'block';
-                    toastr.error("Failed to load audio. Please check the file format or source path.");
-                });
-
-                audio.addEventListener('loadeddata', function () {
-                    const fallback = audio.parentElement.querySelector('.media-fallback');
-                    if (fallback) fallback.style.display = 'none';
-                });
+            } catch (e) {
+                console.error('Error in video player initialization:', e);
             }
 
-            if (pdfIframe) {
-                const fallback = pdfIframe.parentElement.querySelector('.pdf-fallback');
-                pdfIframe.addEventListener('error', function (e) {
-                    console.error('PDF iframe error:', e);
-                    if (fallback) fallback.style.display = 'block';
-                });
+            try {
+                const audio = document.querySelector('audio');
+                const pdfIframe = document.querySelector('.pdf-container iframe');
+                const linkImg = document.querySelector('.link-container img');
+                const image = document.querySelector('.image-container img');
 
-                pdfIframe.addEventListener('load', function () {
-                    try {
-                        if (pdfIframe.contentDocument && pdfIframe.contentDocument.contentType === 'application/pdf') {
-                            console.log('PDF loaded successfully');
-                            if (fallback) fallback.style.display = 'none';
-                        } else {
-                            console.error('PDF not loaded');
+                if (audio) {
+                    audio.addEventListener('error', function (e) {
+                        console.error('Audio error:', e);
+                        const fallback = audio.parentElement.querySelector('.media-fallback');
+                        if (fallback) fallback.style.display = 'block';
+                        if (typeof toastr !== 'undefined') {
+                            toastr.error("Failed to load audio. Please check the file format or source path.");
+                        }
+                    });
+
+                    audio.addEventListener('loadeddata', function () {
+                        const fallback = audio.parentElement.querySelector('.media-fallback');
+                        if (fallback) fallback.style.display = 'none';
+                    });
+                }
+
+                if (pdfIframe) {
+                    const fallback = pdfIframe.parentElement.querySelector('.pdf-fallback');
+                    pdfIframe.addEventListener('error', function (e) {
+                        console.error('PDF iframe error:', e);
+                        if (fallback) fallback.style.display = 'block';
+                    });
+
+                    pdfIframe.addEventListener('load', function () {
+                        try {
+                            if (pdfIframe.contentDocument && pdfIframe.contentDocument.contentType === 'application/pdf') {
+                                console.log('PDF loaded successfully');
+                                if (fallback) fallback.style.display = 'none';
+                            } else {
+                                console.error('PDF not loaded');
+                                if (fallback) fallback.style.display = 'block';
+                            }
+                        } catch (e) {
+                            console.error('PDF load check error:', e);
                             if (fallback) fallback.style.display = 'block';
                         }
-                    } catch (e) {
-                        console.error('PDF load check error:', e);
+                    });
+                }
+
+                if (linkImg) {
+                    linkImg.addEventListener('error', function (e) {
+                        console.error('Link thumbnail error:', e);
+                        const fallback = linkImg.parentElement.parentElement.querySelector('.media-fallback');
                         if (fallback) fallback.style.display = 'block';
-                    }
-                });
-            }
+                    });
 
-            if (linkImg) {
-                linkImg.addEventListener('error', function (e) {
-                    console.error('Link thumbnail error:', e);
-                    const fallback = linkImg.parentElement.parentElement.querySelector('.media-fallback');
-                    if (fallback) fallback.style.display = 'block';
-                });
+                    linkImg.addEventListener('load', function () {
+                        const fallback = linkImg.parentElement.parentElement.querySelector('.media-fallback');
+                        if (fallback) fallback.style.display = 'none';
+                    });
+                }
 
-                linkImg.addEventListener('load', function () {
-                    const fallback = linkImg.parentElement.parentElement.querySelector('.media-fallback');
-                    if (fallback) fallback.style.display = 'none';
-                });
-            }
+                if (image) {
+                    image.addEventListener('error', function (e) {
+                        console.error('Image error:', e);
+                        const fallback = image.parentElement.querySelector('.media-fallback');
+                        if (fallback) fallback.style.display = 'block';
+                    });
 
-            if (image) {
-                image.addEventListener('error', function (e) {
-                    console.error('Image error:', e);
-                    const fallback = image.parentElement.querySelector('.media-fallback');
-                    if (fallback) fallback.style.display = 'block';
-                });
-
-                image.addEventListener('load', function () {
-                    const fallback = image.parentElement.querySelector('.media-fallback');
-                    if (fallback) fallback.style.display = 'none';
-                });
+                    image.addEventListener('load', function () {
+                        const fallback = image.parentElement.querySelector('.media-fallback');
+                        if (fallback) fallback.style.display = 'none';
+                    });
+                }
+            } catch (e) {
+                console.error('Error in media handling:', e);
             }
         });
 
         function deleteContent(id) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: "{{ route('admin.content.destroy', ':id') }}".replace(':id', id),
-                        type: "GET",
-                        success: function(response) {
-                            if (response.success) {
+            try {
+                if (typeof Swal === 'undefined') {
+                    console.error('SweetAlert2 is not loaded.');
+                    alert('Error: Unable to delete content. Please ensure SweetAlert2 is included.');
+                    return;
+                }
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "{{ route('admin.content.destroy', ':id') }}".replace(':id', id),
+                            type: "GET",
+                            success: function(response) {
+                                if (response.success) {
+                                    Swal.fire({
+                                        title: response.message,
+                                        icon: 'success',
+                                        showCancelButton: false,
+                                    });
+                                    setTimeout(() => window.location.href = '{{ route('admin.content.index') }}', 1000);
+                                }
+                            },
+                            error: function(xhr) {
+                                if (typeof toastr !== 'undefined') {
+                                    toastr.error(xhr.responseJSON?.message || 'An error occurred.', 'Error');
+                                } else {
+                                    alert('Error: ' + (xhr.responseJSON?.message || 'An error occurred.'));
+                                }
+                            }
+                        });
+                    }
+                });
+            } catch (e) {
+                console.error('Error in deleteContent:', e);
+                alert('Error: Unable to delete content.');
+            }
+        }
+
+        function publishContent(id) {
+            try {
+                let submitBtn = $(document.activeElement);
+                let btnText = submitBtn.text();
+                submitBtn.prop('disabled', true);
+                submitBtn.html(`<span class="spinner-border spinner-border-sm" aria-hidden="true"></span> ${btnText}ing...`);
+                $.ajax({
+                    url: "{{ route('admin.content.publish', ':id') }}".replace(':id', id),
+                    type: "GET",
+                    success: function(response) {
+                        if (response.success) {
+                            if (typeof Swal !== 'undefined') {
                                 Swal.fire({
                                     title: response.message,
                                     icon: 'success',
                                     showCancelButton: false,
                                 });
-                                setTimeout(() => window.location.href = '{{ route('admin.content.index') }}', 1000);
                             }
+                            setTimeout(() => window.location.reload(), 1000);
                         }
-                    });
-                }
-            });
-        }
-
-        function publishContent(id) {
-            let submitBtn = $(document.activeElement);
-            let btnText = submitBtn.text();
-            submitBtn.prop('disabled', true);
-            submitBtn.html(`<span class="spinner-border spinner-border-sm" aria-hidden="true"></span> ${btnText}ing...`);
-            $.ajax({
-                url: "{{ route('admin.content.publish', ':id') }}".replace(':id', id),
-                type: "GET",
-                success: function(response) {
-                    if (response.success) {
-                        Swal.fire({
-                            title: response.message,
-                            icon: 'success',
-                            showCancelButton: false,
-                        });
-                        setTimeout(() => window.location.reload(), 1000);
+                        submitBtn.prop('disabled', false);
+                        submitBtn.html(btnText);
+                    },
+                    error: function(xhr) {
+                        if (typeof toastr !== 'undefined') {
+                            toastr.error(xhr.responseJSON?.message || 'An error occurred.', 'Error');
+                        } else {
+                            alert('Error: ' + (xhr.responseJSON?.message || 'An error occurred.'));
+                        }
+                        submitBtn.prop('disabled', false);
+                        submitBtn.html(btnText);
                     }
-                    submitBtn.prop('disabled', false);
-                    submitBtn.html(btnText);
-                },
-                error: function(xhr) {
-                    toastr.error(xhr.responseJSON?.message || 'An error occurred.', 'Error');
-                    submitBtn.prop('disabled', false);
-                    submitBtn.html(btnText);
-                }
-            });
+                });
+            } catch (e) {
+                console.error('Error in publishContent:', e);
+                alert('Error: Unable to publish content.');
+            }
         }
 
         function archiveContent(id) {
-            let submitBtn = $(document.activeElement);
-            let btnText = submitBtn.text();
-            submitBtn.prop('disabled', true);
-            submitBtn.html(`<span class="spinner-border spinner-border-sm" aria-hidden="true"></span> ${btnText}ing...`);
-            $.ajax({
-                url: "{{ route('admin.content.archive', ':id') }}".replace(':id', id),
-                type: "GET",
-                success: function(response) {
-                    if (response.success) {
-                        Swal.fire({
-                            title: response.message,
-                            icon: 'success',
-                            showCancelButton: false,
-                        });
-                        setTimeout(() => window.location.reload(), 1000);
+            try {
+                let submitBtn = $(document.activeElement);
+                let btnText = submitBtn.text();
+                submitBtn.prop('disabled', true);
+                submitBtn.html(`<span class="spinner-border spinner-border-sm" aria-hidden="true"></span> ${btnText}ing...`);
+                $.ajax({
+                    url: "{{ route('admin.content.archive', ':id') }}".replace(':id', id),
+                    type: "GET",
+                    success: function(response) {
+                        if (response.success) {
+                            if (typeof Swal !== 'undefined') {
+                                Swal.fire({
+                                    title: response.message,
+                                    icon: 'success',
+                                    showCancelButton: false,
+                                });
+                            }
+                            setTimeout(() => window.location.reload(), 1000);
+                        }
+                        submitBtn.prop('disabled', false);
+                        submitBtn.html(btnText);
+                    },
+                    error: function(xhr) {
+                        if (typeof toastr !== 'undefined') {
+                            toastr.error(xhr.responseJSON?.message || 'An error occurred.', 'Error');
+                        } else {
+                            alert('Error: ' + (xhr.responseJSON?.message || 'An error occurred.'));
+                        }
+                        submitBtn.prop('disabled', false);
+                        submitBtn.html(btnText);
                     }
-                    submitBtn.prop('disabled', false);
-                    submitBtn.html(btnText);
-                },
-                error: function(xhr) {
-                    toastr.error(xhr.responseJSON?.message || 'An error occurred.', 'Error');
-                    submitBtn.prop('disabled', false);
-                    submitBtn.html(btnText);
-                }
-            });
+                });
+            } catch (e) {
+                console.error('Error in archiveContent:', e);
+                alert('Error: Unable to archive content.');
+            }
         }
     </script>
 @endpush
