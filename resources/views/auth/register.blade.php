@@ -114,6 +114,7 @@
                                 <a href="{{ route('admin.home') }}" class="fxt-logo"><img src="{{ 'https://png.pngtree.com/png-clipart/20190925/original/pngtree-no-image-vector-illustration-isolated-png-image_4979075.jpg' }}" alt="Logo" style="max-width: 300px;"></a>
                             @endif
                         </div>
+                        
                         <div class="fxt-transformY-50 fxt-transition-delay-4">
                             <h1 class="fxt-main-title">{{ $global_setting->title }}</h1>
                         </div>
@@ -149,6 +150,7 @@
                                         <div class="form-group required">
                                             <select name="role_id" id="role_id" class="form-control select2" required>
                                                 <option value="">--Select User Type--</option>
+
                                                 <option value="4">Employee</option>
                                                 <option value="5">Others</option>
                                             </select>
@@ -160,6 +162,7 @@
                                         <div class="form-group">
                                             <select name="user_category_id" id="user_category_id" class="form-control select2">
                                                 <option value="">--Select User Service Type--</option>
+                                                
                                                 @foreach ($categorys as $category)
                                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                 @endforeach
@@ -172,6 +175,7 @@
                                         <div class="form-group" id="office_id_group">
                                             <select name="office_id" id="office_id" class="form-control select2">
                                                 <option value="">--Select Organization--</option>
+
                                                 @foreach ($orgs as $org)
                                                     <option value="{{ $org->id }}">{{ $org->name }}</option>
                                                 @endforeach
@@ -184,6 +188,7 @@
                                         <div class="form-group" id="designation_id_group">
                                             <select name="designation_id" id="designation_id" class="form-control select2">
                                                 <option value="">--Select Designation--</option>
+
                                                 @foreach ($designations as $designation)
                                                     <option value="{{ $designation->id }}">{{ $designation->name }}</option>
                                                 @endforeach
@@ -191,16 +196,22 @@
                                             </select>
                                             <div class="validation-message" id="designation_id_error">Designation is required</div>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group" id="other_designation_group" style="display: none;">
-                                            <input type="text" name="other_designation" id="other_designation" class="form-control" placeholder="Enter new designation">
-                                            <div class="validation-message" id="other_designation_error">New Designation is required</div>
+                                    <div id="other_designation_group" style="display: none;">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input type="text" name="other_designation" id="other_designation" class="form-control" placeholder="Enter new designation">
+
+                                                <div class="validation-message" id="other_designation_error">New Designation is required</div>
+                                            </div>
                                         </div>
                                     </div>
 
                                     <div class="col-6">
                                         <div class="form-group">
                                             <input type="email" id="email" class="form-control" name="email" placeholder="Enter Email">
+
                                             <div class="validation-message" id="email_error">Please enter a valid email address</div>
                                         </div>
                                     </div>
@@ -208,6 +219,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <input type="text" id="mobile" class="form-control" name="mobile" placeholder="Enter Mobile No." maxlength="14">
+
                                             <div class="validation-message" id="mobile_error">Mobile number must be 11 digits</div>
                                         </div>
                                     </div>
@@ -216,6 +228,7 @@
                                         <div class="form-group">
                                             <div class="position-relative">
                                                 <input id="password" type="password" class="form-control" name="password" placeholder="Enter Password (Minimum 8 Digit)" minlength="8">
+
                                                 <i toggle="#password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
                                                 <div class="validation-message" id="password_error">Password must be at least 8 characters</div>
                                             </div>
@@ -226,6 +239,7 @@
                                         <div class="form-group">
                                             <div class="position-relative">
                                                 <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" placeholder="Re-Enter Password (Minimum 8 Digit)" minlength="8">
+
                                                 <i toggle="#password_confirmation" class="fa fa-fw fa-eye toggle-password field-icon"></i>
                                                 <div class="validation-message" id="password_confirmation_error">Passwords do not match</div>
                                             </div>
@@ -390,16 +404,20 @@
                     const otherDesignation = $('#other_designation').val().trim();
                     const errorElement = $('#other_designation_error');
                     const formGroup = $('#other_designation_group');
-                    if (roleId === '4' && designationId === '1000' && otherDesignation === '') {
+
+                    if (designationId === '1000' && otherDesignation === '') {
                         if (validationState.other_designation) {
                             errorElement.addClass('show');
+
                             formGroup.addClass('invalid').removeClass('valid');
                         }
+
                         return false;
                     } else {
                         errorElement.removeClass('show');
                         formGroup.addClass('valid').removeClass('invalid');
                         validationState.other_designation = false;
+
                         return true;
                     }
                 }
@@ -549,7 +567,6 @@
                     validateOtherDesignation();
                 }
 
-                // Event listeners for real-time validation on key input/change
                 $('#name_en').on('input', function() {
                     validationState.name_en = true;
                     validateName();

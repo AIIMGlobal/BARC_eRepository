@@ -66,7 +66,7 @@
                                                 <select class="form-control select2" name="user_type" id="user_type">
                                                     <option value="">--Search by User Type--</option>
 
-                                                    <option value="3">Employee</option>
+                                                    <option value="3">Admin</option>
                                                     <option value="4">Registered User</option>
                                                 </select>
                                             </div>

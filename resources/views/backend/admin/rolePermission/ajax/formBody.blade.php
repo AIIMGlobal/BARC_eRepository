@@ -14,10 +14,7 @@
 
                 <form action="{{route('admin.rolePermission.removePermission')}}" method="POST">
                     @csrf
-
-                    @foreach ($rolePermissions as $permission)
-                        <input type="hidden" name="hiddenRoleId" value="{{ $permission->role_id }}">
-                    @endforeach
+                    <input type="hidden" name="hiddenRoleId" value="{{ $selected_role_id ?? '' }}">
 
                     <div class="card-body" style="height: 400px; overflow-y: auto;">
                         <div class="row g-3" id="assignedPermissionList">
@@ -63,7 +60,7 @@
                 <form action="{{ route('admin.rolePermission.givePermission') }}" method="POST">
                     @csrf
 
-                    <input type="hidden" name="hiddenRoleId" value="{{ $selected_role_id }}">
+                    <input type="hidden" name="hiddenRoleId" value="{{ $selected_role_id ?? '' }}">
 
                     <div class="card-body" style="height: 400px; overflow-y: auto;">
                         <div class="row g-3" id="unassignedPermissionList">

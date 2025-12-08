@@ -378,6 +378,12 @@ class UserController extends Controller
                     'message' => "You don't have permission!",
                 ], 403);
             }
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ], 422);
         } catch (\Exception $e) {
             DB::rollBack();
 

@@ -84,15 +84,9 @@
                                 <div class="col-md-2 form-group">
                                     <label for="role">Select Role: </label>
                                     <select class="form-control" name="roleId" id="role">
-                                        @if ($selected_role != '')
-                                            @foreach($roles as $role)
-                                                <option value="{{$role->id}}" @if($selected_role->id == $role->id) selected @endif>{{$role->display_name}}</option>
-                                            @endforeach
-                                        @else
-                                            @foreach ($roles as $role)
-                                                <option value="{{$role->id}}">{{$role->display_name}}</option>
-                                            @endforeach
-                                        @endif
+                                        @foreach($roles as $role)
+                                            <option value="{{$role->id}}" {{ $role->id == $selected_role_id ? 'selected' : '' }}>{{$role->display_name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -181,6 +175,9 @@
                                 `);
                                 unassignedIndex++;
                             });
+
+                            // Update hidden role ID in both forms to match the selected role
+                            $('input[name="hiddenRoleId"]').val(roleId);
 
                             // Trigger search filter on load
                             filterPermissions('#searchAssigned', '#assignedPermissionList');

@@ -58,7 +58,7 @@
                             <i class="bx bx-id-card"></i>
                         </div>
                         <div class="custom-text">
-                            <p class="title">Total Employees</p>
+                            <p class="title">Total Admins</p>
                             <h2 class="count">
                                 <span class="counter-value" data-target="{{ $employeesCount ?? 0 }}">{{ $employeesCount ?? 0 }}</span>
                             </h2>

@@ -76,7 +76,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div>
-                        <div class="tab-content pt-4 text-muted">
+                        <div class="tab-content pt-4 ">
                             <div class="tab-pane active" id="overview-tab" role="tabpanel">
                                 <div class="row">
                                     <div class="col-md-3">
@@ -90,19 +90,19 @@
                                                             <tr>
                                                                 <th class="ps-0" scope="row">Full Name:</th>
 
-                                                                <td class="text-muted">{{ $employee->name_en }}</td>
+                                                                <td class="">{{ $employee->name_en }}</td>
                                                             </tr>
 
                                                             <tr>
                                                                 <th class="ps-0" scope="row">Email:</th>
 
-                                                                <td class="text-muted">{{ $employee->email }}</td>
+                                                                <td class="">{{ $employee->email }}</td>
                                                             </tr>
 
                                                             <tr>
                                                                 <th class="ps-0" scope="row">Mobile:</th>
 
-                                                                <td class="text-muted">{{ $employee->mobile }}</td>
+                                                                <td class="">{{ $employee->mobile }}</td>
                                                             </tr>
                                                             
                                                             <tr>
@@ -132,7 +132,7 @@
                                                                     </ul>
                                                                 </th>
 
-                                                                <td class="text-muted"></td>
+                                                                <td class=""></td>
                                                             </tr> --}}
                                                         </tbody>
                                                     </table>
@@ -572,8 +572,10 @@
                                                     <div class="row">
                                                         <div class="col-md-4">
                                                             <div class="hstack gap-2">
-                                                                <button type="button" class="btn btn-success" id="approve" onclick="approve({{ $employee->id }})">Approve</button>
-                                                                <button type="button" class="btn btn-danger" id="decline" onclick="decline({{ $employee->id }})">Decline</button>
+                                                                @can('approve_user')
+                                                                    <button type="button" class="btn btn-success" id="approve" onclick="approve({{ $employee->id }})">Approve</button>
+                                                                    <button type="button" class="btn btn-danger" id="decline" onclick="decline({{ $employee->id }})">Decline</button>
+                                                                @endcan
                                                             </div>
                                                         </div>
                                                     </div>
@@ -601,6 +603,7 @@
        
         function printDiv(divName) {
             $('div').removeClass('table-responsive');
+
             var printContents = document.getElementById(divName).innerHTML;
             var originalContents = document.body.innerHTML;
 
@@ -609,6 +612,7 @@
             window.print();
 
             document.body.innerHTML = originalContents;
+
             location.reload();
         }
     </script>

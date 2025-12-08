@@ -19,13 +19,7 @@ class RolePermissionController extends Controller
         $user = Auth::user();
 
         if(Gate::allows('assign_permission_list', $user)){
-            if(Session::has('selected_role_id')){
-                $selected_role_id = Session::get('selected_role_id');
-                $selected_role = Role::where('id', $selected_role_id)->first();
-            }else{
-                $selected_role = '';
-                $selected_role_id = Auth::user()->role_id;
-            }
+            $selected_role_id = Session::has('selected_role_id') ? Session::get('selected_role_id') : Auth::user()->role_id;
 
             if ($user->role_id == 1) {
                 $roles = Role::where('status', 1)->get();
@@ -43,7 +37,7 @@ class RolePermissionController extends Controller
 
             $unassignedPermissions = Permission::whereNotIn('id', $assignedIds)->get();
             
-            return view('backend.admin.rolePermission.index', compact('roles', 'rolePermissions', 'unassignedPermissions', 'selected_role', 'selected_role_id'));
+            return view('backend.admin.rolePermission.index', compact('roles', 'rolePermissions', 'unassignedPermissions', 'selected_role_id'));
         }else{
             return abort(403, "You don't have permission..!");
         }
@@ -101,16 +95,29 @@ class RolePermissionController extends Controller
             if (!$request->givePermission) {
                 return redirect()->route('admin.rolePermission.index')->with('error', 'Select permissions first..!');
             } else {
-                foreach($request->givePermission as $permission)
-                {
-                    $permissionsToGive = new RolePermission;
-                    $permissionsToGive->permission_id = $permission;
-                    $permissionsToGive->role_id = $request->hiddenRoleId;
-                    $permissionsToGive->created_by = Auth::user()->id;
-                    $permissionsToGive->save();
+                $addedCount = 0;
+                foreach($request->givePermission as $permission) {
+                    $permissionsToGive = RolePermission::firstOrCreate(
+                        [
+                            'permission_id' => $permission,
+                            'role_id' => $request->hiddenRoleId,
+                        ],
+                        [
+                            'created_by' => Auth::user()->id,
+                        ]
+                    );
+                    if ($permissionsToGive->wasRecentlyCreated) {
+                        $addedCount++;
+                    }
                 }
 
-                return redirect()->route('admin.rolePermission.index')->with('selected_role_id', $request->hiddenRoleId)->with('success', 'Permission given successfully..!');
+                $message = $addedCount > 0 
+                    ? "Permission given successfully..! ({$addedCount} new)" 
+                    : 'No new permissions were added (already assigned).';
+
+                return redirect()->route('admin.rolePermission.index')
+                    ->with('selected_role_id', $request->hiddenRoleId)
+                    ->with('success', $message);
             }
         } else {
             return abort(403, "You don't have permission..!");

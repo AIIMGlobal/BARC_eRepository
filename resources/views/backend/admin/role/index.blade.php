@@ -68,7 +68,7 @@
 
                                             @foreach ($roles as $role)
                                                 <tr>
-                                                    <td class="text-center">{{ $role->sl ?? $i }}</td>
+                                                    <td class="text-center">{{ $i }}</td>
 
                                                     <td>{{ $role->display_name ?? '-' }}</td>
 
