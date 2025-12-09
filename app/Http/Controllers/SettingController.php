@@ -29,8 +29,8 @@ class SettingController extends Controller
             if ($setting->logo) {
                 $imagePath = public_path(). '/storage/logo/' . $setting->logo;
 
-                if(($setting->logo != '') || ($setting->logo != NULL)) {
-                    if(file_exists(public_path(). '/storage/logo/' . $setting->logo)){
+                if (($setting->logo != '') || ($setting->logo != NULL)) {
+                    if (file_exists(public_path(). '/storage/logo/' . $setting->logo)) {
                         unlink($imagePath);
                     }
                 }
@@ -47,8 +47,8 @@ class SettingController extends Controller
             if ($setting->soft_logo) {
                 $imagePath = public_path(). '/storage/soft_logo/' . $setting->soft_logo;
 
-                if(($setting->soft_logo != '') || ($setting->soft_logo != NULL)) {
-                    if(file_exists(public_path(). '/storage/soft_logo/' . $setting->soft_logo)){
+                if (($setting->soft_logo != '') || ($setting->soft_logo != NULL)) {
+                    if(file_exists(public_path(). '/storage/soft_logo/' . $setting->soft_logo)) {
                         unlink($imagePath);
                     }
                 }
@@ -59,6 +59,24 @@ class SettingController extends Controller
             $path = Str::replace('public/soft_logo', '', $path);
 
             $data['soft_logo'] = Str::replace('/', '', $path);
+        }
+
+        if ($request->file('manual')) {
+            if ($setting->manual) {
+                $imagePath = public_path(). '/storage/manual/' . $setting->manual;
+
+                if (($setting->manual != '') || ($setting->manual != NULL)) {
+                    if(file_exists(public_path(). '/storage/manual/' . $setting->manual)) {
+                        unlink($imagePath);
+                    }
+                }
+            }
+
+            $path = $request->file('manual')->store('/public/manual');
+            
+            $path = Str::replace('public/manual', '', $path);
+
+            $data['manual'] = Str::replace('/', '', $path);
         }
         
         if ($setting) {

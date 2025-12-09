@@ -19,15 +19,15 @@ class ActivityLogController extends Controller
 
         if (Gate::allows('activity_log_list', $user)) {
             $activityTypes = [
-                'login' => 'Login',
-                'logout' => 'Logout',
-                'content_create' => 'Content Created',
-                'content_edit' => 'Content Edited',
-                'content_submit' => 'Content Submitted',
-                'content_publish' => 'Content Published',
-                'content_archive' => 'Content Archived',
+                'login'             => 'Login',
+                'logout'            => 'Logout',
+                'content_create'    => 'Content Created',
+                'content_edit'      => 'Content Edited',
+                'content_submit'    => 'Content Submitted',
+                'content_publish'   => 'Content Published',
+                'content_archive'   => 'Content Archived',
                 'content_unarchive' => 'Content Unarchived',
-                'content_delete' => 'Content Deleted',
+                'content_delete'    => 'Content Deleted',
             ];
 
             $query = ActivityLog::query();

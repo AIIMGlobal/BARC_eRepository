@@ -325,13 +325,13 @@
                                 @can('setting_management')
                                     <li class="nav-item">
                                         <a class="nav-link menu-link" href="{{ route('admin.setting.index') }}">
-                                            <span data-key="t-dashboards">Website Settings</span>
+                                            <span data-key="t-website_setting">Website Settings</span>
                                         </a>
                                     </li>
                                 @endcan
 
                                 @can('manage_location')
-                                    <li class="nav-item first-dropdown">
+                                    <li class="nav-item">
                                         <a class="nav-link menu-link" href="#location_management" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="location_management">
                                             <span data-key="t-location_management">Location Settings</span>
                                         </a>
@@ -340,19 +340,19 @@
                                             <ul class="nav nav-sm flex-column">
                                                 @can('manage_region')
                                                     <li class="nav-item">
-                                                        <a href="{{ route('admin.region.index') }}" class="nav-link" data-key="t-crm">{{__('menu.Division List')}} (Location)</a>
+                                                        <a href="{{ route('admin.region.index') }}" class="nav-link" data-key="t-crm">{{ __('menu.Division List') }} (Location)</a>
                                                     </li>
                                                 @endcan
 
                                                 @can('manage_district')
                                                     <li class="nav-item">
-                                                        <a href="{{ route('admin.district.index') }}" class="nav-link" data-key="t-crm">{{__('menu.District List')}}</a>
+                                                        <a href="{{ route('admin.district.index') }}" class="nav-link" data-key="t-crm">{{ __('menu.District List') }}</a>
                                                     </li>
                                                 @endcan
 
                                                 @can('manage_upazila')
                                                     <li class="nav-item">
-                                                        <a href="{{route('admin.upazila.index')}}" class="nav-link" data-key="t-crm">{{__('menu.Upazila List')}}</a>
+                                                        <a href="{{route('admin.upazila.index')}}" class="nav-link" data-key="t-crm">{{ __('menu.Upazila List') }}</a>
                                                     </li>
                                                 @endcan
                                             </ul>
@@ -422,6 +422,12 @@
                         </div>
                     </li>
                 @endcan
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ asset('storage/manual/' . ($global_setting->manual ?? '')) }}">
+                        <i class="ri-file-2-line"></i> <span data-key="t-manual">User Manual</span>
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- Sidebar -->

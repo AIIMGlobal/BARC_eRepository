@@ -4,22 +4,24 @@
     @endphp
 
     @foreach ($logs as $log)
-        <tr>
-            <td class="text-center">{{ $i }}</td>
-            <td>{{ $activityTypes[$log->type] ?? $log->type }}</td>
-            <td>{{ $log->user->name_en ?? 'Unknown' }}</td>
-            <td>{{ $log->content->content_name ?? '-' }}</td>
-            <td>{{ $log->description ?? '-' }}</td>
-            <td>{{ $log->ip_address ?? '-' }}</td>
-            <td>{{ $log->created_at->format('d M, Y H:i a') }}</td>
-        </tr>
+        @if (($log->user->role_id ?? '') != 1)
+            <tr>
+                <td class="text-center">{{ $i }}</td>
+                <td>{{ $activityTypes[$log->type] ?? $log->type }}</td>
+                <td>{{ $log->user->name_en ?? 'Unknown' }}</td>
+                <td>{{ $log->content->content_name ?? 'N/A' }}</td>
+                <td>{{ $log->description ?? '-' }}</td>
+                <td>{{ $log->ip_address ?? '-' }}</td>
+                <td>{{ $log->created_at->format('d M, Y H:i a') }}</td>
+            </tr>
+        @endif
 
         @php
             $i++;
         @endphp
     @endforeach
 @else
-    <tr>
+    {{-- <tr>
         <td colspan="7" class="text-center">No data found</td>
-    </tr>
+    </tr> --}}
 @endif

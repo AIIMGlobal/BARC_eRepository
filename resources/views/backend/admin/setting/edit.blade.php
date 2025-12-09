@@ -78,7 +78,7 @@
                                                 <div>
                                                     <label for="address" class="form-label">Address: <span style="color:red;">*</span></label>
 
-                                                    <textarea class="form-control" name="address" placeholder="Enter Address" rows="3" cols="1" required>{{ $setting->address ?? '' }}</textarea>
+                                                    <textarea class="form-control" name="address" placeholder="Enter Address" rows="5" cols="1" required>{{ $setting->address ?? '' }}</textarea>
                                                 </div>
                                             </div>
 
@@ -86,7 +86,7 @@
                                                 <div>
                                                     <label for="social_link" class="form-label">Location in Map: </label>
 
-                                                    <textarea class="form-control" name="social_link" placeholder="Enter Embedded Code of Map" rows="3" cols="1">{{ $setting->social_link ?? '' }}</textarea>
+                                                    <textarea class="form-control" name="social_link" placeholder="Enter Embedded Code of Map" rows="5" cols="1">{{ $setting->social_link ?? '' }}</textarea>
                                                 </div>
                                             </div>
 
@@ -115,7 +115,7 @@
                                             </div>
 
                                             @if (Auth::user()->role_id == 1)
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 mt-3">
                                                     <div>
                                                         <label for="logo" class="form-label">Logo: </label>
 
@@ -124,8 +124,22 @@
                                                 </div>
 
                                                 <div class="col-md-6 mt-4">
-                                                    <img style="max-height: 60px; max-width:150px;" class="img-thumbnail" src="{{ asset('storage/logo/' . ($global_setting->logo ?? '')) }}" alt="Logo">
+                                                    <img style="max-height: 60px; max-width:150px;" class="img-thumbnail" src="{{ asset('storage/logo/' . ($setting->logo ?? '')) }}" alt="Logo">
                                                 </div>
+
+                                                <div class="col-md-6 mt-3">
+                                                    <div>
+                                                        <label for="manual" class="form-label">User Manual: </label>
+
+                                                        <input type="file" class="form-control" name="manual" data-allow-reorder="true">
+                                                    </div>
+                                                </div>
+
+                                                @if ($setting->manual)
+                                                    <div class="col-md-6 mt-5">
+                                                        <a href="{{ asset('storage/manual/' . ($setting->manual ?? '')) }}" class="btn btn-sm btn-success" target="blank">Download Manual</a>
+                                                    </div>
+                                                @endif
                                             @endif
 
                                             <div class="col-md-12">
