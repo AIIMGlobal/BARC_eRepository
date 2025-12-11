@@ -15,5 +15,5 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('assets/js/pages/widgets.init.js') }}"></script>
+    <script src="{{ asset('backend-assets/assets/js/pages/widgets.init.js') }}"></script>
 @endpush

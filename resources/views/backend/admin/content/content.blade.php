@@ -206,15 +206,17 @@
                                 @endcan
 
                                 @if (Auth::id() == $content->created_by || Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 3)
-                                    @if ($content->status == 0 && (Auth::user()->role_id == 1 || Auth::user()->role_id == 2))
+                                    @if ((Auth::user()->role_id == 1 || Auth::user()->role_id == 2))
                                         @can('edit_content')
                                             <li><a class="dropdown-item" href="{{ route('admin.content.edit', Crypt::encryptString($content->id)) }}" target="_blank">Edit</a></li>
                                         @endcan
                                         
-                                        @can('can_publish')
-                                            <li><button class="dropdown-item" type="button" onclick="publishContent('{{ Crypt::encryptString($content->id) }}')">Publish</button></li>
-                                        @endcan
-                                    @elseif ($content->status == 0 && Auth::user()->role_id == 3)
+                                        @if ($content->status == 0)
+                                            @can('can_publish')
+                                                <li><button class="dropdown-item" type="button" onclick="publishContent('{{ Crypt::encryptString($content->id) }}')">Publish</button></li>
+                                            @endcan
+                                        @endif
+                                    @elseif ($content->status == 0 && (Auth::user()->role_id == 3 || Auth::user()->role_id == 4))
                                         @if (($content->createdBy->userInfo->office_id ?? '') == (Auth::user()->userInfo->office_id ?? ''))
                                             @can('edit_content')
                                                 <li><a class="dropdown-item" href="{{ route('admin.content.edit', Crypt::encryptString($content->id)) }}" target="_blank">Edit</a></li>

@@ -124,9 +124,15 @@
                                 </div>
 
                                 <div class="d-flex gap-2 justify-content-end mt-4">
-                                    @if ($content->status == 0)
-                                        <button type="submit" class="btn btn-info" id="saveBtn" data-status="0">Submit</button>
-                                        
+                                    @if ((Auth::user()->role_id == 1 || Auth::user()->role_id == 2))
+                                        <button type="submit" class="btn btn-info" id="saveBtn" data-status="0">Update</button>
+
+                                        @can('can_publish')
+                                            <button type="submit" class="btn btn-success" id="publishBtn" data-status="1">Publish</button>
+                                        @endcan
+                                    @elseif ((Auth::user()->role_id == 3 || Auth::user()->role_id == 4) && $content->status == 0)
+                                        <button type="submit" class="btn btn-info" id="saveBtn" data-status="0">Update</button>
+
                                         @can('can_publish')
                                             <button type="submit" class="btn btn-success" id="publishBtn" data-status="1">Publish</button>
                                         @endcan
